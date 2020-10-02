@@ -1,38 +1,69 @@
 # Simulation Lab Discussion
-## Names and NetIDs
+## Heather Grune (hlg20), Katherine Barbano (kab134), Priya Rathinavelu (plr11)
 
 
 ## Rock Paper Scissors
 
 ### High Level Design Ideas
-
+* Create a weapon abstract class, and design Rock, Paper, Scissors classes to extend from Weapon.
+* Outcomes Class to keep track of relationships between weapons (what wins against what)
+* Round class for each round 
+* Game class to control the rounds 
+* Player class - InteractivePlayer and ComputerPlayer classes extend Player
+* UserInterface class to set up the UI - interacts with Game class
 
 ### CRC Card Classes
 
-This class's purpose or value is to manage something:
 ```java
- public class Something {
-     public int getTotal (Collection<Integer> data)
-     public Value getValue ()
+ public class Weapon {
+    public Weapon()
+  
+     @Override
+     public int compareTo ()
  }
 ```
 
-This class's purpose or value is to be useful:
 ```java
- public class Value {
-     public void update (int data)
+ public class Outcomes {
+    public Weapon determineWinningWeapon()
  }
 ```
 
-### Use Cases
+```java
+ public class Round {
+    public void startRound()
+    public void endRound()
+    public Weapon getPlayerChoice()
+ }
+```
+
+```java
+ public class Game {
+    public void startGame()
+    public createUI()
+    public void moveToNewRound()
+    public void pauseGame()
+    public void endGame()
+    
+ }
+```
+
+```java
+ public class Player {
+    public void chooseWeapon()
+    public updateScore()
+    
+ }
+```
+
 
 ### Use Cases
 
  * A new game is started with five players, their scores are reset to 0.
  ```java
- Something thing = new Something();
- Value v = thing.getValue();
- v.update(13);
+for(int i=0;i<5;i++){Game.addPlayerToGame(new Player());}
+
+
  ```
 
  * A player chooses his RPS "weapon" with which he wants to play for this round.
@@ -67,7 +98,23 @@ This class's purpose or value is to be useful:
 ## Cell Society
 
 ### High Level Design Ideas
-
+* Model - Reads in the configuration file, creates and stores all components and their states
+    * Cell - responsible for keeping track of what state it is in
+    * Grid
+    * BasicSimulation class to extend for different types
+        * Basic starting Simulation
+        * Keep track of the states that each simulation contains
+    * State Abstract class - extend for all different states we need
+* View  
+    * Adds components to the scene
+    * setupScene()
+    * CellArray
+    * GridDisplay - handle adding
+* Controller (what the user interacts with)
+    * Main - start simulation, stop, pause
+    * Handle changing between types of simulations -> handleChangeSimulation()
+    * step() function (updates both backend and frontend)
+    * Update components in the simulation--> updates both view and model
 
 ### CRC Card Classes
 
