@@ -7,8 +7,8 @@ class GameOfLifeNeighborhood extends Neighborhood {
 
   private Map<Integer, GameOfLifeState> gameOfLifeStateMap;
 
-  GameOfLifeNeighborhood() {
-    super();
+  GameOfLifeNeighborhood(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+    super(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
   /***

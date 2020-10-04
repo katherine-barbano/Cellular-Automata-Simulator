@@ -4,15 +4,10 @@ public class Cell {
 
   private Neighborhood neighborhood;
 
-  public Cell(SimulationType simulationType) {
-    neighborhood = createNeighborhoodForThisCell(simulationType);
-  }
-
-  Neighborhood createNeighborhoodForThisCell(SimulationType simulationType) {
+  public Cell(Neighborhood neighborhood) {
+    this.neighborhood = neighborhood;
   }
 
   Cell createNextCellWithUpdatedState() {
   }
-
-
 }

@@ -83,7 +83,7 @@ abstract class Neighborhood {
           neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn+1];
           break;
         default:
-          //should never be reached
+          //should never be reached, because maxNumberOfNeighbors = 8
           break;
       }
       return neighborState;
@@ -93,7 +93,7 @@ abstract class Neighborhood {
     }
   }
 
-  Map<Integer, Integer> getCellPositionToState() {
+  Map<Integer, Integer> getNeighborPositionToState() {
     return neighborPositionToState;
   }
 }
