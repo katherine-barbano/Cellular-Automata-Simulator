@@ -22,7 +22,6 @@ abstract class Neighborhood {
   }
 
   abstract int getNextState(int currentState);
-  abstract Neighborhood getNextNeighborhood();
 
   /***
    * Chose to make this abstract because some types of simulations might not have a regular mapping
@@ -34,7 +33,8 @@ abstract class Neighborhood {
   /***
    * Creates a map with keys as neighbor position relative to the center cell, and values
    * as the state value as an integer. Neighbor position is numbered from 0 to 7, in the format
-   * of the picture in doc/neighborMapIndices.JPG
+   * of the picture in doc/neighborMapIndices.JPG. If a neighbor does not exist (i.e. center cell is on
+   * outer border of grid), Map simply does not contain a key with that neighbor position number.
    * @param allStatesInCSV 2D int array of all the states in the CSV file
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
@@ -96,5 +96,9 @@ abstract class Neighborhood {
 
   Map<Integer, Integer> getNeighborPositionToState() {
     return neighborPositionToState;
+  }
+
+  ResourceBundle getModelResources() {
+    return modelResources;
   }
 }

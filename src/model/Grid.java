@@ -18,7 +18,7 @@ public class Grid {
 
   /***
    * Constructor used for creating all Grids after the initial grid. Initializes cellGrid as empty,
-   * and should later be filled with next state data.
+   * and the model should later populate it with next state data.
    * @param simulationType type of simulation from SimulationType enum
    * @param rowLength number of rows in grid
    * @param columnLength number of columns in grid
@@ -26,6 +26,16 @@ public class Grid {
   public Grid(SimulationType simulationType, int rowLength, int columnLength) {
     this.simulationType = simulationType;
     cellGrid = new Cell[rowLength][columnLength];
+  }
+
+  /***
+   * Checks if states of cells in current cellGrid are the same as states of cells in next grid
+   * @return true if current grid is stable
+   */
+  public boolean currentGridIsStable() {
+    //TODO: do this method
+    getNextGrid();
+    return true;
   }
 
   /***
