@@ -96,4 +96,8 @@ abstract class Neighborhood {
   Map<Integer, Integer> getNeighborPositionToState() {
     return neighborPositionToState;
   }
+
+  Neighborhood getNextNeighborhood() {
+    Neighborhood
+  }
 }

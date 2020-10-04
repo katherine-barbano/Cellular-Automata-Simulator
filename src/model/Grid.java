@@ -3,10 +3,50 @@ package model;
 public class Grid {
 
   private Cell[][] cellGrid;
+  private SimulationType simulationType;
 
+  /***
+   * Constructor used for creating first initial grid from CSV file.
+   * @param simulationType type of simulation from SimulationType enum
+   * @param allStatesInCSV int[][] of all the states in the csv file
+   */
   public Grid(SimulationType simulationType, int[][] allStatesInCSV) {
+    this.simulationType = simulationType;
     cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
-    initializeCurrentCellGrid(simulationType, allStatesInCSV);
+    initializeCurrentCellGrid(allStatesInCSV);
+  }
+
+  /***
+   * Constructor used for creating all Grids after the initial grid. Initializes cellGrid as empty,
+   * and should later be filled with next state data.
+   * @param simulationType type of simulation from SimulationType enum
+   * @param rowLength number of rows in grid
+   * @param columnLength number of columns in grid
+   */
+  public Grid(SimulationType simulationType, int rowLength, int columnLength) {
+    this.simulationType = simulationType;
+    cellGrid = new Cell[rowLength][columnLength];
+  }
+
+  /***
+   * Call this method from controller to return a Grid object filled with cells in the next state.
+   * @return Grid for one step later
+   */
+  public Grid getNextGrid() {
+    Cell[][] nextCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
+    Grid nextGrid = new Grid(simulationType, cellGrid.length, cellGrid[0].length);
+    for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
+      for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
+        addNextCellToNextGrid(nextGrid, gridRow, gridColumn);
+      }
+    }
+    return nextGrid;
+  }
+
+  private void addNextCellToNextGrid(Grid nextGrid, int gridRow, int gridColumn) {
+    Cell currentCell = cellGrid[gridRow][gridColumn];
+    Cell nextCell = currentCell.getNextCell();
+    nextGrid.addCellToGrid(nextCell, gridRow, gridColumn);
   }
 
   /***
@@ -14,26 +54,26 @@ public class Grid {
    * assume that allStatesInCSV[index][index] is -1 if no Cell should be initialized for that position.
    * This method leaves an empty position in cellGrid if the state is -1 in CSV.
    */
-  private void initializeCurrentCellGrid(SimulationType simulationType, int[][] allStatesInCSV) {
+  private void initializeCurrentCellGrid(int[][] allStatesInCSV) {
     for (int csvRow = 0; csvRow < allStatesInCSV.length; csvRow++) {
       for (int csvColumn = 0; csvColumn < allStatesInCSV[csvRow].length; csvColumn++) {
         if (allStatesInCSV[csvRow][csvColumn] != -1) {
-          putCellWithNeighborhoodInGrid(simulationType, csvRow, csvColumn, allStatesInCSV);
+          putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
         }
       }
     }
   }
 
-  private void putCellWithNeighborhoodInGrid(SimulationType simulationType, int csvRow, int csvColumn, int[][] allStatesInCSV) {
-    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(simulationType, csvRow, csvColumn, allStatesInCSV);
-    Cell cellInPosition = new Cell (cellNeighborhood);
+  private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, int[][] allStatesInCSV) {
+    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(csvRow, csvColumn, allStatesInCSV);
+    Cell cellInPosition = new Cell (cellNeighborhood, allStatesInCSV[csvRow][csvColumn]);
     cellGrid[csvRow][csvColumn] = cellInPosition;
   }
 
   /***
    * Must edit this to create a new type of Neighborhood when adding a new type of simulation.
    */
-  private Neighborhood createNeighborhoodForSimulationType(SimulationType simulationType, int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+  private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
     switch (simulationType) {
       case GAME_OF_LIFE:
         return new GameOfLifeNeighborhood(centerCellRow, centerCellColumn, allStatesInCSV);
@@ -41,5 +81,34 @@ public class Grid {
         //should never be reached, because all simulation types are listed above
         return null;
     }
+  }
+
+  int[][] createStateIntegerGridFromCellGrid() {
+    int[][] stateIntegerGrid = new int[cellGrid.length][cellGrid[0].length];
+    for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
+      for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
+        stateIntegerGrid = cellAddedToStateIntegerGrid(cellGridRow,cellGridColumn,stateIntegerGrid);
+      }
+    }
+    return stateIntegerGrid;
+  }
+
+  private int[][] cellAddedToStateIntegerGrid(int cellGridRow, int cellGridColumn, int[][] stateIntegerGrid) {
+    if (cellGrid[cellGridRow][cellGridColumn] == null) {
+      stateIntegerGrid[cellGridRow][cellGridColumn] = -1;
+    }
+    else {
+      Cell cellAtIndex = cellGrid[cellGridRow][cellGridColumn];
+      stateIntegerGrid[cellGridRow][cellGridColumn] = cellAtIndex.getCurrentState();
+    }
+    return stateIntegerGrid;
+  }
+
+  public Cell[][] getCellGrid() {
+    return cellGrid;
+  }
+
+  void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
+    cellGrid[cellRow][cellColumn] = newCell;
   }
 }
