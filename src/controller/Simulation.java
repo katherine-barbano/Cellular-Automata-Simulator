@@ -3,6 +3,7 @@ package controller;
 import javafx.scene.Group;
 
 public abstract class Simulation {
+  /**
   private Grid currentGrid;
   private Grid nextGrid;
   private final String simulationName;
@@ -42,4 +43,5 @@ public abstract class Simulation {
     }
     displayGridScene(currentGrid);
   };
+   **/
 }
