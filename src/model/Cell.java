@@ -34,7 +34,7 @@ public class Cell {
     return currentState;
   }
 
-  int setNeighborhood() {
-
+  void setNeighborhood(Neighborhood neighborhood) {
+    this.neighborhood = neighborhood;
   }
 }

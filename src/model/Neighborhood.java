@@ -14,14 +14,15 @@ abstract class Neighborhood {
   private Map<Integer, Integer> neighborPositionToState;
   private ResourceBundle modelResources;
 
-  Neighborhood(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+  Neighborhood(int centerCellRow, int centerCellColumn, int[][] stateIntegerGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
 
     createCSVValueToStateMap();
-    createNeighborMap(centerCellRow, centerCellColumn, allStatesInCSV);
+    createNeighborMap(centerCellRow, centerCellColumn, stateIntegerGrid);
   }
 
   abstract int getNextState(int currentState);
+  abstract Neighborhood getNextNeighborhood();
 
   /***
    * Chose to make this abstract because some types of simulations might not have a regular mapping
@@ -95,9 +96,5 @@ abstract class Neighborhood {
 
   Map<Integer, Integer> getNeighborPositionToState() {
     return neighborPositionToState;
-  }
-
-  Neighborhood getNextNeighborhood() {
-    Neighborhood
   }
 }

@@ -31,6 +31,11 @@ class GameOfLifeNeighborhood extends Neighborhood {
     return 1;
   }
 
+  @Override
+  Neighborhood getNextNeighborhood() {
+    return new GameOfLifeNeighborhood(0,0,null);
+  }
+
   /***
    * State corresponding to 0 in CSV file should be at the top, state corresponding to 1 in CSV
    * file should be next, etc.
