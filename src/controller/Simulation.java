@@ -6,39 +6,41 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
+import model.*; //CHECK may need to change so not all classes from model package
 
 public abstract class Simulation {
 
   //private Grid currentGrid;
   //private Grid nextGrid;
-  private final String simulationName;
+  private final SimulationType simulationName;
   private final String simulationFileLocation;
-  //private final List<State> possibleStates;
   private Group root;
+  private final int rowNumber;
+  private final int colNumber;
 
 
 
-  public Simulation(String SimulationNameType, List<String> simulationStates, String simulationConfigurationName) {
+  public Simulation(SimulationType SimulationNameType, String simulationConfigurationName) {
     simulationName = SimulationNameType;
     simulationFileLocation = simulationConfigurationName;
-    //currentGrid = new Grid();
-    //nextGrid = new Grid(); //CHECK should set nextGrid equal to the currentGrid.getUpdateGrid();
-    //possibleStates = simulationStates;
+    //currentGrid = new Grid(SimulationName, getStatesFromFile());
+    //nextGrid = currentGrid.getNextGrid(); //CHECK should set nextGrid equal to the currentGrid.getUpdateGrid();
+    rowNumber = getSizeMatrix(simulationFileLocation).get(0);
+    colNumber = getSizeMatrix(simulationFileLocation).get(1);
+
   }
 
-//CHECK can remove this method if initializing in the constructor itself
+/*//CHECK can remove this method if initializing in the constructor itself
   void initializeSimulation(Group root) { //CHECK might not need to pass root in
     //currentGrid.initalizeGrid(this.simulationName); //CHECK use method in Grid
-    //nextGrid = currentGrid.getUpdateGrid(this.simulationName); //CHECK method names?
+    //nextGrid = currentGrid.getNextGrid(this.simulationName); //CHECK method names?
     //displayGridScene(currentGrid);
-  }
+  }*/
 
   private int [][] getStatesFromFile() {
     String line = "";
     String splitBy = ",";
-    int numRows = getSizeMatrix(simulationFileLocation).get(0);
-    int numCols = getSizeMatrix(simulationFileLocation).get(1);
-    int[][] cellStatesTotal = new int[numRows][numCols];
+    int[][] cellStatesTotal = new int[rowNumber][colNumber];
     try {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       int rowCount = 0;
@@ -90,14 +92,17 @@ public abstract class Simulation {
     }
   }*/
 
-/*  void displayGridScene(Grid gridToBeDisplayed) {
+  void displayGridScene(Grid gridToBeDisplayed) {
     //CHECK depending on how Grid is storing cells
     //CHECK need to create instance of cellDisplay ?
-    for (int i = 0; i < gridToBeDisplayed.getNumberOfCells(); i++) {
-      cellDisplay.displayCellMethod(gridToBeDisplayed.getCell(i));
+    for (int rowCount = 0; rowCount < gridToBeDisplayed.getCellGrid().length; rowCount++) {
+      for (int colCount = 0; colCount < gridToBeDisplayed.getCellGrid()[0].length; colCount++) {
+
+      }
     }
   }
 
+/*
   void updateSimulationGrid() { //CHECK should take in boolean checking if should even update
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getUpdateGrid(this.simulationName);
