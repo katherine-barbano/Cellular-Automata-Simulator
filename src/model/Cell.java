@@ -30,7 +30,7 @@ public class Cell {
     return nextCell;
   }
 
-  int getCurrentState() {
+  public int getCurrentState() {
     return currentState;
   }
 
