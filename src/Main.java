@@ -4,7 +4,7 @@ import view.SimulationView;
 
 public class Main extends Application {
 
-  public static final String SIMULATION_TYPE= "GameOfLife";
+  public static final String SIMULATION_TYPE= "Game Of Life";
 
   @Override
   public void start(Stage primaryStage) throws Exception {

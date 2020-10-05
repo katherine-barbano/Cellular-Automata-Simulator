@@ -1,45 +1,44 @@
 package view;
 
 import java.util.ResourceBundle;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class TitleBar {
+public class TitleBar extends FlowPane {
 
   public static final int TITLE_BAR_X_POSITION =150;
   public static final int TITLE_BAR_Y_POSITION =10;
   public static final int TITLE_BAR_WIDTH=100;
   public static final int TITLE_BAR_HEIGHT =20;
 
-  public static final int TITLE_TEXT_X_POSITION=290;
-  public static final int TITLE_TEXT_Y_POSITION=12;
+  public static final int TITLE_TEXT_X_POSITION=160;
+  public static final int TITLE_TEXT_Y_POSITION=25;
 
-  private BorderPane myRoot;
+  private Group myRoot;
   private ResourceBundle myResources;
   private Rectangle titleBar;
   private Text titleText;
-  private String titleString;
 
-  public TitleBar(BorderPane root, ResourceBundle resources, String simulationType){
+  public TitleBar(Group root, ResourceBundle resources, String simulationType){
+    super();
     this.myRoot = root;
-    this.myResources = resources;
+    this.setId("title-bar");
 
-    this.titleBar = new Rectangle(TITLE_BAR_X_POSITION, TITLE_BAR_Y_POSITION,TITLE_BAR_WIDTH,
-        TITLE_BAR_HEIGHT);
-    this.titleBar.setId("title_bar");
-    this.myRoot.setTop(titleBar);
-
-    this.titleString=myResources.getString(simulationType);
-    this.titleText= new Text(TITLE_TEXT_X_POSITION,TITLE_TEXT_Y_POSITION, titleString);
-    this.titleText.setId("title_text");
-    this.myRoot.setTop(titleText);
+    this.titleText= new Text(simulationType);
+    this.titleText.setId("title-text");
+    this.getChildren().add(titleText);
+    this.setAlignment(Pos.CENTER);
 
   }
 
-  public void updateTitleText(){
-
+  public void updateTitleText(String inputTitle){
+      this.titleText.setText(inputTitle);
   }
 
 }
