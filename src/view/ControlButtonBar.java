@@ -15,6 +15,6 @@ public class ControlButtonBar extends HBox {
     myStep = new StepButton();
     this.getChildren().add(myStep);
 
-    this.getStyleClass().add("control-buttons");
+    this.getStyleClass().add("button-bar");
   }
 }

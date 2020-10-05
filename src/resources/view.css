@@ -12,7 +12,7 @@
   -fx-vgap: 3;
 }
 
-.control-buttons{
+.button-bar{
   -fx-spacing:5;
   -fx-alignment: center;
 }

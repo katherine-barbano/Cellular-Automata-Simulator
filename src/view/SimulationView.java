@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Grid;
 
 public class SimulationView {
 
@@ -19,17 +20,17 @@ public class SimulationView {
   private VBox myRoot;
   private GridDisplay myGridDisplay;
   private ControlButtonBar myControlButtons;
+  private SimulationButtonBar mySimulationButtons;
 
   public SimulationView(){
     //myBundle = ResourceBundle.getBundle("/src/resources/Model");
 
   }
 
-  public Scene setupScene(String simulationType, int width, int height)
+  public Scene setupScene(Grid grid, String simulationType, int width, int height)
       throws MalformedURLException {
 
-
-    createUIElements(simulationType);
+    createUIElements(grid, simulationType);
 
     Scene scene= new Scene(myRoot, width, height);
     File file = new File(RESOURCES+STYLESHEET);
@@ -37,22 +38,21 @@ public class SimulationView {
     return scene;
   }
 
-  private void createUIElements(String simulationType){
+  private void createUIElements(Grid grid, String simulationType){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myRoot.getChildren().add(myTitleBar);
 
-    int[][] cellArray = {{1,0,0,0,1},{1,1,1,1,1},{0,0,0,0,1},{1,1,0,1,1},{0,1,1,0,1}};
-
-    myGridDisplay = new GridDisplay(cellArray);
+    myGridDisplay = new GridDisplay(grid);
     myRoot.getChildren().add(myGridDisplay);
 
     myControlButtons = new ControlButtonBar();
     myRoot.getChildren().add(myControlButtons);
 
-
+    mySimulationButtons = new SimulationButtonBar();
+    myRoot.getChildren().add(mySimulationButtons);
 
   }
 

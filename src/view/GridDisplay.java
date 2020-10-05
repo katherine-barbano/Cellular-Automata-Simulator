@@ -8,19 +8,19 @@ import model.Grid;
 public class GridDisplay extends GridPane {
 
 
-  public GridDisplay(int[][] cellArray){
+  public GridDisplay(Grid grid){
     super();
-    //Cell[][] cellArray = grid.getCellGrid();
+    Cell[][] cellArray = grid.getCellGrid();
     addAllCells(cellArray);
     this.setAlignment(Pos.CENTER);
     this.getStyleClass().add("grid-display");
 
   }
 
-  private void addAllCells(int[][] cellArray){
+  private void addAllCells(Cell[][] cellArray){
     for(int row=0; row<cellArray.length; row++){
       for(int col=0; col<cellArray[row].length;col++){
-        super.add(new CellDisplay(cellArray[row][col]),row,col);
+        super.add(new CellDisplay(cellArray[row][col].getCurrentState()),row,col);
       }
     }
   }
