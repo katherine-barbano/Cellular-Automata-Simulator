@@ -45,11 +45,6 @@ class GridTest {
   }
 
   @Test
-  void verifyNeighborsInInitialGridInstantiation() {
-
-  }
-
-  @Test
   void gridEquals() {
     int[][] statesOne = new int[][] {
         {0, 0, 0, 0, 0},
@@ -151,18 +146,5 @@ class GridTest {
     Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
     Grid gridTwo = new Grid(SimulationType.GAME_OF_LIFE, statesTwo);
     assertFalse(gridOne.equals(gridTwo));
-  }
-
-  void printGrid(Grid grid) {
-    Cell[][] initialCellGrid = grid.getCellGrid();
-    for(int row = 0; row< initialCellGrid.length; row++) {
-      for(int col = 0; col< initialCellGrid[0].length; col++) {
-        Cell cell = initialCellGrid[row][col];
-        int state = cell.getCurrentState();
-        System.out.print(state+" ");
-      }
-      System.out.println();
-    }
-    System.out.println();
   }
 }
