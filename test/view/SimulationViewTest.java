@@ -14,7 +14,6 @@ class SimulationViewTest {
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, testGrid);
 
     SimulationView simView = new SimulationView(grid);
-
   }
 
 }
