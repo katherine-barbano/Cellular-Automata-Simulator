@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Grid;
 
@@ -15,6 +14,7 @@ public class SimulationView {
   public static final String DEFAULT_RESOURCE_FOLDER = "/" + RESOURCES;
   public static final String STYLESHEET = "view.css";
 
+  private Grid myGrid;
   private ResourceBundle myBundle;
   private TitleBar myTitleBar;
   private VBox myRoot;
@@ -22,15 +22,15 @@ public class SimulationView {
   private ControlButtonBar myControlButtons;
   private SimulationButtonBar mySimulationButtons;
 
-  public SimulationView(){
+  public SimulationView(Grid grid){
     //myBundle = ResourceBundle.getBundle("/src/resources/Model");
-
+    myGrid=grid;
   }
 
-  public Scene setupScene(Grid grid, String simulationType, int width, int height)
+  public Scene setupScene(String simulationType, int width, int height)
       throws MalformedURLException {
 
-    createUIElements(grid, simulationType);
+    createUIElements(simulationType);
 
     Scene scene= new Scene(myRoot, width, height);
     File file = new File(RESOURCES+STYLESHEET);
@@ -38,14 +38,14 @@ public class SimulationView {
     return scene;
   }
 
-  private void createUIElements(Grid grid, String simulationType){
+  private void createUIElements(String simulationType){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myRoot.getChildren().add(myTitleBar);
 
-    myGridDisplay = new GridDisplay(grid);
+    myGridDisplay = new GridDisplay(myGrid);
     myRoot.getChildren().add(myGridDisplay);
 
     myControlButtons = new ControlButtonBar();
@@ -54,6 +54,11 @@ public class SimulationView {
     mySimulationButtons = new SimulationButtonBar();
     myRoot.getChildren().add(mySimulationButtons);
 
+  }
+
+  public void updateGridDisplay(Grid nextGrid){
+    myGrid=nextGrid;
+    myGridDisplay=new GridDisplay(nextGrid);
   }
 
 
