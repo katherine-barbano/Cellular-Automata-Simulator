@@ -1,5 +1,6 @@
 package controller;
 
+import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.util.Duration;
 import model.Grid;
 import model.SimulationType;
+import view.SimulationView;
 //import view.SimulationView;
 
 public class ControllerMain extends Application {
@@ -27,11 +29,11 @@ public class ControllerMain extends Application {
   private Scene myScene;
   private Group root;
   private Simulation currentSimulation;
-  //private SimulationView currentSimulationView;
+  private SimulationView currentSimulationView;
   private boolean isPaused;
 
   @Override
-  public void start(Stage stage){
+  public void start(Stage stage) throws MalformedURLException {
     // attach scene to the stage and display it
     //
     setUpStage(stage);
@@ -46,8 +48,8 @@ public class ControllerMain extends Application {
   /*
    * Sets up the stage size and title
    */
-  protected void setUpStage(Stage stage) {
-    //setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
+  protected void setUpStage(Stage stage) throws MalformedURLException {
+    setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
     //currentSimulationView = new SimulationView();
     stage.setScene(myScene);
     stage.setTitle("Testing");
@@ -58,11 +60,14 @@ public class ControllerMain extends Application {
   /*
    * Create the game's "scene": what shapes will be in the game and their starting properties
    */
-  Scene setupScene(int width, int height, Paint background) {
+  Scene setupScene(int width, int height, Paint background) throws MalformedURLException {
     root = new Group();
-    myScene = new Scene(root, width, height, background);
     currentSimulation = new GameOfLifeSimulation();
-    currentSimulation.displayGridScene(new Grid(SimulationType.GAME_OF_LIFE, 3,4));
+    SimulationView currSimView = currentSimulation.getSimulationView();
+    myScene = currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    //currentSimulation.displayGridScene(new Grid(SimulationType.GAME_OF_LIFE, 3,4));
+
     //clickButton();
     //myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return myScene;
@@ -90,7 +95,13 @@ void test() {
   System.out.println("working");
 }
 
+ void unpause() {
+    isPaused = false;
+ }
 
+ void pause() {
+    isPaused = true;
+ }
 
   public static void main (String[] args) {
     launch(args);

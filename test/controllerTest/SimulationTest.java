@@ -7,7 +7,6 @@ import controller.Simulation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.input.KeyCode;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;
 

@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
+import view.SimulationView;
 
 public abstract class Simulation {
 
   private Grid currentGrid;
+
+
   private Grid nextGrid;
   private final SimulationType simulationName;
   private final String simulationFileLocation;
+  private SimulationView simulationView;
   private Group root;
   private final int rowNumber;
   private final int colNumber;
@@ -29,6 +33,7 @@ public abstract class Simulation {
     cells = determineStatesFromFile();
     currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
     nextGrid = currentGrid.getNextGrid();
+    simulationView = new SimulationView(currentGrid);
   }
 
 /*//CHECK can remove this method if initializing in the constructor itself
@@ -46,7 +51,10 @@ public abstract class Simulation {
       int rowCount = 0;
       while ((nextLine = br.readLine()) != null) { //returns a Boolean value
         String[] cellStates = nextLine.split(splitBy);
-        for (int colCount = 0; colCount <= cellStates.length-1; colCount++) {
+        for (int colCount = 0; colCount <= colNumber-1; colCount++) {
+          int rc = rowCount;
+          int cc = colCount;
+          int tobe = Integer.parseInt(cellStates[colCount]);
           cellStatesTotal[rowCount][colCount] = (Integer.parseInt(cellStates[colCount]));
         }
         rowCount++;
@@ -62,14 +70,19 @@ public abstract class Simulation {
   private List<Integer> findSizeMatrix(String simulationFileLocation){
     int numberRows = 0;
     int numberCols = 0;
+    String line = "";
     List<Integer> numberData = new ArrayList<>();
     try
     {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
-      while ((br.readLine()) != null)   //returns a Boolean value
+      while ((line = br.readLine()) != null)   //returns a Boolean value
       {
-        numberCols = br.readLine().split(",").length;
-        numberRows++;
+        String currentLine = br.readLine();
+        numberRows = Integer.parseInt(line.split(",")[0]);
+        numberCols = Integer.parseInt(line.split(",")[1]);
+        break;
+        //numberCols = br.readLine().split(",").length;
+        //numberRows++;
         }
     }
     catch (IOException e)
@@ -107,16 +120,10 @@ public abstract class Simulation {
     if (! isPaused) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
-      //need to delete old grid
-      //root.getChildren().
-      displayGridScene(currentGrid);
+      simulationView.updateGridDisplay(currentGrid);
       }
-
     }
 
-    void deleteGrid(Grid gridToDelete ) {
-        root.getChildren().removeAll(); //CHECK need to just remove certain parts?
-    }
 
     public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<Integer>();
@@ -124,6 +131,11 @@ public abstract class Simulation {
     sizeValues.add(colNumber);
     return sizeValues;
     }
+
+
+  public SimulationView getSimulationView() {
+    return simulationView;
+  }
 
 
 }
