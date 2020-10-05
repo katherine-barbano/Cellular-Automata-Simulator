@@ -33,9 +33,7 @@ public class Grid {
    * @return true if current grid is stable
    */
   public boolean currentGridIsStable() {
-    //TODO: do this method
-    getNextGrid();
-    return true;
+    return getNextGrid().equals(this);
   }
 
   /***

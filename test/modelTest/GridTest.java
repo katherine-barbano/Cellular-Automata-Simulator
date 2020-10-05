@@ -80,8 +80,31 @@ class GridTest {
   }
 
   @Test
-  void getNextGridGameOfLifeOscillators() {
+  void getNextGridGameOfLifePeriodTwoOscillators() {
+    int[][] blinkerInitialState = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
 
+    int[][] blinkerOneStepState = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, blinkerInitialState, blinkerOneStepState);
+  }
+
+  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, int[][] initialState, int[][] expectedNextState) {
+    Grid currentGrid = new Grid(simulationType, initialState);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+    Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
+    assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
 
   void printGrid(Grid grid) {
