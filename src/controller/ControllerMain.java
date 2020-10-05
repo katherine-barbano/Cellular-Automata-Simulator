@@ -2,8 +2,6 @@ package controller;
 
 import java.net.MalformedURLException;
 import javafx.application.Application;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -13,10 +11,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
-import model.Grid;
-import model.SimulationType;
 import view.SimulationView;
-//import view.SimulationView;
 
 public class ControllerMain extends Application {
 
@@ -45,10 +40,9 @@ public class ControllerMain extends Application {
   /*
    * Sets up the stage size and title
    */
-  protected void setUpStage(Stage stage) throws MalformedURLException {
+  protected void setUpStage(Stage stage) {
     setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
     stage.setScene(myScene);
-    stage.setTitle("Testing");
     stage.show();
     isPaused = false;
   }
@@ -63,7 +57,7 @@ public class ControllerMain extends Application {
     myScene = currSimView.setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyControlButtons().getMySave().setOnAction(event -> currentSimulation.storeNewCellConfig());
+    currSimView.getMyControlButtons().getMySave().setOnAction(event -> currentSimulation.storeNewCellConfig(isPaused));
     return myScene;
   }
 
