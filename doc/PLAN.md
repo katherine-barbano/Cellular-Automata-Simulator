@@ -39,6 +39,29 @@
         * Subclasses GameOfLifeSimulation, RockPaperScissorsSimulation... etc
 
 ## Design Details
+Our main abstract class is our Simulation Class. Each type of simulation we need to implement will
+be extending the main Simulation class. Within this simulation, we will have an instance of a 
+current Grid with all of the cell's current states, as well as a "next" Grid which will store the 
+new states of all the cells. Each Grid object is made up of a collection of Cell objects. Each 
+Cell is responsible for knowing which state it is supposed to be, and as the simulation updates, 
+each cell will have to update its state. To help with understanding its own state, each Cell
+will contain an instance of Neighborhood object, which will be an extension of the Neighborhood
+abstract class. This class is abstract because each cell's states need to updated differently 
+according to what simulation is running. By having Neighborhood be abstract, the method in this 
+class that can figure out a cell's new state can be overriden based on which simulation has to run. 
+Each instance of Simulation will also take in a file resource name indicating the file that will 
+be read in to create the general grid shape. This is how the different states of the cells can be 
+stored and updated. To actually display these states, the Simulation class will work with the 
+CellDisplay class that is under the View branch of the project. The CellDisplay class works
+by extending Rectangle and contains a structure that can store all possible states and which 
+colors that each states corresponds to. This class will also be responsible for directly 
+displaying the cell's state on the scene. As we update based on a certain amount of time, the 
+grid will be updated to reflect the new cell states. This will then be displayed on the scene as 
+the "new" grid. 
+
+Our Main class would be in charge of starting, stopping, pausing, and transitioning between
+the current simulation to be displayed. 
+
 
 Here is a graphical look at my design:
 
