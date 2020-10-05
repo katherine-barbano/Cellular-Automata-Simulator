@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
  */
 abstract class Neighborhood {
 
-  public static final String MODEL_RESOURCE_PATH = "resources/Model.properties";
+  public static final String MODEL_RESOURCE_PATH = "resources/Model";
 
   private Map<Integer, Integer> neighborPositionToState;
   private ResourceBundle modelResources;
@@ -40,7 +40,7 @@ abstract class Neighborhood {
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
   void createNeighborMap(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
-    int maxNumberOfNeighbors = (int) modelResources.getObject("MaxNumberOfNeighbors");
+    int maxNumberOfNeighbors = Integer.parseInt((String)modelResources.getObject("MaxNumberOfNeighbors"));
     neighborPositionToState = new HashMap<>();
 
     for(int neighborPosition = 0; neighborPosition<maxNumberOfNeighbors; neighborPosition++) {
@@ -49,6 +49,7 @@ abstract class Neighborhood {
         neighborPositionToState.put(neighborPosition,neighborState);
       }
     }
+    System.out.println(neighborPositionToState);
   }
 
   /***
@@ -60,25 +61,25 @@ abstract class Neighborhood {
       int neighborState = -1;
       switch (neighborPosition) {
         case 0:
-          neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn-1];
-          break;
-        case 1:
           neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn];
           break;
-        case 2:
-          neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn+1];
-          break;
-        case 3:
+        case 1:
           neighborState = allStatesInCSV[centerCellRow][centerCellColumn-1];
           break;
-        case 4:
+        case 2:
           neighborState = allStatesInCSV[centerCellRow][centerCellColumn+1];
           break;
+        case 3:
+          neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn];
+          break;
+        case 4:
+          neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn-1];
+          break;
         case 5:
-          neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn-1];
+          neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn+1];
           break;
         case 6:
-          neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn];
+          neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn-1];
           break;
         case 7:
           neighborState = allStatesInCSV[centerCellRow+1][centerCellColumn+1];
