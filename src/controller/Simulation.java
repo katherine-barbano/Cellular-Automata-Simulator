@@ -114,6 +114,7 @@ public abstract class Simulation {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
+      System.out.println("updating");
       }
     }
 
