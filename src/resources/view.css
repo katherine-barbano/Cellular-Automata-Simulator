@@ -1,5 +1,28 @@
-.h-box{
- -fx-background-color: azure;
+.button{
+  -fx-background-color: lightBlue;
+}
+
+.vbox{
+  -fx-spacing: 5;
+}
+
+.grid-display{
+  -fx-alignment: center;
+  -fx-hgap: 3;
+  -fx-vgap: 3;
+}
+
+.control-buttons{
+  -fx-spacing:5;
+  -fx-alignment: center;
+}
+
+#alive{
+  -fx-fill: black;
+}
+
+#dead{
+  -fx-fill:white;
 }
 
 #title-bar{
