@@ -53,16 +53,15 @@ public class SimulationView {
     myRoot.getStyleClass().add("vbox");
 
     myTitleBar=new TitleBar(myBundle, simulationType);
-    myRoot.getChildren().add(myTitleBar);
+    myControlButtons = new ControlButtonBar();
+    mySimulationButtons = new SimulationButtonBar();
 
     myGridHeight=findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
+
+    myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
-
-    myControlButtons = new ControlButtonBar();
     myRoot.getChildren().add(myControlButtons);
-
-    mySimulationButtons = new SimulationButtonBar();
     myRoot.getChildren().add(mySimulationButtons);
 
   }
@@ -73,7 +72,7 @@ public class SimulationView {
   }
 
   public double findGridHeight(){
-    return myHeight - myTitleBar.getHeight() - myControlButtons.getHeight() - mySimulationButtons.getHeight();
+    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight();
   }
 
 }

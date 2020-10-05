@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 
 public class TitleBar extends FlowPane {
 
+  public static final int TITLE_BAR_HEIGHT=50;
   private ResourceBundle myResources;
   private Text titleText;
 
@@ -18,6 +19,7 @@ public class TitleBar extends FlowPane {
     this.titleText.setId("title-text");
     this.getChildren().add(titleText);
     this.setAlignment(Pos.CENTER);
+    this.setPrefHeight(50);
 
   }
 
