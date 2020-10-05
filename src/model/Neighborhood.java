@@ -49,7 +49,6 @@ abstract class Neighborhood {
         neighborPositionToState.put(neighborPosition,neighborState);
       }
     }
-    System.out.println(neighborPositionToState);
   }
 
   /***
@@ -101,5 +100,9 @@ abstract class Neighborhood {
 
   ResourceBundle getModelResources() {
     return modelResources;
+  }
+
+  public boolean equals(Neighborhood neighborhood) {
+    return neighborPositionToState.equals(neighborhood.getNeighborPositionToState());
   }
 }

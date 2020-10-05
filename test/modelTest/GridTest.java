@@ -4,6 +4,7 @@ import model.Cell;
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
 
@@ -18,25 +19,92 @@ class GridTest {
   }
 
   @Test
-  void getNextGridGameOfLifeStillLifeBlock() {
-    SimulationType simulationType = SimulationType.GAME_OF_LIFE;
-    int[][] initialStateMatrix = new int[][] {
+  void gridEquals() {
+
+  }
+
+  @Test
+  void getNextGridGameOfLifeStillLifes() {
+    int[][] block = new int[][] {
         {0, 0, 0, 0},
         {0, 1, 1, 0},
         {0, 1, 1, 0},
         {0, 0, 0, 0}
     };
 
-    int[][] oneStepLaterStateMatrix = new int[][] {
-        {0, 0, 0, 0},
-        {0, 1, 1, 0},
-        {0, 1, 1, 0},
-        {0, 0, 0, 0}
+    int[][] beehive = new int[][] {
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 1, 1, 0, 0},
+        {0, 1, 0, 0, 1, 0},
+        {0, 0, 1, 1, 0, 0},
+        {0, 0, 0, 0, 0, 0}
     };
 
-    Grid currentGrid = new Grid(simulationType, initialStateMatrix);
+    int[][] loaf = new int[][] {
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 1, 1, 0, 0},
+        {0, 1, 0, 0, 1, 0},
+        {0, 0, 1, 0, 1, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0, 0}
+    };
+
+    int[][] boat = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 1, 1, 0, 0},
+        {0, 1, 0, 1, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    int[][] tub = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 1, 0, 1, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, block);
+    checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, beehive);
+    checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, loaf);
+    checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, boat);
+    checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, tub);
+
+  }
+
+  private void checkStillLifeGridsEqual(SimulationType simulationType, int[][] initialMatrix) {
+    Grid currentGrid = new Grid(simulationType, initialMatrix);
     Grid nextGrid = currentGrid.getNextGrid();
-    //assertEquals()
+    assertTrue(currentGrid.equals(nextGrid));
+  }
+
+  @Test
+  void getNextGridGameOfLifePeriodTwoOscillators() {
+    int[][] blinkerInitialState = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    int[][] blinkerOneStepState = new int[][] {
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, blinkerInitialState, blinkerOneStepState);
+  }
+
+  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, int[][] initialState, int[][] expectedNextState) {
+    Grid currentGrid = new Grid(simulationType, initialState);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+    Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
+    assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
 
   void printGrid(Grid grid) {
