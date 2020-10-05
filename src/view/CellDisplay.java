@@ -7,10 +7,8 @@ import javafx.scene.shape.Rectangle;
 
 public class CellDisplay extends Rectangle {
 
-  public static final int CELL_SIZE=30;
-
-  public CellDisplay(int state){
-    super(CELL_SIZE, CELL_SIZE);
+  public CellDisplay(int state,double cellSize){
+    super(cellSize, cellSize);
     this.setId(getStateFromInt(state));
     getStyleClass().add("cell-display");
   }
