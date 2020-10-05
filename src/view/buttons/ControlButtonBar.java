@@ -25,4 +25,16 @@ public class ControlButtonBar extends HBox {
     this.setPrefHeight(BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
   }
+
+  public StepButton getMyStep() {
+    return myStep;
+  }
+
+  public PlayPauseButton getMyPlayPause() {
+    return myPlayPause;
+  }
+
+  public SaveButton getMySave() {
+    return mySave;
+  }
 }

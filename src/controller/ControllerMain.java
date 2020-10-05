@@ -30,16 +30,12 @@ public class ControllerMain extends Application {
   private Scene myScene;
   private Group root;
   private Simulation currentSimulation;
-  private SimulationView currentSimulationView;
   private boolean isPaused;
 
   @Override
   public void start(Stage stage) throws MalformedURLException {
-    // attach scene to the stage and display it
-    //
     setUpStage(stage);
-    //
-    KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY_LONG), e -> step(SECOND_DELAY_LONG));
+    KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY_LONG), e -> step());
     Timeline animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -51,47 +47,47 @@ public class ControllerMain extends Application {
    */
   protected void setUpStage(Stage stage) throws MalformedURLException {
     setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
-    //currentSimulationView = new SimulationView();
     stage.setScene(myScene);
     stage.setTitle("Testing");
     stage.show();
-    isPaused = false; //CHECK should change this to true when buttons work
+    isPaused = false;
   }
 
   /*
    * Create the game's "scene": what shapes will be in the game and their starting properties
    */
-  Scene setupScene(int width, int height, Paint background) throws MalformedURLException {
+  Scene setupScene(int width, int height, Paint background) {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    myScene = currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    //currentSimulation.displayGridScene(new Grid(SimulationType.GAME_OF_LIFE, 3,4));
-
-    //clickButton();
-    //myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    myScene = currSimView.setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+    currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
+    currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
+    currSimView.getMyControlButtons().getMySave().setOnAction(event -> currentSimulation.storeNewCellConfig());
     return myScene;
   }
 
 
-  void step (double elapsedTime) { //CHECK should be taking in elapsedTime now?
-    updateShapes(elapsedTime);
+  void step () {
+    updateShapes(!isPaused);
   }
 
-  private void updateShapes(double elapsedTime) {
-    currentSimulation.updateSimulationGrid(isPaused);
+  private void updateShapes(boolean shouldRun) {
+    currentSimulation.updateSimulationGrid(shouldRun);
   }
 
- void unpause() {
-    isPaused = false;
- }
+  void stepByButton() {
+    updateShapes(isPaused);
+  }
 
- void pause() {
-    isPaused = true;
- }
+  void unpauseOrPause() {
+    isPaused = !isPaused;
+  }
 
   public static void main (String[] args) {
     launch(args);
   }
+
+
+
 }

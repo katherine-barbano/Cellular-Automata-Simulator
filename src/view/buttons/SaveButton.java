@@ -1,5 +1,6 @@
 package view.buttons;
 
+import controller.Simulation;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
@@ -15,7 +16,7 @@ public class SaveButton extends Button {
   }
 
   private void save(){
-
+    //System.out.println("should save")
   }
 
 }

@@ -73,4 +73,8 @@ public class SimulationView {
     return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight();
   }
 
+  public ControlButtonBar getMyControlButtons() {
+    return myControlButtons;
+  }
+
 }

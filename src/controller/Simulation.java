@@ -38,10 +38,10 @@ public abstract class Simulation {
     simulationView = new SimulationView(currentGrid);
   }
 
-/*//CHECK can remove this method if initializing in the constructor itself
+//CHECK can remove this method if initializing in the constructor itself
   void initializeSimulation(Group root) { //CHECK might not need to pass root in
-    //displayGridScene(currentGrid);
-  }*/
+
+  }
 
   protected int [][] determineStatesFromFile() {
     String nextLine = "";
@@ -109,8 +109,8 @@ public abstract class Simulation {
   }
 
 
-  void updateSimulationGrid(boolean isPaused) { //CHECK should take in boolean checking if should even update
-    if (! isPaused) {
+  void updateSimulationGrid(boolean shouldRun) { //CHECK should take in boolean checking if should even update
+    if (shouldRun) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
@@ -131,9 +131,11 @@ public abstract class Simulation {
     return simulationView;
   }
 
-  protected void storeNewCellConfig(){
+  public void storeNewCellConfig(){
+    System.out.println("storing");
     try {
     FileWriter csvWriter = new FileWriter("new.csv");
+      System.out.println("got new file");
     csvWriter.append(Integer.toString(rowNumber));
     csvWriter.append(",");
     csvWriter.append(Integer.toString(colNumber));
