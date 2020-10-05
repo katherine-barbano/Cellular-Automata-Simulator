@@ -1,6 +1,5 @@
 package modelTest;
 
-import model.Cell;
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;

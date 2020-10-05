@@ -91,7 +91,7 @@ public class Grid {
 
   private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, int[][] allStatesInCSV) {
     Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(csvRow, csvColumn, allStatesInCSV);
-    Cell cellInPosition = new Cell (cellNeighborhood, allStatesInCSV[csvRow][csvColumn]);
+    Cell cellInPosition = new Cell(cellNeighborhood, allStatesInCSV[csvRow][csvColumn]);
     cellGrid[csvRow][csvColumn] = cellInPosition;
   }
 
