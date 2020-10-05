@@ -11,10 +11,9 @@ import view.buttons.SimulationButtonBar;
 
 public class SimulationView {
 
-  private static final String RESOURCES = "src/resources/";
-  public static final String DEFAULT_RESOURCE_PACKAGE = RESOURCES.replace("/", ".");
-  public static final String DEFAULT_RESOURCE_FOLDER = "/" + RESOURCES;
+  private static final String RESOURCES = "resources/";
   public static final String STYLESHEET = "view.css";
+  public static final String RESOURCE_BUNDLE = "View";
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -30,21 +29,19 @@ public class SimulationView {
   private SimulationButtonBar mySimulationButtons;
 
   public SimulationView(Grid grid){
-    //myBundle = ResourceBundle.getBundle("/src/resources/Model");
+    myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE);
     myGrid=grid;
   }
 
-  public Scene setupScene(String simulationType, int width, int height)
-      throws MalformedURLException {
-
+  public Scene setupScene(String simulationType, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
 
     createUIElements(simulationType);
+    addUIElementsToRoot();
 
     Scene scene= new Scene(myRoot, width, height);
-    File file = new File(RESOURCES+STYLESHEET);
-    scene.getStylesheets().add(file.toURI().toURL().toExternalForm());
+    scene.getStylesheets().add(RESOURCES+STYLESHEET);
     return scene;
   }
 
@@ -53,22 +50,23 @@ public class SimulationView {
     myRoot.getStyleClass().add("vbox");
 
     myTitleBar=new TitleBar(myBundle, simulationType);
-    myControlButtons = new ControlButtonBar();
-    mySimulationButtons = new SimulationButtonBar();
+    myControlButtons = new ControlButtonBar(myBundle);
+    mySimulationButtons = new SimulationButtonBar(myBundle);
 
     myGridHeight=findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
+  }
 
+  private void addUIElementsToRoot(){
     myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
     myRoot.getChildren().add(mySimulationButtons);
-
   }
 
   public void updateGridDisplay(Grid nextGrid){
     myGrid=nextGrid;
-    myGridDisplay=new GridDisplay(nextGrid,myGridHeight);
+    myGridDisplay=myGridDisplay.updateCellsInGridDisplay(nextGrid);
   }
 
   public double findGridHeight(){
