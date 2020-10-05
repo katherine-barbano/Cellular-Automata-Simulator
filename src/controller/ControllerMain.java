@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.util.Duration;
 import model.Grid;
 import model.SimulationType;
+//import view.SimulationView;
 
 public class ControllerMain extends Application {
 
@@ -21,14 +22,19 @@ public class ControllerMain extends Application {
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static final int FRAME_SIZE = 400;
   public static final Paint BACKGROUND = Color.AZURE;
+  public static final int SCREEN_WIDTH = 400;
+  public static final int SCREEN_HEIGHT = 400;
   private Scene myScene;
   private Group root;
   private Simulation currentSimulation;
+  //private SimulationView currentSimulationView;
 
   @Override
   public void start(Stage stage){
     // attach scene to the stage and display it
+    //
     setUpStage(stage);
+    //
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
     Timeline animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
@@ -40,7 +46,8 @@ public class ControllerMain extends Application {
    * Sets up the stage size and title
    */
   protected void setUpStage(Stage stage) {
-    setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
+    //setupScene(FRAME_SIZE, FRAME_SIZE, BACKGROUND);
+    //currentSimulationView = new SimulationView();
     stage.setScene(myScene);
     stage.setTitle("Testing");
     stage.show();

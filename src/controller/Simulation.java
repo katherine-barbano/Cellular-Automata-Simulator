@@ -27,31 +27,25 @@ public abstract class Simulation {
     rowNumber = getSizeMatrix(simulationFileLocation).get(0);
     colNumber = getSizeMatrix(simulationFileLocation).get(1);
     cells = getStatesFromFile();
-    //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, getStatesFromFile());
-    //nextGrid = currentGrid.getNextGrid(); //CHECK should set nextGrid equal to the currentGrid.getUpdateGrid();
-
-
+    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, getStatesFromFile());
+    nextGrid = currentGrid.getNextGrid();
   }
 
 /*//CHECK can remove this method if initializing in the constructor itself
   void initializeSimulation(Group root) { //CHECK might not need to pass root in
-    //currentGrid.initalizeGrid(this.simulationName); //CHECK use method in Grid
-    //nextGrid = currentGrid.getNextGrid(this.simulationName); //CHECK method names?
     //displayGridScene(currentGrid);
   }*/
 
   private int [][] getStatesFromFile() {
-    String nextline = "";
+    String nextLine = "";
     String splitBy = ",";
-    int rowValue = getSizeMatrix(simulationFileLocation).get(0);
-    int colVal = getSizeMatrix(simulationFileLocation).get(1);
     int[][] cellStatesTotal = new int[rowNumber][colNumber];
     try {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       String firstLine = br.readLine();
       int rowCount = 0;
-      while ((nextline = br.readLine()) != null) { //returns a Boolean value
-        String[] cellStates = nextline.split(splitBy);
+      while ((nextLine = br.readLine()) != null) { //returns a Boolean value
+        String[] cellStates = nextLine.split(splitBy);
         for (int colCount = 0; colCount <= cellStates.length-1; colCount++) {
           cellStatesTotal[rowCount][colCount] = (Integer.parseInt(cellStates[colCount]));
         }
@@ -71,7 +65,6 @@ public abstract class Simulation {
     List<Integer> numberData = new ArrayList<>();
     try
     {
-//parsing a CSV file into BufferedReader class constructor
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       while ((br.readLine()) != null)   //returns a Boolean value
       {
@@ -88,6 +81,7 @@ public abstract class Simulation {
     return numberData;
   }
 
+  //CHECK see why this method isn't working
 /*  public List<String[]> readAll (InputStream data) {
     try (CSVReader csvReader = new CSVReader(new InputStreamReader(data))) {
       return csvReader.readAll();
@@ -100,7 +94,7 @@ public abstract class Simulation {
 
   void displayGridScene(Grid gridToBeDisplayed) {
     //CHECK depending on how Grid is storing cells
-    //CHECK need to create instance of cellDisplay ?
+    //CHECK need to create instance of cellDisplay for each ?
     for (int rowCount = 0; rowCount < gridToBeDisplayed.getCellGrid().length; rowCount++) {
       for (int colCount = 0; colCount < gridToBeDisplayed.getCellGrid()[0].length; colCount++) {
         System.out.println("displaying");
@@ -108,15 +102,21 @@ public abstract class Simulation {
     }
   }
 
-/*
-  void updateSimulationGrid() { //CHECK should take in boolean checking if should even update
-    this.currentGrid = nextGrid;
-    this.nextGrid = currentGrid.getUpdateGrid(this.simulationName);
-    //Need to update display
-    for (int i = 0; i < currentGrid.getNumberOfCells(); i++) {
-      root.getChildren().remove(currentGrid.getCell(i));
+
+  void updateSimulationGrid(boolean isPaused) { //CHECK should take in boolean checking if should even update
+    if (! isPaused) {
+      this.currentGrid = nextGrid;
+      this.nextGrid = currentGrid.getNextGrid();
+      //need to delete old grid
+      //root.getChildren().
+      displayGridScene(currentGrid);
+      }
+
     }
-    displayGridScene(currentGrid);
-  };*/
+
+    void deleteGrid(Grid gridToDelete ) {
+        root.getChildren().removeAll(); //CHECK need to just remove certain parts?
+    }
+
 
 }
