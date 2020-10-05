@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
  */
 abstract class Neighborhood {
 
-  public static final String MODEL_RESOURCE_PATH = "resources/Model.properties";
+  public static final String MODEL_RESOURCE_PATH = "resources/Model";
 
   private Map<Integer, Integer> neighborPositionToState;
   private ResourceBundle modelResources;
