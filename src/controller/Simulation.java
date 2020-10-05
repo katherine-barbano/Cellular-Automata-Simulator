@@ -2,8 +2,10 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
@@ -77,12 +79,9 @@ public abstract class Simulation {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       while ((line = br.readLine()) != null)   //returns a Boolean value
       {
-        String currentLine = br.readLine();
         numberRows = Integer.parseInt(line.split(",")[0]);
         numberCols = Integer.parseInt(line.split(",")[1]);
         break;
-        //numberCols = br.readLine().split(",").length;
-        //numberRows++;
         }
     }
     catch (IOException e)
@@ -115,6 +114,7 @@ public abstract class Simulation {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
+      System.out.println("updating");
       }
     }
 
@@ -129,6 +129,30 @@ public abstract class Simulation {
 
   public SimulationView getSimulationView() {
     return simulationView;
+  }
+
+  protected void storeNewCellConfig(){
+    try {
+    FileWriter csvWriter = new FileWriter("new.csv");
+    csvWriter.append(Integer.toString(rowNumber));
+    csvWriter.append(",");
+    csvWriter.append(Integer.toString(colNumber));
+    csvWriter.append(",");
+    csvWriter.append("\n");
+
+    for (int i = 0; i < cells.length; i ++) {
+       for (int y = 0; y <cells[0].length; y++) {
+         csvWriter.append(Integer.toString(cells[i][y]));
+         csvWriter.append(",");
+       }
+      csvWriter.append("\n");
+    }
+    csvWriter.flush();
+    csvWriter.close(); }
+    catch(IOException e) {
+      System.out.println("not working");
+    }
+
   }
 
 
