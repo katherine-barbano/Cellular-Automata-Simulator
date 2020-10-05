@@ -102,4 +102,8 @@ abstract class Neighborhood {
   ResourceBundle getModelResources() {
     return modelResources;
   }
+
+  public boolean equals(Neighborhood neighborhood) {
+    return neighborPositionToState.equals(neighborhood.getNeighborPositionToState());
+  }
 }

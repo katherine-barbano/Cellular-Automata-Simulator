@@ -43,9 +43,8 @@ public class Cell {
   }
 
   public boolean equals(Cell otherCell) {
-    if(otherCell.getCurrentState() == currentState) {
-
-    }
-    return false;
+    boolean statesAreEqual = otherCell.getCurrentState() == currentState;
+    boolean neighborhoodsAreEqual = otherCell.getNeighborhood().equals(neighborhood);
+    return statesAreEqual && neighborhoodsAreEqual;
   }
 }
