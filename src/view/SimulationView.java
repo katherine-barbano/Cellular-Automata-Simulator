@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import model.Grid;
+import view.buttons.ControlButtonBar;
+import view.buttons.SimulationButtonBar;
 
 public class SimulationView {
 
@@ -23,7 +25,7 @@ public class SimulationView {
   private SimulationButtonBar mySimulationButtons;
 
   public SimulationView(Grid grid){
-    //myBundle = ResourceBundle.getBundle("/src/resources/Model");
+    myBundle = ResourceBundle.getBundle("/src/resources/Model");
     myGrid=grid;
   }
 
