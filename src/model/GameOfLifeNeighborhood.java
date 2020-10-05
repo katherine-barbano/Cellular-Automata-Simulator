@@ -52,13 +52,28 @@ class GameOfLifeNeighborhood extends Neighborhood {
   private int getNumberOfLivingNeighbors() {
     Map<Integer, Integer> adjacentNeighborsToIntegerState = getNeighborPositionToState();
     int numberLivingNeighbors=0;
-    for(int neighborState:adjacentNeighborsToIntegerState.keySet()) {
-      if(getStateFromInteger(neighborState) == GameOfLifeState.ALIVE) {
+    for(int neighborPosition:adjacentNeighborsToIntegerState.keySet()) {
+      int stateInteger = adjacentNeighborsToIntegerState.get(neighborPosition);
+      if(getStateFromInteger(stateInteger) == GameOfLifeState.ALIVE) {
         numberLivingNeighbors++;
       }
     }
     return numberLivingNeighbors;
   }
+
+  /*private Map<Integer,Integer> getNonDiagonalNeighbors() {
+    Map<Integer, Integer> allNeighbors = getNeighborPositionToState();
+    Map<Integer, Integer> nonDiagonalNeighbors = new HashMap<>();
+    for(int neighborPosition : allNeighbors.keySet()){
+      String constantFromProperties = (String)getModelResources().getObject("StartOfDiagonalNeighborIndices");
+      int startOfDiagonalNeighborIndices= Integer.parseInt(constantFromProperties);
+      if(neighborPosition<startOfDiagonalNeighborIndices) {
+        int neighborState = allNeighbors.get(neighborPosition);
+        nonDiagonalNeighbors.put(neighborPosition,neighborState);
+      }
+    }
+    return nonDiagonalNeighbors;
+  }*/
 
   private GameOfLifeState getStateFromInteger(int currentState) {
     return gameOfLifeStateMap.get(currentState);

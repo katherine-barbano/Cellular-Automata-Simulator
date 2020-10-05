@@ -68,7 +68,8 @@ public class Grid {
   private void updateNeighborhoods() {
     for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
       for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
-        Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(gridRow, gridColumn);
+        int[][] stateIntegerGrid = createStateIntegerGridFromCellGrid();
+        Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(gridRow, gridColumn, stateIntegerGrid);
         Cell cell = cellGrid[gridRow][gridColumn];
         cell.setNeighborhood(cellNeighborhood);
       }
@@ -91,7 +92,7 @@ public class Grid {
   }
 
   private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, int[][] allStatesInCSV) {
-    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(csvRow, csvColumn);
+    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(csvRow, csvColumn, allStatesInCSV);
     Cell cellInPosition = new Cell (cellNeighborhood, allStatesInCSV[csvRow][csvColumn]);
     cellGrid[csvRow][csvColumn] = cellInPosition;
   }
@@ -99,8 +100,7 @@ public class Grid {
   /***
    * Must edit this to create a new type of Neighborhood when adding a new type of simulation.
    */
-  private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn) {
-    int[][] stateIntegerGrid = createStateIntegerGridFromCellGrid();
+  private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, int[][] stateIntegerGrid) {
     switch (simulationType) {
       case GAME_OF_LIFE:
         return new GameOfLifeNeighborhood(centerCellRow, centerCellColumn, stateIntegerGrid);
@@ -131,11 +131,41 @@ public class Grid {
     return stateIntegerGrid;
   }
 
+  void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
+    cellGrid[cellRow][cellColumn] = newCell;
+  }
+
   public Cell[][] getCellGrid() {
     return cellGrid;
   }
 
-  void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
-    cellGrid[cellRow][cellColumn] = newCell;
+  public boolean equals (Grid otherGrid) {
+    return cellsAreEqual(otherGrid) && neighborsAreEqual(otherGrid);
+  }
+
+  public boolean cellsAreEqual(Grid otherGrid) {
+    int[][] otherStateIntegerGrid = otherGrid.createStateIntegerGridFromCellGrid();
+    int[][] thisStateIntegerGrid = createStateIntegerGridFromCellGrid();
+
+    if(otherStateIntegerGrid.length!=thisStateIntegerGrid.length) {
+      return false;
+    }
+
+    if(otherStateIntegerGrid[0].length!=thisStateIntegerGrid[0].length) {
+      return false;
+    }
+
+    for(int row = 0; row< thisStateIntegerGrid.length; row++) {
+      for(int column = 0; column< thisStateIntegerGrid[0].length; column++) {
+        if(otherStateIntegerGrid[row][column] != thisStateIntegerGrid[row][column]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean neighborsAreEqual(Grid otherGrid) {
+    return true;
   }
 }

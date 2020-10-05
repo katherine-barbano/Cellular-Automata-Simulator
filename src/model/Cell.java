@@ -30,11 +30,22 @@ public class Cell {
     return nextCell;
   }
 
-  int getCurrentState() {
+  public int getCurrentState() {
     return currentState;
+  }
+
+  Neighborhood getNeighborhood() {
+    return neighborhood;
   }
 
   void setNeighborhood(Neighborhood neighborhood) {
     this.neighborhood = neighborhood;
+  }
+
+  public boolean equals(Cell otherCell) {
+    if(otherCell.getCurrentState() == currentState) {
+
+    }
+    return false;
   }
 }
