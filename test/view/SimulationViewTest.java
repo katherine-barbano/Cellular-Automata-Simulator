@@ -1,7 +1,5 @@
 package view;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;
