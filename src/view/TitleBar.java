@@ -25,4 +25,5 @@ public class TitleBar extends FlowPane {
       this.titleText.setText(inputTitle);
   }
 
+
 }

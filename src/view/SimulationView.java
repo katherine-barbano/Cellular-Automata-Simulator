@@ -18,19 +18,27 @@ public class SimulationView {
 
   private Grid myGrid;
   private ResourceBundle myBundle;
-  private TitleBar myTitleBar;
   private VBox myRoot;
+
+  private int myHeight;
+  private int myWidth;
+
+  private TitleBar myTitleBar;
   private GridDisplay myGridDisplay;
+  private double myGridHeight;
   private ControlButtonBar myControlButtons;
   private SimulationButtonBar mySimulationButtons;
 
   public SimulationView(Grid grid){
-    myBundle = ResourceBundle.getBundle("/src/resources/Model");
+    //myBundle = ResourceBundle.getBundle("/src/resources/Model");
     myGrid=grid;
   }
 
   public Scene setupScene(String simulationType, int width, int height)
       throws MalformedURLException {
+
+    this.myWidth=width;
+    this.myHeight=height;
 
     createUIElements(simulationType);
 
@@ -47,7 +55,8 @@ public class SimulationView {
     myTitleBar=new TitleBar(myBundle, simulationType);
     myRoot.getChildren().add(myTitleBar);
 
-    myGridDisplay = new GridDisplay(myGrid);
+    myGridHeight=findGridHeight();
+    myGridDisplay = new GridDisplay(myGrid, myGridHeight);
     myRoot.getChildren().add(myGridDisplay);
 
     myControlButtons = new ControlButtonBar();
@@ -60,8 +69,11 @@ public class SimulationView {
 
   public void updateGridDisplay(Grid nextGrid){
     myGrid=nextGrid;
-    myGridDisplay=new GridDisplay(nextGrid);
+    myGridDisplay=new GridDisplay(nextGrid,myGridHeight);
   }
 
+  public double findGridHeight(){
+    return myHeight - myTitleBar.getHeight() - myControlButtons.getHeight() - mySimulationButtons.getHeight();
+  }
 
 }
