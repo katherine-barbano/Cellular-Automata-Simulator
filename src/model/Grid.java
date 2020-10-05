@@ -165,12 +165,4 @@ public class Grid {
   public Cell getCell(int rowNumber, int columnNumber) {
     return cellGrid[rowNumber][columnNumber];
   }
-
-  public int getGridNumberOfRows() {
-    return cellGrid.length;
-  }
-
-  public int getGridNumberOfColumns() {
-    return cellGrid[0].length;
-  }
 }
