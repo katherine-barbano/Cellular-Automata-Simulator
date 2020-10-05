@@ -43,6 +43,9 @@ public class Cell {
   }
 
   public boolean equals(Cell otherCell) {
-    if(otherCell.getCurrentState() == currentState)
+    if(otherCell.getCurrentState() == currentState) {
+
+    }
+    return false;
   }
 }

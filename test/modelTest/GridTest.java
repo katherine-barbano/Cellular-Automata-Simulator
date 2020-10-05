@@ -36,7 +36,7 @@ class GridTest {
 
     Grid currentGrid = new Grid(simulationType, initialStateMatrix);
     Grid nextGrid = currentGrid.getNextGrid();
-    assertEquals()
+    //assertEquals()
   }
 
   void printGrid(Grid grid) {

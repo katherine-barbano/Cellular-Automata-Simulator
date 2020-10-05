@@ -166,6 +166,6 @@ public class Grid {
   }
 
   public boolean neighborsAreEqual(Grid otherGrid) {
-
+    return true;
   }
 }
