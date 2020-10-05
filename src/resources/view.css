@@ -1,0 +1,13 @@
+.h-box{
+ -fx-background-color: azure;
+}
+
+#title-bar{
+  -fx-background-color: azure;
+  -fx-alignment:center;
+  -fx-padding: 10px;
+}
+
+#title-text{
+  -fx-text-alignment: center;
+}
