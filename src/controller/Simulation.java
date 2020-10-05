@@ -24,10 +24,10 @@ public abstract class Simulation {
   public Simulation(SimulationType SimulationNameType, String simulationConfigurationName) {
     simulationName = SimulationNameType;
     simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    rowNumber = getSizeMatrix(simulationFileLocation).get(0);
-    colNumber = getSizeMatrix(simulationFileLocation).get(1);
-    cells = getStatesFromFile();
-    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, getStatesFromFile());
+    rowNumber = findSizeMatrix(simulationFileLocation).get(0);
+    colNumber = findSizeMatrix(simulationFileLocation).get(1);
+    cells = determineStatesFromFile();
+    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
     nextGrid = currentGrid.getNextGrid();
   }
 
@@ -36,7 +36,7 @@ public abstract class Simulation {
     //displayGridScene(currentGrid);
   }*/
 
-  private int [][] getStatesFromFile() {
+  protected int [][] determineStatesFromFile() {
     String nextLine = "";
     String splitBy = ",";
     int[][] cellStatesTotal = new int[rowNumber][colNumber];
@@ -59,7 +59,7 @@ public abstract class Simulation {
   }
 
 
-  private List<Integer> getSizeMatrix(String simulationFileLocation){
+  private List<Integer> findSizeMatrix(String simulationFileLocation){
     int numberRows = 0;
     int numberCols = 0;
     List<Integer> numberData = new ArrayList<>();
@@ -116,6 +116,13 @@ public abstract class Simulation {
 
     void deleteGrid(Grid gridToDelete ) {
         root.getChildren().removeAll(); //CHECK need to just remove certain parts?
+    }
+
+    public List<Integer> getMatrixSize() {
+    List<Integer> sizeValues = new ArrayList<Integer>();
+    sizeValues.add(rowNumber);
+    sizeValues.add(colNumber);
+    return sizeValues;
     }
 
 

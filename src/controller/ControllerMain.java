@@ -28,6 +28,7 @@ public class ControllerMain extends Application {
   private Group root;
   private Simulation currentSimulation;
   //private SimulationView currentSimulationView;
+  private boolean isPaused;
 
   @Override
   public void start(Stage stage){
@@ -51,6 +52,7 @@ public class ControllerMain extends Application {
     stage.setScene(myScene);
     stage.setTitle("Testing");
     stage.show();
+    isPaused = true;
   }
 
   /*
@@ -72,6 +74,7 @@ public class ControllerMain extends Application {
   }
 
   private void updateShapes(double elapsedTime) {
+    currentSimulation.updateSimulationGrid(isPaused);
   }
 
   private void clickButton() {
