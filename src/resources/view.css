@@ -1,0 +1,36 @@
+.button{
+  -fx-background-color: lightBlue;
+}
+
+.vbox{
+  -fx-spacing: 5;
+}
+
+.grid-display{
+  -fx-alignment: center;
+  -fx-hgap: 3;
+  -fx-vgap: 3;
+}
+
+.button-bar{
+  -fx-spacing:5;
+  -fx-alignment: center;
+}
+
+#alive{
+  -fx-fill: black;
+}
+
+#dead{
+  -fx-fill:white;
+}
+
+#title-bar{
+  -fx-background-color: azure;
+  -fx-alignment:center;
+  -fx-padding: 10px;
+}
+
+#title-text{
+  -fx-text-alignment: center;
+}

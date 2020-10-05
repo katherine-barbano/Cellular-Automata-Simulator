@@ -33,9 +33,7 @@ public class Grid {
    * @return true if current grid is stable
    */
   public boolean currentGridIsStable() {
-    //TODO: do this method
-    getNextGrid();
-    return true;
+    return getNextGrid().equals(this);
   }
 
   /***
@@ -140,32 +138,25 @@ public class Grid {
   }
 
   public boolean equals (Grid otherGrid) {
-    return cellsAreEqual(otherGrid) && neighborsAreEqual(otherGrid);
-  }
+    Cell[][] otherGridCellMatrix = otherGrid.getCellGrid();
+    Cell[][] thisGridCellMatrix = getCellGrid();
 
-  public boolean cellsAreEqual(Grid otherGrid) {
-    int[][] otherStateIntegerGrid = otherGrid.createStateIntegerGridFromCellGrid();
-    int[][] thisStateIntegerGrid = createStateIntegerGridFromCellGrid();
-
-    if(otherStateIntegerGrid.length!=thisStateIntegerGrid.length) {
+    if(otherGridCellMatrix.length!=thisGridCellMatrix.length) {
+      return false;
+    }
+    if(otherGridCellMatrix[0].length!=thisGridCellMatrix[0].length) {
       return false;
     }
 
-    if(otherStateIntegerGrid[0].length!=thisStateIntegerGrid[0].length) {
-      return false;
-    }
-
-    for(int row = 0; row< thisStateIntegerGrid.length; row++) {
-      for(int column = 0; column< thisStateIntegerGrid[0].length; column++) {
-        if(otherStateIntegerGrid[row][column] != thisStateIntegerGrid[row][column]) {
+    for(int row = 0; row< thisGridCellMatrix.length; row++) {
+      for(int column = 0; column< thisGridCellMatrix[0].length; column++) {
+        Cell otherCell = otherGridCellMatrix[row][column];
+        Cell thisCell = thisGridCellMatrix[row][column];
+        if(!otherCell.equals(thisCell)) {
           return false;
         }
       }
     }
-    return true;
-  }
-
-  public boolean neighborsAreEqual(Grid otherGrid) {
     return true;
   }
 }
