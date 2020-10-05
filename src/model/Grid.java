@@ -131,11 +131,41 @@ public class Grid {
     return stateIntegerGrid;
   }
 
+  void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
+    cellGrid[cellRow][cellColumn] = newCell;
+  }
+
   public Cell[][] getCellGrid() {
     return cellGrid;
   }
 
-  void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
-    cellGrid[cellRow][cellColumn] = newCell;
+  public boolean equals (Grid otherGrid) {
+    return cellsAreEqual(otherGrid) && neighborsAreEqual(otherGrid);
+  }
+
+  public boolean cellsAreEqual(Grid otherGrid) {
+    int[][] otherStateIntegerGrid = otherGrid.createStateIntegerGridFromCellGrid();
+    int[][] thisStateIntegerGrid = createStateIntegerGridFromCellGrid();
+
+    if(otherStateIntegerGrid.length!=thisStateIntegerGrid.length) {
+      return false;
+    }
+
+    if(otherStateIntegerGrid[0].length!=thisStateIntegerGrid[0].length) {
+      return false;
+    }
+
+    for(int row = 0; row< thisStateIntegerGrid.length; row++) {
+      for(int column = 0; column< thisStateIntegerGrid[0].length; column++) {
+        if(otherStateIntegerGrid[row][column] != thisStateIntegerGrid[row][column]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean neighborsAreEqual(Grid otherGrid) {
+
   }
 }

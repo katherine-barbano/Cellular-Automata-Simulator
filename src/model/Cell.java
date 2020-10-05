@@ -34,7 +34,15 @@ public class Cell {
     return currentState;
   }
 
+  Neighborhood getNeighborhood() {
+    return neighborhood;
+  }
+
   void setNeighborhood(Neighborhood neighborhood) {
     this.neighborhood = neighborhood;
+  }
+
+  public boolean equals(Cell otherCell) {
+    if(otherCell.getCurrentState() == currentState)
   }
 }

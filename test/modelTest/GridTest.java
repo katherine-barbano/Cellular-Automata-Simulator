@@ -8,7 +8,17 @@ import org.junit.jupiter.api.Test;
 class GridTest {
 
   @Test
-  void getNextGridGameOfLife() {
+  void verifyCellsInInitialGridInstantiation() {
+
+  }
+
+  @Test
+  void verifyNeighborsInInitialGridInstantiation() {
+
+  }
+
+  @Test
+  void getNextGridGameOfLifeStillLifeBlock() {
     SimulationType simulationType = SimulationType.GAME_OF_LIFE;
     int[][] initialStateMatrix = new int[][] {
         {0, 0, 0, 0},
@@ -17,11 +27,16 @@ class GridTest {
         {0, 0, 0, 0}
     };
 
+    int[][] oneStepLaterStateMatrix = new int[][] {
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0}
+    };
+
     Grid currentGrid = new Grid(simulationType, initialStateMatrix);
-    System.out.println();
     Grid nextGrid = currentGrid.getNextGrid();
-    printGrid(currentGrid);
-    printGrid(nextGrid);
+    assertEquals()
   }
 
   void printGrid(Grid grid) {
