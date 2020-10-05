@@ -185,17 +185,4 @@ class GameOfLifeTest {
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
   }
-
-  void printGrid(Grid grid) {
-    Cell[][] initialCellGrid = grid.getCellGrid();
-    for(int row = 0; row< initialCellGrid.length; row++) {
-      for(int col = 0; col< initialCellGrid[0].length; col++) {
-        Cell cell = initialCellGrid[row][col];
-        int state = cell.getCurrentState();
-        System.out.print(state+" ");
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
 }

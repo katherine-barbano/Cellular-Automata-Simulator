@@ -8,18 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
 
-  private void verifyStatesInGrid(int[][] states) {
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
-    Cell[][] initialCellGrid = grid.getCellGrid();
-    for (int row = 0; row < initialCellGrid.length; row++) {
-      for (int col = 0; col < initialCellGrid[0].length; col++) {
-        Cell cell = initialCellGrid[row][col];
-        int state = cell.getCurrentState();
-        assertEquals(state,states[row][col]);
-      }
-    }
-  }
-
+  //test used to verify no exception is thrown
   @Test
   void verifyCellsInSquareInitialGridInstantiation() {
     int[][] states = new int[][]{
@@ -29,9 +18,10 @@ class GridTest {
         {0, 0, 0, 0}
     };
 
-    verifyStatesInGrid(states);
+    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
   }
 
+  //test used to verify no exception is thrown
   @Test
   void verifyCellsInNonSquareInitialGridInstantiation() {
     int[][] states = new int[][] {
@@ -41,7 +31,7 @@ class GridTest {
         {0, 0, 0, 0, 0}
     };
 
-    verifyStatesInGrid(states);
+    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
   }
 
   @Test

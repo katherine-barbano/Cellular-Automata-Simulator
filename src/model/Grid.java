@@ -133,7 +133,7 @@ public class Grid {
     cellGrid[cellRow][cellColumn] = newCell;
   }
 
-  public Cell[][] getCellGrid() {
+  Cell[][] getCellGrid() {
     return cellGrid;
   }
 
