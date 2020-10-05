@@ -133,7 +133,7 @@ public class Grid {
     cellGrid[cellRow][cellColumn] = newCell;
   }
 
-  public Cell[][] getCellGrid() {
+  Cell[][] getCellGrid() {
     return cellGrid;
   }
 
@@ -152,7 +152,9 @@ public class Grid {
       for(int column = 0; column< thisGridCellMatrix[0].length; column++) {
         Cell otherCell = otherGridCellMatrix[row][column];
         Cell thisCell = thisGridCellMatrix[row][column];
-        if(!otherCell.equals(thisCell)) {
+        boolean onlyOneCellEmpty = (otherCell==null && thisCell!=null) || (otherCell!=null && thisCell==null);
+        boolean bothCellsEmpty = otherCell==null && thisCell==null;
+        if(onlyOneCellEmpty || (!bothCellsEmpty && !otherCell.equals(thisCell))) {
           return false;
         }
       }

@@ -20,7 +20,7 @@ public class GridDisplay extends GridPane {
   private void addAllCells(Cell[][] cellArray){
     for(int row=0; row<cellArray.length; row++){
       for(int col=0; col<cellArray[row].length;col++){
-        super.add(new CellDisplay(cellArray[row][col].getCurrentState()),row,col);
+        super.add(new CellDisplay(cellArray[row][col].getCurrentState()),col,row);
       }
     }
   }

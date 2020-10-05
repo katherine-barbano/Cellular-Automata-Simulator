@@ -106,13 +106,7 @@ public abstract class Simulation {
   }*/
 
   void displayGridScene(Grid gridToBeDisplayed) {
-    //CHECK depending on how Grid is storing cells
-    //CHECK need to create instance of cellDisplay for each ?
-    for (int rowCount = 0; rowCount < gridToBeDisplayed.getCellGrid().length; rowCount++) {
-      for (int colCount = 0; colCount < gridToBeDisplayed.getCellGrid()[0].length; colCount++) {
-        System.out.println("displaying");
-      }
-    }
+
   }
 
 
