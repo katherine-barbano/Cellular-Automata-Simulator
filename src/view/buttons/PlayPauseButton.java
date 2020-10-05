@@ -11,11 +11,11 @@ public class PlayPauseButton extends Button {
     super();
     String buttonText = resources.getString(PLAY_PAUSE_BUTTON_PROPERTIES);
     this.setText(buttonText);
-    this.setOnAction(event -> playPause());
+    //this.setOnAction(event -> playPause());
   }
 
   private void playPause(){
-
+    System.out.println("should pause/play");
   }
 
 }

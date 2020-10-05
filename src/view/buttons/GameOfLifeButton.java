@@ -15,7 +15,7 @@ public class GameOfLifeButton extends Button {
   }
 
   private void chooseSimulation(){
-
+    //System.out.println("change sim");
   }
 
 }

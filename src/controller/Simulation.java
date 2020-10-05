@@ -38,10 +38,10 @@ public abstract class Simulation {
     simulationView = new SimulationView(currentGrid);
   }
 
-/*//CHECK can remove this method if initializing in the constructor itself
+//CHECK can remove this method if initializing in the constructor itself
   void initializeSimulation(Group root) { //CHECK might not need to pass root in
-    //displayGridScene(currentGrid);
-  }*/
+
+  }
 
   protected int [][] determineStatesFromFile() {
     String nextLine = "";
@@ -49,14 +49,10 @@ public abstract class Simulation {
     int[][] cellStatesTotal = new int[rowNumber][colNumber];
     try {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
-      String firstLine = br.readLine();
       int rowCount = 0;
       while ((nextLine = br.readLine()) != null) { //returns a Boolean value
         String[] cellStates = nextLine.split(splitBy);
         for (int colCount = 0; colCount <= colNumber-1; colCount++) {
-          int rc = rowCount;
-          int cc = colCount;
-          int tobe = Integer.parseInt(cellStates[colCount]);
           cellStatesTotal[rowCount][colCount] = (Integer.parseInt(cellStates[colCount]));
         }
         rowCount++;
@@ -104,20 +100,13 @@ public abstract class Simulation {
     }
   }*/
 
-  void displayGridScene(Grid gridToBeDisplayed) {
-
-  }
-
-
-  void updateSimulationGrid(boolean isPaused) { //CHECK should take in boolean checking if should even update
-    if (! isPaused) {
+  void updateSimulationGrid(boolean shouldRun) {
+    if (shouldRun) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
-      System.out.println("updating");
       }
     }
-
 
     public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<Integer>();
@@ -131,29 +120,31 @@ public abstract class Simulation {
     return simulationView;
   }
 
-  protected void storeNewCellConfig(){
-    try {
-    FileWriter csvWriter = new FileWriter("new.csv");
-    csvWriter.append(Integer.toString(rowNumber));
-    csvWriter.append(",");
-    csvWriter.append(Integer.toString(colNumber));
-    csvWriter.append(",");
-    csvWriter.append("\n");
+  public void storeNewCellConfig(boolean shouldStore) {
+    if (shouldStore) {
+      System.out.println("storing");
+      try {
+        FileWriter csvWriter = new FileWriter("data/gameOfLifeSample/new.csv");
+        System.out.println("got new file");
+        csvWriter.append(Integer.toString(rowNumber));
+        csvWriter.append(",");
+        csvWriter.append(Integer.toString(colNumber));
+        csvWriter.append(",");
+        csvWriter.append("\n");
 
-    for (int i = 0; i < cells.length; i ++) {
-       for (int y = 0; y <cells[0].length; y++) {
-         csvWriter.append(Integer.toString(cells[i][y]));
-         csvWriter.append(",");
-       }
-      csvWriter.append("\n");
+        for (int i = 0; i < cells.length; i++) {
+          for (int y = 0; y < cells[0].length; y++) {
+            csvWriter.append(Integer.toString(cells[i][y]));
+            csvWriter.append(",");
+          }
+          csvWriter.append("\n");
+        }
+        csvWriter.flush();
+        csvWriter.close();
+      } catch (IOException e) {
+        System.out.println("not working");
+      }
     }
-    csvWriter.flush();
-    csvWriter.close(); }
-    catch(IOException e) {
-      System.out.println("not working");
-    }
-
   }
-
 
 }
