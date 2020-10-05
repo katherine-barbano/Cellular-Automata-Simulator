@@ -6,7 +6,7 @@ import model.SimulationType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameOfLifeGridTest {
+class GameOfLifeTest {
 
   private void checkStillLifeGridsEqual(SimulationType simulationType, int[][] initialMatrix) {
     Grid currentGrid = new Grid(simulationType, initialMatrix);
