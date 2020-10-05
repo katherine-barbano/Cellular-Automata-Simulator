@@ -77,12 +77,9 @@ public abstract class Simulation {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       while ((line = br.readLine()) != null)   //returns a Boolean value
       {
-        String currentLine = br.readLine();
         numberRows = Integer.parseInt(line.split(",")[0]);
         numberCols = Integer.parseInt(line.split(",")[1]);
         break;
-        //numberCols = br.readLine().split(",").length;
-        //numberRows++;
         }
     }
     catch (IOException e)
