@@ -74,26 +74,13 @@ public class ControllerMain extends Application {
   }
 
 
-  void step (double elapsedTime) {
+  void step (double elapsedTime) { //CHECK should be taking in elapsedTime now?
     updateShapes(elapsedTime);
   }
 
   private void updateShapes(double elapsedTime) {
     currentSimulation.updateSimulationGrid(isPaused);
   }
-
-  private void clickButton() {
-  Button playAgainButton = new Button(" Click to play again");
-    playAgainButton.setLayoutX(FRAME_SIZE / 2.0); // NOTE position button
-    playAgainButton.setLayoutY(FRAME_SIZE / 2.0);
-    HBox hbox = new HBox(playAgainButton);
-    root.getChildren().add(hbox);
-    playAgainButton.setOnAction(actionEvent -> test());
-}
-
-void test() {
-  System.out.println("working");
-}
 
  void unpause() {
     isPaused = false;

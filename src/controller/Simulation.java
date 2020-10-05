@@ -2,8 +2,10 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
@@ -126,6 +128,30 @@ public abstract class Simulation {
 
   public SimulationView getSimulationView() {
     return simulationView;
+  }
+
+  protected void storeNewCellConfig(){
+    try {
+    FileWriter csvWriter = new FileWriter("new.csv");
+    csvWriter.append(Integer.toString(rowNumber));
+    csvWriter.append(",");
+    csvWriter.append(Integer.toString(colNumber));
+    csvWriter.append(",");
+    csvWriter.append("\n");
+
+    for (int i = 0; i < cells.length; i ++) {
+       for (int y = 0; y <cells[0].length; y++) {
+         csvWriter.append(Integer.toString(cells[i][y]));
+         csvWriter.append(",");
+       }
+      csvWriter.append("\n");
+    }
+    csvWriter.flush();
+    csvWriter.close(); }
+    catch(IOException e) {
+      System.out.println("not working");
+    }
+
   }
 
 
