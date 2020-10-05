@@ -12,6 +12,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
+import model.Grid;
+import model.SimulationType;
 
 public class ControllerMain extends Application {
 
@@ -21,6 +23,7 @@ public class ControllerMain extends Application {
   public static final Paint BACKGROUND = Color.AZURE;
   private Scene myScene;
   private Group root;
+  private Simulation currentSimulation;
 
   @Override
   public void start(Stage stage){
@@ -49,7 +52,9 @@ public class ControllerMain extends Application {
   Scene setupScene(int width, int height, Paint background) {
     root = new Group();
     myScene = new Scene(root, width, height, background);
-    clickButton();
+    currentSimulation = new GameOfLifeSimulation();
+    currentSimulation.displayGridScene(new Grid(SimulationType.GAME_OF_LIFE, 3,4));
+    //clickButton();
     //myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     return myScene;
   }
@@ -60,7 +65,6 @@ public class ControllerMain extends Application {
   }
 
   private void updateShapes(double elapsedTime) {
-
   }
 
   private void clickButton() {
