@@ -49,7 +49,6 @@ abstract class Neighborhood {
         neighborPositionToState.put(neighborPosition,neighborState);
       }
     }
-    System.out.println(neighborPositionToState);
   }
 
   /***
