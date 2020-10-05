@@ -8,6 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameOfLifeGridTest {
 
+  private void checkStillLifeGridsEqual(SimulationType simulationType, int[][] initialMatrix) {
+    Grid currentGrid = new Grid(simulationType, initialMatrix);
+    Grid nextGrid = currentGrid.getNextGrid();
+    assertTrue(currentGrid.equals(nextGrid));
+  }
+
+  private void checkTwoPeriodOscillator(SimulationType simulationType, int[][] gridInitialState, int[][] gridOneStepState) {
+    checkExpectedAndActualNextStateGridsEqual(simulationType, gridInitialState, gridOneStepState);
+    checkExpectedAndActualNextStateGridsEqual(simulationType, gridOneStepState, gridInitialState);
+  }
+
+  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, int[][] initialState, int[][] expectedNextState) {
+    Grid currentGrid = new Grid(simulationType, initialState);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+    Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
+    assertTrue(expectedNextGrid.equals(actualNextGrid));
+  }
+
   @Test
   void getNextGridGameOfLifeStillLifeBlock() {
     int[][] block = new int[][] {
@@ -73,12 +91,6 @@ class GameOfLifeGridTest {
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, tub);
   }
 
-  private void checkStillLifeGridsEqual(SimulationType simulationType, int[][] initialMatrix) {
-    Grid currentGrid = new Grid(simulationType, initialMatrix);
-    Grid nextGrid = currentGrid.getNextGrid();
-    assertTrue(currentGrid.equals(nextGrid));
-  }
-
   @Test
   void getNextGridGameOfLifeOscillatorBlinker() {
     int[][] blinkerInitialState = new int[][] {
@@ -121,18 +133,6 @@ class GameOfLifeGridTest {
     };
 
     checkTwoPeriodOscillator(SimulationType.GAME_OF_LIFE, beaconInitialState, beaconOneStepState);
-  }
-
-  private void checkTwoPeriodOscillator(SimulationType simulationType, int[][] gridInitialState, int[][] gridOneStepState) {
-    checkExpectedAndActualNextStateGridsEqual(simulationType, gridInitialState, gridOneStepState);
-    checkExpectedAndActualNextStateGridsEqual(simulationType, gridOneStepState, gridInitialState);
-  }
-
-  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, int[][] initialState, int[][] expectedNextState) {
-    Grid currentGrid = new Grid(simulationType, initialState);
-    Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
-    assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
 
   @Test

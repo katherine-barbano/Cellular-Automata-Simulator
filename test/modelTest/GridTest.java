@@ -8,6 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
 
+  private void verifyStatesInGrid(int[][] states) {
+    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
+    Cell[][] initialCellGrid = grid.getCellGrid();
+    for (int row = 0; row < initialCellGrid.length; row++) {
+      for (int col = 0; col < initialCellGrid[0].length; col++) {
+        Cell cell = initialCellGrid[row][col];
+        int state = cell.getCurrentState();
+        assertEquals(state,states[row][col]);
+      }
+    }
+  }
+
   @Test
   void verifyCellsInSquareInitialGridInstantiation() {
     int[][] states = new int[][]{
@@ -30,18 +42,6 @@ class GridTest {
     };
 
     verifyStatesInGrid(states);
-  }
-
-  private void verifyStatesInGrid(int[][] states) {
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
-    Cell[][] initialCellGrid = grid.getCellGrid();
-    for (int row = 0; row < initialCellGrid.length; row++) {
-      for (int col = 0; col < initialCellGrid[0].length; col++) {
-        Cell cell = initialCellGrid[row][col];
-        int state = cell.getCurrentState();
-        assertEquals(state,states[row][col]);
-      }
-    }
   }
 
   @Test
@@ -146,5 +146,31 @@ class GridTest {
     Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
     Grid gridTwo = new Grid(SimulationType.GAME_OF_LIFE, statesTwo);
     assertFalse(gridOne.equals(gridTwo));
+  }
+
+  @Test
+  void stableGrid() {
+    int[][] block = new int[][] {
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0}
+    };
+
+    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, block);
+    assertTrue(grid.currentGridIsStable());
+  }
+
+  @Test
+  void unstableGrid() {
+    int[][] unstableMatrix = new int[][] {
+        {0, 0, 0, 0},
+        {0, 0, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0}
+    };
+
+    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, unstableMatrix);
+    assertFalse(grid.currentGridIsStable());
   }
 }
