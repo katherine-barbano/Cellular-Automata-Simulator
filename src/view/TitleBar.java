@@ -8,23 +8,33 @@ import javafx.scene.text.Text;
 public class TitleBar extends FlowPane {
 
   public static final int TITLE_BAR_HEIGHT=50;
+  public static final String TITLE_STRING_IN_RESOURCES = "Title";
   private ResourceBundle myResources;
   private Text titleText;
 
   public TitleBar(ResourceBundle resources, String simulationType){
     super();
-    this.setId("title-bar");
 
-    this.titleText= new Text(simulationType);
-    this.titleText.setId("title-text");
-    this.getChildren().add(titleText);
+    this.setId("title-bar");
+    this.myResources=resources;
+
+    addText(simulationType);
+
     this.setAlignment(Pos.CENTER);
-    this.setPrefHeight(50);
+    this.setPrefHeight(TITLE_BAR_HEIGHT);
 
   }
 
-  public void updateTitleText(String inputTitle){
-      this.titleText.setText(inputTitle);
+  private void addText(String simulationType){
+    String title = myResources.getString(simulationType+TITLE_STRING_IN_RESOURCES);
+    this.titleText= new Text(title);
+    this.titleText.setId("title-text");
+    this.getChildren().add(titleText);
+  }
+
+  public void updateTitleText(String simulationType){
+    String title = myResources.getString(simulationType+TITLE_STRING_IN_RESOURCES);
+    this.titleText.setText(title);
   }
 
 
