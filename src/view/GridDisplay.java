@@ -16,6 +16,7 @@ public class GridDisplay extends GridPane {
     this.setAlignment(Pos.CENTER);
     this.setPrefHeight(height);
     this.getStyleClass().add("grid-display");
+    this.setId("gridDisplay");
 
     this.myCellSize=height/grid.getGridNumberOfRows();
     addAllCells();
@@ -25,13 +26,13 @@ public class GridDisplay extends GridPane {
     for(int row=0; row<myGrid.getGridNumberOfRows(); row++){
       for(int col=0; col<myGrid.getGridNumberOfColumns();col++){
         CellDisplay newCell = new CellDisplay(myGrid.getCell(row,col).getCurrentState(),myCellSize);
-        super.add(newCell,col,row);
+        this.add(newCell,col,row);
       }
     }
   }
 
   public GridDisplay updateCellsInGridDisplay(Grid nextGrid){
-    super.getChildren().removeAll();
+    this.getChildren().clear();
     myGrid=nextGrid;
 
     addAllCells();
