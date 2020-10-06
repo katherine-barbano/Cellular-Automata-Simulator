@@ -14,8 +14,6 @@ import view.SimulationView;
 public abstract class Simulation {
 
   private Grid currentGrid;
-
-
   private Grid nextGrid;
   private final SimulationType simulationName;
   private final String simulationFileLocation;
@@ -101,6 +99,10 @@ public abstract class Simulation {
     }
   }*/
 
+  public Grid getCurrentGrid() {
+    return currentGrid;
+  }
+
   void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       this.currentGrid = nextGrid;
@@ -110,7 +112,7 @@ public abstract class Simulation {
     }
 
     public List<Integer> getMatrixSize() {
-    List<Integer> sizeValues = new ArrayList<Integer>();
+    List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);
     sizeValues.add(colNumber);
     return sizeValues;
@@ -121,7 +123,7 @@ public abstract class Simulation {
     return simulationView;
   }
 
-  public void storeNewCellConfig(boolean shouldStore) {
+  public void storeNewCellConfig(boolean shouldStore, Grid gridToStore) {
     if (shouldStore) {
       System.out.println("storing");
       try {
@@ -133,9 +135,9 @@ public abstract class Simulation {
         csvWriter.append(",");
         csvWriter.append("\n");
 
-        for (int i = 0; i < cells.length; i++) {
-          for (int y = 0; y < cells[0].length; y++) {
-            csvWriter.append(Integer.toString(cells[i][y]));
+        for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
+          for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+            csvWriter.append(Integer.toString(gridToStore.getCell(row,col).getCurrentState()));
             csvWriter.append(",");
           }
           csvWriter.append("\n");
