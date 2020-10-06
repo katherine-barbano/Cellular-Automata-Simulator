@@ -9,6 +9,9 @@ import model.Grid;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
 
+/**
+ * SimulationView sets up and updates the User Interface.
+ */
 public class SimulationView {
 
   private static final String RESOURCES = "resources/";
@@ -28,11 +31,22 @@ public class SimulationView {
   private ControlButtonBar myControlButtons;
   private SimulationButtonBar mySimulationButtons;
 
+  /**
+   * Create Simulatoin View from initial Grid
+   * @param grid Initial grid in scene
+   */
   public SimulationView(Grid grid){
     myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE);
     myGrid=grid;
   }
 
+  /**
+   * Setup the Scene for the UI
+   * @param simulationType Type of simulation
+   * @param width Width of window
+   * @param height Height of Window
+   * @return Scene to be displayed in window
+   */
   public Scene setupScene(String simulationType, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
@@ -64,15 +78,27 @@ public class SimulationView {
     myRoot.getChildren().add(mySimulationButtons);
   }
 
+  /**
+   * Update the GridDisplay to show the next grid in the simulation
+   * @param nextGrid The next grid in the simulation
+   */
   public void updateGridDisplay(Grid nextGrid){
     myGrid=nextGrid;
     myGridDisplay=myGridDisplay.updateCellsInGridDisplay(nextGrid);
   }
 
+  /**
+   * Get the height in pixels for the GridDisplay in the scene
+   * @return Height of the GridDisplay
+   */
   public double findGridHeight(){
     return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight();
   }
 
+  /**
+   * Accessor for buttons in Control Button Bar
+   * @return the ControlButtonBar
+   */
   public ControlButtonBar getMyControlButtons() {
     return myControlButtons;
   }
