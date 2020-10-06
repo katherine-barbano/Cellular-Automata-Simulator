@@ -18,9 +18,92 @@ public class SimulationTest {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     List<Integer> toCompare = new ArrayList<>();
     //CHECK these change depending on starting state of game of life simulation
-    toCompare.add(1);
-    toCompare.add(2);
+    toCompare.add(3);
+    toCompare.add(4);
     assertEquals(toCompare, mySimulation.getMatrixSize());
   }
 
+
+  @Test
+  void testInitialGOLBlinker() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setSimulationFileLocation("testInitialGOLBlinker.csv");
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+    //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
+    mySimulation.updateSimulation(true);
+    assertEquals(0, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+    assertEquals(0, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+  }
+
+  @Test
+  void testInitialGOLBlock() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setSimulationFileLocation("testInitialGOLBlock.csv");
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+
+    //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
+    mySimulation.updateSimulation(true);
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+  }
+
+  @Test
+  void testInitialGOLTub() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setSimulationFileLocation("testInitialGOLTub.csv");
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(3,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+
+    //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
+    mySimulation.updateSimulation(true);
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(3,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+  }
+
+  @Test
+  void testInitialGOLBoat() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setSimulationFileLocation("testInitialGOLBoat.csv");
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(3,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+
+    //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
+    mySimulation.updateSimulation(true);
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(1,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(3,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+  }
+
+  @Test
+  void testInitialGOLBlinker2() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setSimulationFileLocation("testInitialGOLBlinker2.csv");
+    assertEquals(0, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+    assertEquals(0, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+
+ //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
+    mySimulation.updateSimulation(true);
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,1).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,2).getCurrentState());
+    assertEquals(1, mySimulation.getCurrentGrid().getCell(2,3).getCurrentState());
+    
+  }
 }
