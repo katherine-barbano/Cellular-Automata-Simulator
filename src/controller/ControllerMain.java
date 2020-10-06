@@ -44,7 +44,7 @@ public class ControllerMain extends Application {
     setupScene(FRAME_SIZE, FRAME_SIZE);
     stage.setScene(myScene);
     stage.show();
-    isPaused = false;
+    isPaused = true;
   }
 
   /*

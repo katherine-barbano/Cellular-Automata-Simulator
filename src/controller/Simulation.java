@@ -16,12 +16,13 @@ public abstract class Simulation {
   private Grid currentGrid;
   private Grid nextGrid;
   private final SimulationType simulationName;
-  private final String simulationFileLocation;
+  private String simulationFileLocation;
   private SimulationView simulationView;
   private Group root;
-  private final int rowNumber;
-  private final int colNumber;
+  private int rowNumber;
+  private int colNumber;
   private int[][] cells;
+  private final String STORING_FILE_NAME = "data/outputGrids/";
 
 
 
@@ -37,9 +38,17 @@ public abstract class Simulation {
   }
 
 //CHECK can remove this method if initializing in the constructor itself
-  void initializeSimulation(Group root) { //CHECK might not need to pass root in
-
+  public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
+    simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
+    rowNumber = findSizeMatrix(simulationFileLocation).get(0);
+    colNumber = findSizeMatrix(simulationFileLocation).get(1);
+    cells = determineStatesFromFile();
+    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
+    nextGrid = currentGrid.getNextGrid();
+    simulationView = new SimulationView(currentGrid);
   }
+
+
 
   protected int [][] determineStatesFromFile() {
     String nextLine = "";
@@ -103,12 +112,17 @@ public abstract class Simulation {
     return currentGrid;
   }
 
-  void updateSimulationGrid(boolean shouldRun) {
+  public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
       }
+    }
+
+    public void updateSimulation(boolean shouldRun) {
+    this.currentGrid = nextGrid;
+    this.nextGrid = currentGrid.getNextGrid();
     }
 
     public List<Integer> getMatrixSize() {
@@ -125,10 +139,8 @@ public abstract class Simulation {
 
   public void storeNewCellConfig(boolean shouldStore, Grid gridToStore) {
     if (shouldStore) {
-      System.out.println("storing");
       try {
-        FileWriter csvWriter = new FileWriter("data/gameOfLifeSample/new.csv");
-        System.out.println("got new file");
+        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"new.csv");
         csvWriter.append(Integer.toString(rowNumber));
         csvWriter.append(",");
         csvWriter.append(Integer.toString(colNumber));
@@ -144,7 +156,7 @@ public abstract class Simulation {
         }
         csvWriter.flush();
         csvWriter.close();
-      } catch (IOException e) {
+      } catch (IOException e) {//CHECK update catch to match what prof Duvall said today in class
         System.out.println("not working");
       }
     }
