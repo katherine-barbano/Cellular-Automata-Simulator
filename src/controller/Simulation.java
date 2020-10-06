@@ -50,6 +50,7 @@ public abstract class Simulation {
     try {
       BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
       int rowCount = 0;
+      String firstLine = br.readLine();
       while ((nextLine = br.readLine()) != null) { //returns a Boolean value
         String[] cellStates = nextLine.split(splitBy);
         for (int colCount = 0; colCount <= colNumber-1; colCount++) {
