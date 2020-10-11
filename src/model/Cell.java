@@ -1,16 +1,18 @@
 package model;
 
+import controller.State;
+
 public class Cell {
 
   private Neighborhood neighborhood;
-  private int currentState;
+  private State currentState;
 
   /***
    * Constructor used for creating first initial set of cells from CSV file.
    * @param neighborhood Neighborhood object corresponding to cell
-   * @param state int corresponding to state in csv file
+   * @param state State corresponding to state in csv file
    */
-  public Cell(Neighborhood neighborhood, int state) {
+  public Cell(Neighborhood neighborhood, State state) {
     this.neighborhood = neighborhood;
     this.currentState = state;
   }
@@ -18,19 +20,19 @@ public class Cell {
   /***
    * Constructor used for creating all Cells after the initial set of Cells.
    * Must call setNeighborhood after all Cells are created in the new Grid.
-   * @param state int corresponding to state in csv file
+   * @param state State corresponding to state in csv file
    */
-  public Cell(int state) {
+  public Cell(State state) {
     this.currentState = state;
   }
 
   Cell getNextCell() {
-    int nextState = neighborhood.getNextState(currentState);
+    State nextState = neighborhood.getNextState(currentState);
     Cell nextCell = new Cell(nextState);
     return nextCell;
   }
 
-  public int getCurrentState() {
+  public State getCurrentState() {
     return currentState;
   }
 

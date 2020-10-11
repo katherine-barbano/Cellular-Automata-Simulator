@@ -38,7 +38,7 @@ public abstract class Simulation {
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();
     //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
-    currentGrid = new Grid(SimulationNameType, readCellStatesFile());
+    //currentGrid = new Grid(SimulationNameType, readCellStatesFile());
     //currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
@@ -180,7 +180,7 @@ public abstract class Simulation {
 
         for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
           for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-            csvWriter.append(Integer.toString(gridToStore.getCell(row,col).getCurrentState()));
+            csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
             csvWriter.append(",");
           }
           csvWriter.append("\n");

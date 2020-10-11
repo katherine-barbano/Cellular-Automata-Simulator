@@ -1,5 +1,6 @@
 package model;
 
+import controller.State;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,24 +12,16 @@ abstract class Neighborhood {
 
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
 
-  private Map<Integer, Integer> neighborPositionToState;
+  private Map<Integer, State> neighborPositionToState;
   private ResourceBundle modelResources;
 
-  Neighborhood(int centerCellRow, int centerCellColumn, int[][] stateIntegerGrid) {
+  Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
 
-    createCSVValueToStateMap();
-    createNeighborMap(centerCellRow, centerCellColumn, stateIntegerGrid);
+    createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  abstract int getNextState(int currentState);
-
-  /***
-   * Chose to make this abstract because some types of simulations might not have a regular mapping
-   * of 0:first state, 1: second state, etc. correspondence. Can add letters, additional states, etc.
-   * to the CSV file.
-   */
-  abstract void createCSVValueToStateMap();
+  abstract State getNextState(State currentState);
 
   /***
    * Creates a map with keys as neighbor position relative to the center cell, and values
@@ -39,13 +32,13 @@ abstract class Neighborhood {
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
-  void createNeighborMap(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+  void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     int maxNumberOfNeighbors = Integer.parseInt((String)modelResources.getObject("MaxNumberOfNeighbors"));
     neighborPositionToState = new HashMap<>();
 
     for(int neighborPosition = 0; neighborPosition<maxNumberOfNeighbors; neighborPosition++) {
-      int neighborState = getNeighborStateFromAdjacentPosition(neighborPosition, centerCellRow, centerCellColumn, allStatesInCSV);
-      if (neighborState != -1) {
+      State neighborState = getNeighborStateFromAdjacentPosition(neighborPosition, centerCellRow, centerCellColumn, allStatesInCSV);
+      if (neighborState != null) {
         neighborPositionToState.put(neighborPosition,neighborState);
       }
     }
@@ -55,9 +48,9 @@ abstract class Neighborhood {
    * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
    * for allStatesInCSV (i.e. center cell is on the outer edge of allStatesInCSV).
    */
-  private int getNeighborStateFromAdjacentPosition(int neighborPosition, int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+  private State getNeighborStateFromAdjacentPosition(int neighborPosition, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     try {
-      int neighborState = -1;
+      State neighborState = null;
       switch (neighborPosition) {
         case 0:
           neighborState = allStatesInCSV[centerCellRow-1][centerCellColumn];
@@ -90,11 +83,12 @@ abstract class Neighborhood {
       return neighborState;
     }
     catch(IndexOutOfBoundsException e) {
-      return -1;
+      //TODO: throw custom runtime exception here
+      return null;
     }
   }
 
-  Map<Integer, Integer> getNeighborPositionToState() {
+  Map<Integer, State> getNeighborPositionToState() {
     return neighborPositionToState;
   }
 

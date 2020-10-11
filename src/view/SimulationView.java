@@ -1,13 +1,15 @@
 package view;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Grid;
+import model.SimulationType;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
+import view.buttons.FileButtonBar;
 
 /**
  * SimulationView sets up and updates the User Interface.
@@ -29,6 +31,7 @@ public class SimulationView {
   private GridDisplay myGridDisplay;
   private double myGridHeight;
   private ControlButtonBar myControlButtons;
+  private FileButtonBar myFileButtons;
   private SimulationButtonBar mySimulationButtons;
 
   /**
@@ -47,7 +50,7 @@ public class SimulationView {
    * @param height Height of Window
    * @return Scene to be displayed in window
    */
-  public Scene setupScene(String simulationType, int width, int height) {
+  public Scene setupScene(SimulationType simulationType, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
 
@@ -56,18 +59,20 @@ public class SimulationView {
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
+    scene.setOnMouseClicked(mouseEvent -> handleMouseEvent(mouseEvent));
     return scene;
   }
 
-  private void createUIElements(String simulationType){
+  private void createUIElements(SimulationType simulationType){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
+    myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
-    myGridHeight=findGridHeight();
+    myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
   }
 
@@ -75,6 +80,7 @@ public class SimulationView {
     myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
+    myRoot.getChildren().add(myFileButtons);
     myRoot.getChildren().add(mySimulationButtons);
   }
 
@@ -92,7 +98,8 @@ public class SimulationView {
    * @return Height of the GridDisplay
    */
   public double findGridHeight(){
-    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight();
+    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - myFileButtons
+        .getPrefHeight();
   }
 
   /**
@@ -101,6 +108,17 @@ public class SimulationView {
    */
   public ControlButtonBar getMyControlButtons() {
     return myControlButtons;
+  }
+
+  /**
+   * Accessor for buttons in File Button Bar
+   * @return the FileButtonBar
+   */
+  public FileButtonBar getMyFileButtons() { return myFileButtons; }
+
+
+  private void handleMouseEvent(MouseEvent event) {
+
   }
 
 }

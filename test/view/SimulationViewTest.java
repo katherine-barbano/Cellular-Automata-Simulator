@@ -3,6 +3,7 @@ package view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.GameOfLifeSimulation;
+import controller.Simulation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -26,7 +27,7 @@ class SimulationViewTest extends DukeApplicationTest {
   public void start(Stage stage) throws Exception {
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, TEST_GRID);
     myView = new SimulationView(grid);
-    myScene = myView.setupScene("GameOfLife",400,400);
+    myScene = myView.setupScene(SimulationType.GAME_OF_LIFE,400,400);
     stage.setScene(myScene);
     stage.setTitle("Game of Life");
     stage.show();
