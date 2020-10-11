@@ -25,9 +25,11 @@ public class ControllerMain extends Application {
   private Group root;
   private Simulation currentSimulation;
   private boolean isPaused;
+  private Stage currentStage;
 
   @Override
   public void start(Stage stage) {
+    currentStage = stage;
     setUpStage(stage);
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY_LONG), e -> step());
     Timeline animation = new Timeline();
@@ -83,12 +85,36 @@ public class ControllerMain extends Application {
   }
 
   void selectNewFile() {
-    JFileChooser j = new JFileChooser();
-    j.showSaveDialog(null);
-    File file = j.getSelectedFile();
-    System.out.println(file.getName());
-    currentSimulation.setSimulationFileLocation(file.getName());
-    currentSimulation.getSimulationView().setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
+    try {
+      isPaused = true;
+      JFileChooser j = new JFileChooser();
+      j.showSaveDialog(null);
+      File file = j.getSelectedFile();
+      System.out.println(file.getName());
+      //setUpStage(currentStage);
+      currentSimulation.setSimulationFileLocation(file.getName());
+      SimulationView currSimView = currentSimulation.getSimulationView();
+      myScene = currSimView.setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+      currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
+      currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
+      //currSimView.getMyControlButtons().getMySave().setOnAction(event ->
+      //    currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+      currSimView.getMyControlButtons().getMySave().setOnAction(event ->
+          selectNewFile());
+
+      currentStage.setScene(myScene);
+      currentStage.show();
+      //currentSimulation.readCellStatesFile();
+      //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
+      //setupScene(SCREEN_WIDTH,SCREEN_HEIGHT);
+      //currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+      System.out.println("should change now");
+      //setUpStage(currentStage);
+      //currentStage.setScene(myScene);
+      //currentStage.show();
+    } catch(NullPointerException n) {
+      System.out.println("file not found");
+    }
     //System.out.println(currentSimulation.getSimulationView());
   }
 

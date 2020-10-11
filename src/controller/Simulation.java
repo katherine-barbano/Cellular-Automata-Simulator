@@ -44,6 +44,8 @@ public abstract class Simulation {
     simulationView = new SimulationView(currentGrid);
   }
 
+  abstract public String readInPropertiesFile();
+
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
     simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
@@ -52,6 +54,7 @@ public abstract class Simulation {
     //cells = determineStatesFromFile();
     //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
     //currentGrid = new Grid(simulationName, readCellStatesFile());
+    currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
     //simulationView.setupScene("gameOfLife", )

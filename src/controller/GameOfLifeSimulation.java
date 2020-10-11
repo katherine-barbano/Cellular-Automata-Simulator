@@ -26,4 +26,11 @@ public class GameOfLifeSimulation extends Simulation {
     }
     return cellStates;
   }
+
+  @Override
+  public String readInPropertiesFile() {
+
+
+    return "";
+  }
 }
