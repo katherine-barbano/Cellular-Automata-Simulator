@@ -2,8 +2,11 @@ package view;
 
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Grid;
+import model.SimulationType;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
 import view.buttons.FileButtonBar;
@@ -47,7 +50,7 @@ public class SimulationView {
    * @param height Height of Window
    * @return Scene to be displayed in window
    */
-  public Scene setupScene(String simulationType, int width, int height) {
+  public Scene setupScene(SimulationType simulationType, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
 
@@ -56,10 +59,11 @@ public class SimulationView {
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
+    scene.setOnMouseClicked(mouseEvent -> handleMouseEvent(mouseEvent));
     return scene;
   }
 
-  private void createUIElements(String simulationType){
+  private void createUIElements(SimulationType simulationType){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
@@ -111,5 +115,10 @@ public class SimulationView {
    * @return the FileButtonBar
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
+
+
+  private void handleMouseEvent(MouseEvent event) {
+
+  }
 
 }

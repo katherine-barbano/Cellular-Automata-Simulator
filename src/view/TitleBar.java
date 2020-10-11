@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
+import model.SimulationType;
 
 public class TitleBar extends FlowPane {
 
@@ -12,7 +13,7 @@ public class TitleBar extends FlowPane {
   private ResourceBundle myResources;
   private Text titleText;
 
-  public TitleBar(ResourceBundle resources, String simulationType){
+  public TitleBar(ResourceBundle resources, SimulationType simulationType){
     super();
 
     this.setId("title-bar");
