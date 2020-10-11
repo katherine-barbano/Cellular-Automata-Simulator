@@ -57,6 +57,8 @@ public class ControllerMain extends Application {
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyControlButtons().getMySave().setOnAction(event ->
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+    //currSimView.getMyControlButtons().getMySave().setOnAction(event ->
+    //        selectNewFile());
     //currentSimulation.readCellStatesFile();
     //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
     return myScene;
