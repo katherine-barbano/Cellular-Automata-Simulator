@@ -1,11 +1,15 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
@@ -21,7 +25,7 @@ public abstract class Simulation {
   private Group root;
   private int rowNumber;
   private int colNumber;
-  private int[][] cells;
+ // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
 
 
@@ -29,10 +33,11 @@ public abstract class Simulation {
   public Simulation(SimulationType SimulationNameType, String simulationConfigurationName) {
     simulationName = SimulationNameType;
     simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    rowNumber = findSizeMatrix(simulationFileLocation).get(0);
-    colNumber = findSizeMatrix(simulationFileLocation).get(1);
-    cells = determineStatesFromFile();
-    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
+    //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
+    //colNumber = findSizeMatrix(simulationFileLocation).get(1);
+    //cells = determineStatesFromFile();
+    //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
+    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, readCellStatesFile());
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -40,14 +45,15 @@ public abstract class Simulation {
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
     simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
-    rowNumber = findSizeMatrix(simulationFileLocation).get(0);
-    colNumber = findSizeMatrix(simulationFileLocation).get(1);
-    cells = determineStatesFromFile();
-    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
+    //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
+    //colNumber = findSizeMatrix(simulationFileLocation).get(1);
+    //cells = determineStatesFromFile();
+    //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
+    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, readCellStatesFile());
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
-
+/*
 
 
   protected int [][] determineStatesFromFile() {
@@ -95,10 +101,27 @@ public abstract class Simulation {
     numberData.add(numberRows);
     numberData.add(numberCols);
     return numberData;
+  }*/
+
+  public int[][] readCellStatesFile() {
+    int[][] cellStates = new int[0][];
+    try {
+      List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
+      rowNumber = Integer.parseInt(readFiles.get(0)[0]);
+      colNumber = Integer.parseInt(readFiles.get(0)[1]);
+      cellStates = new int[rowNumber][colNumber];
+      for (int curr = 1; curr < readFiles.size(); curr++) {
+        for (int col = 0; col < colNumber; col++) {
+          cellStates[curr - 1][col] = Integer.parseInt(readFiles.get(curr)[col]);
+        }
+      }
+    } catch (FileNotFoundException f){
+      System.out.println("not working");
+    }
+    return cellStates;
   }
 
-  //CHECK see why this method isn't working
-/*  public List<String[]> readAll (InputStream data) {
+  public List<String[]> readAll (InputStream data) {
     try (CSVReader csvReader = new CSVReader(new InputStreamReader(data))) {
       return csvReader.readAll();
     }
@@ -106,7 +129,12 @@ public abstract class Simulation {
       e.printStackTrace();
       return Collections.emptyList();
     }
-  }*/
+  }
+
+  public State[][] createStatesFromInteger() {
+
+    return null;
+  }
 
   public Grid getCurrentGrid() {
     return currentGrid;

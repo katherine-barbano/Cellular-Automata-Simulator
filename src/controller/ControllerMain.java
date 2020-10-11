@@ -2,12 +2,9 @@ package controller;
 
 import java.net.MalformedURLException;
 import javafx.application.Application;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
@@ -59,6 +56,7 @@ public class ControllerMain extends Application {
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyControlButtons().getMySave().setOnAction(event ->
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+    currentSimulation.readCellStatesFile();
     return myScene;
   }
 
