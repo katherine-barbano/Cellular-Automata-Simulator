@@ -105,7 +105,7 @@ public class Grid {
 
     try {
       //code referenced from
-      Class<?> cl = Class.forName("rpn.model." + token + "Neighborhood");
+      Class<?> cl = Class.forName("model.neighborhoods." + simulationType.toString() + "Neighborhood");
       Neighborhood instance = cl.newInstance();
       return instance;
     }
