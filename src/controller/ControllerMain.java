@@ -57,7 +57,7 @@ public class ControllerMain extends Application {
     myScene = currSimView.setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyControlButtons().getMySave().setOnAction(event ->
+    currSimView.getMyFileButtons().getMySave().setOnAction(event ->
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
     return myScene;
   }

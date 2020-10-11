@@ -7,20 +7,27 @@ import javafx.scene.layout.HBox;
 public class ControlButtonBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT=50;
+  public static final String PLAY_PAUSE_BUTTON_PROPERTIES = "PlayPauseButton";
+  public static final String STEP_BUTTON_PROPERTIES = "StepButton";
+
   private Button myPlayPause;
   private Button myStep;
-  private Button mySave;
+  private Button mySpeedUp;
+  private Button mySlowDown;
 
   public ControlButtonBar(ResourceBundle bundle){
 
-    this.myPlayPause = new PlayPauseButton(bundle);
+    this.myPlayPause = new ButtonFromResources(bundle,PLAY_PAUSE_BUTTON_PROPERTIES);
     this.getChildren().add(myPlayPause);
 
-    this.myStep = new StepButton(bundle);
+    this.myStep = new ButtonFromResources(bundle, STEP_BUTTON_PROPERTIES);
     this.getChildren().add(myStep);
 
-    this.mySave = new SaveButton(bundle);
-    this.getChildren().add(mySave);
+    this.mySpeedUp = new SpeedUpButton(bundle);
+    this.getChildren().add(mySpeedUp);
+
+    this.mySlowDown = new SlowDownButton(bundle);
+    this.getChildren().add(mySlowDown);
 
     this.setPrefHeight(BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
@@ -34,7 +41,11 @@ public class ControlButtonBar extends HBox {
     return myPlayPause;
   }
 
-  public Button getMySave() {
-    return mySave;
+  public Button getSpeedUpButton() {
+    return mySpeedUp;
+  }
+
+  public Button getSlowDownButton() {
+    return mySlowDown;
   }
 }

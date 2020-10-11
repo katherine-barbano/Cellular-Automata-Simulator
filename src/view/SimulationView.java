@@ -1,14 +1,12 @@
 package view;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import model.Grid;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
-import view.buttons.SpeedButtonBar;
+import view.buttons.FileButtonBar;
 
 /**
  * SimulationView sets up and updates the User Interface.
@@ -30,7 +28,7 @@ public class SimulationView {
   private GridDisplay myGridDisplay;
   private double myGridHeight;
   private ControlButtonBar myControlButtons;
-  private SpeedButtonBar mySpeedButtons;
+  private FileButtonBar myFileButtons;
   private SimulationButtonBar mySimulationButtons;
 
   /**
@@ -67,10 +65,10 @@ public class SimulationView {
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
-    mySpeedButtons = new SpeedButtonBar(myBundle);
+    myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
-    myGridHeight=findGridHeight();
+    myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
   }
 
@@ -78,7 +76,7 @@ public class SimulationView {
     myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
-    myRoot.getChildren().add(mySpeedButtons);
+    myRoot.getChildren().add(myFileButtons);
     myRoot.getChildren().add(mySimulationButtons);
   }
 
@@ -96,7 +94,8 @@ public class SimulationView {
    * @return Height of the GridDisplay
    */
   public double findGridHeight(){
-    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - mySpeedButtons.getPrefHeight();
+    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - myFileButtons
+        .getPrefHeight();
   }
 
   /**
@@ -111,6 +110,6 @@ public class SimulationView {
    * Accessor for buttons in Speed Button Bar
    * @return the SpeedButtonBar
    */
-  public SpeedButtonBar getMySpeedButtons() { return mySpeedButtons; }
+  public FileButtonBar getMyFileButtons() { return myFileButtons; }
 
 }
