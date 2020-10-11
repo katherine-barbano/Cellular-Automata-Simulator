@@ -1,5 +1,6 @@
 package model;
 
+import controller.State;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,7 @@ class GameOfLifeNeighborhood extends Neighborhood {
   }
 
   @Override
-  int getNextState(int currentStateInteger) {
-    GameOfLifeState currentState = getStateFromInteger(currentStateInteger);
+  int getNextState(State currentState) {
     GameOfLifeState nextState = GameOfLifeState.DEAD;
     int numberOfLivingNeighbors = getNumberOfLivingNeighbors();
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);
@@ -61,10 +61,6 @@ class GameOfLifeNeighborhood extends Neighborhood {
     return numberLivingNeighbors;
   }
 
-  private GameOfLifeState getStateFromInteger(int currentState) {
-    return gameOfLifeStateMap.get(currentState);
-  }
-
   /***
    * Returns -1 if current state does not exist in gameOfLifeStateMap.
    * Assumes there are no duplicate values between different keys in gameOfLifeStateMap.
@@ -86,14 +82,5 @@ class GameOfLifeNeighborhood extends Neighborhood {
       numberOfNeighborsIntList.add(Integer.parseInt(numberOfNeighbors));
     }
     return numberOfNeighborsIntList;
-  }
-
-  /***
-   * State corresponding to 0 in CSV file should be at the top, state corresponding to 1 in CSV
-   * file should be next, etc.
-   */
-  private enum GameOfLifeState {
-    DEAD,
-    ALIVE
   }
 }
