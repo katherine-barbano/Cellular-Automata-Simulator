@@ -107,8 +107,8 @@ public class SimulationView {
   }
 
   /**
-   * Accessor for buttons in Speed Button Bar
-   * @return the SpeedButtonBar
+   * Accessor for buttons in File Button Bar
+   * @return the FileButtonBar
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
 
