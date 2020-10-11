@@ -1,5 +1,6 @@
 package model;
 
+import controller.GameOfLifeState;
 import controller.State;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,27 +14,12 @@ class GameOfLifeNeighborhood extends Neighborhood {
 
   private Map<Integer, GameOfLifeState> gameOfLifeStateMap;
 
-  GameOfLifeNeighborhood(int centerCellRow, int centerCellColumn, int[][] allStatesInCSV) {
+  GameOfLifeNeighborhood(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     super(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
-  /***
-   * Assumes the number of possible state values given in CSV file are equal to the corresponding
-   * number of constants in GameOfLifeState enum.
-   */
   @Override
-  void createCSVValueToStateMap() {
-    gameOfLifeStateMap = new HashMap<>();
-    GameOfLifeState possibleStatesInGameOfLife[] = GameOfLifeState.values();
-    int stateNumber = 0;
-    for(GameOfLifeState state : possibleStatesInGameOfLife) {
-      gameOfLifeStateMap.put(stateNumber,state);
-      stateNumber++;
-    }
-  }
-
-  @Override
-  int getNextState(State currentState) {
+  State getNextState(State currentState) {
     GameOfLifeState nextState = GameOfLifeState.DEAD;
     int numberOfLivingNeighbors = getNumberOfLivingNeighbors();
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);
@@ -46,32 +32,19 @@ class GameOfLifeNeighborhood extends Neighborhood {
       nextState = GameOfLifeState.ALIVE;
     }
 
-    return getIntegerFromState(nextState);
+    return nextState;
   }
 
   private int getNumberOfLivingNeighbors() {
-    Map<Integer, Integer> adjacentNeighborsToIntegerState = getNeighborPositionToState();
+    Map<Integer, State> adjacentNeighborsToState = getNeighborPositionToState();
     int numberLivingNeighbors=0;
-    for(int neighborPosition:adjacentNeighborsToIntegerState.keySet()) {
-      int stateInteger = adjacentNeighborsToIntegerState.get(neighborPosition);
-      if(getStateFromInteger(stateInteger) == GameOfLifeState.ALIVE) {
+    for(int neighborPosition:adjacentNeighborsToState.keySet()) {
+      State state = adjacentNeighborsToState.get(neighborPosition);
+      if(state == GameOfLifeState.ALIVE) {
         numberLivingNeighbors++;
       }
     }
     return numberLivingNeighbors;
-  }
-
-  /***
-   * Returns -1 if current state does not exist in gameOfLifeStateMap.
-   * Assumes there are no duplicate values between different keys in gameOfLifeStateMap.
-   */
-  private int getIntegerFromState(GameOfLifeState currentState) {
-    for(int stateInteger:gameOfLifeStateMap.keySet()) {
-      if(gameOfLifeStateMap.get(stateInteger) == currentState) {
-        return stateInteger;
-      }
-    }
-    return -1;
   }
 
   private List<Integer> getNumberOfNeighborsFromResources(String numberListName) {

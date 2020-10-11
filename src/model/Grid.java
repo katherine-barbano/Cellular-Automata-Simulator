@@ -84,7 +84,7 @@ public class Grid {
   private void initializeCurrentCellGrid(State[][] allStatesInCSV) {
     for (int csvRow = 0; csvRow < allStatesInCSV.length; csvRow++) {
       for (int csvColumn = 0; csvColumn < allStatesInCSV[csvRow].length; csvColumn++) {
-        if (allStatesInCSV[csvRow][csvColumn] != -1) {
+        if (allStatesInCSV[csvRow][csvColumn] != null) {
           putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
         }
       }
@@ -111,7 +111,7 @@ public class Grid {
   }
 
   State[][] createStateIntegerGridFromCellGrid() {
-    State[][] stateIntegerGrid = new int[cellGrid.length][cellGrid[0].length];
+    State[][] stateIntegerGrid = new State[cellGrid.length][cellGrid[0].length];
     for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
       for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
         stateIntegerGrid = cellAddedToStateIntegerGrid(cellGridRow,cellGridColumn,stateIntegerGrid);
@@ -122,7 +122,7 @@ public class Grid {
 
   private State[][] cellAddedToStateIntegerGrid(int cellGridRow, int cellGridColumn, State[][] stateIntegerGrid) {
     if (cellGrid[cellGridRow][cellGridColumn] == null) {
-      stateIntegerGrid[cellGridRow][cellGridColumn] = -1;
+      stateIntegerGrid[cellGridRow][cellGridColumn] = null;
     }
     else {
       Cell cellAtIndex = cellGrid[cellGridRow][cellGridColumn];
