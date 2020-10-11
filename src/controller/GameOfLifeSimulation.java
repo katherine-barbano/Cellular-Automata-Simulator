@@ -12,7 +12,7 @@ public class GameOfLifeSimulation extends Simulation {
   @Override
   public State[][] createStatesFromInteger(int[][] integerCellStates) {
     HashMap<Integer, State> statesForInteger = new HashMap<>();
-    State possibleStatesInGameOfLife[] = GameOfLifeStates.values();
+    State possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
     for(State state : possibleStatesInGameOfLife) {
       statesForInteger.put(stateNumber,state);
