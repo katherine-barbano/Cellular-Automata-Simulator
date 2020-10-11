@@ -7,8 +7,6 @@ import javafx.scene.layout.HBox;
 public class ControlButtonBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT=50;
-  public static final String PLAY_PAUSE_BUTTON_PROPERTIES = "PlayPauseButton";
-  public static final String STEP_BUTTON_PROPERTIES = "StepButton";
 
   private Button myPlayPause;
   private Button myStep;

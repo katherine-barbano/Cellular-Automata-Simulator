@@ -7,7 +7,6 @@ import javafx.scene.layout.HBox;
 public class FileButtonBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT=50;
-  public static final String NEW_FILE_BUTTON_PROPERTIES = "NewFileButton";
 
   private Button mySave;
   private Button myNewFile;
@@ -17,7 +16,7 @@ public class FileButtonBar extends HBox {
     this.mySave = new SaveButton(bundle);
     this.getChildren().add(mySave);
 
-    this.myNewFile = new ButtonFromResources(bundle, NEW_FILE_BUTTON_PROPERTIES);
+    this.myNewFile = new NewFileButton(bundle);
     this.getChildren().add(myNewFile);
 
     this.setPrefHeight(BUTTON_BAR_HEIGHT);
