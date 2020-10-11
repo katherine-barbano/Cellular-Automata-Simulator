@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import model.Grid;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
+import view.buttons.SpeedButtonBar;
 
 /**
  * SimulationView sets up and updates the User Interface.
@@ -29,6 +30,7 @@ public class SimulationView {
   private GridDisplay myGridDisplay;
   private double myGridHeight;
   private ControlButtonBar myControlButtons;
+  private SpeedButtonBar mySpeedButtons;
   private SimulationButtonBar mySimulationButtons;
 
   /**
@@ -65,6 +67,7 @@ public class SimulationView {
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
+    mySpeedButtons = new SpeedButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
     myGridHeight=findGridHeight();
@@ -75,6 +78,7 @@ public class SimulationView {
     myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
+    myRoot.getChildren().add(mySpeedButtons);
     myRoot.getChildren().add(mySimulationButtons);
   }
 
@@ -92,7 +96,7 @@ public class SimulationView {
    * @return Height of the GridDisplay
    */
   public double findGridHeight(){
-    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight();
+    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - mySpeedButtons.getPrefHeight();
   }
 
   /**
@@ -102,5 +106,11 @@ public class SimulationView {
   public ControlButtonBar getMyControlButtons() {
     return myControlButtons;
   }
+
+  /**
+   * Accessor for buttons in Speed Button Bar
+   * @return the SpeedButtonBar
+   */
+  public SpeedButtonBar getMySpeedButtons() { return mySpeedButtons; }
 
 }
