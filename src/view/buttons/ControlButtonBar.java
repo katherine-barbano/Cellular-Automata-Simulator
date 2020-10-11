@@ -22,6 +22,9 @@ public class ControlButtonBar extends HBox {
     mySave = new SaveButton(bundle);
     this.getChildren().add(mySave);
 
+    mySave = new SpeedUpButton(bundle);
+    this.getChildren().add(mySave);
+
     this.setPrefHeight(BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
   }
