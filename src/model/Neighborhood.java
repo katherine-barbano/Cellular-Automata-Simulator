@@ -7,19 +7,19 @@ import java.util.ResourceBundle;
 /***
  * States represented as the integers from csv file.
  */
-abstract class Neighborhood {
+public abstract class Neighborhood {
 
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
 
   private Map<int[], State> neighborPositionToState;
   private ResourceBundle modelResources;
 
-  Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
+  public Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     neighborPositionToState = createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  abstract State getNextState(State currentState);
+  public abstract State getNextState(State currentState);
 
   /***
    * Creates a map with keys as neighbor position relative to the center cell, and values
@@ -30,24 +30,24 @@ abstract class Neighborhood {
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
-  abstract Map<int[], State>createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
+  public abstract Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
 
   /***
    * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
    * for allStatesInCSV (i.e. center cell is on the outer edge of allStatesInCSV).
    */
-  State getNeighborStateFromAdjacentPosition(int[] neighborPosition, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) throws IndexOutOfBoundsException{
+  public State getNeighborStateFromAdjacentPosition(int[] neighborPosition, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) throws IndexOutOfBoundsException{
     int neighborRow = centerCellRow + neighborPosition[0];
     int neighborColumn = centerCellColumn + neighborPosition[1];
 
     return allStatesInCSV[neighborRow][neighborColumn];
   }
 
-  Map<int[], State> getNeighborPositionToState() {
+  public Map<int[], State> getNeighborPositionToState() {
     return neighborPositionToState;
   }
 
-  ResourceBundle getModelResources() {
+  public ResourceBundle getModelResources() {
     return modelResources;
   }
 

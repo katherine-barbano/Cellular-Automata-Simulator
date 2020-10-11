@@ -1,4 +1,4 @@
-package model;
+package model.neighborhoods;
 
 import controller.GameOfLifeState;
 import controller.State;
@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import model.Neighborhood;
 
-class GameOfLifeNeighborhood extends Neighborhood {
+public class GameOfLifeNeighborhood extends Neighborhood {
 
   public static final String NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForLiveCellToSurvive";
   public static final String NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForDeadCellToSurvive";
@@ -18,7 +19,7 @@ class GameOfLifeNeighborhood extends Neighborhood {
   }
 
   @Override
-  Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+  public Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     Map<int[], State> neighborPositionToState = new HashMap<>();
 
     for(int row = centerCellRow-1; row<centerCellColumn + 1; row++) {
@@ -45,7 +46,7 @@ class GameOfLifeNeighborhood extends Neighborhood {
   }
 
   @Override
-  State getNextState(State currentState) {
+  public State getNextState(State currentState) {
     GameOfLifeState nextState = GameOfLifeState.DEAD;
     int numberOfLivingNeighbors = getNumberOfLivingNeighbors();
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);

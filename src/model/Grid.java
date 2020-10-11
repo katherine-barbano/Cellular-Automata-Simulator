@@ -1,6 +1,7 @@
 package model;
 
 import controller.State;
+import model.neighborhoods.GameOfLifeNeighborhood;
 
 public class Grid {
 
@@ -100,7 +101,20 @@ public class Grid {
   /***
    * Must edit this to create a new type of Neighborhood when adding a new type of simulation.
    */
-  private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateIntegerGrid) {
+  private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
+
+    try {
+      //code referenced from
+      Class<?> cl = Class.forName("rpn.model." + token + "Neighborhood");
+      Neighborhood instance = cl.newInstance();
+      return instance;
+    }
+    catch(Exception e) {
+      throw new ModelException("Simulation type specified did not match class simulation name.");
+    }
+
+
+
     switch (simulationType) {
       case GAME_OF_LIFE:
         return new GameOfLifeNeighborhood(centerCellRow, centerCellColumn, stateIntegerGrid);
