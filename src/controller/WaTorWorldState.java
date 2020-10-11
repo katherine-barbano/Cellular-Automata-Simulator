@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Random;
 
 public enum WaTorWorldState implements State{
-  FISH(0, List.of(new int[0])),
-  SHARK(0, List.of(new int[0])),
+  FISH(0),
+  SHARK(0),
   EMPTY();
 
   private int age;
-  private int[] nextPosition;
+  private int[] nextPosition = new int[] {0,0};
 
-  WaTorWorldState(int defaultAge, List<int[]> openPositions){
+  WaTorWorldState(int defaultAge){
     this.age = defaultAge;
-    this.nextPosition = determineOpenPosition(openPositions);
+    //this.nextPosition = determineOpenPosition(openPositions);
   }
 
   WaTorWorldState(){
@@ -31,14 +31,14 @@ public enum WaTorWorldState implements State{
     return this.nextPosition;
   }
 
-  public void setNextPosition(List<int[]> newOpenPositions) {
+/*  public void setNextPosition(List<int[]> newOpenPositions) {
     this.nextPosition = determineOpenPosition((newOpenPositions));
-  }
+  }*/
 
-  public int[] determineOpenPosition(List<int[]> openPositions) {
+  public void determineOpenPosition(List<int[]> openPositions) {
     Random random = new Random();
     int randomIndex = random.nextInt(openPositions.size()-1);
-    return openPositions.get(randomIndex);
+    this.nextPosition = openPositions.get(randomIndex);
   }
 
 }
