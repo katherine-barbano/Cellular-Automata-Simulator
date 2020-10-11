@@ -2,12 +2,18 @@ package model;
 
 import controller.State;
 import java.lang.reflect.Constructor;
+import java.util.ResourceBundle;
 import model.neighborhoods.GameOfLifeNeighborhood;
 
 public class Grid {
 
+  public static final String CLASS_NAME_PREFIX_PROPERTIES = "classNamePrefix";
+  public static final String CLASS_NAME_SUFFIX_PROPERTIES = "classNameSuffix";
+  public static final String SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES = "simulationTypeExceptionMessage";
+
   private Cell[][] cellGrid;
   private SimulationType simulationType;
+  private ResourceBundle modelResources;
 
   /***
    * Constructor used for creating first initial grid from CSV file.
@@ -15,6 +21,7 @@ public class Grid {
    * @param allStatesInCSV State[][] of all the states in the csv file
    */
   public Grid(SimulationType simulationType, State[][] allStatesInCSV) {
+    modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
     initializeCurrentCellGrid(allStatesInCSV);
@@ -28,6 +35,7 @@ public class Grid {
    * @param columnLength number of columns in grid
    */
   public Grid(SimulationType simulationType, int rowLength, int columnLength) {
+    modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[rowLength][columnLength];
   }
@@ -105,7 +113,10 @@ public class Grid {
   private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     try {
       //code referenced from https://java2blog.com/invoke-constructor-using-reflection-java/ provided on course website
-      Class<?> cl = Class.forName("model.neighborhoods." + simulationType.toString() + "Neighborhood");
+      String classNamePrefix = modelResources.getString(CLASS_NAME_PREFIX_PROPERTIES);
+      String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
+
+      Class<?> cl = Class.forName(classNamePrefix + simulationType.toString() + classNameSuffix);
       Class<?>[] type = { int.class,int.class,State[][].class };
       Constructor<?> cons = cl.getConstructor(type);
       Object[] obj = { centerCellRow,centerCellColumn,stateGrid};
@@ -113,7 +124,8 @@ public class Grid {
       return (Neighborhood)newInstance;
     }
     catch(Exception e) {
-      throw new ModelException("Simulation type specified did not match class simulation name.");
+      String simulationTypeExceptionMessage = modelResources.getString(SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES);
+      throw new ModelException(simulationTypeExceptionMessage);
     }
   }
 
@@ -182,5 +194,4 @@ public class Grid {
   public int getGridNumberOfColumns() {
     return cellGrid[0].length;
   }
-
 }
