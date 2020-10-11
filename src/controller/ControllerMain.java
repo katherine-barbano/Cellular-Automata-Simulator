@@ -1,6 +1,5 @@
 package controller;
 
-import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
@@ -25,7 +24,7 @@ public class ControllerMain extends Application {
   private boolean isPaused;
 
   @Override
-  public void start(Stage stage) throws MalformedURLException {
+  public void start(Stage stage) {
     setUpStage(stage);
     KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY_LONG), e -> step());
     Timeline animation = new Timeline();

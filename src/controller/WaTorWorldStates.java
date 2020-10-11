@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Random;
 
-public enum WaTorWorld implements State{
+public enum WaTorWorldStates implements State{
   FISH(0, List.of(1,3,4,6)),
   SHARK(0, List.of(1,3,4,6)),
   EMPTY();
@@ -11,12 +11,12 @@ public enum WaTorWorld implements State{
   private int age;
   private int nextPosition;
 
-  WaTorWorld(int defaultAge, List<Integer> openPositions){
+  WaTorWorldStates(int defaultAge, List<Integer> openPositions){
     this.age = defaultAge;
     this.nextPosition = getOpenPosition(openPositions);
   }
 
-  WaTorWorld(){
+  WaTorWorldStates(){
   }
 
   public int getAge(){

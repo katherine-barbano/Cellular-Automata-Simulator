@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
@@ -37,7 +38,7 @@ public abstract class Simulation {
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();
     //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
-    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, readCellStatesFile());
+    currentGrid = new Grid(SimulationNameType, readCellStatesFile());
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -49,13 +50,14 @@ public abstract class Simulation {
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();
     //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
-    currentGrid = new Grid(SimulationType.GAME_OF_LIFE, readCellStatesFile());
+    currentGrid = new Grid(simulationName, readCellStatesFile());
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
+
+  abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
+
 /*
-
-
   protected int [][] determineStatesFromFile() {
     String nextLine = "";
     String splitBy = ",";
@@ -129,11 +131,6 @@ public abstract class Simulation {
       e.printStackTrace();
       return Collections.emptyList();
     }
-  }
-
-  public State[][] createStatesFromInteger() {
-
-    return null;
   }
 
   public Grid getCurrentGrid() {
