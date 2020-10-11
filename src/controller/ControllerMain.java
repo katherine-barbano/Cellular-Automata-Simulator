@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
 import javax.swing.JFileChooser;
+import model.SimulationType;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
@@ -52,10 +53,10 @@ public class ControllerMain extends Application {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    myScene = currSimView.setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+    myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyControlButtons().getMySave().setOnAction(event ->
+    currSimView.getMyFileButtons().getMySave().setOnAction(event ->
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
     //currSimView.getMyControlButtons().getMySave().setOnAction(event ->
     //        selectNewFile());
@@ -87,7 +88,7 @@ public class ControllerMain extends Application {
     File file = j.getSelectedFile();
     System.out.println(file.getName());
     currentSimulation.setSimulationFileLocation(file.getName());
-    currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+    currentSimulation.getSimulationView().setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     //System.out.println(currentSimulation.getSimulationView());
   }
 
