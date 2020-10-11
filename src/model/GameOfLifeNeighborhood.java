@@ -11,11 +11,37 @@ class GameOfLifeNeighborhood extends Neighborhood {
 
   public static final String NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForLiveCellToSurvive";
   public static final String NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForDeadCellToSurvive";
-
-  private Map<Integer, GameOfLifeState> gameOfLifeStateMap;
+  public static final String COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES = "neighborPositionCoordinateSize";
 
   GameOfLifeNeighborhood(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     super(centerCellRow, centerCellColumn, allStatesInCSV);
+  }
+
+  @Override
+  Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    Map<int[], State> neighborPositionToState = new HashMap<>();
+
+    for(int row = centerCellRow-1; row<centerCellColumn + 1; row++) {
+      for(int column = centerCellColumn-1; column<centerCellColumn+1; centerCellColumn++) {
+        int coordinateDimensions = (int) getModelResources().getObject(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES);
+        int[] relativePositionOfNeighbor = new int[coordinateDimensions];
+        relativePositionOfNeighbor[0] = row;
+        relativePositionOfNeighbor[1] = column;
+        State neighborState = getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
+        putNeighborPositionIntoMap(relativePositionOfNeighbor,neighborState,neighborPositionToState);
+      }
+    }
+
+    return neighborPositionToState;
+  }
+
+  private void putNeighborPositionIntoMap(int[] relativePositionOfNeighbor, State neighborState, Map<int[], State> neighborPositionToState) {
+    try {
+      neighborPositionToState.put(relativePositionOfNeighbor,neighborState);
+    }
+    catch(IndexOutOfBoundsException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
+    }
   }
 
   @Override
@@ -36,9 +62,9 @@ class GameOfLifeNeighborhood extends Neighborhood {
   }
 
   private int getNumberOfLivingNeighbors() {
-    Map<Integer, State> adjacentNeighborsToState = getNeighborPositionToState();
+    Map<int[], State> adjacentNeighborsToState = getNeighborPositionToState();
     int numberLivingNeighbors=0;
-    for(int neighborPosition:adjacentNeighborsToState.keySet()) {
+    for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
       State state = adjacentNeighborsToState.get(neighborPosition);
       if(state == GameOfLifeState.ALIVE) {
         numberLivingNeighbors++;
