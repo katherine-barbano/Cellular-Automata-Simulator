@@ -9,7 +9,7 @@ import model.SimulationType;
 public class TitleBar extends FlowPane {
 
   public static final int TITLE_BAR_HEIGHT=50;
-  public static final String TITLE_STRING_IN_RESOURCES = "Title";
+  public static final String TITLE_STRING_IN_RESOURCES = "_TITLE";
   private ResourceBundle myResources;
   private Text titleText;
 
@@ -26,7 +26,7 @@ public class TitleBar extends FlowPane {
 
   }
 
-  private void addText(String simulationType){
+  private void addText(SimulationType simulationType){
     String title = myResources.getString(simulationType+TITLE_STRING_IN_RESOURCES);
     this.titleText= new Text(title);
     this.titleText.setId("title-text");

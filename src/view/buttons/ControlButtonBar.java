@@ -17,10 +17,10 @@ public class ControlButtonBar extends HBox {
 
   public ControlButtonBar(ResourceBundle bundle){
 
-    this.myPlayPause = new ButtonFromResources(bundle,PLAY_PAUSE_BUTTON_PROPERTIES);
+    this.myPlayPause = new PlayPauseButton(bundle);
     this.getChildren().add(myPlayPause);
 
-    this.myStep = new ButtonFromResources(bundle, STEP_BUTTON_PROPERTIES);
+    this.myStep = new StepButton(bundle);
     this.getChildren().add(myStep);
 
     this.mySpeedUp = new SpeedUpButton(bundle);
