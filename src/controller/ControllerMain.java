@@ -85,6 +85,7 @@ public class ControllerMain extends Application {
 
   void selectNewFile() {
     try {
+      isPaused = true;
       JFileChooser j = new JFileChooser();
       j.showSaveDialog(null);
       File file = j.getSelectedFile();
@@ -102,12 +103,8 @@ public class ControllerMain extends Application {
 
       currentStage.setScene(myScene);
       currentStage.show();
-      isPaused = true;
       //currentSimulation.readCellStatesFile();
       //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
-
-
-
       //setupScene(SCREEN_WIDTH,SCREEN_HEIGHT);
       //currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
       System.out.println("should change now");
