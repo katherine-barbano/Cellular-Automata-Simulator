@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
@@ -7,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
+import javax.swing.JFileChooser;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
@@ -55,7 +57,8 @@ public class ControllerMain extends Application {
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyControlButtons().getMySave().setOnAction(event ->
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
-    currentSimulation.readCellStatesFile();
+    //currentSimulation.readCellStatesFile();
+    //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
     return myScene;
   }
 
@@ -74,6 +77,16 @@ public class ControllerMain extends Application {
 
   void unpauseOrPause() {
     isPaused = !isPaused;
+  }
+
+  void selectNewFile() {
+    JFileChooser j = new JFileChooser();
+    j.showSaveDialog(null);
+    File file = j.getSelectedFile();
+    System.out.println(file.getName());
+    currentSimulation.setSimulationFileLocation(file.getName());
+    currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
+    //System.out.println(currentSimulation.getSimulationView());
   }
 
   public static void main (String[] args) {

@@ -39,6 +39,7 @@ public abstract class Simulation {
     //cells = determineStatesFromFile();
     //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
     currentGrid = new Grid(SimulationNameType, readCellStatesFile());
+    //currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -53,6 +54,8 @@ public abstract class Simulation {
     currentGrid = new Grid(simulationName, readCellStatesFile());
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
+    //simulationView.setupScene("gameOfLife", )
+    System.out.println("new simulation set");
   }
 
   abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
