@@ -56,6 +56,12 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
+    for(int r=0;r<4;r++) {
+      for(int c =0;c<4;c++) {
+        System.out.print(nextGridWithOldNeighborhoods.getCell(r,c).getCurrentState());
+      }
+      System.out.println();
+    }
     nextGridWithOldNeighborhoods.updateNeighborhoods();
     nextGridWithOldNeighborhoods.updateCellsFromOverlappedNeighborsAfterInitialMove();
     Grid nextGridWithNewNeighborhoods = nextGridWithOldNeighborhoods;
@@ -160,7 +166,6 @@ public class Grid {
       return (Neighborhood)newInstance;
     }
     catch(Exception e) {
-      e.printStackTrace();
       String simulationTypeExceptionMessage = modelResources.getString(SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES);
       throw new ModelException(simulationTypeExceptionMessage);
     }

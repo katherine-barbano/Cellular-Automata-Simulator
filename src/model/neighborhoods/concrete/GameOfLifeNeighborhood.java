@@ -22,13 +22,17 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
   public Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     Map<int[], State> neighborPositionToState = new HashMap<>();
 
-    for(int row = centerCellRow-1; row<=centerCellRow + 1; row++) {
-      for(int column = centerCellColumn-1; column<=centerCellColumn+1; column++) {
-        int coordinateDimensions = Integer.parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
-        int[] relativePositionOfNeighbor = new int[coordinateDimensions];
-        relativePositionOfNeighbor[0] = row;
-        relativePositionOfNeighbor[1] = column;
-        putNeighborPositionIntoMap(relativePositionOfNeighbor,neighborPositionToState, row, column, allStatesInCSV);
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(!(row==0 && column==0)) {
+          int coordinateDimensions = Integer
+              .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
+          int[] relativePositionOfNeighbor = new int[coordinateDimensions];
+          relativePositionOfNeighbor[0] = row;
+          relativePositionOfNeighbor[1] = column;
+          putNeighborPositionIntoMap(relativePositionOfNeighbor, neighborPositionToState,
+              centerCellRow, centerCellColumn, allStatesInCSV);
+        }
       }
     }
     return neighborPositionToState;
