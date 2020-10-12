@@ -4,21 +4,27 @@ import java.util.List;
 import java.util.Random;
 
 public enum WaTorWorldState implements State{
-  FISH(0),
-  SHARK(0),
-  EMPTY();
+  FISH(0, "Fish"),
+  SHARK(0, "Shark"),
+  EMPTY("Empty");
 
   private int age;
+  private String stateName;
   private int[] nextPosition;
 
-  WaTorWorldState(int defaultAge){
+  WaTorWorldState(int defaultAge, String nameOfState){
     this.age = defaultAge;
     this.nextPosition = new int[2];
     nextPosition[0]=0;
     nextPosition[1]=0;
+    this.stateName = nameOfState;
   }
 
   WaTorWorldState() {
+  }
+
+  WaTorWorldState(String nameOfState) {
+    this.stateName = nameOfState;
   }
 
   public int getAge(){
@@ -43,9 +49,8 @@ public enum WaTorWorldState implements State{
     return openPositions.get(randomIndex);
   }
 
-  @Override
   public String toString() {
-    return "WatorWorld";
+    return this.stateName;
   }
 
 }
