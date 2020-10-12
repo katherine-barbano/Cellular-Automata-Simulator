@@ -18,34 +18,53 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getNextState(State currentState) {
     WaTorWorldState currentWaTorWorldState = (WaTorWorldState)currentState;
-    List<int[]> positionsOfEmptyNeighbors = positionsOfEmptyNeighbors();
+    List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(WaTorWorldState.EMPTY);
+    int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
     if(currentState == WaTorWorldState.SHARK) {
-      return handleSharkState(currentWaTorWorldState, positionsOfEmptyNeighbors);
+      return handleSharkState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge);
     }
     else if(currentState == WaTorWorldState.FISH) {
-      return handleFishState(currentWaTorWorldState, positionsOfEmptyNeighbors);
+      return handleFishState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge);
     }
     else {
       return handleEmptyState();
     }
   }
 
-  private State handleSharkState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
-    return null;
+  private State handleSharkState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
+    List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(WaTorWorldState.FISH);
+
+    if(currentState.getAge()>minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
+      return handleBreeding(currentState, positionsOfEmptyNeighbors);
+    }
+    else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
+      return handleMove();
+    }
+    else if(positionsOfFishNeighbors.size()>0) {
+      return handleEat();
+    }
+    else {
+      return handleAging();
+    }
   }
 
-  private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
-    return null;
+  private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
+    if(currentState.getAge()>minimumBreedingAge) {
+      return handleBreeding(currentState, positionsOfEmptyNeighbors);
+    }
+    else if(positionsOfEmptyNeighbors.size()>0) {
+      return handleMove();
+    }
+    else {
+      return handleAging();
+    }
   }
 
   private State handleBreeding(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
-    int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
-    if(currentState.getAge()>minimumBreedingAge) {
-      int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
-      replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto);
-      currentState.setAge(currentState.getAge() + 1);
-      currentState.setNextPositionStationary();
-    }
+    int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
+    replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto);
+    currentState.setAge(currentState.getAge() + 1);
+    currentState.setNextPositionStationary();
     return currentState;
   }
 
@@ -54,11 +73,11 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     replaceNeighborStateWithNewState(positionToBreedInto,babyShark);
   }
 
-  private List<int[]> positionsOfEmptyNeighbors() {
+  private List<int[]> positionsOfTargetStateNeighbors(WaTorWorldState state) {
     List<int[]> emptyIndices = new ArrayList<>();
     Map<int[], State> neighborPositionToState = getNeighborPositionToState();
     for(int[] thisKey:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(thisKey) == WaTorWorldState.EMPTY) {
+      if(neighborPositionToState.get(thisKey) == state) {
         emptyIndices.add(thisKey);
       }
     }
