@@ -72,7 +72,6 @@ public class SimulationView {
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
-
     myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
@@ -105,7 +104,7 @@ public class SimulationView {
    */
   public double findGridHeight(){
     return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - myFileButtons
-        .getPrefHeight() - myCellFormatBar.getPrefHeight();
+        .getPrefHeight() - myControlButtons.getPrefHeight();
   }
 
   /**

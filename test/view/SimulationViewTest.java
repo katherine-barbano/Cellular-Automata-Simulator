@@ -56,8 +56,8 @@ class SimulationViewTest extends DukeApplicationTest {
     for(int row=0;row< TEST_GRID.length;row++){
       for(int col=0; col<TEST_GRID[row].length;col++){
         int cellIndex = TEST_GRID[row].length *row +col;
-        int cellState= getStateNumber(cells.get(cellIndex).getId());
-        assertEquals(cellState, TEST_GRID[row][col]);
+        String cellState= cells.get(cellIndex).getId();
+        assertEquals(cellState, TEST_GRID[row][col].toString());
       }
     }
   }
@@ -75,8 +75,8 @@ class SimulationViewTest extends DukeApplicationTest {
       int row = myGridDisplay.getRowIndex(cell);
       int col = myGridDisplay.getColumnIndex(cell);
 
-      int cellState=getStateNumber(cell.getId());
-      assertEquals(cellState,gridMatrix[row][col]);
+      String cellState=cell.getId();
+      assertEquals(cellState,gridMatrix[row][col].toString());
     }
   }
 
@@ -119,8 +119,8 @@ class SimulationViewTest extends DukeApplicationTest {
 
   private int getStateNumber(String id){
     switch(id){
-      case "dead": return 0;
-      case "alive": return 1;
+      case "Dead": return 0;
+      case "Alive": return 1;
       default: return -1;
     }
   }

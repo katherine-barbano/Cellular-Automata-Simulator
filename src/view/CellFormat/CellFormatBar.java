@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import model.SimulationType;
 import view.CellDisplay;
@@ -23,9 +24,8 @@ public class CellFormatBar extends HBox {
   public CellFormatBar(GridDisplay gridDisplay, State[] possibleStates, ResourceBundle resources) {
     super();
 
-    this.myGridDisplay = gridDisplay;
     this.myPossibleStates = possibleStates;
-
+    this.myGridDisplay = gridDisplay;
     this.myStateChoice = new StateChooser(myPossibleStates);
     this.myColorChoice = new CellColorChooser();
     this.myImageChoice = new ImageChooser(resources);
@@ -46,13 +46,15 @@ public class CellFormatBar extends HBox {
   }
 
   public void updateCellColor(){
+    System.out.println("updating color");
+
     State chosenState = myStateChoice.getMySelection();
     Paint chosenColor= myColorChoice.getChosenColor();
     Image chosenImage = myImageChoice.getChosenImage();
 
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for(CellDisplay cell: cellsWithChosenState){
-      cell.setFill(chosenColor);
+      //cell.setFill(chosenColor);
       //cell.setFill(new ImagePattern(chosenImage));
     }
   }
