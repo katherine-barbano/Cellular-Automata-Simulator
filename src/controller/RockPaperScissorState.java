@@ -16,8 +16,7 @@ public enum RockPaperScissorState implements State{
     return new int[0];
   }
 
-  @Override
   public String toString() {
-    return "RockPaperScissors";
+    return this.stateName;
   }
 }

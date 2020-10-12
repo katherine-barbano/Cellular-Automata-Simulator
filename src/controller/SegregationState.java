@@ -16,8 +16,7 @@ public enum SegregationState implements State{
     return new int[0];
   }
 
-  @Override
   public String toString() {
-    return "Segregation";
+    return this.stateName;
   }
 }

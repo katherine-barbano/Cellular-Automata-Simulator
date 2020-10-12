@@ -12,9 +12,8 @@ public enum GameOfLifeState implements State{
     this.stateName = nameOfState;
   }
 
-  @Override
   public String toString() {
-    return stateName;
+    return this.stateName;
   }
 
 

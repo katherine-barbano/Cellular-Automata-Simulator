@@ -16,8 +16,7 @@ public enum FireState implements State{
     return new int[0];
   }
 
-  @Override
   public String toString() {
-    return "SpreadingOfFire";
+    return this.stateName;
   }
 }

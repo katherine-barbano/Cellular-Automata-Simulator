@@ -15,8 +15,7 @@ public enum PercolationState implements State{
     return new int[] {0,0} ;
   }
 
-  @Override
   public String toString() {
-    return "Percolation";
+    return this.stateName;
   }
 }
