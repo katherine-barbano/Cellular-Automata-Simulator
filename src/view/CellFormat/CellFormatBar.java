@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javax.swing.text.html.CSS;
 import model.SimulationType;
 import view.CellDisplay;
 import view.GridDisplay;
@@ -14,6 +15,7 @@ import view.GridDisplay;
 public class CellFormatBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT = 50;
+  public static final String CSS_FILL_FIELD="-fx-fill:";
   private GridDisplay myGridDisplay;
   private State[] myPossibleStates;
   private CellColorChooser myColorChoice;
@@ -28,9 +30,11 @@ public class CellFormatBar extends HBox {
     this.myGridDisplay = gridDisplay;
     this.myStateChoice = new StateChooser(myPossibleStates);
     this.myColorChoice = new CellColorChooser();
-    this.myImageChoice = new ImageChooser(resources);
     this.myFormatButton = new FormatButton(resources);
     myFormatButton.setOnAction(event -> updateCellColor());
+
+    this.myImageChoice = new ImageChooser(resources);
+
 
     addToRoot();
 
@@ -41,12 +45,12 @@ public class CellFormatBar extends HBox {
   private void addToRoot(){
     this.getChildren().add(myStateChoice);
     this.getChildren().add(myColorChoice);
-    this.getChildren().add(myImageChoice);
     this.getChildren().add(myFormatButton);
+    this.getChildren().add(myImageChoice);
+
   }
 
   public void updateCellColor(){
-    System.out.println("updating color");
 
     State chosenState = myStateChoice.getMySelection();
     Paint chosenColor= myColorChoice.getChosenColor();
@@ -54,7 +58,7 @@ public class CellFormatBar extends HBox {
 
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for(CellDisplay cell: cellsWithChosenState){
-      //cell.setFill(chosenColor);
+      cell.setFill(chosenColor);
       //cell.setFill(new ImagePattern(chosenImage));
     }
   }
