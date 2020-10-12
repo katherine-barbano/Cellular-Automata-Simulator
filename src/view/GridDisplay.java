@@ -1,6 +1,11 @@
 package view;
 
+import controller.State;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.css.StyleClass;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import model.Cell;
 import model.Grid;
@@ -38,5 +43,19 @@ public class GridDisplay extends GridPane {
     addAllCells();
 
     return this;
+  }
+
+  public List<CellDisplay> getCellListByState(State inputState){
+    List<CellDisplay> stateCells = new ArrayList();
+    for(Node cell: this.getChildren()){
+        checkStateOfCellDisplay(stateCells,inputState,cell);
+    }
+    return stateCells;
+  }
+
+  private void checkStateOfCellDisplay(List<CellDisplay> currentCellList, State searchState, Node node){
+    CellDisplay cellDisplay = (CellDisplay) node;
+    if (cellDisplay.getMyState().equals(searchState))
+      currentCellList.add(cellDisplay);
   }
 }

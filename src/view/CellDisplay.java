@@ -8,8 +8,11 @@ import javafx.scene.shape.Shape;
 
 public class CellDisplay extends Shape {
 
+  State myState;
+
   public CellDisplay(State state, double cellSize){
     super();
+    myState = state;
     this.setId(getIdFromState(state));
     getStyleClass().add("cell-display");
   }
@@ -21,5 +24,9 @@ public class CellDisplay extends Shape {
       return "alive";
     }
     return "none";
+  }
+
+  public State getMyState(){
+    return myState;
   }
 }
