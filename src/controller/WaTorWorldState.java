@@ -43,4 +43,9 @@ public enum WaTorWorldState implements State{
     return openPositions.get(randomIndex);
   }
 
+  @Override
+  public String toString() {
+    return "WatorWorld";
+  }
+
 }
