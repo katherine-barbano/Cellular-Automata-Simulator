@@ -4,10 +4,7 @@ import controller.GameOfLifeState;
 import controller.State;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.Cell;
 import model.Grid;
 import model.SimulationType;
 import view.CellFormat.CellFormatBar;
@@ -41,7 +38,7 @@ public class SimulationView {
   private SimulationButtonBar mySimulationButtons;
 
   /**
-   * Create Simulatoin View from initial Grid
+   * Create Simulation View from initial Grid
    * @param grid Initial grid in scene
    */
   public SimulationView(Grid grid){

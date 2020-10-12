@@ -17,11 +17,11 @@
   -fx-alignment: center;
 }
 
-#alive{
+#Alive{
   -fx-fill: black;
 }
 
-#dead{
+#Dead{
   -fx-fill:white;
 }
 
