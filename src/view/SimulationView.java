@@ -1,12 +1,16 @@
 package view;
 
+import controller.GameOfLifeState;
+import controller.State;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import model.Cell;
 import model.Grid;
 import model.SimulationType;
+import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
 import view.buttons.SimulationButtonBar;
 import view.buttons.FileButtonBar;
@@ -19,6 +23,7 @@ public class SimulationView {
   private static final String RESOURCES = "resources/";
   public static final String STYLESHEET = "view.css";
   public static final String RESOURCE_BUNDLE = "View";
+  public static final State[] STATES_PLACEHOLDER = GameOfLifeState.values();
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -31,6 +36,7 @@ public class SimulationView {
   private GridDisplay myGridDisplay;
   private double myGridHeight;
   private ControlButtonBar myControlButtons;
+  private CellFormatBar myCellFormatBar;
   private FileButtonBar myFileButtons;
   private SimulationButtonBar mySimulationButtons;
 
@@ -69,17 +75,20 @@ public class SimulationView {
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
+
     myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
     myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
+    myCellFormatBar = new CellFormatBar(myGridDisplay, STATES_PLACEHOLDER, myBundle);
   }
 
   private void addUIElementsToRoot(){
     myRoot.getChildren().add(myTitleBar);
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
+    myRoot.getChildren().add(myCellFormatBar);
     myRoot.getChildren().add(myFileButtons);
     myRoot.getChildren().add(mySimulationButtons);
   }
@@ -99,7 +108,7 @@ public class SimulationView {
    */
   public double findGridHeight(){
     return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - myFileButtons
-        .getPrefHeight();
+        .getPrefHeight() - myCellFormatBar.getPrefHeight();
   }
 
   /**
