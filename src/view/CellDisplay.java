@@ -4,12 +4,12 @@ import static controller.GameOfLifeState.ALIVE;
 import static controller.GameOfLifeState.DEAD;
 
 import controller.State;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
-public class CellDisplay extends Rectangle {
+public class CellDisplay extends Shape {
 
-  public CellDisplay(State state,double cellSize){
-    super(cellSize, cellSize);
+  public CellDisplay(State state, double cellSize){
+    super();
     this.setId(getIdFromState(state));
     getStyleClass().add("cell-display");
   }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CellTest {
+  /*
   @Test
   void cellsNotEqualState() {
     Cell aliveCell = new Cell( 1);
@@ -17,5 +18,5 @@ class CellTest {
     Cell aliveCell1 = new Cell( 1);
     Cell aliveCell2 = new Cell( 1);
     assertTrue(aliveCell1.equals(aliveCell2));
-  }
+  }*/
 }

@@ -59,7 +59,7 @@ public class SimulationView {
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
-    scene.setOnMouseClicked(mouseEvent -> handleMouseEvent(mouseEvent));
+    //scene.setOnMouseClicked(mouseEvent -> handleMouseEvent(mouseEvent));
     return scene;
   }
 
@@ -115,10 +115,5 @@ public class SimulationView {
    * @return the FileButtonBar
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
-
-
-  private void handleMouseEvent(MouseEvent event) {
-
-  }
 
 }
