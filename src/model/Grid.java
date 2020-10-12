@@ -69,7 +69,7 @@ public class Grid {
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
         populateStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors, row, column, centerCellNeighborhood);
         centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
-        cellGrid[row][column] = centerCell;
+        cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
       }
     }
   }
