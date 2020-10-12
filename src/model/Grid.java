@@ -3,6 +3,7 @@ package model;
 import controller.State;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -72,6 +73,7 @@ public class Grid {
         cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
       }
     }
+    updateNeighborhoods();
   }
 
   private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
@@ -89,7 +91,7 @@ public class Grid {
       State stateOnCenterCellFromNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
       statesOfOverlappingNeighbors.put(neighborPosition,stateOnCenterCellFromNeighbor);
     }
-    catch(IndexOutOfBoundsException e) {
+    catch(NullPointerException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
   }
@@ -129,11 +131,10 @@ public class Grid {
   private void initializeCurrentCellGrid(State[][] allStatesInCSV) {
     for (int csvRow = 0; csvRow < allStatesInCSV.length; csvRow++) {
       for (int csvColumn = 0; csvColumn < allStatesInCSV[csvRow].length; csvColumn++) {
-        if (allStatesInCSV[csvRow][csvColumn] != null) {
-          putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
-        }
+        putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
       }
     }
+    updateNeighborhoods();
   }
 
   private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, State[][] allStatesInCSV) {
@@ -152,9 +153,9 @@ public class Grid {
       String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
 
       Class<?> cl = Class.forName(classNamePrefix + simulationType.toString() + classNameSuffix);
-      Class<?>[] type = { int.class,int.class,State[][].class };
+      Class<?>[] type = { int.class,int.class,State[][].class};
       Constructor<?> cons = cl.getConstructor(type);
-      Object[] obj = { centerCellRow,centerCellColumn,stateGrid};
+      Object[] obj = {centerCellRow,centerCellColumn,stateGrid};
       Object newInstance = cons.newInstance(obj);
       return (Neighborhood)newInstance;
     }
