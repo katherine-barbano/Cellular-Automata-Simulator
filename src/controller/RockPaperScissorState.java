@@ -9,4 +9,9 @@ public enum RockPaperScissorState implements State{
   public int[] getNextPosition() {
     return new int[0];
   }
+
+  @Override
+  public String toString() {
+    return "RockPaperScissors";
+  }
 }
