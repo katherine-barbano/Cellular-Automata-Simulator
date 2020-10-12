@@ -3,7 +3,6 @@ package model;
 import controller.State;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
-import model.neighborhoods.GameOfLifeNeighborhood;
 
 public class Grid {
 
