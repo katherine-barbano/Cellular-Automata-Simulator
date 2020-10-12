@@ -35,10 +35,10 @@ public abstract class Simulation {
 
 
 
-  public Simulation(SimulationType SimulationNameType, String simulationConfigurationName) {
+  public Simulation(SimulationType SimulationNameType, String propertiesName) {
     simulationName = SimulationNameType;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile("GameOfLife.properties");
+    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
     //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();
@@ -54,7 +54,7 @@ public abstract class Simulation {
 
   public String readPropertiesFile(String propertiesFileName) {
       try {
-        String resourceName = "simulationProperties/"+propertiesFileName; // could also be a constant
+        String resourceName = "simulationProperties/"+propertiesFileName + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -78,7 +78,6 @@ public abstract class Simulation {
         //System.out.println("loaded now");
       }
       catch (Exception e) {
-
         String improperPropertiesFileMessage = ResourceBundle.getBundle("resources/ControllerErrors").
             getString("InvalidFile");
         throw new ControllerException(improperPropertiesFileMessage);
