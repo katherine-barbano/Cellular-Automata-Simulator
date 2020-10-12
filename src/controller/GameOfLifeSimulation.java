@@ -48,10 +48,6 @@ public class GameOfLifeSimulation extends Simulation {
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
-      //Class csl = Class.forName("controller.GameOfLifeSimulation");
-      //ClassLoader cl = csl.getClassLoader();
-      //myProperties.load()
-          //yProperties.load(ControllerErrors.getResourceAsStream());
       InputStream is = GameOfLifeSimulation.class.getClass().getResourceAsStream("ControllerError.properties");
       myProperties.load(is);
       System.out.println("loaded now");
@@ -64,8 +60,7 @@ public class GameOfLifeSimulation extends Simulation {
   }
 
   @Override
-  public void storeNewCellConfig(boolean shouldStore, Grid gridToStore) {
-    if (shouldStore) {
+  public void storeNewCellConfig(Grid gridToStore) {
       try {
         FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"new.csv");
         csvWriter.append(Integer.toString(numberRows));
@@ -91,6 +86,5 @@ public class GameOfLifeSimulation extends Simulation {
             getString("InvalidFile");
         throw new ControllerException(invalidFileExceptionMessage);
       }
-    }
   }
 }

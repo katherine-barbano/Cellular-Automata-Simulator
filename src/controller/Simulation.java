@@ -103,7 +103,7 @@ public abstract class Simulation {
   }
 
 
-  abstract public void storeNewCellConfig(boolean shouldStore, Grid gridToStore);
+  abstract public void storeNewCellConfig(Grid gridToStore);
 
   abstract public String readInPropertiesFile();
 

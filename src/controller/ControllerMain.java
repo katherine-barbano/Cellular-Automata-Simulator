@@ -61,8 +61,7 @@ public class ControllerMain extends Application {
     myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyFileButtons().getMySave().setOnAction(event ->
-        currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+    currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
     currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
             selectNewFile());
     currSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
@@ -79,6 +78,11 @@ public class ControllerMain extends Application {
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun);
+  }
+
+  void saveFile() {
+    isPaused = true;
+    currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
   }
 
   void increaseSpeed() {
@@ -113,8 +117,7 @@ public class ControllerMain extends Application {
       myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
       currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-      currSimView.getMyFileButtons().getMySave().setOnAction(event ->
-          currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+      currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
           selectNewFile());
       currentStage.setScene(myScene);
