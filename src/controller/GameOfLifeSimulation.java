@@ -33,10 +33,13 @@ public class GameOfLifeSimulation extends Simulation {
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
-      Class csl = Class.forName("controller.GameOfLifeSimulation");
-      ClassLoader cl = csl.getClassLoader();
+      //Class csl = Class.forName("controller.GameOfLifeSimulation");
+      //ClassLoader cl = csl.getClassLoader();
       //myProperties.load()
           //yProperties.load(ControllerErrors.getResourceAsStream());
+      InputStream is = GameOfLifeSimulation.class.getClass().getResourceAsStream("ControllerError.properties");
+      myProperties.load(is);
+      System.out.println("loaded now");
       return "";
     }
     catch (Exception e) {

@@ -42,6 +42,7 @@ public abstract class Simulation {
     //currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
+    readInPropertiesFile();
   }
 
   abstract public String readInPropertiesFile();
