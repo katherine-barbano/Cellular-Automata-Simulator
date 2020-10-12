@@ -44,7 +44,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return handleEat();
     }
     else {
-      return handleAging();
+      return handleAgingAndStationary(currentState);
     }
   }
 
@@ -56,15 +56,14 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return handleMove();
     }
     else {
-      return handleAging();
+      return handleAgingAndStationary(currentState);
     }
   }
 
   private State handleBreeding(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
     int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
     replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto);
-    currentState.setAge(currentState.getAge() + 1);
-    currentState.setNextPositionStationary();
+    handleAgingAndStationary(currentState);
     return currentState;
   }
 
@@ -82,6 +81,12 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       }
     }
     return emptyIndices;
+  }
+
+  private State handleAgingAndStationary(WaTorWorldState currentState) {
+    currentState.setAge(currentState.getAge() + 1);
+    currentState.setNextPositionStationary();
+    return currentState;
   }
 
   private State handleEmptyState() {
