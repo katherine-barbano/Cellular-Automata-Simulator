@@ -1,8 +1,14 @@
 package controller;
 
 public enum PercolationState implements State{
-  OPEN,
-  BLOCKED;
+  OPEN("Open"),
+  BLOCKED("Blocked");
+
+  private String stateName;
+
+  PercolationState(String nameOfState) {
+    this.stateName = nameOfState;
+  }
 
   @Override
   public int[] getNextPosition() {
