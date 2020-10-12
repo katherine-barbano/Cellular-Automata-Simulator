@@ -27,6 +27,8 @@ public abstract class Simulation {
   private String simulationFileLocation;
   private SimulationView simulationView;
   private Group root;
+
+
   private int rowNumber;
   private int colNumber;
  // private int[][] cells;
@@ -100,6 +102,8 @@ public abstract class Simulation {
     System.out.println("new simulation set");
   }
 
+
+  abstract public void storeNewCellConfig(boolean shouldStore, Grid gridToStore);
 
   abstract public String readInPropertiesFile();
 
@@ -213,32 +217,14 @@ public abstract class Simulation {
     return simulationView;
   }
 
-  public void storeNewCellConfig(boolean shouldStore, Grid gridToStore) {
-    if (shouldStore) {
-      try {
-        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"new.csv");
-        csvWriter.append(Integer.toString(rowNumber));
-        csvWriter.append(",");
-        csvWriter.append(Integer.toString(colNumber));
-        csvWriter.append(",");
-        csvWriter.append("\n");
 
-        for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
-          for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-            csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
-            csvWriter.append(",");
-          }
-          csvWriter.append("\n");
-        }
-        csvWriter.flush();
-        csvWriter.close();
-      } catch (IOException e) {//CHECK update catch to match what prof Duvall said today in class
-        //System.out.println("not working");
-        String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
-            getString("InvalidFile");
-        throw new ControllerException(invalidFileExceptionMessage);
-      }
-    }
+  public int getRowNumber() {
+    return rowNumber;
   }
+
+  public int getColNumber() {
+    return colNumber;
+  }
+
 
 }
