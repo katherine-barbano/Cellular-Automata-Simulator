@@ -2,6 +2,7 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
@@ -46,6 +48,27 @@ public abstract class Simulation {
   }
 
   abstract public String readInPropertiesFile();
+
+
+  public String readPropertiesFile(String name) {
+      try {
+        Properties myProperties = new Properties();
+        //Class csl = Class.forName("controller.GameOfLifeSimulation");
+        //ClassLoader cl = csl.getClassLoader();
+        //myProperties.load()
+        //yProperties.load(ControllerErrors.getResourceAsStream());
+
+        //File file = new File(getClass().getClassLoader().getResource(name).getFile());
+        InputStream is = getClass().getResourceAsStream(name);
+        myProperties.load(is);
+        System.out.println("loaded now");
+        return "";
+      }
+      catch (Exception e) {
+        System.out.println("exception");
+      }
+      return null;
+    }
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
