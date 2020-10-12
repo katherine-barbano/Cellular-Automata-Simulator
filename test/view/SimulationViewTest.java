@@ -3,7 +3,9 @@ package view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.GameOfLifeSimulation;
+import controller.GameOfLifeState;
 import controller.Simulation;
+import controller.State;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -17,8 +19,10 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class SimulationViewTest extends DukeApplicationTest {
+  public static final State ALIVE = GameOfLifeState.ALIVE;
+  public static final State DEAD = GameOfLifeState.DEAD;
 
-  public static final int[][] TEST_GRID ={{1,1,1},{0,1,0},{1,0,1}};
+  public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
   private SimulationView myView;
   private Scene myScene;
   private GridDisplay myGridDisplay;
@@ -61,7 +65,8 @@ class SimulationViewTest extends DukeApplicationTest {
 
   @Test
   void TestUpdateGridDisplay() throws FileNotFoundException {
-    int[][] gridMatrix = getIntMatrixFromInputFile("data/gameOfLifeSample/testingGOL.csv");
+    //int[][] gridMatrix = getIntMatrixFromInputFile("data/gameOfLifeSample/testingGOL.csv");
+    State[][] gridMatrix = {{ALIVE,ALIVE,ALIVE,ALIVE},{ALIVE,ALIVE,DEAD,ALIVE},{DEAD,ALIVE,ALIVE,ALIVE}};
     Grid newGrid = new Grid (SimulationType.GAME_OF_LIFE,gridMatrix);
     javafxRun(()->myView.updateGridDisplay(newGrid));
 
