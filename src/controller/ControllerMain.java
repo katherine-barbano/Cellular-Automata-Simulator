@@ -14,9 +14,10 @@ import view.SimulationView;
 
 public class ControllerMain extends Application {
 
-  public static final int FRAMES_PER_SECOND = 60;
-  public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static final double SECOND_DELAY_LONG = 1.0;
+  //public static final int FRAMES_PER_SECOND = 60;
+  //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  public static double secondDelay = 1.0;
+  public final double SPEED_CHANGE_AMOUNT = .25;
   public static final int FRAME_SIZE = 400;
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 400;
@@ -31,7 +32,7 @@ public class ControllerMain extends Application {
   public void start(Stage stage) {
     currentStage = stage;
     setUpStage(stage);
-    KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY_LONG), e -> step());
+    KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
     Timeline animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -62,6 +63,8 @@ public class ControllerMain extends Application {
         currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
     currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
             selectNewFile());
+    currSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
+    currSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
     //currentSimulation.readCellStatesFile();
     //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
     return myScene;
@@ -74,6 +77,14 @@ public class ControllerMain extends Application {
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun);
+  }
+
+  void increaseSpeed() {
+    secondDelay+= SPEED_CHANGE_AMOUNT;
+  }
+
+  void decreaseSpeed() {
+    secondDelay -= SPEED_CHANGE_AMOUNT;
   }
 
   void stepByButton() {
