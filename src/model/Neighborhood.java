@@ -51,6 +51,18 @@ public abstract class Neighborhood {
     return neighborPositionToState;
   }
 
+  public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(keysAreEqual(thisKey,neighborKey)) {
+        neighborPositionToState.put(thisKey,newState);
+      }
+    }
+  }
+
+  public boolean keysAreEqual(int[] thisKey, int[] otherKey) {
+    return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
+  }
+
   public ResourceBundle getModelResources() {
     return modelResources;
   }
@@ -69,7 +81,7 @@ public abstract class Neighborhood {
       boolean thisNeighborContainsKey = false;
       int[] thisNeighborKey = new int[2];
       for(int[] thisKey:thisNeighborKeySet) {
-        if(thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1]) {
+        if(keysAreEqual(thisKey,otherKey)) {
           thisNeighborContainsKey=true;
           thisNeighborKey = thisKey;
         }

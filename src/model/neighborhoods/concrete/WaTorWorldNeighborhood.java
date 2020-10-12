@@ -2,6 +2,8 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.WaTorWorldState;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import model.neighborhoods.InfluentialNeighborhood;
 
@@ -15,29 +17,52 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState) {
+    WaTorWorldState currentWaTorWorldState = (WaTorWorldState)currentState;
+    List<int[]> positionsOfEmptyNeighbors = positionsOfEmptyNeighbors();
     if(currentState == WaTorWorldState.SHARK) {
-      return handleSharkState(currentState);
+      return handleSharkState(currentWaTorWorldState, positionsOfEmptyNeighbors);
     }
     else if(currentState == WaTorWorldState.FISH) {
-      return handleFishState(currentState);
+      return handleFishState(currentWaTorWorldState, positionsOfEmptyNeighbors);
     }
     else {
       return handleEmptyState();
     }
   }
 
-  private State handleSharkState(State currentState) {
+  private State handleSharkState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
     return null;
   }
 
-  private State handleFishState(State currentState) {
+  private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
     return null;
   }
 
-  private State handleBreeding(State currentState) {
+  private State handleBreeding(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
     int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
-    //if(currentState.get)
-    return null;
+    if(currentState.getAge()>minimumBreedingAge) {
+      int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
+      replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto);
+      currentState.setAge(currentState.getAge() + 1);
+      currentState.setNextPositionStationary();
+    }
+    return currentState;
+  }
+
+  private void replaceEmptyWithNewlyBornSeaCreature(int[] positionToBreedInto) {
+    State babyShark = WaTorWorldState.SHARK;
+    replaceNeighborStateWithNewState(positionToBreedInto,babyShark);
+  }
+
+  private List<int[]> positionsOfEmptyNeighbors() {
+    List<int[]> emptyIndices = new ArrayList<>();
+    Map<int[], State> neighborPositionToState = getNeighborPositionToState();
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(neighborPositionToState.get(thisKey) == WaTorWorldState.EMPTY) {
+        emptyIndices.add(thisKey);
+      }
+    }
+    return emptyIndices;
   }
 
   private State handleEmptyState() {
