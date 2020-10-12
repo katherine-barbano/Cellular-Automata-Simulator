@@ -38,7 +38,7 @@ public abstract class Simulation {
   public Simulation(SimulationType SimulationNameType, String propertiesName) {
     simulationName = SimulationNameType;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
+    simulationFileLocation = "data/gameOfLifeSample/testingGOL.csv"; //+ readPropertiesFile(SimulationNameType.toString());
     //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();

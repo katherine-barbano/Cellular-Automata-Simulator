@@ -65,4 +65,9 @@ public enum WaTorWorldState implements State{
     return stateColor;
   }
 
+  @Override
+  public int getOrdinal(){
+    return this.ordinal();
+  }
+
 }

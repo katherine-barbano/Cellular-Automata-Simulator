@@ -32,4 +32,9 @@ public enum RockPaperScissorState implements State{
   public CellColors getStateColor(){
     return stateColor;
   }
+
+  @Override
+  public int getOrdinal(){
+    return this.ordinal();
+  }
 }

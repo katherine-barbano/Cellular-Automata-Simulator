@@ -5,6 +5,8 @@ import static controller.GameOfLifeState.DEAD;
 
 import controller.State;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import view.CellFormat.CellColors;
@@ -37,7 +39,20 @@ public class CellDisplay extends Rectangle {
   }
 
   private void handleMouseEvent(){
+    setMyState(getNextState(myState));
+  }
 
+  private State getNextState(State currentState){
+    try {
+      Method valuesMethod = currentState.getClass().getDeclaredMethod("values");
+      Object obj = valuesMethod.invoke(null);
+      State[] states = (State[]) obj;
+      int ordinal = currentState.getOrdinal();
+      return states[(ordinal+1)% states.length];
+    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+      System.out.println("Enum.values method not found");
+      return currentState;
+    }
   }
 
 }

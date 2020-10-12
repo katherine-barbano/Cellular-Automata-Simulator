@@ -32,4 +32,9 @@ public enum SegregationState implements State{
   public CellColors getStateColor(){
     return stateColor;
   }
+
+  @Override
+  public int getOrdinal(){
+    return this.ordinal();
+  }
 }
