@@ -17,7 +17,7 @@ Hours Spent:
 
 
 ### Resources Used
-
+https://www.tutorialspoint.com/javafx/javafx_event_handling.html - eventListeners in View
 
 ### Running the Program
 

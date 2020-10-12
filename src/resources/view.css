@@ -17,12 +17,12 @@
   -fx-alignment: center;
 }
 
-#alive{
+#Alive{
   -fx-fill: black;
 }
 
-#dead{
-  -fx-fill:white;
+#Dead{
+  -fx-fill: white;
 }
 
 #title-bar{

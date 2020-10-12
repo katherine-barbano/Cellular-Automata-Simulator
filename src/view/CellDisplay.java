@@ -5,21 +5,26 @@ import static controller.GameOfLifeState.DEAD;
 
 import controller.State;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class CellDisplay extends Rectangle {
 
-  public CellDisplay(State state,double cellSize){
-    super(cellSize, cellSize);
-    this.setId(getIdFromState(state));
+  State myState;
+
+  public CellDisplay(State state, double cellSize){
+    super(cellSize,cellSize);
+    myState = state;
+    this.setId(state.toString());
+    System.out.println(state.toString());
     getStyleClass().add("cell-display");
   }
 
-  private String getIdFromState(State input){
-    if (DEAD.equals(input)) {
-      return "dead";
-    } else if (ALIVE.equals(input)) {
-      return "alive";
-    }
-    return "none";
+  public State getMyState(){
+    return myState;
+  }
+
+  public void setMyState(State inputState){
+    myState = inputState;
+    this.setId(inputState.toString());
   }
 }

@@ -9,7 +9,7 @@ import model.SimulationType;
 public class TitleBar extends FlowPane {
 
   public static final int TITLE_BAR_HEIGHT=50;
-  public static final String TITLE_STRING_IN_RESOURCES = "_TITLE";
+  public static final String TITLE_STRING_IN_RESOURCES = "Title";
   private ResourceBundle myResources;
   private Text titleText;
 
