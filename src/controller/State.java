@@ -6,5 +6,4 @@ public interface State {
 
   abstract int[] getNextPosition();
 
-  abstract String toString();
 }
