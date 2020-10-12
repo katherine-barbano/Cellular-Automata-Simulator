@@ -51,5 +51,4 @@ public enum WaTorWorldState implements State{
   public String toString() {
     return this.stateName;
   }
-
 }
