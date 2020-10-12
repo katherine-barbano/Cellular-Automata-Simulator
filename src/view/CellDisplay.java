@@ -19,9 +19,11 @@ public class CellDisplay extends Rectangle {
     super(cellSize,cellSize);
     mySize = cellSize;
     myState = state;
-    currentColor = state.getStateColor();
+    currentColor = myState.getStateColor();
     this.setFill(currentColor.getCellColor());
     getStyleClass().add("cell-display");
+
+    this.setOnMouseClicked(mouseEvent->handleMouseEvent());
   }
 
   public State getMyState(){
@@ -30,7 +32,12 @@ public class CellDisplay extends Rectangle {
 
   public void setMyState(State inputState){
     myState = inputState;
-    this.setId(inputState.toString());
+    currentColor = myState.getStateColor();
+    this.setFill(currentColor.getCellColor());
+  }
+
+  private void handleMouseEvent(){
+
   }
 
 }

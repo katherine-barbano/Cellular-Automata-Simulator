@@ -9,7 +9,7 @@ import model.Grid;
 import model.SimulationType;
 import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
-import view.buttons.SimulationButtonBar;
+import view.SimulationChoice.SimulationButtonBar;
 import view.buttons.FileButtonBar;
 
 /**
