@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.Random;
+import view.CellFormat.CellColors;
 
 public enum WaTorWorldState implements State{
   FISH(0, "Fish"),
@@ -11,6 +12,7 @@ public enum WaTorWorldState implements State{
   private int age;
   private String stateName;
   private int[] nextPosition;
+  private CellColors stateColor;
 
   WaTorWorldState(int defaultAge, String nameOfState){
     this.age = defaultAge;
@@ -51,6 +53,16 @@ public enum WaTorWorldState implements State{
 
   public String toString() {
     return this.stateName;
+  }
+
+  @Override
+  public void setStateColor(CellColors color){
+    this.stateColor = color;
+  }
+
+  @Override
+  public CellColors getStateColor(){
+    return stateColor;
   }
 
 }
