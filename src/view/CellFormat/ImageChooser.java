@@ -1,43 +1,45 @@
 package view.CellFormat;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 
-public class ImageChooser extends Button {
+public class ImageChooser extends ChoiceBox {
 
   public static final String IMAGE_CHOOSER_PROPERTIES = "ImageChooserButton";
-  public static final String IMAGE_PATH_PLACEHOLDER = "data/images/Starsinthesky.jpg";
-  private FileChooser myFileChooser;
+  public static final CellColors[] CELL_PHOTOS = {CellColors.STARRY_NIGHT,CellColors.POLKA_DOTS};
+  public static final String[] CELL_PHOTO_NAMES = {"Starry Night", "Polka Dots"};
   private FileInputStream mySelectedFile;
-  private Image myImage;
+  private ObservableList myPhotos;
+  private CellColors myChosenImage;
 
   public ImageChooser(ResourceBundle resources){
     super();
-    String buttonText = resources.getString(IMAGE_CHOOSER_PROPERTIES);
-    this.setText(buttonText);
 
-    this.myFileChooser = new FileChooser();
-    this.setOnAction(event -> pickImageFile());
+    this.setTooltip(new Tooltip("Select a Photo: "));
+
+    myPhotos = FXCollections.observableArrayList(Arrays.asList(CELL_PHOTO_NAMES));
+    this.setItems(myPhotos);
+
+    this.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+          Number newValue) {
+        myChosenImage = CELL_PHOTOS[newValue.intValue()];
+      }
+    });
   }
 
-  private void pickImageFile(){
-    //File selectedFile = myFileChooser.showOpenDialog(stage);
-    try {
-      mySelectedFile = new FileInputStream(IMAGE_PATH_PLACEHOLDER);
-      myImage = new Image(mySelectedFile);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException();
-    }
-
-  }
-
-  public Image getChosenImage(){
-    return myImage;
+  public CellColors getChosenImage(){
+    return myChosenImage;
   }
 
 }

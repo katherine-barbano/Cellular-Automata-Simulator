@@ -12,11 +12,11 @@ import javafx.scene.paint.Paint;
 
 public class CellColorChooser extends ChoiceBox {
 
-  public static final Paint[] CELL_COLORS = {Color.BLACK ,Color.WHITE, Color.RED, Color.ORANGE,Color.YELLOW,
-                                              Color.GREEN,Color.BLUE,Color.PURPLE};
+  public static final CellColors[] CELL_COLORS = {CellColors.BLACK ,CellColors.WHITE, CellColors.RED, CellColors.ORANGE,CellColors.YELLOW,
+                                              CellColors.GREEN,CellColors.BLUE,CellColors.PURPLE};
   public static final String[] CELL_COLOR_NAMES= {"Black", "White", "Red", "Orange","Yellow","Green","Blue","Purple"};
   private ObservableList myColors;
-  private Paint myChosenColor;
+  private CellColors myChosenColor;
 
   public CellColorChooser(){
     super();
@@ -34,7 +34,7 @@ public class CellColorChooser extends ChoiceBox {
     });
   }
 
-  public Paint getChosenColor(){
+  public CellColors getChosenColor(){
     return myChosenColor;
   }
 }
