@@ -73,6 +73,7 @@ public class Grid {
         cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
       }
     }
+    updateNeighborhoods();
   }
 
   private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
@@ -130,11 +131,10 @@ public class Grid {
   private void initializeCurrentCellGrid(State[][] allStatesInCSV) {
     for (int csvRow = 0; csvRow < allStatesInCSV.length; csvRow++) {
       for (int csvColumn = 0; csvColumn < allStatesInCSV[csvRow].length; csvColumn++) {
-        if (allStatesInCSV[csvRow][csvColumn] != null) {
-          putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
-        }
+        putCellWithNeighborhoodInGrid(csvRow, csvColumn, allStatesInCSV);
       }
     }
+    updateNeighborhoods();
   }
 
   private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, State[][] allStatesInCSV) {

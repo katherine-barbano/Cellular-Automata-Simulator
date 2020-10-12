@@ -38,7 +38,7 @@ public class Cell {
     return currentState;
   }
 
-  Neighborhood getNeighborhood() {
+  public Neighborhood getNeighborhood() {
     return neighborhood;
   }
 
