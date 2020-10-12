@@ -88,8 +88,11 @@ public class Grid {
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
       Map<int[], State> neighborPositionToStateOfNeighbor = neighborhoodOfNeighbor.getNeighborPositionToState();
-      State stateOnCenterCellFromNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
-      statesOfOverlappingNeighbors.put(neighborPosition,stateOnCenterCellFromNeighbor);
+      State stateOfNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
+      int[] nextPositionOfNeighbor = stateOfNeighbor.getNextPosition();
+      if(nextPositionOfNeighbor[0] == row && nextPositionOfNeighbor[1] == column) {
+        statesOfOverlappingNeighbors.put(neighborPosition,stateOfNeighbor);
+      }
     }
     catch(NullPointerException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
@@ -143,9 +146,6 @@ public class Grid {
     cellGrid[csvRow][csvColumn] = cellInPosition;
   }
 
-  /***
-   * Must edit this to create a new type of Neighborhood when adding a new type of simulation.
-   */
   private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     try {
       //code referenced from https://java2blog.com/invoke-constructor-using-reflection-java/ provided on course website

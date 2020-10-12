@@ -20,9 +20,6 @@ public enum WaTorWorldState implements State{
     this.stateName = nameOfState;
   }
 
-  WaTorWorldState() {
-  }
-
   WaTorWorldState(String nameOfState) {
     this.stateName = nameOfState;
   }
