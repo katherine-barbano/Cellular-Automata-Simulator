@@ -2,8 +2,9 @@ package model;
 
 import controller.State;
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
-import model.neighborhoods.GameOfLifeNeighborhood;
 
 public class Grid {
 
@@ -55,8 +56,42 @@ public class Grid {
   public Grid getNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
     nextGridWithOldNeighborhoods.updateNeighborhoods();
+    nextGridWithOldNeighborhoods.updateCellsFromOverlappedNeighborsAfterInitialMove();
     Grid nextGridWithNewNeighborhoods = nextGridWithOldNeighborhoods;
     return nextGridWithNewNeighborhoods;
+  }
+
+  public void updateCellsFromOverlappedNeighborsAfterInitialMove() {
+    for(int row = 0; row<cellGrid.length; row++) {
+      for(int column = 0; column<cellGrid[0].length; column++) {
+        Cell centerCell = cellGrid[row][column];
+        Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
+        Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
+        populateStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors, row, column, centerCellNeighborhood);
+        centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
+        cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
+      }
+    }
+  }
+
+  private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
+    Map<int[], State> centerCellNeighborPositionToState = centerCellNeighborhood.getNeighborPositionToState();
+    for (int[] neighborPosition : centerCellNeighborPositionToState.keySet()) {
+      putStatesOfOverlappingNeighborsCenterCell(row, column, neighborPosition, statesOfOverlappingNeighbors);
+    }
+  }
+
+  private void putStatesOfOverlappingNeighborsCenterCell(int row, int column, int[] neighborPosition, Map<int[], State> statesOfOverlappingNeighbors) {
+    try{
+      Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
+      Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
+      Map<int[], State> neighborPositionToStateOfNeighbor = neighborhoodOfNeighbor.getNeighborPositionToState();
+      State stateOnCenterCellFromNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
+      statesOfOverlappingNeighbors.put(neighborPosition,stateOnCenterCellFromNeighbor);
+    }
+    catch(IndexOutOfBoundsException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
+    }
   }
 
   private Grid getGridWithNextCells() {

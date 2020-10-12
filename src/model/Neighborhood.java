@@ -21,6 +21,8 @@ public abstract class Neighborhood {
 
   public abstract State getNextState(State currentState);
 
+  public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
+
   /***
    * Creates a map with keys as neighbor position relative to the center cell, and values
    * as the state value as an integer. Neighbor position is numbered from 0 to 7, in the format

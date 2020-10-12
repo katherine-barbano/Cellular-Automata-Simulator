@@ -9,14 +9,16 @@ public enum WaTorWorldState implements State{
   EMPTY();
 
   private int age;
-  private int[] nextPosition = new int[] {0,0};
+  private int[] nextPosition;
 
   WaTorWorldState(int defaultAge){
     this.age = defaultAge;
-    //this.nextPosition = determineOpenPosition(openPositions);
+    this.nextPosition = new int[2];
+    nextPosition[0]=0;
+    nextPosition[1]=0;
   }
 
-  WaTorWorldState(){
+  WaTorWorldState() {
   }
 
   public int getAge(){
@@ -26,16 +28,15 @@ public enum WaTorWorldState implements State{
     this.age = newAge;
   }
 
-  @Override
   public int[] getNextPosition() {
     return this.nextPosition;
   }
 
-/*  public void setNextPosition(List<int[]> newOpenPositions) {
-    this.nextPosition = determineOpenPosition((newOpenPositions));
-  }*/
+  public void setNextPosition(List<int[]> newOpenPositions) {
+    this.nextPosition = getOpenPosition((newOpenPositions));
+  }
 
-  public void determineOpenPosition(List<int[]> openPositions) {
+  private int[] getOpenPosition(List<int[]> openPositions) {
     Random random = new Random();
     int randomIndex = random.nextInt(openPositions.size()-1);
     this.nextPosition = openPositions.get(randomIndex);

@@ -1,11 +1,13 @@
 package model;
 
 import controller.State;
+import java.util.Map;
 
 public class Cell {
 
   private Neighborhood neighborhood;
   private State currentState;
+  private Map<int[], State> statesOfOverlappingNeighborsOnCell;
 
   /***
    * Constructor used for creating first initial set of cells from CSV file.
@@ -53,5 +55,16 @@ public class Cell {
       neighborhoodsAreEqual = true;
     }
     return statesAreEqual && neighborhoodsAreEqual;
+  }
+
+  Cell getCellFromOverlappingNeighbors() {
+    State nextState = neighborhood.getStateOfOverlappingNeighbors(getCurrentState(),
+        statesOfOverlappingNeighborsOnCell);
+    Cell nextCell = new Cell(nextState);
+    return nextCell;
+  }
+
+  void setStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors) {
+    statesOfOverlappingNeighborsOnCell = statesOfOverlappingNeighbors;
   }
 }

@@ -1,5 +1,7 @@
 package modelTest;
 
+import controller.GameOfLifeState;
+import controller.State;
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;
@@ -7,18 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameOfLifeTest {
 
-  private void checkStillLifeGridsEqual(SimulationType simulationType, int[][] initialMatrix) {
+  private void checkStillLifeGridsEqual(SimulationType simulationType, State[][] initialMatrix) {
     Grid currentGrid = new Grid(simulationType, initialMatrix);
     Grid nextGrid = currentGrid.getNextGrid();
     assertTrue(currentGrid.equals(nextGrid));
   }
 
-  private void checkTwoPeriodOscillator(SimulationType simulationType, int[][] gridInitialState, int[][] gridOneStepState) {
+  private void checkTwoPeriodOscillator(SimulationType simulationType, State[][] gridInitialState, State[][] gridOneStepState) {
     checkExpectedAndActualNextStateGridsEqual(simulationType, gridInitialState, gridOneStepState);
     checkExpectedAndActualNextStateGridsEqual(simulationType, gridOneStepState, gridInitialState);
   }
 
-  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, int[][] initialState, int[][] expectedNextState) {
+  private void checkExpectedAndActualNextStateGridsEqual(SimulationType simulationType, State[][] initialState, State[][] expectedNextState) {
     Grid currentGrid = new Grid(simulationType, initialState);
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
@@ -27,11 +29,11 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeStillLifeBlock() {
-    int[][] block = new int[][] {
-        {0, 0, 0, 0},
-        {0, 1, 1, 0},
-        {0, 1, 1, 0},
-        {0, 0, 0, 0}
+    State[][] block = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, block);
@@ -39,12 +41,12 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeStillLifeBeehive() {
-    int[][] beehive = new int[][] {
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 1, 0, 0},
-        {0, 1, 0, 0, 1, 0},
-        {0, 0, 1, 1, 0, 0},
-        {0, 0, 0, 0, 0, 0}
+    State[][] beehive = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, beehive);
@@ -52,13 +54,13 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeStillLifeLoaf() {
-    int[][] loaf = new int[][] {
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 1, 0, 0},
-        {0, 1, 0, 0, 1, 0},
-        {0, 0, 1, 0, 1, 0},
-        {0, 0, 0, 1, 0, 0},
-        {0, 0, 0, 0, 0, 0}
+    State[][] loaf = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, loaf);
@@ -66,12 +68,12 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeStillLifeBoat() {
-    int[][] boat = new int[][] {
-        {0, 0, 0, 0, 0},
-        {0, 1, 1, 0, 0},
-        {0, 1, 0, 1, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 0, 0, 0}
+    State[][] boat = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, boat);
@@ -79,12 +81,12 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeStillLifeTub() {
-    int[][] tub = new int[][] {
-        {0, 0, 0, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 1, 0, 1, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 0, 0, 0}
+    State[][] tub = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, tub);
@@ -92,20 +94,20 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeOscillatorBlinker() {
-    int[][] blinkerInitialState = new int[][] {
-        {0, 0, 0, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 0, 0, 0}
+    State[][] blinkerInitialState = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
-    int[][] blinkerOneStepState = new int[][] {
-        {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0},
-        {0, 1, 1, 1, 0},
-        {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0}
+    State[][] blinkerOneStepState = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkTwoPeriodOscillator(SimulationType.GAME_OF_LIFE, blinkerInitialState, blinkerOneStepState);
@@ -113,22 +115,22 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeOscillatorBeacon() {
-    int[][] beaconInitialState = new int[][] {
-        {0, 0, 0, 0, 0, 0},
-        {0, 1, 1, 0, 0, 0},
-        {0, 1, 1, 0, 0, 0},
-        {0, 0, 0, 1, 1, 0},
-        {0, 0, 0, 1, 1, 0},
-        {0, 0, 0, 0, 0, 0}
+    State[][] beaconInitialState = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
-    int[][] beaconOneStepState = new int[][] {
-        {0, 0, 0, 0, 0, 0},
-        {0, 1, 1, 0, 0, 0},
-        {0, 1, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 0},
-        {0, 0, 0, 1, 1, 0},
-        {0, 0, 0, 0, 0, 0}
+    State[][] beaconOneStepState = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
     };
 
     checkTwoPeriodOscillator(SimulationType.GAME_OF_LIFE, beaconInitialState, beaconOneStepState);
@@ -136,16 +138,16 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeAllAliveCellsOnEdge() {
-    int[][] edgesInitialState = new int[][] {
-        {1, 1, 1},
-        {1, 1, 1},
-        {1, 1, 1},
+    State[][] edgesInitialState = new State[][] {
+        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
+        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
+        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
     };
 
-    int[][] edgesOneStepState = new int[][] {
-        {1, 0, 1},
-        {0, 0, 0},
-        {1, 0, 1},
+    State[][] edgesOneStepState = new State[][] {
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
@@ -153,16 +155,16 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeAliveCellsInCorners() {
-    int[][] edgesInitialState = new int[][] {
-        {1, 0, 1},
-        {0, 0, 0},
-        {1, 0, 1},
+    State[][] edgesInitialState = new State[][] {
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
     };
 
-    int[][] edgesOneStepState = new int[][] {
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
+    State[][] edgesOneStepState = new State[][] {
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
@@ -170,16 +172,16 @@ class GameOfLifeTest {
 
   @Test
   void getNextGridGameOfLifeEndWithAliveCellsOnFirstTwoRows() {
-    int[][] edgesInitialState = new int[][] {
-        {1, 1, 1},
-        {1, 1, 1},
-        {0, 0, 0},
+    State[][] edgesInitialState = new State[][] {
+        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
+        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
+        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
     };
 
-    int[][] edgesOneStepState = new int[][] {
-        {1, 0, 1},
-        {1, 0, 1},
-        {0, 1, 0},
+    State[][] edgesOneStepState = new State[][] {
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
