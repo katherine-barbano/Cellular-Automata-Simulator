@@ -13,20 +13,16 @@ public class CellDisplay extends Shape {
   public CellDisplay(State state, double cellSize){
     super();
     myState = state;
-    this.setId(getIdFromState(state));
+    this.setId(state.toString());
     getStyleClass().add("cell-display");
-  }
-
-  private String getIdFromState(State input){
-    if (DEAD.equals(input)) {
-      return "dead";
-    } else if (ALIVE.equals(input)) {
-      return "alive";
-    }
-    return "none";
   }
 
   public State getMyState(){
     return myState;
+  }
+
+  public void setMyState(State inputState){
+    myState = inputState;
+    this.setId(inputState.toString());
   }
 }
