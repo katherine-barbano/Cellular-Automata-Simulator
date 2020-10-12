@@ -4,6 +4,7 @@ import controller.State;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /***
  * States represented as the integers from csv file.
@@ -55,6 +56,29 @@ public abstract class Neighborhood {
   }
 
   public boolean equals(Neighborhood neighborhood) {
-    return neighborPositionToState.equals(neighborhood.getNeighborPositionToState());
+    Map<int[],State> otherNeighborPositionToState = neighborhood.getNeighborPositionToState();
+    boolean direction1 = compareNeighborhoodInOneDirection(otherNeighborPositionToState,neighborPositionToState);
+    boolean direction2 = compareNeighborhoodInOneDirection(neighborPositionToState,otherNeighborPositionToState);
+    return direction1 && direction2;
+  }
+
+  private boolean compareNeighborhoodInOneDirection(Map<int[],State> otherNeighborPositionToState, Map<int[],State> thisNeighborPositionToState) {
+    for (int[] otherKey: otherNeighborPositionToState.keySet()) {
+      Set<int[]> thisNeighborKeySet = thisNeighborPositionToState.keySet();
+
+      boolean thisNeighborContainsKey = false;
+      int[] thisNeighborKey = new int[2];
+      for(int[] thisKey:thisNeighborKeySet) {
+        if(thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1]) {
+          thisNeighborContainsKey=true;
+          thisNeighborKey = thisKey;
+        }
+      }
+
+      if(!thisNeighborContainsKey || otherNeighborPositionToState.get(otherKey) != thisNeighborPositionToState.get(thisNeighborKey)) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -56,12 +56,6 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
-    for(int r=0;r<4;r++) {
-      for(int c =0;c<4;c++) {
-        System.out.print(nextGridWithOldNeighborhoods.getCell(r,c).getCurrentState());
-      }
-      System.out.println();
-    }
     nextGridWithOldNeighborhoods.updateNeighborhoods();
     nextGridWithOldNeighborhoods.updateCellsFromOverlappedNeighborsAfterInitialMove();
     Grid nextGridWithNewNeighborhoods = nextGridWithOldNeighborhoods;
@@ -96,7 +90,7 @@ public class Grid {
       State stateOnCenterCellFromNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
       statesOfOverlappingNeighbors.put(neighborPosition,stateOnCenterCellFromNeighbor);
     }
-    catch(IndexOutOfBoundsException e) {
+    catch(NullPointerException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
   }
