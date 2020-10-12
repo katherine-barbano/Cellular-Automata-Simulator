@@ -70,12 +70,12 @@ public class Grid {
     for(int row = 0; row<cellGrid.length; row++) {
       for(int column = 0; column<cellGrid[0].length; column++) {
         Cell centerCell = cellGrid[row][column];
+        System.out.println(""+row+""+column);
         Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
         populateStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors, row, column, centerCellNeighborhood);
         centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
         cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
-        System.out.println();
       }
     }
     updateNeighborhoods(this);
@@ -99,6 +99,8 @@ public class Grid {
     try{
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
+      System.out.println(neighborhoodOfNeighbor.getNeighborPositionToState());
+      System.out.print(neighborPosition[0]+""+neighborPosition[1]);
       State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(neighborPosition);
       System.out.println(stateOfNeighbor);
       int[] nextPositionOfNeighbor = stateOfNeighbor.getNextPosition();
@@ -106,6 +108,9 @@ public class Grid {
         statesOfOverlappingNeighbors.put(neighborPosition,stateOfNeighbor);
       }*/
       statesOfOverlappingNeighbors.put(neighborPosition,stateOfNeighbor);
+    }
+    catch(ModelException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
     catch(NullPointerException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
