@@ -81,6 +81,13 @@ public class Grid {
     updateNeighborhoods(this);
   }
 
+  /***
+   * Iterate through each neighbor of the center cell
+   * @param statesOfOverlappingNeighbors
+   * @param row
+   * @param column
+   * @param centerCellNeighborhood
+   */
   private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
     Map<int[], State> centerCellNeighborPositionToState = centerCellNeighborhood.getNeighborPositionToState();
     for (int[] neighborPosition : centerCellNeighborPositionToState.keySet()) {
@@ -92,9 +99,8 @@ public class Grid {
     try{
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
-      //System.out.println(neighborhoodOfNeighbor.getNeighborPositionToState());
-      Map<int[], State> neighborPositionToStateOfNeighbor = neighborhoodOfNeighbor.getNeighborPositionToState();
-      State stateOfNeighbor = neighborPositionToStateOfNeighbor.get(neighborPosition);
+      State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(neighborPosition);
+      System.out.println(stateOfNeighbor);
       int[] nextPositionOfNeighbor = stateOfNeighbor.getNextPosition();
       /*if(nextPositionOfNeighbor[0] == row && nextPositionOfNeighbor[1] == column) {
         statesOfOverlappingNeighbors.put(neighborPosition,stateOfNeighbor);

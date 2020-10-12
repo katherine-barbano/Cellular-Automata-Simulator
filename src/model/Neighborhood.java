@@ -14,6 +14,7 @@ public abstract class Neighborhood {
 
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
   public static final String COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES = "neighborPositionCoordinateSize";
+  public static final String KEY_NOT_FOUND_PROPERTIES = "neighborPositionNotFound";
 
   private Map<int[], State> neighborPositionToState;
   private ResourceBundle modelResources;
@@ -90,6 +91,16 @@ public abstract class Neighborhood {
 
   public boolean keysAreEqual(int[] thisKey, int[] otherKey) {
     return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
+  }
+
+  public State getStateFromNeighborPosition(int[] position) {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(keysAreEqual(thisKey,position)) {
+        return neighborPositionToState.get(thisKey);
+      }
+    }
+    String errorMessage = getModelResources().getString(KEY_NOT_FOUND_PROPERTIES);
+    throw new ModelException(errorMessage);
   }
 
   public ResourceBundle getModelResources() {
