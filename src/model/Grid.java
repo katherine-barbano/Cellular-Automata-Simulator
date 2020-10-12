@@ -3,6 +3,7 @@ package model;
 import controller.State;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -152,13 +153,14 @@ public class Grid {
       String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
 
       Class<?> cl = Class.forName(classNamePrefix + simulationType.toString() + classNameSuffix);
-      Class<?>[] type = { int.class,int.class,State[][].class };
+      Class<?>[] type = { int.class,int.class,State[][].class};
       Constructor<?> cons = cl.getConstructor(type);
-      Object[] obj = { centerCellRow,centerCellColumn,stateGrid};
+      Object[] obj = {centerCellRow,centerCellColumn,stateGrid};
       Object newInstance = cons.newInstance(obj);
       return (Neighborhood)newInstance;
     }
     catch(Exception e) {
+      e.printStackTrace();
       String simulationTypeExceptionMessage = modelResources.getString(SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES);
       throw new ModelException(simulationTypeExceptionMessage);
     }
