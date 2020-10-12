@@ -2,6 +2,7 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
@@ -28,12 +31,14 @@ public abstract class Simulation {
   private int colNumber;
  // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
+  private final String PROPERTIES_LOCATION = "simulationProperties/";
 
 
 
-  public Simulation(SimulationType SimulationNameType, String simulationConfigurationName) {
+  public Simulation(SimulationType SimulationNameType, String propertiesName) {
     simulationName = SimulationNameType;
-    simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
+    //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
+    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
     //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
     //colNumber = findSizeMatrix(simulationFileLocation).get(1);
     //cells = determineStatesFromFile();
@@ -42,10 +47,43 @@ public abstract class Simulation {
     currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
-    readInPropertiesFile();
+    //readPropertiesFile("GameOfLife.properties");
   }
 
-  abstract public String readInPropertiesFile();
+
+
+  public String readPropertiesFile(String propertiesFileName) {
+      try {
+        String resourceName = "simulationProperties/"+propertiesFileName + ".properties"; // could also be a constant
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
+        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+          props.load(resourceStream);
+        }
+        for (Object s : props.keySet()) {
+          if (s.toString().equals("fileName")) {
+            return props.get(s).toString();
+          }
+        }
+        //InputStream toRead = Simulation.class.getClassLoader().getResourceAsStream(
+         //   "Testing.properties");
+        //InputStream is = Main.class.getResourceAsStream(name);
+        //ResourceBundle test = ResourceBundle.getBundle("resources.View");
+        //ResourceBundle trying = ResourceBundle.getBundle("data/simulationProperties.GameOfLife");
+        //ResourceBundle resources = ResourceBundle.getBundle("Testing");
+        //InputStream trying = Main.class.getClassLoader().getResourceAsStream("resources.Testing");
+        //String output = Main.class.getClassLoader().getResourceAsStream(resources.getString("amma"));
+        //System.out.println(Simulation.class.getClassLoader().getResourceAsStream(trying.getString("kind")));
+        //System.out.println(Simulation.class.getClassLoader().getResourceAsStream(trying.getString("amma")));
+        //System.out.println("loaded now");
+      }
+      catch (Exception e) {
+        String improperPropertiesFileMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+            getString("InvalidFile");
+        throw new ControllerException(improperPropertiesFileMessage);
+      }
+      return null;
+    }
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
@@ -61,6 +99,9 @@ public abstract class Simulation {
     //simulationView.setupScene("gameOfLife", )
     System.out.println("new simulation set");
   }
+
+
+  abstract public String readInPropertiesFile();
 
   abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
 
@@ -124,8 +165,11 @@ public abstract class Simulation {
           cellStates[curr - 1][col] = Integer.parseInt(readFiles.get(curr)[col]);
         }
       }
-    } catch (FileNotFoundException f){
-      System.out.println("not working");
+    } catch (Exception f){
+      String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("InvalidConfigSize");
+      throw new ControllerException(incorrectConfigurationExceptionMessage);
+      //System.out.println("not working");
     }
     return cellStates;
   }
@@ -189,7 +233,10 @@ public abstract class Simulation {
         csvWriter.flush();
         csvWriter.close();
       } catch (IOException e) {//CHECK update catch to match what prof Duvall said today in class
-        System.out.println("not working");
+        //System.out.println("not working");
+        String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+            getString("InvalidFile");
+        throw new ControllerException(invalidFileExceptionMessage);
       }
     }
   }

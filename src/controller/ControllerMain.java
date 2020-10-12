@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
@@ -9,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
 import javax.swing.JFileChooser;
+import model.Neighborhood;
 import model.SimulationType;
 import view.SimulationView;
 
@@ -17,7 +19,7 @@ public class ControllerMain extends Application {
   //public static final int FRAMES_PER_SECOND = 60;
   //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static double secondDelay = 1.0;
-  public final double SPEED_CHANGE_AMOUNT = .25;
+  public final double SPEED_CHANGE_AMOUNT = .1;
   public static final int FRAME_SIZE = 400;
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 400;
@@ -80,11 +82,14 @@ public class ControllerMain extends Application {
   }
 
   void increaseSpeed() {
-    secondDelay+= SPEED_CHANGE_AMOUNT;
+    secondDelay-= SPEED_CHANGE_AMOUNT;
+    System.out.println("increasing");
+    //start(currentStage);
   }
 
-  void decreaseSpeed() {
-    secondDelay -= SPEED_CHANGE_AMOUNT;
+  void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
+    secondDelay += SPEED_CHANGE_AMOUNT;
+    System.out.println("decreasing");
   }
 
   void stepByButton() {
@@ -112,23 +117,14 @@ public class ControllerMain extends Application {
           currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
           selectNewFile());
-      //currSimView.getMyControlButtons().getMySave().setOnAction(event ->
-      //    selectNewFile());
-
       currentStage.setScene(myScene);
       currentStage.show();
-      //currentSimulation.readCellStatesFile();
-      //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
-      //setupScene(SCREEN_WIDTH,SCREEN_HEIGHT);
-      //currentSimulation.getSimulationView().setupScene("GameOfLife", SCREEN_WIDTH, SCREEN_HEIGHT);
-      System.out.println("should change now");
-      //setUpStage(currentStage);
-      //currentStage.setScene(myScene);
-      //currentStage.show();
-    } catch(NullPointerException n) {
-      System.out.println("file not found");
+    } catch(Exception e) {
+
+      String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("NoFileSelectedError");
+      throw new ControllerException(noFileExceptionMessage);
     }
-    //System.out.println(currentSimulation.getSimulationView());
   }
 
   public static void main (String[] args) {
