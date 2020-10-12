@@ -5,6 +5,7 @@ import controller.WaTorWorldState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
 public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
@@ -16,15 +17,15 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   @Override
-  public State getNextState(State currentState) {
+  public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     WaTorWorldState currentWaTorWorldState = (WaTorWorldState)currentState;
     List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(WaTorWorldState.EMPTY);
     int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
     if(currentState == WaTorWorldState.SHARK) {
-      return handleSharkState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge);
+      return handleSharkState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge, neighborhoodsOfNeighbors);
     }
     else if(currentState == WaTorWorldState.FISH) {
-      return handleFishState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge);
+      return handleFishState(currentWaTorWorldState, positionsOfEmptyNeighbors, minimumBreedingAge, neighborhoodsOfNeighbors);
     }
     else {
       return handleEmptyState();
@@ -42,14 +43,14 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     return emptyIndices;
   }
 
-  private State handleSharkState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
+  private State handleSharkState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(WaTorWorldState.FISH);
 
     if(currentState.getAge()>minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors);
+      return handleMove(currentState, positionsOfEmptyNeighbors, neighborhoodsOfNeighbors);
     }
     else if(positionsOfFishNeighbors.size()>0) {
       return handleEat(currentState, positionsOfEmptyNeighbors);
@@ -59,12 +60,12 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     }
   }
 
-  private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
+  private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     if(currentState.getAge()>minimumBreedingAge) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors);
+      return handleMove(currentState, positionsOfEmptyNeighbors, neighborhoodsOfNeighbors);
     }
     else {
       return handleAgingAndStationary(currentState);
@@ -93,12 +94,13 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
 
-  private State handleMove(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors) {
+  private State handleMove(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     ageByOne(currentState);
     currentState.setNextPositionMove(positionsOfEmptyNeighbors);
     //check this? idk if I should put it into the neighbors or not
     int[] positionToMoveInto = currentState.getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
+    deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors);
     return WaTorWorldState.EMPTY;
   }
 

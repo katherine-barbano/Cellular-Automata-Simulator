@@ -10,7 +10,7 @@ public abstract class NonInfluentialNeighborhood extends Neighborhood {
     super(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState);
+  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
 
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {

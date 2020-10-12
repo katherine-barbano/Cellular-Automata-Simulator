@@ -24,7 +24,7 @@ public abstract class Neighborhood {
     neighborPositionToState = createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState);
+  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
 
   public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
 
@@ -132,5 +132,14 @@ public abstract class Neighborhood {
       }
     }
     return true;
+  }
+
+  //for help debugging
+  public void printNeighborPositionToState() {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      System.out.print(thisKey[0]+","+thisKey[1]+"=");
+      System.out.print(neighborPositionToState.get(thisKey)+", ");
+    }
+    System.out.println();
   }
 }

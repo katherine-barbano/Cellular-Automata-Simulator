@@ -11,7 +11,11 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
     super(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState);
+  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
 
   public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
+
+  public void deleteMovedStateFromNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    System.out.println("hi");
+  }
 }

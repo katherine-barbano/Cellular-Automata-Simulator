@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
@@ -18,7 +19,7 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
   }
 
   @Override
-  public State getNextState(State currentState) {
+  public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     GameOfLifeState nextState = GameOfLifeState.DEAD;
     int numberOfLivingNeighbors = getNumberOfLivingNeighbors();
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);
