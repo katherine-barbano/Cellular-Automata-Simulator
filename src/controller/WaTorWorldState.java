@@ -39,7 +39,7 @@ public enum WaTorWorldState implements State{
   private int[] getOpenPosition(List<int[]> openPositions) {
     Random random = new Random();
     int randomIndex = random.nextInt(openPositions.size()-1);
-    return openPositions.get(randomIndex);
+    this.nextPosition = openPositions.get(randomIndex);
   }
 
 }
