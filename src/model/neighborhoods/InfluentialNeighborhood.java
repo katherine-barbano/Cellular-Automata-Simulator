@@ -12,10 +12,7 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
 
   public abstract State getNextState(State currentState);
 
-  @Override
-  public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    return null;
-  }
+  public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
 
   public abstract Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
 }

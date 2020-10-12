@@ -14,7 +14,7 @@ public abstract class NonInfluentialNeighborhood extends Neighborhood {
 
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    return null;
+    return nextState;
   }
 
   public abstract Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
