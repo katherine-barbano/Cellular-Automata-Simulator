@@ -1,16 +1,17 @@
 package controller;
 
-public enum PercolationState implements State{
-  OPEN,
-  BLOCKED;
+public enum FireState implements State{
+  TREE,
+  BURNING,
+  EMPTY;
 
   @Override
   public int[] getNextPosition() {
-    return new int[] {0,0} ;
+    return new int[0];
   }
 
   @Override
   public String toString() {
-    return "Percolation";
+    return "SpreadingOfFire";
   }
 }

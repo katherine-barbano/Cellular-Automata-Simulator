@@ -24,6 +24,7 @@ public enum WaTorWorldState implements State{
   public int getAge(){
     return this.age;
   }
+
   public void setAge(int newAge) {
     this.age = newAge;
   }
@@ -40,6 +41,11 @@ public enum WaTorWorldState implements State{
     Random random = new Random();
     int randomIndex = random.nextInt(openPositions.size()-1);
     return openPositions.get(randomIndex);
+  }
+
+  @Override
+  public String toString() {
+    return "WatorWorld";
   }
 
 }

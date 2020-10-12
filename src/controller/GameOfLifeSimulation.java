@@ -1,6 +1,8 @@
 package controller;
 
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Properties;
 import model.SimulationType;
 
 public class GameOfLifeSimulation extends Simulation {
@@ -29,8 +31,20 @@ public class GameOfLifeSimulation extends Simulation {
 
   @Override
   public String readInPropertiesFile() {
-
-
-    return "";
+    try {
+      Properties myProperties = new Properties();
+      //Class csl = Class.forName("controller.GameOfLifeSimulation");
+      //ClassLoader cl = csl.getClassLoader();
+      //myProperties.load()
+          //yProperties.load(ControllerErrors.getResourceAsStream());
+      InputStream is = GameOfLifeSimulation.class.getClass().getResourceAsStream("ControllerError.properties");
+      myProperties.load(is);
+      System.out.println("loaded now");
+      return "";
+    }
+    catch (Exception e) {
+      System.out.println("exception");
+    }
+    return null;
   }
 }
