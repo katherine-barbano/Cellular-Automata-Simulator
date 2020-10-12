@@ -1,4 +1,4 @@
-package model.neighborhoods;
+package model.neighborhoods.concrete;
 
 import controller.GameOfLifeState;
 import controller.State;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.Neighborhood;
+import model.neighborhoods.NonInfluentialNeighborhood;
 
-public class GameOfLifeNeighborhood extends Neighborhood {
+public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForLiveCellToSurvive";
   public static final String NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForDeadCellToSurvive";
