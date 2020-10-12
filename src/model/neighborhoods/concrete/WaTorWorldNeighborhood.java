@@ -162,7 +162,8 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
    * @return
    */
   private State getOldestSeaCreature (Map<int[], State> neighborPositionToState, State targetState) {
-    State oldestSeaCreature = null;
+    State oldestSeaCreature = targetState;
+    ((WaTorWorldState)oldestSeaCreature).setAge(-1);
     for(int[] key:neighborPositionToState.keySet()) {
       State currentState = neighborPositionToState.get(key);
       int oldestSeaCreatureAge = ((WaTorWorldState) oldestSeaCreature).getAge();
