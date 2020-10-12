@@ -3,11 +3,11 @@ package view.CellFormat;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
-public class FormatButton extends Button {
+public class ChangeImageButton extends Button {
 
-  public static final String FORMAT_BUTTON_PROPERTIES="FormatButton";
+  public static final String FORMAT_BUTTON_PROPERTIES="ChangeImageButton";
 
-  public FormatButton(ResourceBundle resources){
+  public ChangeImageButton(ResourceBundle resources){
     super();
     String buttonText = resources.getString(FORMAT_BUTTON_PROPERTIES);
     this.setText(buttonText);

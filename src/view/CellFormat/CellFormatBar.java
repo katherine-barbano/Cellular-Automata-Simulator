@@ -3,11 +3,8 @@ package view.CellFormat;
 import controller.State;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
-import model.SimulationType;
 import view.CellDisplay;
 import view.GridDisplay;
 
@@ -19,7 +16,8 @@ public class CellFormatBar extends HBox {
   private CellColorChooser myColorChoice;
   private ImageChooser myImageChoice;
   private StateChooser myStateChoice;
-  private FormatButton myFormatButton;
+  private Button myFormatButton;
+  private Button myImageChooserButton;
 
   public CellFormatBar(GridDisplay gridDisplay, State[] possibleStates, ResourceBundle resources) {
     super();
@@ -28,9 +26,12 @@ public class CellFormatBar extends HBox {
     this.myGridDisplay = gridDisplay;
     this.myStateChoice = new StateChooser(myPossibleStates);
     this.myColorChoice = new CellColorChooser();
-    this.myImageChoice = new ImageChooser(resources);
-    this.myFormatButton = new FormatButton(resources);
+    this.myFormatButton = new ChangeColorButton(resources);
     myFormatButton.setOnAction(event -> updateCellColor());
+
+    this.myImageChoice = new ImageChooser(resources);
+    myImageChooserButton = new ChangeImageButton(resources);
+    myImageChooserButton.setOnAction(event -> updateCellImage());
 
     addToRoot();
 
@@ -41,21 +42,28 @@ public class CellFormatBar extends HBox {
   private void addToRoot(){
     this.getChildren().add(myStateChoice);
     this.getChildren().add(myColorChoice);
-    this.getChildren().add(myImageChoice);
     this.getChildren().add(myFormatButton);
+    this.getChildren().add(myImageChoice);
+    this.getChildren().add(myImageChooserButton);
   }
 
-  public void updateCellColor(){
-    System.out.println("updating color");
-
+   private void updateCellColor() {
     State chosenState = myStateChoice.getMySelection();
-    Paint chosenColor= myColorChoice.getChosenColor();
-    Image chosenImage = myImageChoice.getChosenImage();
+    CellColors chosenColor= myColorChoice.getChosenColor();
+    updateAllCellsWithChosenState(chosenState,chosenColor);
+  }
 
+  private void updateCellImage() {
+    State chosenState = myStateChoice.getMySelection();
+    CellColors chosenImage = myImageChoice.getChosenImage();
+    updateAllCellsWithChosenState(chosenState,chosenImage);
+  }
+
+  private void updateAllCellsWithChosenState(State chosenState, CellColors chosenFill){
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
-    for(CellDisplay cell: cellsWithChosenState){
-      //cell.setFill(chosenColor);
-      //cell.setFill(new ImagePattern(chosenImage));
+    for (CellDisplay cell : cellsWithChosenState) {
+      cell.setFill(chosenFill.getCellColor());
+      cell.getMyState().setStateColor(chosenFill);
     }
   }
 
