@@ -6,7 +6,7 @@ public enum SimulationType {
   ROCK_PAPER_SCISSORS("RockPaperScissors"),
   SPREADING_OF_FIRE("SpreadingOfFire"),
   SEGREGATION("Segregation"),
-  WATOR_WORLD("WatorWorld");
+  WATOR_WORLD("WaTorWorld");
 
   private String className;
 

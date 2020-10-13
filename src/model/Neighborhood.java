@@ -1,6 +1,7 @@
 package model;
 
 import controller.State;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -12,6 +13,8 @@ import java.util.Set;
 public abstract class Neighborhood {
 
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
+  public static final String COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES = "neighborPositionCoordinateSize";
+  public static final String KEY_NOT_FOUND_PROPERTIES = "neighborPositionNotFound";
 
   private Map<int[], State> neighborPositionToState;
   private ResourceBundle modelResources;
@@ -21,7 +24,7 @@ public abstract class Neighborhood {
     neighborPositionToState = createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState);
+  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
 
   public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
 
@@ -34,7 +37,34 @@ public abstract class Neighborhood {
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
-  public abstract Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
+  public Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    Map<int[], State> neighborPositionToState = new HashMap<>();
+
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(!(row==0 && column==0)) {
+          int coordinateDimensions = Integer
+              .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
+          int[] relativePositionOfNeighbor = new int[coordinateDimensions];
+          relativePositionOfNeighbor[0] = row;
+          relativePositionOfNeighbor[1] = column;
+          putNeighborPositionIntoMap(relativePositionOfNeighbor, neighborPositionToState,
+              centerCellRow, centerCellColumn, allStatesInCSV);
+        }
+      }
+    }
+    return neighborPositionToState;
+  }
+
+  private void putNeighborPositionIntoMap(int[] relativePositionOfNeighbor, Map<int[], State> neighborPositionToState, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    try {
+      State neighborState = getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
+      neighborPositionToState.put(relativePositionOfNeighbor,neighborState);
+    }
+    catch(IndexOutOfBoundsException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
+    }
+  }
 
   /***
    * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
@@ -49,6 +79,28 @@ public abstract class Neighborhood {
 
   public Map<int[], State> getNeighborPositionToState() {
     return neighborPositionToState;
+  }
+
+  public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(keysAreEqual(thisKey,neighborKey)) {
+        neighborPositionToState.put(thisKey,newState);
+      }
+    }
+  }
+
+  public boolean keysAreEqual(int[] thisKey, int[] otherKey) {
+    return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
+  }
+
+  public State getStateFromNeighborPosition(int[] position) {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(keysAreEqual(thisKey,position)) {
+        return neighborPositionToState.get(thisKey);
+      }
+    }
+    String errorMessage = getModelResources().getString(KEY_NOT_FOUND_PROPERTIES);
+    throw new ModelException(errorMessage);
   }
 
   public ResourceBundle getModelResources() {
@@ -69,7 +121,7 @@ public abstract class Neighborhood {
       boolean thisNeighborContainsKey = false;
       int[] thisNeighborKey = new int[2];
       for(int[] thisKey:thisNeighborKeySet) {
-        if(thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1]) {
+        if(keysAreEqual(thisKey,otherKey)) {
           thisNeighborContainsKey=true;
           thisNeighborKey = thisKey;
         }
@@ -80,5 +132,14 @@ public abstract class Neighborhood {
       }
     }
     return true;
+  }
+
+  //for help debugging
+  public void printNeighborPositionToState() {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      System.out.print(thisKey[0]+","+thisKey[1]+"=");
+      System.out.print(neighborPositionToState.get(thisKey)+", ");
+    }
+    System.out.println();
   }
 }

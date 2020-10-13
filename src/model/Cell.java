@@ -28,8 +28,8 @@ public class Cell {
     this.currentState = state;
   }
 
-  Cell getNextCell() {
-    State nextState = neighborhood.getNextState(currentState);
+  Cell getNextCell(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    State nextState = neighborhood.getNextState(currentState, neighborhoodsOfNeighbors);
     Cell nextCell = new Cell(nextState);
     return nextCell;
   }
