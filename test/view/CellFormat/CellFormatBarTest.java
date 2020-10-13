@@ -2,15 +2,9 @@ package view.CellFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import controller.GameOfLifeSimulation;
 import controller.states.GameOfLifeState;
 import controller.State;
-import java.awt.Image;
-import java.io.FileNotFoundException;
-import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Grid;
 import model.SimulationType;
