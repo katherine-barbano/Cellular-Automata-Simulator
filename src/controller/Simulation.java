@@ -120,8 +120,8 @@ public abstract class Simulation {
   }
 
   public void updateSimulationGrid(boolean shouldRun) {
-    checkGridUpdatesInDisplay();
     if (shouldRun) {
+      checkGridUpdatesInDisplay();
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
