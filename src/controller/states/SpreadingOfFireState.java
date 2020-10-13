@@ -3,7 +3,7 @@ package controller.states;
 import controller.State;
 import view.CellFormat.CellColors;
 
-public enum FireState implements State {
+public enum SpreadingOfFireState implements State {
   TREE("Tree"),
   BURNING("Burning"),
   EMPTY("Empty");
@@ -11,7 +11,7 @@ public enum FireState implements State {
   private String stateName;
   private CellColors stateColor;
 
-  FireState(String nameOfState) {
+  SpreadingOfFireState(String nameOfState) {
     this.stateName = nameOfState;
   }
 

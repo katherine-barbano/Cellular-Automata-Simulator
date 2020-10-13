@@ -1,7 +1,9 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
+import controller.states.SpreadingOfFireState;
 import java.util.Map;
+import java.util.Random;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
@@ -23,7 +25,21 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-
+    if(currentState != SpreadingOfFireState.TREE) {
+      return SpreadingOfFireState.EMPTY;
+    }
+    else if(treeCatchesFire()){
+      return SpreadingOfFireState.BURNING;
+    }
+    else {
+      return currentState;
+    }
   }
 
+  //referenced https://stackoverflow.com/questions/3680637/generate-a-random-double-in-a-range to learn how to generate a random double
+  private boolean treeCatchesFire() {
+    Random random = new Random();
+    double actualEvent = random.nextDouble();
+    return actualEvent>=probabilityCatchFire;
+  }
 }
