@@ -50,6 +50,15 @@ public abstract class Neighborhood {
     return allStatesInCSV[neighborRow][neighborColumn];
   }
 
+  public boolean neighborPositionToStateContainsState(State target) {
+    for(int[] position:neighborPositionToState.keySet()) {
+      if(neighborPositionToState.get(position) == target) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public Map<int[], State> getNeighborPositionToState() {
     return neighborPositionToState;
   }
