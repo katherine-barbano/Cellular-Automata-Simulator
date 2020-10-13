@@ -135,4 +135,34 @@ public abstract class Neighborhood {
     }
     System.out.println();
   }
+
+  public void createNeighborMapForAdjacentNeighborsOnly(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(!(row==0 && column==0)  && row!=column) {
+          makePositionAndPutIntoMap(row, column, centerCellRow, centerCellColumn, allStatesInCSV);
+        }
+      }
+    }
+  }
+
+  public void createNeighborMapForAdjacentAndDiagonal(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(!(row==0 && column==0)) {
+          makePositionAndPutIntoMap(row, column, centerCellRow, centerCellColumn, allStatesInCSV);
+        }
+      }
+    }
+  }
+
+  private void makePositionAndPutIntoMap(int row, int column, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    int coordinateDimensions = Integer
+        .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
+    int[] relativePositionOfNeighbor = new int[coordinateDimensions];
+    relativePositionOfNeighbor[0] = row;
+    relativePositionOfNeighbor[1] = column;
+    putNeighborPositionIntoMap(relativePositionOfNeighbor,
+        centerCellRow, centerCellColumn, allStatesInCSV);
+  }
 }

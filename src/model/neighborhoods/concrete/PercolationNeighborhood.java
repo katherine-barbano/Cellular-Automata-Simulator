@@ -15,19 +15,7 @@ public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
-    for(int row = -1; row<=1; row++) {
-      for(int column = -1; column<=1; column++) {
-        if(!(row==0 && column==0)) {
-          int coordinateDimensions = Integer
-              .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
-          int[] relativePositionOfNeighbor = new int[coordinateDimensions];
-          relativePositionOfNeighbor[0] = row;
-          relativePositionOfNeighbor[1] = column;
-          putNeighborPositionIntoMap(relativePositionOfNeighbor,
-              centerCellRow, centerCellColumn, allStatesInCSV);
-        }
-      }
-    }
+    createNeighborMapForAdjacentNeighborsOnly(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
   @Override
