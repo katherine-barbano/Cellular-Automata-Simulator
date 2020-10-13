@@ -61,17 +61,13 @@ public class ControllerMain extends Application {
     myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyFileButtons().getMySave().setOnAction(event ->
-        currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+    currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
     currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
             selectNewFile());
     currSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
     currSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
-    //currentSimulation.readCellStatesFile();
-    //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
     return myScene;
   }
-
 
   void step () {
     updateShapes(!isPaused);
@@ -79,6 +75,11 @@ public class ControllerMain extends Application {
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun);
+  }
+
+  void saveFile() {
+    isPaused = true;
+    currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
   }
 
   void increaseSpeed() {
@@ -100,7 +101,7 @@ public class ControllerMain extends Application {
     isPaused = !isPaused;
   }
 
-  void selectNewFile() {
+  void selectNewFile() throws ControllerException {
     try {
       isPaused = true;
       JFileChooser j = new JFileChooser();
@@ -113,17 +114,16 @@ public class ControllerMain extends Application {
       myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
       currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-      currSimView.getMyFileButtons().getMySave().setOnAction(event ->
-          currentSimulation.storeNewCellConfig(isPaused, currentSimulation.getCurrentGrid()));
+      currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
           selectNewFile());
       currentStage.setScene(myScene);
       currentStage.show();
     } catch(Exception e) {
-
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
-      throw new ControllerException(noFileExceptionMessage);
+      //throw new ControllerException(noFileExceptionMessage);
+      currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
     }
   }
 

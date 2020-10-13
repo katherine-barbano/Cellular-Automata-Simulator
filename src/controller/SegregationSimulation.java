@@ -10,17 +10,17 @@ import java.util.ResourceBundle;
 import model.Grid;
 import model.SimulationType;
 
-public class GameOfLifeSimulation extends Simulation {
+public class SegregationSimulation extends Simulation{
 
-  private static final String STORING_FILE_NAME = "data/outputGrids/";
+  private static final String STORING_FILE_NAME = "data/outputGrids/segregation";
   private int numberRows;
   private int numberCols;
   private HashMap<Integer,State> statesForInteger;
   private HashMap<State, Integer> integerForStates;
   ;
 
-  public GameOfLifeSimulation() {
-    super(SimulationType.GAME_OF_LIFE, "GameOfLife");
+  public SegregationSimulation() {
+    super(SimulationType.PERCOLATION, "testingSegregation.csv");
   }
 
   @Override
@@ -62,30 +62,30 @@ public class GameOfLifeSimulation extends Simulation {
 
   @Override
   public void storeNewCellConfig(Grid gridToStore) {
-      try {
-        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"gameOfLifeNew.csv");
-        csvWriter.append(Integer.toString(numberRows));
-        csvWriter.append(",");
-        csvWriter.append(Integer.toString(numberCols));
-        csvWriter.append(",");
-        csvWriter.append("\n");
+    try {
+      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
+      csvWriter.append(Integer.toString(numberRows));
+      csvWriter.append(",");
+      csvWriter.append(Integer.toString(numberCols));
+      csvWriter.append(",");
+      csvWriter.append("\n");
 
-        for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
-          for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-            csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState()).toString());
-            //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
-            csvWriter.append(",");
-          }
-          csvWriter.append("\n");
+      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
+        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState()).toString());
+          //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
+          csvWriter.append(",");
         }
-        csvWriter.flush();
-        csvWriter.close();
-        System.out.println("saved");
-      } catch (IOException e) {
-        //System.out.println("not working");
-        String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
-            getString("InvalidFile");
-        throw new ControllerException(invalidFileExceptionMessage);
+        csvWriter.append("\n");
       }
+      csvWriter.flush();
+      csvWriter.close();
+      System.out.println("saved");
+    } catch (IOException e) {
+      //System.out.println("not working");
+      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("InvalidFile");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
   }
 }

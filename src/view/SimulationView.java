@@ -1,6 +1,6 @@
 package view;
 
-import controller.GameOfLifeState;
+import controller.states.GameOfLifeState;
 import controller.State;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;

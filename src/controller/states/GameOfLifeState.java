@@ -1,40 +1,42 @@
-package controller;
+package controller.states;
 
+import controller.State;
+import java.util.List;
+import model.Cell;
 import view.CellFormat.CellColors;
 
-public enum SegregationState implements State{
-  XAGENT("xagent"),
-  OAGENT("oagent"),
-  EMPTY("empty");
+public enum GameOfLifeState implements State {
+  DEAD("Dead", CellColors.WHITE),
+  ALIVE("Alive", CellColors.BLACK);
 
   private String stateName;
   private CellColors stateColor;
 
-  SegregationState(String nameOfState) {
+  GameOfLifeState(String nameOfState, CellColors color) {
     this.stateName = nameOfState;
-  }
-
-  @Override
-  public int[] getNextPosition() {
-    return new int[0];
+    this.stateColor= color;
   }
 
   public String toString() {
     return this.stateName;
   }
 
-  @Override
   public void setStateColor(CellColors color){
     this.stateColor = color;
   }
 
-  @Override
   public CellColors getStateColor(){
     return stateColor;
   }
 
+
   @Override
+  public int[] getNextPosition() {
+    return new int[] {0,0} ;
+  }
+
   public int getOrdinal(){
     return this.ordinal();
   }
+
 }

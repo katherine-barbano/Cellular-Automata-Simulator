@@ -1,41 +1,41 @@
-package controller;
+package controller.states;
 
-import java.util.List;
-import model.Cell;
+import controller.State;
 import view.CellFormat.CellColors;
 
-public enum GameOfLifeState implements State{
-  DEAD("Dead", CellColors.WHITE),
-  ALIVE("Alive", CellColors.BLACK);
+public enum RockPaperScissorState implements State {
+  ROCK("Rock"),
+  PAPER("Paper"),
+  SCISSOR("Scissor");
 
   private String stateName;
   private CellColors stateColor;
 
-  GameOfLifeState(String nameOfState, CellColors color) {
+  RockPaperScissorState(String nameOfState) {
     this.stateName = nameOfState;
-    this.stateColor= color;
+  }
+
+  @Override
+  public int[] getNextPosition() {
+    return new int[0];
   }
 
   public String toString() {
     return this.stateName;
   }
 
+  @Override
   public void setStateColor(CellColors color){
     this.stateColor = color;
   }
 
+  @Override
   public CellColors getStateColor(){
     return stateColor;
   }
 
-
   @Override
-  public int[] getNextPosition() {
-    return new int[] {0,0} ;
-  }
-
   public int getOrdinal(){
     return this.ordinal();
   }
-
 }

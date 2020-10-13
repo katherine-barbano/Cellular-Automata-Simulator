@@ -1,16 +1,17 @@
-package controller;
+package controller.states;
 
+import controller.State;
 import view.CellFormat.CellColors;
 
-public enum FireState implements State{
-  TREE("Tree"),
-  BURNING("Burning"),
-  EMPTY("Empty");
+public enum SegregationState implements State {
+  XAGENT("xagent"),
+  OAGENT("oagent"),
+  EMPTY("empty");
 
   private String stateName;
   private CellColors stateColor;
 
-  FireState(String nameOfState) {
+  SegregationState(String nameOfState) {
     this.stateName = nameOfState;
   }
 
@@ -37,5 +38,4 @@ public enum FireState implements State{
   public int getOrdinal(){
     return this.ordinal();
   }
-
 }

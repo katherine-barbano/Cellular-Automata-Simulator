@@ -1,6 +1,6 @@
 package model.neighborhoods.concrete;
 
-import controller.GameOfLifeState;
+import controller.states.GameOfLifeState;
 import controller.State;
 import java.util.ArrayList;
 import java.util.HashMap;
