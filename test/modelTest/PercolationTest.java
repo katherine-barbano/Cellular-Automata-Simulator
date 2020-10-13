@@ -1,6 +1,6 @@
 package modelTest;
 
-import controller.PercolationState;
+import controller.states.PercolationState;
 import controller.State;
 import model.Grid;
 import model.SimulationType;
