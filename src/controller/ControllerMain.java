@@ -26,7 +26,7 @@ public class ControllerMain extends Application {
   public static final int SCREEN_HEIGHT = 400;
   private Scene myScene;
   private Group root;
-  private Simulation currentSimulation = new GameOfLifeSimulation();
+  private Simulation currentSimulation;
   private boolean isPaused;
   private Stage currentStage;
 
@@ -56,7 +56,7 @@ public class ControllerMain extends Application {
    */
   Scene setupScene(int width, int height) {
     root = new Group();
-    //currentSimulation = new GameOfLifeSimulation();
+    currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
     myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
