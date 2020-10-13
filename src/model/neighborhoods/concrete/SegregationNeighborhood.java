@@ -1,6 +1,7 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
+import controller.states.SegregationState;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
@@ -35,6 +36,9 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
+    if(nextState == SegregationState.EMPTY) {
 
+    }
+    return nextState;
   }
 }
