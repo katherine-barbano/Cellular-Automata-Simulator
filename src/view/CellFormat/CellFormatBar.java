@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import view.CellDisplay;
 import view.GridDisplay;
 
+/**
+ * The Cell Format Bar allows the user to choose colors and images to fill cells with a chosen state.
+ */
 public class CellFormatBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT = 50;
@@ -37,6 +40,7 @@ public class CellFormatBar extends HBox {
 
     this.setPrefHeight(BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
+    this.setId("cell-format-bar");
   }
 
   private void addToRoot(){

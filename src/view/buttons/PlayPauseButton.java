@@ -3,6 +3,9 @@ package view.buttons;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * The Play/Pause button will start and stop the simulation.
+ */
 public class PlayPauseButton extends Button {
 
   public static final String PLAY_PAUSE_BUTTON_PROPERTIES = "PlayPauseButton";

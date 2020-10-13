@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.GameOfLifeSimulation;
 import controller.GameOfLifeState;
-import controller.Simulation;
 import controller.State;
 import java.io.File;
 import java.io.FileNotFoundException;

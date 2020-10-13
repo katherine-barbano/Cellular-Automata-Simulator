@@ -4,6 +4,10 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
+/**
+ * The ControlButtonBar contains all of the buttons that control the flow of the Simulation, including
+ * Play/Pause, Step, SpeedUp, SlowDown.
+ */
 public class ControlButtonBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT=50;
@@ -31,18 +35,34 @@ public class ControlButtonBar extends HBox {
     this.getStyleClass().add("button-bar");
   }
 
+  /**
+   * Accessor for Step Button
+   * @return Step Button
+   */
   public Button getMyStep() {
     return myStep;
   }
 
+  /**
+   * Accessor for Play/Pause Button
+   * @return play/pause button
+   */
   public Button getMyPlayPause() {
     return myPlayPause;
   }
 
+  /**
+   * Accessor for Speed Up Button
+   * @return SpeedUp Button
+   */
   public Button getSpeedUpButton() {
     return mySpeedUp;
   }
 
+  /**
+   * Accessor for Slow Down Button
+   * @return SlowDown Button
+   */
   public Button getSlowDownButton() {
     return mySlowDown;
   }

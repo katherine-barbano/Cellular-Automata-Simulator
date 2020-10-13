@@ -16,6 +16,7 @@ public class StateChooser extends ChoiceBox {
 
   public StateChooser(State[] simulationStates){
     super();
+    this.setId("state-chooser");
     this.setTooltip(new Tooltip("Select a State: "));
 
     myStates = FXCollections.observableArrayList(Arrays.asList(simulationStates));
@@ -33,6 +34,11 @@ public class StateChooser extends ChoiceBox {
   public State getMySelection(){
     return mySelection;
   }
+
+  public void setMySelection(State state){
+    mySelection=state;
+  }
+
 
 
 }
