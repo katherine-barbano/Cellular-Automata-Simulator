@@ -137,9 +137,12 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
+    System.out.println(statesOfOverlappingNeighborsOnCell);
     if(nextState == WaTorWorldState.EMPTY) {
       State oldestShark = returnOldestSeaCreature(WaTorWorldState.SHARK, statesOfOverlappingNeighborsOnCell);
       State oldestFish = returnOldestSeaCreature(WaTorWorldState.FISH, statesOfOverlappingNeighborsOnCell);
+      System.out.println(oldestShark);
+      System.out.println(oldestFish);
       if(oldestShark != null) {
         return oldestShark;
       }
@@ -151,7 +154,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State returnOldestSeaCreature(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    State oldestSeaCreature = getOldestSeaCreature(statesOfOverlappingNeighborsOnCell, WaTorWorldState.FISH);
+    State oldestSeaCreature = getOldestSeaCreature(statesOfOverlappingNeighborsOnCell, targetState);
     if(oldestSeaCreature !=null) {
       return oldestSeaCreature;
     }
@@ -159,19 +162,25 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   /***
-   * Returns null if no shark in map
+   * Returns null if no targetState in map
    * @param neighborPositionToState
    * @return
    */
   private State getOldestSeaCreature (Map<int[], State> neighborPositionToState, State targetState) {
     State oldestSeaCreature = targetState;
-    ((WaTorWorldState)oldestSeaCreature).setAge(-1);
+    int greatestAge = -1;
     for(int[] key:neighborPositionToState.keySet()) {
       State currentState = neighborPositionToState.get(key);
-      int oldestSeaCreatureAge = ((WaTorWorldState) oldestSeaCreature).getAge();
-      if(currentState == targetState && ((WaTorWorldState)currentState).getAge() > oldestSeaCreatureAge) {
+      if(currentState.toString().equals(targetState.toString()) && ((WaTorWorldState)currentState).getAge() > greatestAge) {
         oldestSeaCreature = currentState;
+        greatestAge = ((WaTorWorldState) currentState).getAge();
+        ((WaTorWorldState)oldestSeaCreature).setAge(greatestAge);
+        ((WaTorWorldState)oldestSeaCreature).setNextPosition(currentState.getNextPosition());
+        ((WaTorWorldState)oldestSeaCreature).setStateName(((WaTorWorldState)currentState).getStateName());
       }
+    }
+    if(greatestAge==-1) {
+      return null;
     }
     return oldestSeaCreature;
   }
