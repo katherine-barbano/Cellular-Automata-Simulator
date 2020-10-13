@@ -137,11 +137,9 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    System.out.println(statesOfOverlappingNeighborsOnCell);
     if(nextState == WaTorWorldState.EMPTY) {
       State oldestShark = returnOldestSeaCreature(WaTorWorldState.SHARK, statesOfOverlappingNeighborsOnCell);
       State oldestFish = returnOldestSeaCreature(WaTorWorldState.FISH, statesOfOverlappingNeighborsOnCell);
-      System.out.println(oldestShark);
       System.out.println(oldestFish);
       if(oldestShark != null) {
         return oldestShark;

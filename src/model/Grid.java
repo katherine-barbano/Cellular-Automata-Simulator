@@ -56,15 +56,6 @@ public class Grid {
   public Grid getNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
     nextGridWithOldNeighborhoods.updateNeighborhoodsWithOldNeighborhoods(this);
-    for(int r = 0; r<getCellGrid().length; r++) {
-      for(int c = 0; c<getCellGrid()[0].length; c++) {
-        System.out.println(r+""+c);
-        nextGridWithOldNeighborhoods.getCell(r,c).getNeighborhood().printNeighborPositionToState();
-        //System.out.print(nextGridWithOldNeighborhoods.getCell(r,c).getCurrentState());
-      }
-      System.out.println();
-    }
-    System.out.println("----");
     nextGridWithOldNeighborhoods.updateCellsFromOverlappedNeighborsAfterInitialMove();
     nextGridWithOldNeighborhoods.updateNeighborhoodsWithNewNeighborhoods();
     Grid nextGridWithNewNeighborhoods = nextGridWithOldNeighborhoods;
@@ -79,22 +70,13 @@ public class Grid {
     for(int row = 0; row<cellGrid.length; row++) {
       for(int column = 0; column<cellGrid[0].length; column++) {
         Cell centerCell = cellGrid[row][column];
-        System.out.println(""+row+""+column);
         Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
         //populateStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors, row, column, centerCellNeighborhood);
         populateStatesOfOverlappingNeighborsRedo(centerCellNeighborhood, row, column, statesOfOverlappingNeighbors);
-        System.out.println("hi");
-        for(int[] thisKey:statesOfOverlappingNeighbors.keySet()) {
-          System.out.print(thisKey[0]+","+thisKey[1]+"=");
-          System.out.print(statesOfOverlappingNeighbors.get(thisKey)+", ");
-        }
-        System.out.println();
-        System.out.println("uhg");
         centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
         cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
         updateNewNeighborhood(row,column);
-        System.out.println(getCell(0,0).getNeighborhood()+"ok");
       }
     }
   }
@@ -108,15 +90,13 @@ public class Grid {
    */
   private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
     Map<int[], State> centerCellNeighborPositionToState = centerCellNeighborhood.getNeighborPositionToState();
-    System.out.println("oogazooga");
-    centerCellNeighborhood.printNeighborPositionToState();
-    System.out.println("bababa");
     for (int[] neighborPosition : centerCellNeighborPositionToState.keySet()) {
       putStatesOfOverlappingNeighborsCenterCell(row, column, neighborPosition, statesOfOverlappingNeighbors);
     }
   }
 
   private void populateStatesOfOverlappingNeighborsRedo(Neighborhood centerNeighborhood, int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
+    centerNeighborhood.printNeighborPositionToState();
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = getNeighborhoodsOfNeighbors(centerNeighborhood, row, column);
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
@@ -130,8 +110,6 @@ public class Grid {
     try{
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPositionRelativeToCenterCell[0]][column + neighborPositionRelativeToCenterCell[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
-      System.out.println(neighborhoodOfNeighbor);
-      System.out.println(neighborPositionRelativeToCenterCell[0]+""+ neighborPositionRelativeToCenterCell[1]);
       neighborhoodOfNeighbor.printNeighborPositionToState();
       int[] positionOfCenterCellInNeighborsNeighborhood = negateArray(neighborPositionRelativeToCenterCell);
       State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(
@@ -142,7 +120,6 @@ public class Grid {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
     catch(NullPointerException e) {
-      System.out.println("NULL" + (row + neighborPositionRelativeToCenterCell[0]) + (column + neighborPositionRelativeToCenterCell[1]));
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
   }
