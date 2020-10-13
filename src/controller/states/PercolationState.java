@@ -1,22 +1,23 @@
-package controller;
+package controller.states;
 
+import controller.State;
 import view.CellFormat.CellColors;
 
-public enum RockPaperScissorState implements State{
-  ROCK("Rock"),
-  PAPER("Paper"),
-  SCISSOR("Scissor");
+public enum PercolationState implements State {
+  OPEN("Open"),
+  BLOCKED("Blocked"),
+  WATER("Water");
 
   private String stateName;
   private CellColors stateColor;
 
-  RockPaperScissorState(String nameOfState) {
+  PercolationState(String nameOfState) {
     this.stateName = nameOfState;
   }
 
   @Override
   public int[] getNextPosition() {
-    return new int[0];
+    return new int[] {0,0} ;
   }
 
   public String toString() {

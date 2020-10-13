@@ -1,6 +1,6 @@
 package modelTest;
 
-import controller.GameOfLifeState;
+import controller.states.GameOfLifeState;
 import model.Cell;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

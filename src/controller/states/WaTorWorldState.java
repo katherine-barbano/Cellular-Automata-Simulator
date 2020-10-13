@@ -1,10 +1,11 @@
-package controller;
+package controller.states;
 
+import controller.State;
 import java.util.List;
 import java.util.Random;
 import view.CellFormat.CellColors;
 
-public enum WaTorWorldState implements State{
+public enum WaTorWorldState implements State {
   FISH(0, "Fish"),
   SHARK(0, "Shark"),
   EMPTY("Empty");
@@ -16,13 +17,8 @@ public enum WaTorWorldState implements State{
 
   WaTorWorldState(int defaultAge, String nameOfState){
     this.age = defaultAge;
-    this.nextPosition = new int[2];
-    nextPosition[0]=0;
-    nextPosition[1]=0;
+    setNextPositionStationary();
     this.stateName = nameOfState;
-  }
-
-  WaTorWorldState() {
   }
 
   WaTorWorldState(String nameOfState) {
@@ -41,11 +37,15 @@ public enum WaTorWorldState implements State{
     return this.nextPosition;
   }
 
-  public void setNextPosition(List<int[]> newOpenPositions) {
+  public void setNextPositionMove(List<int[]> newOpenPositions) {
     this.nextPosition = getOpenPosition((newOpenPositions));
   }
 
-  private int[] getOpenPosition(List<int[]> openPositions) {
+  public void setNextPositionStationary() {
+    this.nextPosition = new int[]{0,0};
+  }
+
+  public int[] getOpenPosition(List<int[]> openPositions) {
     Random random = new Random();
     int randomIndex = random.nextInt(openPositions.size()-1);
     return openPositions.get(randomIndex);
@@ -53,6 +53,18 @@ public enum WaTorWorldState implements State{
 
   public String toString() {
     return this.stateName;
+  }
+
+  public void setNextPosition(int[] nextPosition) {
+    this.nextPosition = nextPosition;
+  }
+
+  public void setStateName (String stateName) {
+    this.stateName = stateName;
+  }
+
+  public String getStateName() {
+    return stateName;
   }
 
   @Override

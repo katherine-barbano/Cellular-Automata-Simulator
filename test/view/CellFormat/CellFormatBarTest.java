@@ -3,7 +3,7 @@ package view.CellFormat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import controller.GameOfLifeSimulation;
-import controller.GameOfLifeState;
+import controller.states.GameOfLifeState;
 import controller.State;
 import java.awt.Image;
 import java.io.FileNotFoundException;
@@ -61,7 +61,7 @@ class CellFormatBarTest extends DukeApplicationTest {
 
   @Test
   void testColorChoice() {
-    myStateChooser.setMySelection(GameOfLifeState.ALIVE);
+    myStateChooser.setMySelection(ALIVE);
     myColorChooser.setMyChosenColor(CellColors.BLUE);
     clickOn(myColorButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
@@ -71,7 +71,7 @@ class CellFormatBarTest extends DukeApplicationTest {
 
   @Test
   void testImageChoice(){
-    myStateChooser.setMySelection(GameOfLifeState.ALIVE);
+    myStateChooser.setMySelection(ALIVE);
     myImageChooser.setMyChosenImage(CellColors.STARRY_NIGHT);
     clickOn(myImageButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
