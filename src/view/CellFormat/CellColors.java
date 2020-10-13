@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 
+/**
+ * All Possible colors and images to fill the cells.
+ */
 public enum CellColors {
   BLACK(Color.BLACK),
   WHITE(Color.WHITE),

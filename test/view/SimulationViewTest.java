@@ -3,6 +3,7 @@ package view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.GameOfLifeSimulation;
+import controller.Simulation;
 import controller.states.GameOfLifeState;
 import controller.State;
 import java.io.File;
@@ -43,6 +44,17 @@ class SimulationViewTest extends DukeApplicationTest {
   }
 
   @Test
+  void clickOnCell(){
+    CellDisplay cell = (CellDisplay) myGridDisplay.getChildren().get(0);
+    clickOn(cell);
+    assertEquals(DEAD,cell.getMyState());
+
+    assertEquals(DEAD,myGridDisplay.getMyGrid().getCell(0,0).getCurrentState());
+    assertEquals(DEAD,myView.getCurrentGridInDisplay().getCell(0,0).getCurrentState());
+
+  }
+
+  @Test
   void UISetup(){
     sleep(1000);
   }
@@ -55,8 +67,9 @@ class SimulationViewTest extends DukeApplicationTest {
     for(int row=0;row< TEST_GRID.length;row++){
       for(int col=0; col<TEST_GRID[row].length;col++){
         int cellIndex = TEST_GRID[row].length *row +col;
-        String cellState= cells.get(cellIndex).getId();
-        assertEquals(cellState, TEST_GRID[row][col].toString());
+        CellDisplay cellDisplay= (CellDisplay) cells.get(cellIndex);
+        State cellState = cellDisplay.getMyState();
+        assertEquals(cellState, TEST_GRID[row][col]);
       }
     }
   }
@@ -74,8 +87,9 @@ class SimulationViewTest extends DukeApplicationTest {
       int row = myGridDisplay.getRowIndex(cell);
       int col = myGridDisplay.getColumnIndex(cell);
 
-      String cellState=cell.getId();
-      assertEquals(cellState,gridMatrix[row][col].toString());
+      CellDisplay cellDisplay = (CellDisplay) cell;
+      State cellState=cellDisplay.getMyState();
+      assertEquals(cellState,gridMatrix[row][col]);
     }
   }
 
@@ -86,7 +100,7 @@ class SimulationViewTest extends DukeApplicationTest {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     mySimulation.setSimulationFileLocation("testInitialGOLBlinker.csv");
     Grid grid1 =mySimulation.getCurrentGrid();
-    int[][] gridMatrix = getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker.csv");
+    State[][] gridMatrix = mySimulation.createStatesFromInteger(getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker.csv"));
     javafxRun(()->myView.updateGridDisplay(grid1));
 
     //test gridDisplay = inputFile
@@ -95,14 +109,15 @@ class SimulationViewTest extends DukeApplicationTest {
       int row = myGridDisplay.getRowIndex(cell);
       int col = myGridDisplay.getColumnIndex(cell);
 
-      int cellState=getStateNumber(cell.getId());
+      CellDisplay cellDisplay = (CellDisplay) cell;
+      State cellState=cellDisplay.getMyState();
       assertEquals(cellState,gridMatrix[row][col]);
     }
 
     //set up screen 2
     mySimulation.updateSimulation(true);
     Grid grid2 =mySimulation.getCurrentGrid();
-    int[][] gridMatrix2 = getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker2.csv");
+    State[][] gridMatrix2 =mySimulation.createStatesFromInteger(getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker2.csv"));
     javafxRun(()->myView.updateGridDisplay(grid2));
 
     //test GridDipslay = input file 2
@@ -111,18 +126,12 @@ class SimulationViewTest extends DukeApplicationTest {
       int row = myGridDisplay.getRowIndex(cell);
       int col = myGridDisplay.getColumnIndex(cell);
 
-      int cellState=getStateNumber(cell.getId());
+      CellDisplay cellDisplay = (CellDisplay) cell;
+      State cellState=cellDisplay.getMyState();
       assertEquals(cellState,gridMatrix2[row][col]);
     }
   }
 
-  private int getStateNumber(String id){
-    switch(id){
-      case "Dead": return 0;
-      case "Alive": return 1;
-      default: return -1;
-    }
-  }
 
   private int[][] getIntMatrixFromInputFile(String inputFile) throws FileNotFoundException {
     File file = new File(inputFile);

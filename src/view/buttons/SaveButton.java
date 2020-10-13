@@ -1,9 +1,11 @@
 package view.buttons;
 
-import controller.Simulation;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * The Save Button will save the current tile configuration to a file.
+ */
 public class SaveButton extends Button {
 
   public static final String SAVE_BUTTON_PROPERTIES = "SaveButton";

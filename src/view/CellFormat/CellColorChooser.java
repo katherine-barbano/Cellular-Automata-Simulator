@@ -7,9 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
+/**
+ * CellColor Chooser Class will allow the user to change the color of cells with a chosen state.
+ */
 public class CellColorChooser extends ChoiceBox {
 
   public static final CellColors[] CELL_COLORS = {CellColors.BLACK ,CellColors.WHITE, CellColors.RED, CellColors.ORANGE,CellColors.YELLOW,
@@ -20,6 +21,7 @@ public class CellColorChooser extends ChoiceBox {
 
   public CellColorChooser(){
     super();
+    this.setId("color-chooser");
     this.setTooltip(new Tooltip("Select a Color: "));
 
     myColors = FXCollections.observableArrayList(Arrays.asList(CELL_COLOR_NAMES));
@@ -34,7 +36,15 @@ public class CellColorChooser extends ChoiceBox {
     });
   }
 
+  /**
+   * Accessor for the Users chosen color
+   * @return the chosen CellColor
+   */
   public CellColors getChosenColor(){
     return myChosenColor;
+  }
+
+  public void setMyChosenColor(CellColors color){
+    myChosenColor=color;
   }
 }

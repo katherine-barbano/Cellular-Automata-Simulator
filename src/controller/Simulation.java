@@ -120,11 +120,18 @@ public abstract class Simulation {
   }
 
   public void updateSimulationGrid(boolean shouldRun) {
+    checkGridUpdatesInDisplay();
     if (shouldRun) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
       }
+    }
+
+    public void checkGridUpdatesInDisplay(){
+    Grid newGrid = simulationView.getCurrentGridInDisplay();
+    this.currentGrid=newGrid;
+    this.nextGrid = currentGrid.getNextGrid();
     }
 
     public void updateSimulation(boolean shouldRun) {

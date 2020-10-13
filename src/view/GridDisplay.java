@@ -60,6 +60,10 @@ public class GridDisplay extends GridPane {
   }
 
   public void updateCellInGrid(int row, int col, State newState){
-    //myGrid.getCell(row,col).setCurrentState(newState);
+    myGrid.getCell(row,col).setCurrentState(newState);
+  }
+
+  public Grid getMyGrid(){
+    return myGrid;
   }
 }
