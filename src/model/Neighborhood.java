@@ -139,7 +139,7 @@ public abstract class Neighborhood {
   public void createNeighborMapForAdjacentNeighborsOnly(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     for(int row = -1; row<=1; row++) {
       for(int column = -1; column<=1; column++) {
-        if(!(row==0 && column==0)  && row!=column) {
+        if(Math.abs(row)!=Math.abs(column)) {
           makePositionAndPutIntoMap(row, column, centerCellRow, centerCellColumn, allStatesInCSV);
         }
       }
