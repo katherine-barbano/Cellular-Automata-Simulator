@@ -71,7 +71,6 @@ public class ControllerMain extends Application {
 
   void step () {
     updateShapes(!isPaused);
-    catchError();
   }
 
   private void updateShapes(boolean shouldRun) {
@@ -94,13 +93,6 @@ public class ControllerMain extends Application {
     System.out.println("decreasing");
   }
 
-  void catchError() {
-    try {}
-    catch(ControllerException e) {
-      System.out.println("caught the error!");
-    }
-  }
-
   void stepByButton() {
     updateShapes(isPaused);
   }
@@ -109,7 +101,7 @@ public class ControllerMain extends Application {
     isPaused = !isPaused;
   }
 
-  void selectNewFile() {
+  void selectNewFile() throws ControllerException {
     try {
       isPaused = true;
       JFileChooser j = new JFileChooser();
@@ -130,7 +122,8 @@ public class ControllerMain extends Application {
     } catch(Exception e) {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
-      throw new ControllerException(noFileExceptionMessage);
+      //throw new ControllerException(noFileExceptionMessage);
+      currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
     }
   }
 

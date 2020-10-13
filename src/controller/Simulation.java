@@ -45,7 +45,7 @@ public abstract class Simulation {
 
 
 
-  public String readPropertiesFile(String propertiesFileName) {
+  public String readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
         String resourceName = "simulationProperties/"+propertiesFileName + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -64,24 +64,17 @@ public abstract class Simulation {
             getString("InvalidFile");
         throw new ControllerException(improperPropertiesFileMessage);
       }
-      return null;
+      return "";
     }
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
     simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
-    //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
-    //colNumber = findSizeMatrix(simulationFileLocation).get(1);
-    //cells = determineStatesFromFile();
-    //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
-    //currentGrid = new Grid(simulationName, readCellStatesFile());
     currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
-    //simulationView.setupScene("gameOfLife", )
     System.out.println("new simulation set");
   }
-
 
   abstract public void storeNewCellConfig(Grid gridToStore);
 
@@ -89,55 +82,8 @@ public abstract class Simulation {
 
   abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
 
-/*
-  protected int [][] determineStatesFromFile() {
-    String nextLine = "";
-    String splitBy = ",";
-    int[][] cellStatesTotal = new int[rowNumber][colNumber];
-    try {
-      BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
-      int rowCount = 0;
-      String firstLine = br.readLine();
-      while ((nextLine = br.readLine()) != null) { //returns a Boolean value
-        String[] cellStates = nextLine.split(splitBy);
-        for (int colCount = 0; colCount <= colNumber-1; colCount++) {
-          cellStatesTotal[rowCount][colCount] = (Integer.parseInt(cellStates[colCount]));
-        }
-        rowCount++;
-      }
-    }
-     catch (IOException ioException) {
-       System.out.println("unable to create full matrix");
-    }
-    return cellStatesTotal;
-  }
 
-
-  private List<Integer> findSizeMatrix(String simulationFileLocation){
-    int numberRows = 0;
-    int numberCols = 0;
-    String line = "";
-    List<Integer> numberData = new ArrayList<>();
-    try
-    {
-      BufferedReader br = new BufferedReader(new FileReader(simulationFileLocation));
-      while ((line = br.readLine()) != null)   //returns a Boolean value
-      {
-        numberRows = Integer.parseInt(line.split(",")[0]);
-        numberCols = Integer.parseInt(line.split(",")[1]);
-        break;
-        }
-    }
-    catch (IOException e)
-    {
-      System.out.println("not working");
-    }
-    numberData.add(numberRows);
-    numberData.add(numberCols);
-    return numberData;
-  }*/
-
-  public int[][] readCellStatesFile() {
+  public int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates = new int[0][];
     try {
       List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
@@ -163,7 +109,7 @@ public abstract class Simulation {
       return csvReader.readAll();
     }
     catch (IOException | CsvException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
       return Collections.emptyList();
     }
   }
