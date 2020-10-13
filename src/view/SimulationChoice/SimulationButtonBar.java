@@ -25,4 +25,8 @@ public class SimulationButtonBar extends HBox {
     return mySimulationButton;
   }
 
+  public SimulationChooser getSimulationChooser() {
+    return myGameOfLife;
+  }
+
 }
