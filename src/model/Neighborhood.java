@@ -21,7 +21,8 @@ public abstract class Neighborhood {
 
   public Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
-    neighborPositionToState = createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
+    neighborPositionToState = new HashMap<>();
+    createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
   public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
@@ -37,7 +38,7 @@ public abstract class Neighborhood {
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
-  public abstract Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
+  public abstract void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
 
   /***
    * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
@@ -83,6 +84,16 @@ public abstract class Neighborhood {
     }
     String errorMessage = getModelResources().getString(KEY_NOT_FOUND_PROPERTIES);
     throw new ModelException(errorMessage);
+  }
+
+  public void putNeighborPositionIntoMap(int[] relativePositionOfNeighbor, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    try {
+      State neighborState = getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
+      neighborPositionToState.put(relativePositionOfNeighbor,neighborState);
+    }
+    catch(IndexOutOfBoundsException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
+    }
   }
 
   public ResourceBundle getModelResources() {
