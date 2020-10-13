@@ -2,7 +2,6 @@ package model.neighborhoods.concrete;
 
 import controller.states.PercolationState;
 import controller.State;
-import java.util.HashMap;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
@@ -20,8 +19,6 @@ public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    System.out.println("YAY");
-    printNeighborPositionToState();
     if(currentState == PercolationState.OPEN) {
       return handleOpenState();
     }

@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
+import javax.swing.JOptionPane;
 
 public abstract class Simulation {
 

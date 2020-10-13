@@ -1,12 +1,14 @@
 package controller;
 
 import controller.states.GameOfLifeState;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
 import model.Grid;
 import model.SimulationType;
 
@@ -63,7 +65,10 @@ public class GameOfLifeSimulation extends Simulation {
   @Override
   public void storeNewCellConfig(Grid gridToStore) {
       try {
-        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"gameOfLifeNew.csv");
+        String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
+        File file = new File(input);
+        //FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
+        FileWriter csvWriter = new FileWriter(file.getName());
         csvWriter.append(Integer.toString(numberRows));
         csvWriter.append(",");
         csvWriter.append(Integer.toString(numberCols));
@@ -80,6 +85,14 @@ public class GameOfLifeSimulation extends Simulation {
         }
         csvWriter.flush();
         csvWriter.close();
+        String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
+        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+          props.load(resourceStream);
+        }
+        Object s = "fileName";
+        props.replace(s, props.get(s), input);
         System.out.println("saved");
       } catch (IOException e) {
         //System.out.println("not working");

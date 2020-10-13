@@ -132,4 +132,8 @@ public class SimulationView {
     myRoot.getChildren().add(ExceptionText);
   }
 
+  public SimulationButtonBar getMySimulationButtons() {
+    return mySimulationButtons;
+  }
+
 }

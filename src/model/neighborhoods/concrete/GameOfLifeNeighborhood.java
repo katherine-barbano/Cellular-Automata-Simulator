@@ -21,7 +21,7 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     GameOfLifeState nextState = GameOfLifeState.DEAD;
-    int numberOfLivingNeighbors = getNumberOfLivingNeighbors();
+    int numberOfLivingNeighbors = getNumberOfNeighborsWithGivenState(GameOfLifeState.ALIVE);
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);
     List<Integer> numberLiveNeighborsForDeadCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES);
 
@@ -33,18 +33,6 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
     }
 
     return nextState;
-  }
-
-  private int getNumberOfLivingNeighbors() {
-    Map<int[], State> adjacentNeighborsToState = getNeighborPositionToState();
-    int numberLivingNeighbors=0;
-    for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
-      State state = adjacentNeighborsToState.get(neighborPosition);
-      if(state == GameOfLifeState.ALIVE) {
-        numberLivingNeighbors++;
-      }
-    }
-    return numberLivingNeighbors;
   }
 
   private List<Integer> getNumberOfNeighborsFromResources(String numberListName) {
