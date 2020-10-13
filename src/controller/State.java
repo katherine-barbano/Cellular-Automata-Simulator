@@ -11,4 +11,6 @@ public interface State {
 
   abstract void setStateColor(CellColors color);
 
+  abstract int getOrdinal();
+
 }

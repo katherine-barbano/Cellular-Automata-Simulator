@@ -34,4 +34,8 @@ public enum GameOfLifeState implements State{
     return new int[] {0,0} ;
   }
 
+  public int getOrdinal(){
+    return this.ordinal();
+  }
+
 }

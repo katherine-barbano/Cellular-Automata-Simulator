@@ -17,17 +17,21 @@ public enum CellColors {
   GREEN(Color.GREEN),
   BLUE(Color.BLUE),
   PURPLE(Color.PURPLE),
-  STARRY_NIGHT("data/images/Starsinthesky.jpg"),
-  POLKA_DOTS("data/images/polkadots.png");
+  STARRY_NIGHT(),
+  POLKA_DOTS();
 
-
+  public static final String DEFAULT_IMAGE_FILE_PATH= "data/images/Starsinthesky.jpg";
   private Paint cellColor;
 
   CellColors(Paint color) {
     this.cellColor = color;
   }
 
-  CellColors(String filePath){
+  CellColors(){
+    setCellImage(DEFAULT_IMAGE_FILE_PATH);
+  }
+
+  public void setCellImage(String filePath){
     FileInputStream selectedFile = null;
     try {
       selectedFile = new FileInputStream(filePath);
@@ -37,7 +41,6 @@ public enum CellColors {
       System.out.println("FileNotFound in CellColors");
       cellColor = Color.GRAY;
     }
-
   }
 
   public Paint getCellColor() {
