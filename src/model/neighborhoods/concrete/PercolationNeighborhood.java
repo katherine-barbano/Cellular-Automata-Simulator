@@ -2,7 +2,6 @@ package model.neighborhoods.concrete;
 
 import controller.states.PercolationState;
 import controller.State;
-import java.util.HashMap;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;

@@ -3,15 +3,15 @@ package controller.states;
 import controller.State;
 import view.CellFormat.CellColors;
 
-public enum RockPaperScissorState implements State {
+public enum RockPaperScissorsState implements State {
   ROCK("Rock"),
   PAPER("Paper"),
-  SCISSOR("Scissor");
+  SCISSORS("Scissors");
 
   private String stateName;
   private CellColors stateColor;
 
-  RockPaperScissorState(String nameOfState) {
+  RockPaperScissorsState(String nameOfState) {
     this.stateName = nameOfState;
   }
 
