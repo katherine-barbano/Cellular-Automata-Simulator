@@ -37,7 +37,7 @@ public abstract class Simulation {
   public Simulation(SimulationType SimulationNameType, String propertiesName) {
     simulationName = SimulationNameType;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/testingGOL.csv" + readPropertiesFile(SimulationNameType.toString());
+    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
     currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
