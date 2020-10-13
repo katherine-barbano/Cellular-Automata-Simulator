@@ -30,7 +30,7 @@ public class GridDisplay extends GridPane {
   private void addAllCells(){
     for(int row=0; row<myGrid.getGridNumberOfRows(); row++){
       for(int col=0; col<myGrid.getGridNumberOfColumns();col++){
-        CellDisplay newCell = new CellDisplay(myGrid.getCell(row,col).getCurrentState(),myCellSize);
+        CellDisplay newCell = new CellDisplay(myGrid.getCell(row,col).getCurrentState(),myCellSize, this);
         this.add(newCell,col,row);
       }
     }
@@ -57,5 +57,9 @@ public class GridDisplay extends GridPane {
     CellDisplay cellDisplay = (CellDisplay) node;
     if (cellDisplay.getMyState().equals(searchState))
       currentCellList.add(cellDisplay);
+  }
+
+  public void updateCellInGrid(int row, int col, State newState){
+    //myGrid.getCell(row,col).setCurrentState(newState);
   }
 }

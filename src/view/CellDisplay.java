@@ -1,14 +1,9 @@
 package view;
 
-import static controller.GameOfLifeState.ALIVE;
-import static controller.GameOfLifeState.DEAD;
-
 import controller.State;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import view.CellFormat.CellColors;
 
 public class CellDisplay extends Rectangle {
@@ -16,12 +11,15 @@ public class CellDisplay extends Rectangle {
   State myState;
   private double mySize;
   private CellColors currentColor;
+  private GridDisplay myGridDisplay;
 
-  public CellDisplay(State state, double cellSize){
+  public CellDisplay(State state, double cellSize, GridDisplay gridDisplay){
     super(cellSize,cellSize);
-    mySize = cellSize;
-    myState = state;
-    currentColor = myState.getStateColor();
+    this.mySize = cellSize;
+    this.myState = state;
+    this.myGridDisplay = gridDisplay;
+
+    this.currentColor = myState.getStateColor();
     this.setFill(currentColor.getCellColor());
     getStyleClass().add("cell-display");
 
@@ -36,6 +34,8 @@ public class CellDisplay extends Rectangle {
     myState = inputState;
     currentColor = myState.getStateColor();
     this.setFill(currentColor.getCellColor());
+
+    myGridDisplay.updateCellInGrid(myGridDisplay.getRowIndex(this), myGridDisplay.getColumnIndex(this),inputState);
   }
 
   private void handleMouseEvent(){
