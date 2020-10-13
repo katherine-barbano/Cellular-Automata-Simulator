@@ -1,8 +1,8 @@
 package modelTest;
 
-import controller.PercolationState;
+import controller.states.PercolationState;
 import controller.State;
-import controller.WaTorWorldState;
+import controller.states.WaTorWorldState;
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;

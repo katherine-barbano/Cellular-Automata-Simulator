@@ -36,7 +36,7 @@ public abstract class Simulation {
   public Simulation(SimulationType SimulationNameType, String propertiesName) {
     simulationName = SimulationNameType;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
+    simulationFileLocation = "data/gameOfLifeSample/testingGOL.csv" + readPropertiesFile(SimulationNameType.toString());
     currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
@@ -119,11 +119,18 @@ public abstract class Simulation {
   }
 
   public void updateSimulationGrid(boolean shouldRun) {
+    checkGridUpdatesInDisplay();
     if (shouldRun) {
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
       }
+    }
+
+    public void checkGridUpdatesInDisplay(){
+    Grid newGrid = simulationView.getCurrentGridInDisplay();
+    this.currentGrid=newGrid;
+    this.nextGrid = currentGrid.getNextGrid();
     }
 
     public void updateSimulation(boolean shouldRun) {
