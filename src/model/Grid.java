@@ -56,10 +56,11 @@ public class Grid {
   public Grid getNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
     nextGridWithOldNeighborhoods.updateNeighborhoodsWithOldNeighborhoods(this);
-    for(int r = 0; r<3; r++) {
-      for(int c = 0; c<4; c++) {
-        System.out.println(r+""+c);
-        nextGridWithOldNeighborhoods.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+    for(int r = 0; r<getCellGrid().length; r++) {
+      for(int c = 0; c<getCellGrid()[0].length; c++) {
+        //System.out.println(r+""+c);
+        //nextGridWithOldNeighborhoods.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+        System.out.print(nextGridWithOldNeighborhoods.getCell(r,c).getCurrentState());
       }
       System.out.println();
     }

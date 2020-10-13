@@ -100,7 +100,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     //check this? idk if I should put it into the neighbors or not
     int[] positionToMoveInto = currentState.getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
-    deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors);
+    deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors, WaTorWorldState.EMPTY);
     return WaTorWorldState.EMPTY;
   }
 
