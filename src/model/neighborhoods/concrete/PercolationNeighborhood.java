@@ -20,8 +20,6 @@ public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    System.out.println("YAY");
-    printNeighborPositionToState();
     if(currentState == PercolationState.OPEN) {
       return handleOpenState();
     }
