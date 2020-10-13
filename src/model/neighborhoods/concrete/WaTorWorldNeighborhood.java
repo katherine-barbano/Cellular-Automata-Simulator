@@ -3,6 +3,7 @@ package model.neighborhoods.concrete;
 import controller.State;
 import controller.WaTorWorldState;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.Neighborhood;
@@ -181,5 +182,10 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return null;
     }
     return oldestSeaCreature;
+  }
+
+  @Override
+  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
+    createNeighborMapForAdjacentNeighborsOnly(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 }

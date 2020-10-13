@@ -67,4 +67,8 @@ public class Cell {
   void setStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors) {
     statesOfOverlappingNeighborsOnCell = statesOfOverlappingNeighbors;
   }
+
+  public void setCurrentState(State state) {
+    currentState = state;
+  }
 }

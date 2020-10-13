@@ -1,6 +1,5 @@
 package modelTest;
 
-import controller.GameOfLifeState;
 import controller.State;
 import controller.WaTorWorldState;
 import model.Grid;

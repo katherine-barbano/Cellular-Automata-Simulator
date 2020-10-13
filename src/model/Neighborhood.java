@@ -21,7 +21,8 @@ public abstract class Neighborhood {
 
   public Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
-    neighborPositionToState = createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
+    neighborPositionToState = new HashMap<>();
+    createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
   public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
@@ -37,34 +38,7 @@ public abstract class Neighborhood {
    * @param centerCellRow Starting with index 0, row number of center cell
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
-  public Map<int[], State> createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
-    Map<int[], State> neighborPositionToState = new HashMap<>();
-
-    for(int row = -1; row<=1; row++) {
-      for(int column = -1; column<=1; column++) {
-        if(!(row==0 && column==0)) {
-          int coordinateDimensions = Integer
-              .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
-          int[] relativePositionOfNeighbor = new int[coordinateDimensions];
-          relativePositionOfNeighbor[0] = row;
-          relativePositionOfNeighbor[1] = column;
-          putNeighborPositionIntoMap(relativePositionOfNeighbor, neighborPositionToState,
-              centerCellRow, centerCellColumn, allStatesInCSV);
-        }
-      }
-    }
-    return neighborPositionToState;
-  }
-
-  private void putNeighborPositionIntoMap(int[] relativePositionOfNeighbor, Map<int[], State> neighborPositionToState, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
-    try {
-      State neighborState = getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
-      neighborPositionToState.put(relativePositionOfNeighbor,neighborState);
-    }
-    catch(IndexOutOfBoundsException e) {
-      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
-    }
-  }
+  public abstract void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
 
   /***
    * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
@@ -75,6 +49,15 @@ public abstract class Neighborhood {
     int neighborColumn = centerCellColumn + neighborPosition[1];
 
     return allStatesInCSV[neighborRow][neighborColumn];
+  }
+
+  public boolean neighborPositionToStateContainsState(State target) {
+    for(int[] position:neighborPositionToState.keySet()) {
+      if(neighborPositionToState.get(position) == target) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public Map<int[], State> getNeighborPositionToState() {
@@ -101,6 +84,16 @@ public abstract class Neighborhood {
     }
     String errorMessage = getModelResources().getString(KEY_NOT_FOUND_PROPERTIES);
     throw new ModelException(errorMessage);
+  }
+
+  public void putNeighborPositionIntoMap(int[] relativePositionOfNeighbor, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    try {
+      State neighborState = getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
+      neighborPositionToState.put(relativePositionOfNeighbor,neighborState);
+    }
+    catch(IndexOutOfBoundsException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
+    }
   }
 
   public ResourceBundle getModelResources() {
@@ -141,5 +134,35 @@ public abstract class Neighborhood {
       System.out.print(neighborPositionToState.get(thisKey)+", ");
     }
     System.out.println();
+  }
+
+  public void createNeighborMapForAdjacentNeighborsOnly(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(Math.abs(row)!=Math.abs(column)) {
+          makePositionAndPutIntoMap(row, column, centerCellRow, centerCellColumn, allStatesInCSV);
+        }
+      }
+    }
+  }
+
+  public void createNeighborMapForAdjacentAndDiagonal(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    for(int row = -1; row<=1; row++) {
+      for(int column = -1; column<=1; column++) {
+        if(!(row==0 && column==0)) {
+          makePositionAndPutIntoMap(row, column, centerCellRow, centerCellColumn, allStatesInCSV);
+        }
+      }
+    }
+  }
+
+  private void makePositionAndPutIntoMap(int row, int column, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    int coordinateDimensions = Integer
+        .parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
+    int[] relativePositionOfNeighbor = new int[coordinateDimensions];
+    relativePositionOfNeighbor[0] = row;
+    relativePositionOfNeighbor[1] = column;
+    putNeighborPositionIntoMap(relativePositionOfNeighbor,
+        centerCellRow, centerCellColumn, allStatesInCSV);
   }
 }

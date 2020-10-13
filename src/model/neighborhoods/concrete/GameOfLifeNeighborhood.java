@@ -56,4 +56,9 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
     }
     return numberOfNeighborsIntList;
   }
+
+  @Override
+  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
+    createNeighborMapForAdjacentAndDiagonal(centerCellRow, centerCellColumn, allStatesInCSV);
+  }
 }
