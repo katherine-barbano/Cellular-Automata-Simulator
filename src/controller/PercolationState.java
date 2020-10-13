@@ -4,7 +4,8 @@ import view.CellFormat.CellColors;
 
 public enum PercolationState implements State{
   OPEN("Open"),
-  BLOCKED("Blocked");
+  BLOCKED("Blocked"),
+  WATER("Water");
 
   private String stateName;
   private CellColors stateColor;
