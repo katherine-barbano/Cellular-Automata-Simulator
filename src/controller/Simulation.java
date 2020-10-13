@@ -2,16 +2,12 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -41,11 +37,6 @@ public abstract class Simulation {
     simulationName = SimulationNameType;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
     simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
-    //rowNumber = findSizeMatrix(simulationFileLocation).get(0);
-    //colNumber = findSizeMatrix(simulationFileLocation).get(1);
-    //cells = determineStatesFromFile();
-    //currentGrid = new Grid(SimulationType.GAME_OF_LIFE, determineStatesFromFile());
-    //currentGrid = new Grid(SimulationNameType, readCellStatesFile());
     currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
@@ -67,17 +58,6 @@ public abstract class Simulation {
             return props.get(s).toString();
           }
         }
-        //InputStream toRead = Simulation.class.getClassLoader().getResourceAsStream(
-         //   "Testing.properties");
-        //InputStream is = Main.class.getResourceAsStream(name);
-        //ResourceBundle test = ResourceBundle.getBundle("resources.View");
-        //ResourceBundle trying = ResourceBundle.getBundle("data/simulationProperties.GameOfLife");
-        //ResourceBundle resources = ResourceBundle.getBundle("Testing");
-        //InputStream trying = Main.class.getClassLoader().getResourceAsStream("resources.Testing");
-        //String output = Main.class.getClassLoader().getResourceAsStream(resources.getString("amma"));
-        //System.out.println(Simulation.class.getClassLoader().getResourceAsStream(trying.getString("kind")));
-        //System.out.println(Simulation.class.getClassLoader().getResourceAsStream(trying.getString("amma")));
-        //System.out.println("loaded now");
       }
       catch (Exception e) {
         String improperPropertiesFileMessage = ResourceBundle.getBundle("resources/ControllerErrors").

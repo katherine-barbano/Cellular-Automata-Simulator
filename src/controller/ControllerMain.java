@@ -66,14 +66,12 @@ public class ControllerMain extends Application {
             selectNewFile());
     currSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
     currSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
-    //currentSimulation.readCellStatesFile();
-    //currSimView.getMyControlButtons().getChooseFile().setOnAction(event -> selectNewFile());
     return myScene;
   }
 
-
   void step () {
     updateShapes(!isPaused);
+    catchError();
   }
 
   private void updateShapes(boolean shouldRun) {
@@ -94,6 +92,13 @@ public class ControllerMain extends Application {
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
     secondDelay += SPEED_CHANGE_AMOUNT;
     System.out.println("decreasing");
+  }
+
+  void catchError() {
+    try {}
+    catch(ControllerException e) {
+      System.out.println("caught the error!");
+    }
   }
 
   void stepByButton() {
@@ -123,7 +128,6 @@ public class ControllerMain extends Application {
       currentStage.setScene(myScene);
       currentStage.show();
     } catch(Exception e) {
-
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
       throw new ControllerException(noFileExceptionMessage);

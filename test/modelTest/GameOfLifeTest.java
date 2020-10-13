@@ -1,6 +1,6 @@
 package modelTest;
 
-import controller.GameOfLifeState;
+import controller.states.GameOfLifeState;
 import controller.State;
 import model.Grid;
 import model.SimulationType;

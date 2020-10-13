@@ -1,10 +1,11 @@
-package controller;
+package controller.states;
 
+import controller.State;
 import java.util.List;
 import java.util.Random;
 import view.CellFormat.CellColors;
 
-public enum WaTorWorldState implements State{
+public enum WaTorWorldState implements State {
   FISH(0, "Fish"),
   SHARK(0, "Shark"),
   EMPTY("Empty");

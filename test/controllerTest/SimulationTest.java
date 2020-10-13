@@ -3,12 +3,9 @@ package controllerTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import controller.GameOfLifeSimulation;
-import controller.GameOfLifeState;
-import controller.Simulation;
-import java.io.IOException;
+import controller.states.GameOfLifeState;
 import java.util.ArrayList;
 import java.util.List;
-import model.SimulationType;
 import org.junit.jupiter.api.Test;
 
 
