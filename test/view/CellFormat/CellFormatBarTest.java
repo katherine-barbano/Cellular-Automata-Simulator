@@ -25,6 +25,7 @@ class CellFormatBarTest extends DukeApplicationTest {
   public static final State ALIVE = GameOfLifeState.ALIVE;
   public static final State DEAD = GameOfLifeState.DEAD;
   public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
+  public static final State[][] TEST_GRID2 ={{DEAD,DEAD,DEAD},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
   private SimulationView myView;
   private Scene myScene;
   private GridDisplay myGridDisplay;
@@ -67,16 +68,29 @@ class CellFormatBarTest extends DukeApplicationTest {
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
 
     assertEquals(CellColors.BLUE, cell.getMyState().getStateColor());
+
+    //Test that cells have Blue Color after updating the grid
+    javafxRun(()->myView.updateGridDisplay(new Grid(SimulationType.GAME_OF_LIFE,TEST_GRID2)));
+    CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
+    assertEquals(CellColors.BLUE, cell2.getMyState().getStateColor());
   }
 
   @Test
   void testImageChoice(){
+    //Test Choosing Starry Night Image for Alive cells
     myStateChooser.setMySelection(ALIVE);
     myImageChooser.setMyChosenImage(CellColors.STARRY_NIGHT);
     clickOn(myImageButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
 
     assertEquals(CellColors.STARRY_NIGHT, cell.getMyState().getStateColor());
+
+    //Test that cells have Starry Night Images after updating the grid
+    javafxRun(()->myView.updateGridDisplay(new Grid(SimulationType.GAME_OF_LIFE,TEST_GRID2)));
+    CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
+    assertEquals(CellColors.STARRY_NIGHT, cell2.getMyState().getStateColor());
+
+
   }
 
 }
