@@ -4,7 +4,9 @@ import controller.states.GameOfLifeState;
 import controller.State;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.Grid;
 import model.SimulationType;
 import view.CellFormat.CellFormatBar;
@@ -120,5 +122,14 @@ public class SimulationView {
    * @return the FileButtonBar
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
+
+  public Grid getCurrentGridInDisplay(){
+    return myGrid;
+  }
+
+  public void addExceptionMessage(String message){
+    Text ExceptionText = new Text(message);
+    myRoot.getChildren().add(ExceptionText);
+  }
 
 }
