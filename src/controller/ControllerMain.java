@@ -26,7 +26,7 @@ public class ControllerMain extends Application {
   public static final int SCREEN_HEIGHT = 400;
   private Scene myScene;
   private Group root;
-  private Simulation currentSimulation;
+  private Simulation currentSimulation = new GameOfLifeSimulation();
   private boolean isPaused;
   private Stage currentStage;
 
@@ -56,7 +56,7 @@ public class ControllerMain extends Application {
    */
   Scene setupScene(int width, int height) {
     root = new Group();
-    currentSimulation = new GameOfLifeSimulation();
+    //currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
     myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
@@ -72,6 +72,7 @@ public class ControllerMain extends Application {
 
   void step () {
     updateShapes(!isPaused);
+    checkChangeSimulation();
   }
 
   private void updateShapes(boolean shouldRun) {
@@ -84,8 +85,22 @@ public class ControllerMain extends Application {
     currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
   }
 
-  void checkChangeSimulation(SimulationView simView) {
-    //currentSimulation = simView.getMySimulationButtons().getSimulationChooserButton().getType();
+  void checkChangeSimulation() {
+    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType() == SimulationType.GAME_OF_LIFE) {
+      currentSimulation = new GameOfLifeSimulation();
+      setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+      System.out.println("game now");
+      currentStage.setScene(myScene);
+      currentStage.show();
+    }
+
+    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType() == SimulationType.PERCOLATION) {
+      currentSimulation = new PercolationSimulation();
+      setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+      System.out.println("percolation now");
+      currentStage.setScene(myScene);
+      currentStage.show();
+    }
   }
 
   void increaseSpeed() {
