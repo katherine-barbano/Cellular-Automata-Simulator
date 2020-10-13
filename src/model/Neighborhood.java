@@ -1,6 +1,7 @@
 package model;
 
 import controller.State;
+import controller.states.GameOfLifeState;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,5 +165,17 @@ public abstract class Neighborhood {
     relativePositionOfNeighbor[1] = column;
     putNeighborPositionIntoMap(relativePositionOfNeighbor,
         centerCellRow, centerCellColumn, allStatesInCSV);
+  }
+
+  public int getNumberOfNeighborsWithGivenState(State targetState) {
+    Map<int[], State> adjacentNeighborsToState = getNeighborPositionToState();
+    int numberNeighbors=0;
+    for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
+      State state = adjacentNeighborsToState.get(neighborPosition);
+      if(state == targetState) {
+        numberNeighbors++;
+      }
+    }
+    return numberNeighbors;
   }
 }
