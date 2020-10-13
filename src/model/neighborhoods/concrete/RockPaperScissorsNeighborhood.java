@@ -24,7 +24,7 @@ public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
     State stateThatBeatsCurrentState = stateThatBeatsCurrentState(currentState);
     int numberOfNeighborsThatBeatCurrentState = getNumberOfNeighborsWithGivenState(stateThatBeatsCurrentState);
     int thresholdValue = Integer.parseInt(getModelResources().getString(THRESHOLD_TO_LOSE_PROPERTIES));
-    if(numberOfNeighborsThatBeatCurrentState > thresholdValue) {
+    if(numberOfNeighborsThatBeatCurrentState >= thresholdValue) {
       return stateThatBeatsCurrentState;
     }
     return currentState;
