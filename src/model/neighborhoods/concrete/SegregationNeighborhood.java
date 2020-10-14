@@ -1,6 +1,7 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
+import controller.states.MovingState;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
@@ -8,6 +9,13 @@ import model.neighborhoods.InfluentialNeighborhood;
 public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   public static final String THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMove";
+  private final String EMPTY_PROPERTIES="emptyStateName";
+  public static final String XAGENT_PROPERTIES="xAgentStateName";
+  public static final String OAGENT_PROPERTIES="oAgentStateName";
+
+  private String xAgentStateName = getModelResources().getString(XAGENT_PROPERTIES);
+  private String oAgentStateName = getModelResources().getString(OAGENT_PROPERTIES);
+  private String emptyStateName = getModelResources().getString(EMPTY_PROPERTIES);
 
   private double thresholdToMove;
 
@@ -35,9 +43,9 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    if(nextState == SegregationState.EMPTY) {
-      State agentO = getAgentFromOverlappingNeighbors(SegregationState.OAGENT, statesOfOverlappingNeighborsOnCell);
-      State agentX = getAgentFromOverlappingNeighbors(SegregationState.XAGENT, statesOfOverlappingNeighborsOnCell);
+    if(nextState.equals(emptyStateName)) {
+      State agentO = getAgentFromOverlappingNeighbors(new MovingState(oAgentStateName), statesOfOverlappingNeighborsOnCell);
+      State agentX = getAgentFromOverlappingNeighbors(new MovingState(xAgentStateName), statesOfOverlappingNeighborsOnCell);
       if(agentX!=null) {
         return agentX;
       }
