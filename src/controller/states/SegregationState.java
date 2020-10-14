@@ -15,11 +15,6 @@ public enum SegregationState implements State {
     this.stateName = nameOfState;
   }
 
-  @Override
-  public int[] getNextPosition() {
-    return new int[0];
-  }
-
   public String toString() {
     return this.stateName;
   }

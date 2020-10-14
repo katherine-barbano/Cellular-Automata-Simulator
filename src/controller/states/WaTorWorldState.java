@@ -55,14 +55,6 @@ public enum WaTorWorldState implements State {
     return this.stateName;
   }
 
-  public void setNextPosition(int[] nextPosition) {
-    this.nextPosition = nextPosition;
-  }
-
-  public void setStateName (String stateName) {
-    this.stateName = stateName;
-  }
-
   public String getStateName() {
     return stateName;
   }

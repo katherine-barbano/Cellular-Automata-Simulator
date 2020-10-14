@@ -62,7 +62,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State handleFishState(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    if(currentState.getAge()>minimumBreedingAge) {
+    if(currentState.getAge()>=minimumBreedingAge) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {
@@ -89,16 +89,13 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     else {
       baby = WaTorWorldState.SHARK;
     }
-
-    //check this? idk if I should put it into the neighbors or not
-    //((WaTorWorldState)babyShark).setNextPositionMove();
+    System.out.println(((WaTorWorldState) baby).getAge());
     replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
 
   private State handleMove(WaTorWorldState currentState, List<int[]> positionsOfEmptyNeighbors, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     ageByOne(currentState);
     currentState.setNextPositionMove(positionsOfEmptyNeighbors);
-    //check this? idk if I should put it into the neighbors or not
     int[] positionToMoveInto = currentState.getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
     deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors, WaTorWorldState.EMPTY);
@@ -172,9 +169,6 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       if(currentState.toString().equals(targetState.toString()) && ((WaTorWorldState)currentState).getAge() > greatestAge) {
         oldestSeaCreature = currentState;
         greatestAge = ((WaTorWorldState) currentState).getAge();
-        ((WaTorWorldState)oldestSeaCreature).setAge(greatestAge);
-        ((WaTorWorldState)oldestSeaCreature).setNextPosition(currentState.getNextPosition());
-        ((WaTorWorldState)oldestSeaCreature).setStateName(((WaTorWorldState)currentState).getStateName());
       }
     }
     if(greatestAge==-1) {

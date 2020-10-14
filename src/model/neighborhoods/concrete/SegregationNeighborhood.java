@@ -3,6 +3,7 @@ package model.neighborhoods.concrete;
 import controller.State;
 import controller.states.SegregationState;
 import java.util.Map;
+import model.ModelException;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
@@ -37,8 +38,25 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     if(nextState == SegregationState.EMPTY) {
-
+      State agentO = getAgentFromOverlappingNeighbors(SegregationState.OAGENT, statesOfOverlappingNeighborsOnCell);
+      State agentX = getAgentFromOverlappingNeighbors(SegregationState.XAGENT, statesOfOverlappingNeighborsOnCell);
+      if(agentX!=null) {
+        return agentX;
+      }
+      else {
+        return agentO;
+      }
     }
     return nextState;
+  }
+
+  private State getAgentFromOverlappingNeighbors(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
+    for(int[] position:statesOfOverlappingNeighborsOnCell.keySet()) {
+      State currentState = statesOfOverlappingNeighborsOnCell.get(position);
+      if(currentState == targetState) {
+        return currentState;
+      }
+    }
+    return null;
   }
 }

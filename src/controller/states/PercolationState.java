@@ -15,11 +15,6 @@ public enum PercolationState implements State {
     this.stateName = nameOfState;
   }
 
-  @Override
-  public int[] getNextPosition() {
-    return new int[] {0,0} ;
-  }
-
   public String toString() {
     return this.stateName;
   }

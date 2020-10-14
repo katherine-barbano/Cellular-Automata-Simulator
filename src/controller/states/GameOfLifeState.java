@@ -29,12 +29,6 @@ public enum GameOfLifeState implements State {
     return stateColor;
   }
 
-
-  @Override
-  public int[] getNextPosition() {
-    return new int[] {0,0} ;
-  }
-
   public int getOrdinal(){
     return this.ordinal();
   }
