@@ -58,10 +58,11 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State handleFishState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
-    if(((MovingState)currentState).nextPositionIsStationary()) {
+    //TODO: bug here preventing fish from getting eaten
+    /*if(((MovingState)currentState).nextPositionIsStationary()) {
       return handleEaten();
-    }
-    else if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge) {
+    }*/
+    if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {

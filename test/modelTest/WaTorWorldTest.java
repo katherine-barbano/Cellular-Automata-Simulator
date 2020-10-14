@@ -152,12 +152,6 @@ class WaTorWorldTest {
       }
     }
 
-    printGrid(gridTurn1);
-    printGrid(gridTurn2);
-    printGrid(gridTurn3);
-    printGrid(gridTurn4);
-    printGrid(gridTurn5);
-
     assertEquals(sharkCount,3);
   }
 
