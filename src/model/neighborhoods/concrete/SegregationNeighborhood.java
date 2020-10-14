@@ -24,7 +24,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-
+    return null;
   }
 
   /***
