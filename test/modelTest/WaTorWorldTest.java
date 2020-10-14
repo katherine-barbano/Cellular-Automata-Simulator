@@ -141,17 +141,18 @@ class WaTorWorldTest {
     Grid gridTurn2 = gridTurn1.getNextGrid();
     Grid gridTurn3 = gridTurn2.getNextGrid();
     Grid gridTurn4 = gridTurn3.getNextGrid();
+    Grid gridTurn5 = gridTurn4.getNextGrid();
 
     int sharkCount = 0;
     for(int row=0;row<3;row++) {
       for(int column=0;column<4;column++) {
-        if(gridTurn4.getCell(row,column).getCurrentState().equals("Shark")) {
+        if(gridTurn5.getCell(row,column).getCurrentState().equals("Shark")) {
           sharkCount++;
         }
       }
     }
 
-    assertEquals(sharkCount,2);
+    assertEquals(sharkCount,3);
   }
 
   @Test
