@@ -1,6 +1,5 @@
 package modelTest;
 
-import controller.states.GameOfLifeState;
 import controller.State;
 import model.Grid;
 import model.SimulationType;
@@ -30,10 +29,10 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeStillLifeBlock() {
     State[][] block = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, block);
@@ -42,11 +41,11 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeStillLifeBeehive() {
     State[][] beehive = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, beehive);
@@ -55,12 +54,12 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeStillLifeLoaf() {
     State[][] loaf = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, loaf);
@@ -69,11 +68,11 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeStillLifeBoat() {
     State[][] boat = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, boat);
@@ -82,11 +81,11 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeStillLifeTub() {
     State[][] tub = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkStillLifeGridsEqual(SimulationType.GAME_OF_LIFE, tub);
@@ -95,19 +94,19 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeOscillatorBlinker() {
     State[][] blinkerInitialState = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     State[][] blinkerOneStepState = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkTwoPeriodOscillator(SimulationType.GAME_OF_LIFE, blinkerInitialState, blinkerOneStepState);
@@ -116,21 +115,21 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeOscillatorBeacon() {
     State[][] beaconInitialState = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     State[][] beaconOneStepState = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     checkTwoPeriodOscillator(SimulationType.GAME_OF_LIFE, beaconInitialState, beaconOneStepState);
@@ -139,15 +138,15 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeAllAliveCellsOnEdge() {
     State[][] edgesInitialState = new State[][] {
-        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
-        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
-        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
+        {new State("Alive"), new State("Alive"), new State("Alive")},
+        {new State("Alive"), new State("Alive"), new State("Alive")},
+        {new State("Alive"), new State("Alive"), new State("Alive")},
     };
 
     State[][] edgesOneStepState = new State[][] {
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
@@ -156,15 +155,15 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeAliveCellsInCorners() {
     State[][] edgesInitialState = new State[][] {
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
     };
 
     State[][] edgesOneStepState = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);
@@ -173,15 +172,15 @@ class GameOfLifeTest {
   @Test
   void getNextGridGameOfLifeEndWithAliveCellsOnFirstTwoRows() {
     State[][] edgesInitialState = new State[][] {
-        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
-        {GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
+        {new State("Alive"), new State("Alive"), new State("Alive")},
+        {new State("Alive"), new State("Alive"), new State("Alive")},
+        {new State("Dead"), new State("Dead"), new State("Dead")},
     };
 
     State[][] edgesOneStepState = new State[][] {
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
-        {GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.ALIVE},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
+        {new State("Alive"), new State("Dead"), new State("Alive")},
+        {new State("Dead"), new State("Alive"), new State("Dead")},
     };
 
     checkExpectedAndActualNextStateGridsEqual(SimulationType.GAME_OF_LIFE, edgesInitialState, edgesOneStepState);

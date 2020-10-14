@@ -1,6 +1,5 @@
 package controller;
 
-import controller.states.GameOfLifeState;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +24,7 @@ public class PercolationSimulation extends Simulation{
 
   @Override
   public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    statesForInteger = new HashMap<>();
+    /*statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     State possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -42,7 +41,8 @@ public class PercolationSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;
+    return cellStates;*/
+    return null;
   }
 
   @Override

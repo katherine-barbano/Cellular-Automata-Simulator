@@ -1,7 +1,6 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
-import controller.states.RockPaperScissorsState;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
@@ -9,6 +8,13 @@ import model.neighborhoods.NonInfluentialNeighborhood;
 public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String THRESHOLD_TO_LOSE_PROPERTIES = "RockPaperScissors_thresholdToLose";
+  public static final String ROCK_PROPERTIES="rockStateName";
+  public static final String PAPER_PROPERTIES="paperStateName";
+  public static final String SCISSORS_PROPERTIES="scissorsStateName";
+
+  private String rockStateName = getModelResources().getString(ROCK_PROPERTIES);
+  private String paperStateName = getModelResources().getString(PAPER_PROPERTIES);
+  private String scissorsStateName = getModelResources().getString(SCISSORS_PROPERTIES);
 
   public RockPaperScissorsNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     super(centerCellRow, centerCellColumn, stateGrid);
@@ -31,13 +37,13 @@ public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
   }
 
   private State stateThatBeatsCurrentState(State currentState) {
-    if(currentState == RockPaperScissorsState.ROCK) {
-      return RockPaperScissorsState.PAPER;
+    if(currentState.equals(rockStateName)) {
+      return new State(paperStateName);
     }
-    else if(currentState == RockPaperScissorsState.PAPER) {
-      return RockPaperScissorsState.SCISSORS;
+    else if(currentState.equals(paperStateName)) {
+      return new State(scissorsStateName);
     }
-    return RockPaperScissorsState.ROCK;
+    return new State(rockStateName);
   }
 
 }

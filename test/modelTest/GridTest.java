@@ -1,6 +1,5 @@
 package modelTest;
 
-import controller.states.GameOfLifeState;
 import controller.State;
 import model.Grid;
 import model.SimulationType;
@@ -13,10 +12,10 @@ class GridTest {
   @Test
   void verifyCellsInSquareInitialGridInstantiation() {
     State[][] states = new State[][]{
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
@@ -26,10 +25,10 @@ class GridTest {
   @Test
   void verifyCellsInNonSquareInitialGridInstantiation() {
     State[][] states = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
@@ -38,17 +37,17 @@ class GridTest {
   @Test
   void gridEquals() {
     State[][] statesOne = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     State[][] statesTwo = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
@@ -59,17 +58,17 @@ class GridTest {
   @Test
   void gridNotEquals() {
     State[][] statesOne = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Alive")}
     };
 
     State[][] statesTwo = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
@@ -80,16 +79,16 @@ class GridTest {
   @Test
   void gridNotEqualsDifferentLengthMatrices() {
     State[][] statesOne = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     State[][] statesTwo = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
@@ -100,10 +99,10 @@ class GridTest {
   @Test
   void stableGrid() {
     State[][] block = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, block);
@@ -113,10 +112,10 @@ class GridTest {
   @Test
   void unstableGrid() {
     State[][] unstableMatrix = new State[][] {
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.ALIVE, GameOfLifeState.ALIVE, GameOfLifeState.DEAD},
-        {GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD, GameOfLifeState.DEAD}
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Alive"), new State("Alive"), new State("Dead")},
+        {new State("Dead"), new State("Dead"), new State("Dead"), new State("Dead")}
     };
 
     Grid grid = new Grid(SimulationType.GAME_OF_LIFE, unstableMatrix);

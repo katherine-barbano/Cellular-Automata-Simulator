@@ -43,6 +43,7 @@ public class CellDisplay extends Rectangle {
   }
 
   private State getNextState(State currentState){
+    /*
     try {
       Method valuesMethod = currentState.getClass().getDeclaredMethod("values");
       Object obj = valuesMethod.invoke(null);
@@ -53,6 +54,8 @@ public class CellDisplay extends Rectangle {
       System.out.println("Enum.values method not found");
       return currentState;
     }
+    */
+    return null;
   }
 
 }

@@ -1,12 +1,17 @@
 package model.neighborhoods.concrete;
 
-import controller.states.PercolationState;
 import controller.State;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class PercolationNeighborhood extends NonInfluentialNeighborhood {
+
+  public static final String OPEN_PROPERTIES="openStateName";
+  public static final String WATER_PROPERTIES="waterStateName";
+
+  private String openStateName = getModelResources().getString(OPEN_PROPERTIES);
+  private String waterStateName = getModelResources().getString(WATER_PROPERTIES);
 
   public PercolationNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     super(centerCellRow, centerCellColumn, stateGrid);
@@ -19,17 +24,17 @@ public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    if(currentState == PercolationState.OPEN) {
+    if(currentState.equals(openStateName)) {
       return handleOpenState();
     }
     return currentState;
   }
 
   private State handleOpenState() {
-    boolean adjacentToWater = neighborPositionToStateContainsState(PercolationState.WATER);
+    boolean adjacentToWater = neighborPositionToStateContainsState(new State(waterStateName));
     if(adjacentToWater) {
-      return PercolationState.WATER;
+      return new State(waterStateName);
     }
-    return PercolationState.OPEN;
+    return new State(openStateName);
   }
 }
