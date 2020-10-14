@@ -54,12 +54,29 @@ public class Grid {
    * @return Grid for one step later
    */
   public Grid getNextGrid() {
+    Grid initialNextGridFromSurroundingStates = getInitialNextGrid();
+    for(int r = 0; r<3; r++) {
+      for(int c = 0; c<4; c++) {
+        initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+      }
+      System.out.println();
+    }
+    System.out.println();
+    Grid nextGridAfterInfluentialNeighborsHaveMoved = getNextGridAfterMove(initialNextGridFromSurroundingStates);
+    return nextGridAfterInfluentialNeighborsHaveMoved;
+  }
+
+  private Grid getInitialNextGrid() {
     Grid nextGridWithOldNeighborhoods = getGridWithNextCells();
     nextGridWithOldNeighborhoods.updateNeighborhoodsWithOldNeighborhoods(this);
-    nextGridWithOldNeighborhoods.updateCellsFromOverlappedNeighborsAfterInitialMove();
-    nextGridWithOldNeighborhoods.updateNeighborhoodsWithNewNeighborhoods();
     Grid nextGridWithNewNeighborhoods = nextGridWithOldNeighborhoods;
     return nextGridWithNewNeighborhoods;
+  }
+
+  private Grid getNextGridAfterMove(Grid initialNextGrid) {
+    initialNextGrid.updateCellsFromOverlappedNeighborsAfterInitialMove();
+    initialNextGrid.updateNeighborhoodsWithNewNeighborhoods();
+    return initialNextGrid;
   }
 
   /***
@@ -71,12 +88,15 @@ public class Grid {
       for(int column = 0; column<cellGrid[0].length; column++) {
         Cell centerCell = cellGrid[row][column];
         Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
+
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
-        //populateStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors, row, column, centerCellNeighborhood);
         populateStatesOfOverlappingNeighborsRedo(centerCellNeighborhood, row, column, statesOfOverlappingNeighbors);
         centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
-        cellGrid[row][column] = centerCell.getCellFromOverlappingNeighbors();
-        updateNewNeighborhood(row,column);
+
+        Cell updatedCell = centerCell.getCellFromOverlappingNeighbors();
+        updatedCell.setNeighborhood(centerCellNeighborhood);
+        cellGrid[row][column] = updatedCell;
+        System.out.println("hi");
       }
     }
   }
@@ -96,7 +116,9 @@ public class Grid {
   }
 
   private void populateStatesOfOverlappingNeighborsRedo(Neighborhood centerNeighborhood, int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
-    centerNeighborhood.printNeighborPositionToState();
+    //centerNeighborhood.printNeighborPositionToState();
+    /*int[] pos = new int[]{0,1};
+    System.out.println(centerNeighborhood.getStateFromNeighborPosition(pos));*/
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = getNeighborhoodsOfNeighbors(centerNeighborhood, row, column);
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
@@ -110,7 +132,7 @@ public class Grid {
     try{
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPositionRelativeToCenterCell[0]][column + neighborPositionRelativeToCenterCell[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
-      neighborhoodOfNeighbor.printNeighborPositionToState();
+      //neighborhoodOfNeighbor.printNeighborPositionToState();
       int[] positionOfCenterCellInNeighborsNeighborhood = negateArray(neighborPositionRelativeToCenterCell);
       State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(
           positionOfCenterCellInNeighborsNeighborhood);

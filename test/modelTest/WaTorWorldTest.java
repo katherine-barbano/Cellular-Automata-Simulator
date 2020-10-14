@@ -20,8 +20,8 @@ class WaTorWorldTest {
   void getNextGridWaTorWorldAllFish() {
     State[][] grid = new State[][] {
         {WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY},
-        {WaTorWorldState.SHARK, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY},
-        {WaTorWorldState.FISH, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY}
+        {WaTorWorldState.EMPTY, WaTorWorldState.FISH, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY},
+        {WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY, WaTorWorldState.EMPTY}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
