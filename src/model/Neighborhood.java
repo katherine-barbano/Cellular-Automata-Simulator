@@ -1,9 +1,7 @@
 package model;
 
 import controller.State;
-import controller.states.GameOfLifeState;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -54,7 +52,7 @@ public abstract class Neighborhood {
 
   public boolean neighborPositionToStateContainsState(State target) {
     for(int[] position:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(position) == target) {
+      if(neighborPositionToState.get(position).equals(target)) {
         return true;
       }
     }
@@ -172,7 +170,7 @@ public abstract class Neighborhood {
     int numberNeighbors=0;
     for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
       State state = adjacentNeighborsToState.get(neighborPosition);
-      if(state == targetState) {
+      if(state.equals(targetState)) {
         numberNeighbors++;
       }
     }

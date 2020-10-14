@@ -1,6 +1,5 @@
 package controller;
 
-import controller.states.GameOfLifeState;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;

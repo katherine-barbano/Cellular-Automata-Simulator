@@ -1,9 +1,7 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
-import controller.states.SegregationState;
 import java.util.Map;
-import model.ModelException;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 

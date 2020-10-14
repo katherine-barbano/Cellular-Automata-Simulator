@@ -3,8 +3,6 @@ package view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import controller.GameOfLifeSimulation;
-import controller.Simulation;
-import controller.states.GameOfLifeState;
 import controller.State;
 import java.io.File;
 import java.io.FileNotFoundException;

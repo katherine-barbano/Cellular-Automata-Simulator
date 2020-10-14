@@ -1,7 +1,6 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
-import controller.states.SpreadingOfFireState;
 import java.util.Map;
 import java.util.Random;
 import model.Neighborhood;

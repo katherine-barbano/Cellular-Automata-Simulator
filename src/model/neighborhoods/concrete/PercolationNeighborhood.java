@@ -1,6 +1,5 @@
 package model.neighborhoods.concrete;
 
-import controller.states.PercolationState;
 import controller.State;
 import java.util.Map;
 import model.Neighborhood;

@@ -2,7 +2,6 @@ package view.CellFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import controller.states.GameOfLifeState;
 import controller.State;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

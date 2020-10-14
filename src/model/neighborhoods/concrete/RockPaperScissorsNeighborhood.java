@@ -1,7 +1,6 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
-import controller.states.RockPaperScissorsState;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;

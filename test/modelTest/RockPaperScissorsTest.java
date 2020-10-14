@@ -1,7 +1,6 @@
 package modelTest;
 
 import controller.State;
-import controller.states.RockPaperScissorsState;
 import model.Grid;
 import model.SimulationType;
 import org.junit.jupiter.api.Test;

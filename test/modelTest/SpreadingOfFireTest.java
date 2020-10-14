@@ -1,10 +1,6 @@
 package modelTest;
 
 import controller.State;
-import controller.states.PercolationState;
-import controller.states.RockPaperScissorsState;
-import controller.states.SpreadingOfFireState;
-import java.util.Random;
 import model.Grid;
 import model.Neighborhood;
 import model.SimulationType;
