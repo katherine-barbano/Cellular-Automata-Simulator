@@ -55,13 +55,6 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid initialNextGridFromSurroundingStates = getInitialNextGrid();
-    for(int r = 0; r<3; r++) {
-      for(int c = 0; c<4; c++) {
-        initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
-      }
-      System.out.println();
-    }
-    System.out.println();
     Grid nextGridAfterInfluentialNeighborsHaveMoved = getNextGridAfterMove(initialNextGridFromSurroundingStates);
     return nextGridAfterInfluentialNeighborsHaveMoved;
   }
@@ -96,7 +89,6 @@ public class Grid {
         Cell updatedCell = centerCell.getCellFromOverlappingNeighbors();
         updatedCell.setNeighborhood(centerCellNeighborhood);
         cellGrid[row][column] = updatedCell;
-        System.out.println("hi");
       }
     }
   }
@@ -116,9 +108,6 @@ public class Grid {
   }
 
   private void populateStatesOfOverlappingNeighborsRedo(Neighborhood centerNeighborhood, int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
-    //centerNeighborhood.printNeighborPositionToState();
-    /*int[] pos = new int[]{0,1};
-    System.out.println(centerNeighborhood.getStateFromNeighborPosition(pos));*/
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = getNeighborhoodsOfNeighbors(centerNeighborhood, row, column);
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
@@ -132,7 +121,6 @@ public class Grid {
     try{
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPositionRelativeToCenterCell[0]][column + neighborPositionRelativeToCenterCell[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
-      //neighborhoodOfNeighbor.printNeighborPositionToState();
       int[] positionOfCenterCellInNeighborsNeighborhood = negateArray(neighborPositionRelativeToCenterCell);
       State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(
           positionOfCenterCellInNeighborsNeighborhood);
