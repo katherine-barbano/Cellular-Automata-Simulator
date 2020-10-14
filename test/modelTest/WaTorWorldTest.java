@@ -49,6 +49,8 @@ class WaTorWorldTest {
     Grid expected3 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome3);
     Grid expected4 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome4);
 
+    printGrid(actualNextGrid);
+
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
 

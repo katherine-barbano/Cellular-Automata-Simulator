@@ -195,4 +195,8 @@ public abstract class Neighborhood {
     }
     return numberNeighbors;
   }
+
+  public int getNumberOfNeighbors() {
+    return neighborPositionToState.size();
+  }
 }

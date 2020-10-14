@@ -40,17 +40,6 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     }
   }
 
-  private List<int[]> positionsOfTargetStateNeighbors(State state) {
-    List<int[]> emptyIndices = new ArrayList<>();
-    Map<int[], State> neighborPositionToState = getNeighborPositionToState();
-    for(int[] thisKey:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(thisKey).equals(state)) {
-        emptyIndices.add(thisKey);
-      }
-    }
-    return emptyIndices;
-  }
-
   private State handleSharkState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
     List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(fishStateName));
 
@@ -61,7 +50,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors);
+      return handleMove(currentState);
     }
     else {
       return handleAgingAndStationary(currentState);
@@ -76,7 +65,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors);
+      return handleMove(currentState);
     }
     else {
       return handleAgingAndStationary(currentState);
@@ -102,13 +91,9 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
 
-  private State handleMove(State currentState, List<int[]> positionsOfEmptyNeighbors) {
+  private State handleMove(State currentState) {
     ageByOne(currentState);
-    ((MovingState)currentState).setNextPositionMove(positionsOfEmptyNeighbors);
-    int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();
-    replaceNeighborStateWithNewState(positionToMoveInto,currentState);
-    deleteMovedStateFromNeighborhoodsOfNeighbors(new State(emptyStateName));
-    return new State(emptyStateName);
+    return handleMoveToNeighbor(currentState, new State(emptyStateName));
   }
 
   private State handleEat(State currentState, List<int[]> positionsOfFishNeighbors) {

@@ -2,6 +2,7 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.states.MovingState;
+import java.util.List;
 import java.util.Map;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
@@ -29,9 +30,26 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
     createNeighborMapForAdjacentAndDiagonal(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
+  /***
+   * An unsatisfied agent will move into one of its empty neighbors.
+   * Agents were modeled after people, so if an agent is completely surrounded, it cannot move
+   * regardless of whether it is satisfied or not.
+   * @param currentState
+   * @return
+   */
   @Override
   public State getNextState(State currentState) {
-    return null;
+    double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/getNumberOfNeighbors();
+    boolean isSatisfied = thresholdToMove >= percentSameNeighbors;
+    if(currentState.equals(emptyStateName)) {
+      return currentState;
+    }
+    else if(isSatisfied){
+      return currentState;
+    }
+    else {
+      return handleMoveToNeighbor(currentState, new MovingState(emptyStateName));
+    }
   }
 
   /***
