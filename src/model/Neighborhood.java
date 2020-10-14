@@ -26,7 +26,7 @@ public abstract class Neighborhood {
     createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
+  public abstract State getNextState(State currentState);
 
   public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
 
@@ -65,11 +65,20 @@ public abstract class Neighborhood {
     return neighborPositionToState;
   }
 
-  void setNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  public void setNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
     this.neighborhoodsOfNeighbors = neighborhoodsOfNeighbors;
   }
 
-  Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {
+  public Neighborhood findPositionInNeighborhoodOfNeighbors(int[] openPosition) {
+    for(int[] position:neighborhoodsOfNeighbors.keySet()) {
+      if(position[0] == openPosition[0] && position[1] == openPosition[1]) {
+        return neighborhoodsOfNeighbors.get(position);
+      }
+    }
+    throw new ModelException("Eaten not found");
+  }
+
+  public Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {
     return neighborhoodsOfNeighbors;
   }
 

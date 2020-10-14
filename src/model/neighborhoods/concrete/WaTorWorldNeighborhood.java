@@ -26,14 +26,14 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   @Override
-  public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  public State getNextState(State currentState) {
     List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(emptyStateName));
     int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
     if(currentState.equals(sharkStateName)) {
-      return handleSharkState(currentState, positionsOfEmptyNeighbors, minimumBreedingAge, neighborhoodsOfNeighbors);
+      return handleSharkState(currentState, positionsOfEmptyNeighbors, minimumBreedingAge);
     }
     else if(currentState.equals(fishStateName)) {
-      return handleFishState(currentState, positionsOfEmptyNeighbors, minimumBreedingAge, neighborhoodsOfNeighbors);
+      return handleFishState(currentState, positionsOfEmptyNeighbors, minimumBreedingAge);
     }
     else {
       return handleEmptyState();
@@ -51,24 +51,24 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     return emptyIndices;
   }
 
-  private State handleSharkState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  private State handleSharkState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
     List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(fishStateName));
 
     if(positionsOfFishNeighbors.size()>0) {
-      return handleEat(currentState, positionsOfEmptyNeighbors, neighborhoodsOfNeighbors);
+      return handleEat(currentState, positionsOfEmptyNeighbors);
     }
     else if(((MovingStateWithAge)currentState).getAge()>minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors, neighborhoodsOfNeighbors);
+      return handleMove(currentState, positionsOfEmptyNeighbors);
     }
     else {
       return handleAgingAndStationary(currentState);
     }
   }
 
-  private State handleFishState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  private State handleFishState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
     if(((MovingState)currentState).nextPositionIsStationary()) {
       return handleEaten();
     }
@@ -76,7 +76,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {
-      return handleMove(currentState, positionsOfEmptyNeighbors, neighborhoodsOfNeighbors);
+      return handleMove(currentState, positionsOfEmptyNeighbors);
     }
     else {
       return handleAgingAndStationary(currentState);
@@ -102,32 +102,24 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
 
-  private State handleMove(State currentState, List<int[]> positionsOfEmptyNeighbors, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  private State handleMove(State currentState, List<int[]> positionsOfEmptyNeighbors) {
     ageByOne(currentState);
     ((MovingState)currentState).setNextPositionMove(positionsOfEmptyNeighbors);
     int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
-    deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors, new State(emptyStateName));
+    deleteMovedStateFromNeighborhoodsOfNeighbors(getNeighborhoodsOfNeighbors(), new State(emptyStateName));
     return new State(emptyStateName);
   }
 
-  private State handleEat(State currentState, List<int[]> positionsOfEmptyNeighbors, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  private State handleEat(State currentState, List<int[]> positionsOfEmptyNeighbors) {
     handleAgingAndStationary(currentState);
     State empty = new State(emptyStateName);
     int[] openPosition = ((MovingState)currentState).getOpenPosition(positionsOfEmptyNeighbors);
-    Neighborhood neighborhoodOfEaten = findEatenInNeighborhood(openPosition, neighborhoodsOfNeighbors);
+    Neighborhood neighborhoodOfEaten = findPositionInNeighborhoodOfNeighbors(openPosition);
     replaceNeighborStateWithNewState(openPosition,empty);
-    ((InfluentialNeighborhood)neighborhoodOfEaten).deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors, new State(emptyStateName));
+    Map<int[], Neighborhood> neighborhoodOfEatenNeighbor = neighborhoodOfEaten.getNeighborhoodsOfNeighbors();
+    ((InfluentialNeighborhood)neighborhoodOfEaten).deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodOfEatenNeighbor, new State(emptyStateName));
     return currentState;
-  }
-
-  private Neighborhood findEatenInNeighborhood(int[] openPosition, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    for(int[] position:neighborhoodsOfNeighbors.keySet()) {
-      if(position[0] == openPosition[0] && position[1] == openPosition[1]) {
-        return neighborhoodsOfNeighbors.get(position);
-      }
-    }
-    throw new ModelException("Eaten not found");
   }
 
   private State handleEaten() {
