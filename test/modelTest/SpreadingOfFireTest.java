@@ -1,6 +1,7 @@
 package modelTest;
 
 import controller.State;
+import controller.states.MovingStateWithAge;
 import model.Grid;
 import model.Neighborhood;
 import model.SimulationType;
@@ -70,22 +71,26 @@ class SpreadingOfFireTest {
   @Test
   void getNextStateSpreadingOfFireWithFire() {
     State[][] firstGrid = new State[][] {
-        {new State("Tree"), new State("Empty"), new State("Empty"), new State("Burning")},
-        {new State("Tree"), new State("Burning"), new State("Tree"), new State("Tree")},
-        {new State("Empty"), new State("Burning"), new State("Tree"), new State("Tree")}
+        {new State("Empty"), new State("Empty")},
+        {new State("Tree"), new State("Burning")}
+    };
+
+    State[][] expectGrid1 = new State[][] {
+        {new State("Empty"), new State("Empty")},
+        {new State("Tree"), new State("Empty")}
+    };
+
+    State[][] expectGrid2 = new State[][] {
+        {new State("Empty"), new State("Empty")},
+        {new State("Burning"), new State("Empty")}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
-    Neighborhood neighborhood = currentGrid.getCell(0,2).getNeighborhood();
-    double nextDouble = ((SpreadingOfFireNeighborhood)neighborhood).getNextDoubleOfRandom();
     Grid actualNextGrid = currentGrid.getNextGrid();
+    Grid expectGrid1Result = new Grid(SimulationType.SPREADING_OF_FIRE, expectGrid1);
+    Grid expectGrid2Result = new Grid(SimulationType.SPREADING_OF_FIRE, expectGrid2);
 
-    if(nextDouble>=.15) {
-      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), new State("Burning"));
-    }
-    else {
-      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), new State("Tree"));
-    }
+    assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
   }
 
 }

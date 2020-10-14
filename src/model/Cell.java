@@ -47,7 +47,7 @@ public class Cell {
   }
 
   public boolean equals(Cell otherCell) {
-    boolean statesAreEqual = otherCell.getCurrentState() == currentState;
+    boolean statesAreEqual = otherCell.getCurrentState().equals(currentState);
     boolean neighborhoodsBothNull = neighborhood == null && otherCell.getNeighborhood()==null;
     boolean atLeastOneNeighborhoodNull = neighborhood==null || otherCell.neighborhood==null;
     boolean neighborhoodsAreEqual = false;

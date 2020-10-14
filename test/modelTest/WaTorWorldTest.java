@@ -86,11 +86,16 @@ class WaTorWorldTest {
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
+    printGrid(currentGrid);
 
     Grid expected1 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome1);
+    printGrid(expected1);
     Grid expected2 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome2);
+    printGrid(expected2);
     Grid expected3 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome3);
+    printGrid(expected3);
     Grid expected4 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome4);
+    printGrid(expected4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
@@ -105,15 +110,9 @@ class WaTorWorldTest {
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
-    printGrid(gridTurn1);
     Grid gridTurn2 = gridTurn1.getNextGrid();
-    printGrid(gridTurn2);
     Grid gridTurn3 = gridTurn2.getNextGrid();
-    printGrid(gridTurn3);
     Grid gridTurn4 = gridTurn3.getNextGrid();
-    printGrid(gridTurn4);
-    Grid gridTurn5 = gridTurn4.getNextGrid();
-    printGrid(gridTurn5);
 
     int fishCount = 0;
     for(int row=0;row<3;row++) {
@@ -124,7 +123,7 @@ class WaTorWorldTest {
       }
     }
 
-    assertEquals(fishCount,3);
+    assertEquals(fishCount,4);
   }
 
 
@@ -132,7 +131,7 @@ class WaTorWorldTest {
   private void printGrid(Grid grid) {
     for(int r = 0; r<3; r++) {
       for(int c = 0; c<4; c++) {
-        System.out.print(((MovingStateWithAge)grid.getCell(r,c).getCurrentState()).getAge());
+        System.out.print(grid.getCell(r,c).getCurrentState());
       }
       System.out.println();
     }

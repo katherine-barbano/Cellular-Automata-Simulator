@@ -59,7 +59,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   private State getAgentFromOverlappingNeighbors(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     for(int[] position:statesOfOverlappingNeighborsOnCell.keySet()) {
       State currentState = statesOfOverlappingNeighborsOnCell.get(position);
-      if(currentState == targetState) {
+      if(currentState.equals(targetState)) {
         return currentState;
       }
     }

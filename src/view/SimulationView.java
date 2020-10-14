@@ -20,7 +20,7 @@ public class SimulationView {
   private static final String RESOURCES = "resources/";
   public static final String STYLESHEET = "view.css";
   public static final String RESOURCE_BUNDLE = "View";
-  public static final State[] STATES_PLACEHOLDER = GameOfLifeState.values();
+  //public static final State[] STATES_PLACEHOLDER = GameOfLifeState.values();
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -77,7 +77,7 @@ public class SimulationView {
 
     myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
-    myCellFormatBar = new CellFormatBar(myGridDisplay, STATES_PLACEHOLDER, myBundle);
+    //myCellFormatBar = new CellFormatBar(myGridDisplay, STATES_PLACEHOLDER, myBundle);
   }
 
   private void addUIElementsToRoot(){

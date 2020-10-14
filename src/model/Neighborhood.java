@@ -119,7 +119,7 @@ public abstract class Neighborhood {
         }
       }
 
-      if(!thisNeighborContainsKey || otherNeighborPositionToState.get(otherKey) != thisNeighborPositionToState.get(thisNeighborKey)) {
+      if(!thisNeighborContainsKey || !otherNeighborPositionToState.get(otherKey).equals(thisNeighborPositionToState.get(thisNeighborKey))) {
         return false;
       }
     }

@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class SimulationViewTest extends DukeApplicationTest {
-  public static final State ALIVE = GameOfLifeState.ALIVE;
-  public static final State DEAD = GameOfLifeState.DEAD;
+  public static final State ALIVE = new State("Alive");
+  public static final State DEAD = new State("Dead");
 
   public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
   private SimulationView myView;
