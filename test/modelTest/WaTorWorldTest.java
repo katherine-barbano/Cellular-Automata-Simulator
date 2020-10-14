@@ -155,15 +155,15 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkEatFish() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
         {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
     };
 
     State[][] outcome = new State[][] {
         {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -174,6 +174,52 @@ class WaTorWorldTest {
 
     assertTrue(outcomeGrid.equals(gridTurn1));
   }
+
+  @Test
+  void getNextGridWaTorWorldSharkSurroundedFish() {
+    State[][] grid = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    State[][] outcome1 = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    State[][] outcome2 = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    State[][] outcome3 = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    State[][] outcome4 = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+
+    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid gridTurn1 = currentGrid.getNextGrid();
+    Grid outcomeGrid1 = new Grid(SimulationType.WATOR_WORLD,outcome1);
+    Grid outcomeGrid2 = new Grid(SimulationType.WATOR_WORLD,outcome2);
+    Grid outcomeGrid3 = new Grid(SimulationType.WATOR_WORLD,outcome3);
+    Grid outcomeGrid4 = new Grid(SimulationType.WATOR_WORLD,outcome4);
+
+    printGrid(gridTurn1);
+
+    assertTrue(outcomeGrid1.equals(gridTurn1) || outcomeGrid2.equals(gridTurn1) || outcomeGrid3.equals(gridTurn1) || outcomeGrid4.equals(gridTurn1));
+  }
+
 
   @Test
   void getNextGridWaTorWorldAllFish() {

@@ -51,8 +51,4 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
     nextDouble = random.nextDouble();
     return actualEvent>=probabilityCatchFire;
   }
-
-  public double getNextDoubleOfRandom() {
-    return nextDouble;
-  }
 }

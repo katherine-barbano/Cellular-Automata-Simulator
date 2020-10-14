@@ -16,11 +16,13 @@ public abstract class Neighborhood {
   public static final String KEY_NOT_FOUND_PROPERTIES = "neighborPositionNotFound";
 
   private Map<int[], State> neighborPositionToState;
+  private Map<int[], Neighborhood> neighborhoodsOfNeighbors;
   private ResourceBundle modelResources;
 
   public Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     neighborPositionToState = new HashMap<>();
+    neighborhoodsOfNeighbors = new HashMap<>();
     createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
@@ -61,6 +63,14 @@ public abstract class Neighborhood {
 
   public Map<int[], State> getNeighborPositionToState() {
     return neighborPositionToState;
+  }
+
+  void setNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    this.neighborhoodsOfNeighbors = neighborhoodsOfNeighbors;
+  }
+
+  Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {
+    return neighborhoodsOfNeighbors;
   }
 
   public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
