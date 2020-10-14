@@ -68,6 +68,9 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State handleFishState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    if(neighborPositionToStateContainsState(new MovingStateWithAge(sharkStateName))) {
+      return handleEmptyState();
+    }
     if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }

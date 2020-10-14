@@ -126,6 +126,73 @@ class WaTorWorldTest {
     assertEquals(fishCount,4);
   }
 
+  @Test
+  void getNextGridWaTorWorldSharkBreed() {
+    State[][] grid = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid gridTurn1 = currentGrid.getNextGrid();
+    Grid gridTurn2 = gridTurn1.getNextGrid();
+    Grid gridTurn3 = gridTurn2.getNextGrid();
+    Grid gridTurn4 = gridTurn3.getNextGrid();
+
+    int sharkCount = 0;
+    for(int row=0;row<3;row++) {
+      for(int column=0;column<4;column++) {
+        if(gridTurn4.getCell(row,column).getCurrentState().equals("Shark")) {
+          sharkCount++;
+        }
+      }
+    }
+
+    assertEquals(sharkCount,2);
+  }
+
+  @Test
+  void getNextGridWaTorWorldSharkEatFish() {
+    State[][] grid = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    State[][] outcome = new State[][] {
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+    };
+
+    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid gridTurn1 = currentGrid.getNextGrid();
+    Grid outcomeGrid = new Grid(SimulationType.WATOR_WORLD,outcome);
+
+    printGrid(gridTurn1);
+
+    assertTrue(outcomeGrid.equals(gridTurn1));
+  }
+
+  @Test
+  void getNextGridWaTorWorldAllFish() {
+    State[][] grid = new State[][] {
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")}
+    };
+
+    State[][] outcome = new State[][] {
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")},
+        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")}
+    };
+
+    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid gridTurn1 = currentGrid.getNextGrid();
+    Grid outcomeGrid = new Grid(SimulationType.WATOR_WORLD,outcome);
+
+    assertTrue(outcomeGrid.equals(gridTurn1));
+  }
 
   //for help debugging
   private void printGrid(Grid grid) {
