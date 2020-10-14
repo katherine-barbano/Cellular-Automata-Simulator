@@ -28,8 +28,8 @@ public class Cell {
     this.currentState = state;
   }
 
-  Cell getNextCell(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
-    State nextState = neighborhood.getNextState(currentState, neighborhoodsOfNeighbors);
+  Cell getNextCell() {
+    State nextState = neighborhood.getNextState(currentState);
     Cell nextCell = new Cell(nextState);
     return nextCell;
   }
@@ -66,6 +66,14 @@ public class Cell {
 
   void setStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors) {
     statesOfOverlappingNeighborsOnCell = statesOfOverlappingNeighbors;
+  }
+
+  void setNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    neighborhood.setNeighborhoodsOfNeighbors(neighborhoodsOfNeighbors);
+  }
+
+  Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {
+    return neighborhood.getNeighborhoodsOfNeighbors();
   }
 
   public void setCurrentState(State state) {

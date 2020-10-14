@@ -16,15 +16,17 @@ public abstract class Neighborhood {
   public static final String KEY_NOT_FOUND_PROPERTIES = "neighborPositionNotFound";
 
   private Map<int[], State> neighborPositionToState;
+  private Map<int[], Neighborhood> neighborhoodsOfNeighbors;
   private ResourceBundle modelResources;
 
   public Neighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     neighborPositionToState = new HashMap<>();
+    neighborhoodsOfNeighbors = new HashMap<>();
     createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public abstract State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors);
+  public abstract State getNextState(State currentState);
 
   public abstract State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell);
 
@@ -61,6 +63,23 @@ public abstract class Neighborhood {
 
   public Map<int[], State> getNeighborPositionToState() {
     return neighborPositionToState;
+  }
+
+  public void setNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+    this.neighborhoodsOfNeighbors = neighborhoodsOfNeighbors;
+  }
+
+  public Neighborhood findPositionInNeighborhoodOfNeighbors(int[] openPosition) {
+    for(int[] position:neighborhoodsOfNeighbors.keySet()) {
+      if(position[0] == openPosition[0] && position[1] == openPosition[1]) {
+        return neighborhoodsOfNeighbors.get(position);
+      }
+    }
+    throw new ModelException("Eaten not found");
+  }
+
+  public Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {
+    return neighborhoodsOfNeighbors;
   }
 
   public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
@@ -175,5 +194,9 @@ public abstract class Neighborhood {
       }
     }
     return numberNeighbors;
+  }
+
+  public int getNumberOfNeighbors() {
+    return neighborPositionToState.size();
   }
 }

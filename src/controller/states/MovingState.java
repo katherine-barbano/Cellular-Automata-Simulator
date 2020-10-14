@@ -19,6 +19,10 @@ public class MovingState extends State {
     return this.nextPosition;
   }
 
+  public boolean nextPositionIsStationary() {
+    return nextPosition[0] == 0 && nextPosition[1] == 0;
+  }
+
   public void setNextPositionMove(List<int[]> newOpenPositions) {
     this.nextPosition = getOpenPosition((newOpenPositions));
   }
