@@ -11,10 +11,10 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
     super(centerCellRow, centerCellColumn, stateGrid);
   }
 
-  public void deleteMovedStateFromNeighborhoodsOfNeighbors(Map<int[], Neighborhood> neighborhoodsOfNeighbors, State newState) {
-    for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
+  public void deleteMovedStateFromNeighborhoodsOfNeighbors(State newState) {
+    for(int[] neighborPosition : getNeighborhoodsOfNeighbors().keySet()) {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
-      Neighborhood neighborhoodOfNeighbor = neighborhoodsOfNeighbors.get(neighborPosition);
+      Neighborhood neighborhoodOfNeighbor = getNeighborhoodsOfNeighbors().get(neighborPosition);
       neighborhoodOfNeighbor.replaceNeighborStateWithNewState(positionOfCenterCellInNeighbor,newState);
     }
   }

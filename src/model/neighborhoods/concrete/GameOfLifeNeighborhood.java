@@ -22,7 +22,7 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
   }
 
   @Override
-  public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  public State getNextState(State currentState) {
     State nextState = new State(deadStateName);
     int numberOfLivingNeighbors = getNumberOfNeighborsWithGivenState(new State(aliveStateName));
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);

@@ -33,7 +33,7 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
   }
 
   @Override
-  public State getNextState(State currentState, Map<int[], Neighborhood> neighborhoodsOfNeighbors) {
+  public State getNextState(State currentState) {
     if(!currentState.equals(treeStateName)) {
       return new State(emptyStateName);
     }

@@ -155,9 +155,9 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkEatFish() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
         {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
     };
 
     State[][] outcome = new State[][] {

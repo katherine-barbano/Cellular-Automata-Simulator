@@ -55,7 +55,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(fishStateName));
 
     if(positionsOfFishNeighbors.size()>0) {
-      return handleEat(currentState, positionsOfEmptyNeighbors);
+      return handleEat(currentState, positionsOfFishNeighbors);
     }
     else if(((MovingStateWithAge)currentState).getAge()>minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
@@ -107,18 +107,17 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     ((MovingState)currentState).setNextPositionMove(positionsOfEmptyNeighbors);
     int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
-    deleteMovedStateFromNeighborhoodsOfNeighbors(getNeighborhoodsOfNeighbors(), new State(emptyStateName));
+    deleteMovedStateFromNeighborhoodsOfNeighbors(new State(emptyStateName));
     return new State(emptyStateName);
   }
 
-  private State handleEat(State currentState, List<int[]> positionsOfEmptyNeighbors) {
+  private State handleEat(State currentState, List<int[]> positionsOfFishNeighbors) {
     handleAgingAndStationary(currentState);
     State empty = new State(emptyStateName);
-    int[] openPosition = ((MovingState)currentState).getOpenPosition(positionsOfEmptyNeighbors);
+    int[] openPosition = ((MovingState)currentState).getOpenPosition(positionsOfFishNeighbors);
     Neighborhood neighborhoodOfEaten = findPositionInNeighborhoodOfNeighbors(openPosition);
     replaceNeighborStateWithNewState(openPosition,empty);
-    Map<int[], Neighborhood> neighborhoodOfEatenNeighbor = neighborhoodOfEaten.getNeighborhoodsOfNeighbors();
-    ((InfluentialNeighborhood)neighborhoodOfEaten).deleteMovedStateFromNeighborhoodsOfNeighbors(neighborhoodOfEatenNeighbor, new State(emptyStateName));
+    ((InfluentialNeighborhood)neighborhoodOfEaten).deleteMovedStateFromNeighborhoodsOfNeighbors(new State(emptyStateName));
     return currentState;
   }
 
