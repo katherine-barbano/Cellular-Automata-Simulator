@@ -13,13 +13,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireEmpty() {
     State[][] firstGrid = new State[][] {
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.EMPTY},
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.EMPTY}
+        {new State("Empty"), new State("Empty")},
+        {new State("Empty"), new State("Empty")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.EMPTY},
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.EMPTY}
+        {new State("Empty"), new State("Empty")},
+        {new State("Empty"), new State("Empty")}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -32,13 +32,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireTrees() {
     State[][] firstGrid = new State[][] {
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.TREE},
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.TREE}
+        {new State("Tree"), new State("Tree")},
+        {new State("Tree"), new State("Tree")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.TREE},
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.TREE}
+        {new State("Tree"), new State("Tree")},
+        {new State("Tree"), new State("Tree")}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -51,13 +51,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireTreesAndEmpty() {
     State[][] firstGrid = new State[][] {
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.EMPTY},
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.TREE}
+        {new State("Tree"), new State("Empty")},
+        {new State("Empty"), new State("Tree")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.EMPTY},
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.TREE}
+        {new State("Tree"), new State("Empty")},
+        {new State("Empty"), new State("Tree")}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -70,9 +70,9 @@ class SpreadingOfFireTest {
   @Test
   void getNextStateSpreadingOfFireWithFire() {
     State[][] firstGrid = new State[][] {
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.EMPTY, SpreadingOfFireState.EMPTY, SpreadingOfFireState.BURNING},
-        {SpreadingOfFireState.TREE, SpreadingOfFireState.BURNING, SpreadingOfFireState.TREE, SpreadingOfFireState.TREE},
-        {SpreadingOfFireState.EMPTY, SpreadingOfFireState.BURNING, SpreadingOfFireState.TREE, SpreadingOfFireState.TREE}
+        {new State("Tree"), new State("Empty"), new State("Empty"), new State("Burning")},
+        {new State("Tree"), new State("Burning"), new State("Tree"), new State("Tree")},
+        {new State("Empty"), new State("Burning"), new State("Tree"), new State("Tree")}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -81,10 +81,10 @@ class SpreadingOfFireTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
 
     if(nextDouble>=.15) {
-      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), SpreadingOfFireState.BURNING);
+      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), new State("Burning"));
     }
     else {
-      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), SpreadingOfFireState.TREE);
+      assertEquals(actualNextGrid.getCell(1,0).getCurrentState(), new State("Tree"));
     }
   }
 

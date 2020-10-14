@@ -7,14 +7,10 @@ public class MovingStateWithAge extends MovingState {
 
   private int age;
 
-  public MovingStateWithAge(int defaultAge, String nameOfState){
+  public MovingStateWithAge(String nameOfState){
     super(nameOfState);
-    this.age = defaultAge;
+    this.age = 0;
     setNextPositionStationary();
-  }
-
-  public MovingStateWithAge(String nameOfState) {
-    super(nameOfState);
   }
 
   public int getAge(){

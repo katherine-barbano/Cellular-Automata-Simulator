@@ -11,21 +11,21 @@ class PercolationTest {
   @Test
   void getNextGridPercolationNoBlocks() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.WATER, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Open"), new State("Open"), new State("Open")},
+        {new State("Open"), new State("Water"), new State("Open")},
+        {new State("Open"), new State("Open"), new State("Open")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.WATER, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.WATER},
-        {PercolationState.OPEN, PercolationState.WATER, PercolationState.OPEN}
+        {new State("Open"), new State("Water"), new State("Open")},
+        {new State("Water"), new State("Water"), new State("Water")},
+        {new State("Open"), new State("Water"), new State("Open")}
     };
 
     State[][] expectedGrid2 = new State[][] {
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.WATER},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.WATER},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.WATER}
+        {new State("Water"), new State("Water"), new State("Water")},
+        {new State("Water"), new State("Water"), new State("Water")},
+        {new State("Water"), new State("Water"), new State("Water")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
@@ -43,15 +43,15 @@ class PercolationTest {
   @Test
   void getNextGridPercolationWaterIsTrapped() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.BLOCKED, PercolationState.WATER, PercolationState.BLOCKED, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")},
+        {new State("Blocked"), new State("Water"), new State("Blocked"), new State("Open")},
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.BLOCKED, PercolationState.WATER, PercolationState.BLOCKED, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")},
+        {new State("Blocked"), new State("Water"), new State("Blocked"), new State("Open")},
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
@@ -64,15 +64,15 @@ class PercolationTest {
   @Test
   void getNextGridPercolationWaterOnEdge() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Open"), new State("Open"), new State("Open")},
+        {new State("Water"), new State("Open"), new State("Open")},
+        {new State("Open"), new State("Open"), new State("Open")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Water"), new State("Open"), new State("Open")},
+        {new State("Water"), new State("Water"), new State("Open")},
+        {new State("Water"), new State("Open"), new State("Open")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
@@ -85,15 +85,15 @@ class PercolationTest {
   @Test
   void getNextGridPercolationTwoWaterSources() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.WATER},
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Open"), new State("Open"), new State("Open")},
+        {new State("Water"), new State("Open"), new State("Water")},
+        {new State("Open"), new State("Open"), new State("Open")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.WATER},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.WATER},
-        {PercolationState.WATER, PercolationState.OPEN, PercolationState.WATER}
+        {new State("Water"), new State("Open"), new State("Water")},
+        {new State("Water"), new State("Water"), new State("Water")},
+        {new State("Water"), new State("Open"), new State("Water")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
@@ -106,15 +106,15 @@ class PercolationTest {
   @Test
   void getNextGridPercolationNoWater() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Blocked"), new State("Open"), new State("Open"), new State("Open")},
+        {new State("Open"), new State("Open"), new State("Blocked"), new State("Open")},
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN}
+        {new State("Blocked"), new State("Open"), new State("Open"), new State("Open")},
+        {new State("Open"), new State("Open"), new State("Blocked"), new State("Open")},
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Open")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
@@ -127,15 +127,15 @@ class PercolationTest {
   @Test
   void getNextGridPercolationMixOfThreeStates() {
     State[][] firstGrid = new State[][] {
-        {PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.WATER, PercolationState.BLOCKED, PercolationState.OPEN},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.OPEN, PercolationState.WATER}
+        {new State("Blocked"), new State("Open"), new State("Open"), new State("Open")},
+        {new State("Open"), new State("Water"), new State("Blocked"), new State("Open")},
+        {new State("Open"), new State("Blocked"), new State("Open"), new State("Water")}
     };
 
     State[][] expectedGrid = new State[][] {
-        {PercolationState.BLOCKED, PercolationState.WATER, PercolationState.OPEN, PercolationState.OPEN},
-        {PercolationState.WATER, PercolationState.WATER, PercolationState.BLOCKED, PercolationState.WATER},
-        {PercolationState.OPEN, PercolationState.BLOCKED, PercolationState.WATER, PercolationState.WATER}
+        {new State("Blocked"), new State("Water"), new State("Open"), new State("Open")},
+        {new State("Water"), new State("Water"), new State("Blocked"), new State("Water")},
+        {new State("Open"), new State("Blocked"), new State("Water"), new State("Water")}
     };
 
     Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
