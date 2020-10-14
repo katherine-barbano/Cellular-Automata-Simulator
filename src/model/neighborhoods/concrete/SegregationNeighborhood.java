@@ -40,7 +40,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getNextState(State currentState) {
     double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/getNumberOfNeighbors();
-    boolean isSatisfied = thresholdToMove >= percentSameNeighbors;
+    boolean isSatisfied = thresholdToMove <= percentSameNeighbors;
     if(currentState.equals(emptyStateName)) {
       return currentState;
     }
@@ -67,7 +67,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
       if(agentX!=null) {
         return agentX;
       }
-      else {
+      else if(agentO!=null){
         return agentO;
       }
     }
