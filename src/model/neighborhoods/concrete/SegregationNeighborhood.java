@@ -48,7 +48,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
       return currentState;
     }
     else {
-      return handleMoveToNeighbor(currentState, new MovingState(emptyStateName));
+      return handleMoveToNeighbor(currentState, new State(emptyStateName));
     }
   }
 

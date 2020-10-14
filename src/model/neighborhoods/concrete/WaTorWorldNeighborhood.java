@@ -46,7 +46,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     if(positionsOfFishNeighbors.size()>0) {
       return handleEat(currentState, positionsOfFishNeighbors);
     }
-    else if(((MovingStateWithAge)currentState).getAge()>minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
+    else if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
