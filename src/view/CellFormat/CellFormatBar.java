@@ -1,6 +1,7 @@
 package view.CellFormat;
 
 import controller.State;
+import controller.StateType;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
@@ -15,14 +16,14 @@ public class CellFormatBar extends HBox {
 
   public static final int BUTTON_BAR_HEIGHT = 50;
   private GridDisplay myGridDisplay;
-  private State[] myPossibleStates;
+  private StateType[] myPossibleStates;
   private CellColorChooser myColorChoice;
   private ImageChooser myImageChoice;
   private StateChooser myStateChoice;
   private Button myFormatButton;
   private Button myImageChooserButton;
 
-  public CellFormatBar(GridDisplay gridDisplay, State[] possibleStates, ResourceBundle resources) {
+  public CellFormatBar(GridDisplay gridDisplay, StateType[] possibleStates, ResourceBundle resources) {
     super();
 
     this.myPossibleStates = possibleStates;
@@ -52,18 +53,18 @@ public class CellFormatBar extends HBox {
   }
 
    private void updateCellColor() {
-    State chosenState = myStateChoice.getMySelection();
+    StateType chosenState = myStateChoice.getMySelection();
     CellColors chosenColor= myColorChoice.getChosenColor();
     updateAllCellsWithChosenState(chosenState,chosenColor);
   }
 
   private void updateCellImage() {
-    State chosenState = myStateChoice.getMySelection();
+    StateType chosenState = myStateChoice.getMySelection();
     CellColors chosenImage = myImageChoice.getChosenImage();
     updateAllCellsWithChosenState(chosenState,chosenImage);
   }
 
-  private void updateAllCellsWithChosenState(State chosenState, CellColors chosenFill){
+  private void updateAllCellsWithChosenState(StateType chosenState, CellColors chosenFill){
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for (CellDisplay cell : cellsWithChosenState) {
       cell.setFill(chosenFill.getCellColor());

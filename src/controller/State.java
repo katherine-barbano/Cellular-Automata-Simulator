@@ -5,15 +5,15 @@ import view.CellFormat.CellColors;
 
 public class State {
 
-  private String stateName;
+  private StateType stateType;
   private CellColors stateColor;
 
-  public State(String stateName) {
-    this.stateName = stateName;
+  public State(StateType stateName) {
+    this.stateType = stateName;
   }
 
-  public String toString() {
-    return this.stateName;
+  public StateType getStateType(){
+    return stateType;
   }
 
   public void setStateColor(CellColors color){
@@ -25,10 +25,10 @@ public class State {
   }
 
   public boolean equals(State otherState) {
-    return stateName.equals(otherState.toString());
+    return stateType == otherState.getStateType();
   }
 
-  public boolean equals(String otherName) {
-    return stateName.equals(otherName);
+  public boolean equals(StateType otherStateType) {
+    return stateType == otherStateType;
   }
 }
