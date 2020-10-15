@@ -1,6 +1,7 @@
 package view;
 
 import controller.State;
+import controller.StateType;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -53,20 +54,19 @@ public class SimulationView {
    * @param height Height of Window
    * @return Scene to be displayed in window
    */
-  public Scene setupScene(SimulationType simulationType, int width, int height) {
+  public Scene setupScene(SimulationType simulationType,  StateType[] states, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
 
-    createUIElements(simulationType);
+    createUIElements(simulationType, states);
     addUIElementsToRoot();
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
-    //scene.setOnMouseClicked(mouseEvent -> handleMouseEvent(mouseEvent));
     return scene;
   }
 
-  private void createUIElements(SimulationType simulationType){
+  private void createUIElements(SimulationType simulationType, StateType[] states){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
@@ -77,7 +77,7 @@ public class SimulationView {
 
     myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight);
-    //myCellFormatBar = new CellFormatBar(myGridDisplay, STATES_PLACEHOLDER, myBundle);
+    myCellFormatBar = new CellFormatBar(myGridDisplay, states, myBundle);
   }
 
   private void addUIElementsToRoot(){

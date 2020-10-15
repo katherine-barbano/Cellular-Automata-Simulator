@@ -1,6 +1,7 @@
 package view.CellFormat;
 
 import controller.State;
+import controller.StateType;
 import java.util.Arrays;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,9 +13,9 @@ import javafx.scene.control.Tooltip;
 public class StateChooser extends ChoiceBox {
 
   private ObservableList myStates;
-  private State mySelection;
+  private StateType mySelection;
 
-  public StateChooser(State[] simulationStates){
+  public StateChooser(StateType[] simulationStates){
     super();
     this.setId("state-chooser");
     this.setTooltip(new Tooltip("Select a State: "));
@@ -26,16 +27,16 @@ public class StateChooser extends ChoiceBox {
       @Override
       public void changed(ObservableValue<? extends Number> observable, Number oldValue,
           Number newValue) {
-          mySelection= (State) myStates.get(newValue.intValue());
+          mySelection= (StateType) myStates.get(newValue.intValue());
       }
     });
   }
 
-  public State getMySelection(){
+  public StateType getMySelection(){
     return mySelection;
   }
 
-  public void setMySelection(State state){
+  public void setMySelection(StateType state){
     mySelection=state;
   }
 
