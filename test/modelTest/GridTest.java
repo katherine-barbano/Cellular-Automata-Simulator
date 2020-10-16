@@ -2,7 +2,6 @@ package modelTest;
 
 import controller.State;
 import model.Grid;
-import model.SimulationType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

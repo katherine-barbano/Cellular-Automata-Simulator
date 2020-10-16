@@ -1,13 +1,11 @@
 package view;
 
-import controller.State;
 import controller.StateType;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Grid;
-import model.SimulationType;
 import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
 import view.SimulationChoice.SimulationButtonBar;

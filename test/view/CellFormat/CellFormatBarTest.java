@@ -6,7 +6,6 @@ import controller.State;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Grid;
-import model.SimulationType;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import view.CellDisplay;
