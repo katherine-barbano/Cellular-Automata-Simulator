@@ -4,7 +4,6 @@ import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
-import model.SimulationType;
 
 public class TitleBar extends FlowPane {
 

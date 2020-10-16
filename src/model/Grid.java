@@ -13,7 +13,7 @@ public class Grid {
   public static final String SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES = "simulationTypeExceptionMessage";
 
   private Cell[][] cellGrid;
-  private SimulationType simulationType;
+  private String simulationType;
   private ResourceBundle modelResources;
 
   /***
@@ -21,7 +21,7 @@ public class Grid {
    * @param simulationType type of simulation from SimulationType enum
    * @param allStatesInCSV State[][] of all the states in the csv file
    */
-  public Grid(SimulationType simulationType, State[][] allStatesInCSV) {
+  public Grid(String simulationType, State[][] allStatesInCSV) {
     modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
@@ -35,7 +35,7 @@ public class Grid {
    * @param rowLength number of rows in grid
    * @param columnLength number of columns in grid
    */
-  public Grid(SimulationType simulationType, int rowLength, int columnLength) {
+  public Grid(String simulationType, int rowLength, int columnLength) {
     modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[rowLength][columnLength];
@@ -241,7 +241,7 @@ public class Grid {
       String classNamePrefix = modelResources.getString(CLASS_NAME_PREFIX_PROPERTIES);
       String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
 
-      Class<?> cl = Class.forName(classNamePrefix + simulationType.toString() + classNameSuffix);
+      Class<?> cl = Class.forName(classNamePrefix + simulationType + classNameSuffix);
       Class<?>[] type = { int.class,int.class,State[][].class};
       Constructor<?> cons = cl.getConstructor(type);
       Object[] obj = {centerCellRow,centerCellColumn,stateGrid};
