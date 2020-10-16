@@ -254,7 +254,7 @@ public class Grid {
     }
   }
 
-  State[][] createStateIntegerGridFromCellGrid() {
+  private State[][] createStateIntegerGridFromCellGrid() {
     State[][] stateIntegerGrid = new State[cellGrid.length][cellGrid[0].length];
     for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
       for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
