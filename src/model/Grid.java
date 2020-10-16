@@ -279,10 +279,6 @@ public class Grid {
     cellGrid[cellRow][cellColumn] = newCell;
   }
 
-  Cell[][] getCellGrid() {
-    return cellGrid;
-  }
-
   public boolean equals (Grid otherGrid) {
     Cell[][] otherGridCellMatrix = otherGrid.getCellGrid();
     Cell[][] thisGridCellMatrix = getCellGrid();
