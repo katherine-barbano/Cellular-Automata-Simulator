@@ -1,8 +1,11 @@
 package model;
 
 import controller.State;
+import controller.StateType;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -320,5 +323,32 @@ public class Grid {
 
   public int getGridNumberOfColumns() {
     return cellGrid[0].length;
+  }
+
+  /***
+   * Note: This method is NOT returning a reference to the data structure of the Grid!!!
+   *
+   * This is returning which cells have the same state type as the target argument. Because
+   * we have to return multiple cells, we have to return a list, but that list does NOT reference
+   * the position of any cells, or the structure that is used to store the cells in Grid.
+   * This is used as a helper to provide data to the graph in View, rather than having the
+   * view have to do the checking itself for each cell.
+   *
+   * So there are still no public references to the Grid's data structure, this is just a generic List.
+   * @param target
+   * @return
+   */
+  public List<Cell> getAllCellsWithSameStateTypeAsTarget(StateType target) {
+    List<Cell> cellsWithTargetStateType = new ArrayList<>();
+    for(int row = 0; row<cellGrid.length; row++) {
+      for(int column = 0; column<cellGrid[0].length; column++) {
+        Cell currentCell = cellGrid[row][column];
+        State currentState = currentCell.getCurrentState();
+        if(currentState.equals(target)) {
+          cellsWithTargetStateType.add(currentCell);
+        }
+      }
+    }
+    return cellsWithTargetStateType;
   }
 }
