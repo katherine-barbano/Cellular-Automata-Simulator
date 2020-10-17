@@ -2,6 +2,7 @@ package model;
 
 import controller.State;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -19,15 +20,12 @@ public abstract class NeighborPolicy {
 
   protected NeighborPolicy(EdgePolicy edgePolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
+    this.neighborPositionToState = new HashMap<>();
     this.edgePolicy = edgePolicy;
     createNeighborPositionToState();
   }
 
   protected abstract void createNeighborPositionToState();
-
-  protected EdgePolicy getEdgePolicy() {
-    return edgePolicy;
-  }
 
   protected void makePositionAndPutIntoMap(int row, int column) {
     int coordinateDimensions = Integer
@@ -35,8 +33,18 @@ public abstract class NeighborPolicy {
     int[] relativePositionOfNeighbor = new int[coordinateDimensions];
     relativePositionOfNeighbor[0] = row;
     relativePositionOfNeighbor[1] = column;
-    State neighborState = edgePolicy.getNeighborStateFromPositionForInitialization(relativePositionOfNeighbor);
-    neighborPositionToState.put(relativePositionOfNeighbor, neighborState);
+    putValidNeighborsIntoMapWithEdgePolicy(relativePositionOfNeighbor);
+  }
+
+  private void putValidNeighborsIntoMapWithEdgePolicy(int[] relativePositionOfNeighbor) {
+    try {
+      State neighborState = edgePolicy
+          .getNeighborStateFromPositionForInitialization(relativePositionOfNeighbor);
+      neighborPositionToState.put(relativePositionOfNeighbor, neighborState);
+    }
+    catch(ModelException e) {
+      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. So nothing needs to be added to the map.
+    }
   }
 
   protected boolean neighborPositionToStateContainsState(State target) {
@@ -80,7 +88,7 @@ public abstract class NeighborPolicy {
   private boolean compareNeighborhoods(Neighborhood otherNeighbor) {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       boolean attemptToRetrieveKey = tryToRetrieveThisKeyFromNeighbor(thisKey, otherNeighbor);
-      if(attemptToRetrieveKey == false) {
+      if(!attemptToRetrieveKey) {
         return false;
       }
     }

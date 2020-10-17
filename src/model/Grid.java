@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import model.neighborPolicies.CompleteNeighborPolicy;
+import model.neighborhoods.concrete.GameOfLifeNeighborhood;
 
 public class Grid {
 
@@ -67,7 +68,7 @@ public class Grid {
       }
       if(word.length() > 1) {
         String restOfWord = word.substring(1);
-        formattedString += String.format("%s", restOfWord.toLowerCase());
+        formattedString += String.format("%s", restOfWord);
       }
     }
     return formattedString;
@@ -261,8 +262,6 @@ public class Grid {
     Class<?>[] type = {EdgePolicy.class};
     EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
     Object[] constructorArguments = {edgePolicy};
-
-    NeighborPolicy test = new CompleteNeighborPolicy(edgePolicy);
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
     return (NeighborPolicy) subclass;

@@ -53,11 +53,7 @@ public abstract class Neighborhood {
   }
 
   public boolean equals(Neighborhood neighborhood) {
-    return neighborPolicy.equals(neighborhood.getNeighborPolicy());
-  }
-
-  protected NeighborPolicy getNeighborPolicy() {
-    return neighborPolicy;
+    return neighborPolicy.equals(neighborhood);
   }
 
   protected boolean neighborPositionToStateContainsState(State target) {
