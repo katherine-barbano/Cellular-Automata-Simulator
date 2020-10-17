@@ -66,7 +66,7 @@ public class SpreadingOfFireTest {
   }
 
   @Test
-  void getNextStateSpreadingOfFireWithFire() {
+  public void getNextStateSpreadingOfFireWithFire() {
     State[][] firstGrid = new State[][] {
         {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
         {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.BURNING)}

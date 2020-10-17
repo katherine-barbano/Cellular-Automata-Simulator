@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WaTorWorldTest {
 
   @Test
-  void getNextGridWaTorWorldFishMovement() {
+  public void getNextGridWaTorWorldFishMovement() {
     State[][] grid = new State[][] {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},

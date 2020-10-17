@@ -125,7 +125,7 @@ public class PercolationTest {
   }
 
   @Test
-  void getNextGridPercolationMixOfThreeStates() {
+  public void getNextGridPercolationMixOfThreeStates() {
     State[][] firstGrid = new State[][] {
         {new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.BLOCKED), new State(PercolationState.OPEN)},
