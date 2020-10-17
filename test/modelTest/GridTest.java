@@ -18,7 +18,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
+    Grid grid = new Grid("GameOfLife", states);
   }
 
   //test used to verify no exception is thrown
@@ -31,7 +31,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, states);
+    Grid grid = new Grid("GameOfLife", states);
   }
 
   @Test
@@ -50,8 +50,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
-    Grid gridTwo = new Grid(SimulationType.GAME_OF_LIFE, statesTwo);
+    Grid gridOne = new Grid("GameOfLife", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", statesTwo);
     assertTrue(gridOne.equals(gridTwo));
   }
 
@@ -71,8 +71,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
-    Grid gridTwo = new Grid(SimulationType.GAME_OF_LIFE, statesTwo);
+    Grid gridOne = new Grid("GameOfLife", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", statesTwo);
     assertFalse(gridOne.equals(gridTwo));
   }
 
@@ -91,8 +91,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid(SimulationType.GAME_OF_LIFE, statesOne);
-    Grid gridTwo = new Grid(SimulationType.GAME_OF_LIFE, statesTwo);
+    Grid gridOne = new Grid("GameOfLife", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", statesTwo);
     assertFalse(gridOne.equals(gridTwo));
   }
 
@@ -105,7 +105,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, block);
+    Grid grid = new Grid("GameOfLife", block);
     assertTrue(grid.currentGridIsStable());
   }
 
@@ -118,7 +118,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, unstableMatrix);
+    Grid grid = new Grid("GameOfLife", unstableMatrix);
     assertFalse(grid.currentGridIsStable());
   }
 }

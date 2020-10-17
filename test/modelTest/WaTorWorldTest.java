@@ -41,13 +41,13 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome1);
-    Grid expected2 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome2);
-    Grid expected3 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome3);
-    Grid expected4 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome4);
+    Grid expected1 = new Grid("WaTorWorld", possibleOutcome1);
+    Grid expected2 = new Grid("WaTorWorld", possibleOutcome2);
+    Grid expected3 = new Grid("WaTorWorld", possibleOutcome3);
+    Grid expected4 = new Grid("WaTorWorld", possibleOutcome4);
 
     printGrid(actualNextGrid);
 
@@ -86,17 +86,17 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
     printGrid(currentGrid);
 
-    Grid expected1 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome1);
+    Grid expected1 = new Grid("WaTorWorld", possibleOutcome1);
     printGrid(expected1);
-    Grid expected2 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome2);
+    Grid expected2 = new Grid("WaTorWorld", possibleOutcome2);
     printGrid(expected2);
-    Grid expected3 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome3);
+    Grid expected3 = new Grid("WaTorWorld", possibleOutcome3);
     printGrid(expected3);
-    Grid expected4 = new Grid(SimulationType.WATOR_WORLD, possibleOutcome4);
+    Grid expected4 = new Grid("WaTorWorld", possibleOutcome4);
     printGrid(expected4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
@@ -110,7 +110,7 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
     Grid gridTurn2 = gridTurn1.getNextGrid();
     Grid gridTurn3 = gridTurn2.getNextGrid();
@@ -136,7 +136,7 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
     Grid gridTurn2 = gridTurn1.getNextGrid();
     Grid gridTurn3 = gridTurn2.getNextGrid();
@@ -169,9 +169,9 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
-    Grid outcomeGrid = new Grid(SimulationType.WATOR_WORLD,outcome);
+    Grid outcomeGrid = new Grid("WaTorWorld",outcome);
 
     printGrid(gridTurn1);
 
@@ -211,12 +211,12 @@ class WaTorWorldTest {
     };
 
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
-    Grid outcomeGrid1 = new Grid(SimulationType.WATOR_WORLD,outcome1);
-    Grid outcomeGrid2 = new Grid(SimulationType.WATOR_WORLD,outcome2);
-    Grid outcomeGrid3 = new Grid(SimulationType.WATOR_WORLD,outcome3);
-    Grid outcomeGrid4 = new Grid(SimulationType.WATOR_WORLD,outcome4);
+    Grid outcomeGrid1 = new Grid("WaTorWorld",outcome1);
+    Grid outcomeGrid2 = new Grid("WaTorWorld",outcome2);
+    Grid outcomeGrid3 = new Grid("WaTorWorld",outcome3);
+    Grid outcomeGrid4 = new Grid("WaTorWorld",outcome4);
 
     printGrid(gridTurn1);
 
@@ -236,9 +236,9 @@ class WaTorWorldTest {
         {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
+    Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid gridTurn1 = currentGrid.getNextGrid();
-    Grid outcomeGrid = new Grid(SimulationType.WATOR_WORLD,outcome);
+    Grid outcomeGrid = new Grid("WaTorWorld",outcome);
 
     assertTrue(outcomeGrid.equals(gridTurn1));
   }

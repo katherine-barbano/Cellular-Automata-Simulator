@@ -28,14 +28,14 @@ class PercolationTest {
         {new State(PercolationState.WATER), new State(PercolationState.WATER), new State(PercolationState.WATER)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
 
     Grid actualNextNextGrid = actualNextGrid.getNextGrid();
-    Grid expectedNextNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid2);
+    Grid expectedNextNextGrid = new Grid("Percolation", expectedGrid2);
 
     assertTrue(actualNextNextGrid.equals(expectedNextNextGrid));
   }
@@ -54,9 +54,9 @@ class PercolationTest {
         {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -75,9 +75,9 @@ class PercolationTest {
         {new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.OPEN)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -96,9 +96,9 @@ class PercolationTest {
         {new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.WATER)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -117,9 +117,9 @@ class PercolationTest {
         {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -138,9 +138,9 @@ class PercolationTest {
         {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.WATER)}
     };
 
-    Grid currentGrid = new Grid(SimulationType.PERCOLATION, firstGrid);
+    Grid currentGrid = new Grid("Percolation", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(SimulationType.PERCOLATION, expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
