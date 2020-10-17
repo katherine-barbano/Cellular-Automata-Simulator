@@ -16,7 +16,7 @@ import view.buttons.FileButtonBar;
  */
 public class SimulationView {
 
-  private static final String RESOURCES = "resources/";
+  public static final String RESOURCES = "resources/";
   public static final String STYLESHEET = "view.css";
   public static final String RESOURCE_BUNDLE = "View";
   //public static final State[] STATES_PLACEHOLDER = GameOfLifeState.values();
@@ -52,7 +52,7 @@ public class SimulationView {
    * @param height Height of Window
    * @return Scene to be displayed in window
    */
-  public Scene setupScene(SimulationType simulationType,  StateType[] states, int width, int height) {
+  public Scene setupScene(String simulationType,  StateType[] states, int width, int height) {
     this.myWidth=width;
     this.myHeight=height;
 
@@ -64,7 +64,7 @@ public class SimulationView {
     return scene;
   }
 
-  private void createUIElements(SimulationType simulationType, StateType[] states){
+  private void createUIElements(String simulationType, StateType[] states){
     myRoot = new VBox();
     myRoot.getStyleClass().add("vbox");
 
