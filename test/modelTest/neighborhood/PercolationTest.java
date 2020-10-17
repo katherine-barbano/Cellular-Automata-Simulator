@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.PercolationState;
@@ -6,7 +6,7 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PercolationTest {
+public class PercolationTest {
 
   @Test
   void getNextGridPercolationNoBlocks() {

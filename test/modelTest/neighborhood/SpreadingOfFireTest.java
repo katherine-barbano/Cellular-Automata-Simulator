@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.SpreadingOfFireState;
@@ -6,7 +6,7 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SpreadingOfFireTest {
+public class SpreadingOfFireTest {
 
   @Test
   void getNextGridSpreadingOfFireEmpty() {

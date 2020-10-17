@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.structure;
 
 import controller.State;
 import controller.stateType.GameOfLifeState;

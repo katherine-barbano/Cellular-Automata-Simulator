@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.WaTorWorldState;
@@ -7,7 +7,7 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class WaTorWorldTest {
+public class WaTorWorldTest {
 
   @Test
   void getNextGridWaTorWorldFishMovement() {

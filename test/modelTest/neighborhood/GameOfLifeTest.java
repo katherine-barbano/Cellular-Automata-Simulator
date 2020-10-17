@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.GameOfLifeState;
@@ -6,7 +6,7 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameOfLifeTest {
+public class GameOfLifeTest {
 
   private void checkStillLifeGridsEqual(String simulationType, String edgePolicy, String neighborPolicy, State[][] initialMatrix) {
     Grid currentGrid = new Grid(simulationType, edgePolicy, neighborPolicy, initialMatrix);
@@ -153,7 +153,7 @@ class GameOfLifeTest {
   }
 
   @Test
-  void getNextGridGameOfLifeAliveCellsInCorners() {
+  public void getNextGridGameOfLifeAliveCellsInCorners() {
     State[][] edgesInitialState = new State[][] {
         {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},

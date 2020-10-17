@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.SegregationState;
@@ -7,7 +7,7 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SegregationTest {
+public class SegregationTest {
 
   @Test
   void getNextGridSegregationUnsatisfiedOAgent() {
@@ -100,7 +100,7 @@ class SegregationTest {
   }
 
   @Test
-  void getNextGridSegregationUnsatisfiedXAgent() {
+  public void getNextGridSegregationUnsatisfiedXAgent() {
     State[][] grid = new State[][] {
         {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
         {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},

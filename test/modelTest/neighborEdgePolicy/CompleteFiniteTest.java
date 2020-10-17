@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborEdgePolicy;
 
 import controller.State;
 import controller.stateType.PercolationState;
@@ -6,6 +6,9 @@ import controller.stateType.SpreadingOfFireState;
 import controller.stateType.WaTorWorldState;
 import controller.states.MovingStateWithAge;
 import model.Grid;
+import modelTest.neighborhood.GameOfLifeTest;
+import modelTest.neighborhood.RockPaperScissorsTest;
+import modelTest.neighborhood.SegregationTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

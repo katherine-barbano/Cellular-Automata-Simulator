@@ -1,4 +1,4 @@
-package modelTest;
+package modelTest.neighborhood;
 
 import controller.State;
 import controller.stateType.RockPaperScissorsState;
@@ -6,10 +6,10 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class RockPaperScissorsTest {
+public class RockPaperScissorsTest {
 
   @Test
-  void getNextGridRockPaperScissorsMixThreeStates() {
+  public void getNextGridRockPaperScissorsMixThreeStates() {
     State[][] firstGrid = new State[][] {
         {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)},
         {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK)},
