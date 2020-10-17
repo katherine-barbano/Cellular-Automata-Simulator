@@ -1,6 +1,7 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
+import controller.stateType.SpreadingOfFireState;
 import java.util.Map;
 import java.util.Random;
 import model.Neighborhood;
@@ -9,16 +10,10 @@ import model.neighborhoods.NonInfluentialNeighborhood;
 public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String PROBABILITY_CATCH_PROPERTIES = "SpreadingOfFire_probabilityOfCatching";
-  public static final String BURNING_PROPERTIES="burningStateName";
-  public static final String TREE_PROPERTIES="treeStateName";
-  private final String EMPTY_PROPERTIES="emptyStateName";
 
   private double probabilityCatchFire;
   private Random random;
   private double nextDouble;
-  private String treeStateName = getModelResources().getString(TREE_PROPERTIES);
-  private String burningStateName = getModelResources().getString(BURNING_PROPERTIES);
-  private String emptyStateName = getModelResources().getString(EMPTY_PROPERTIES);
 
   public SpreadingOfFireNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     super(centerCellRow, centerCellColumn, stateGrid);
@@ -34,11 +29,11 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState) {
-    if(!currentState.equals(treeStateName)) {
-      return new State(emptyStateName);
+    if(!currentState.equals(SpreadingOfFireState.TREE)) {
+      return new State(SpreadingOfFireState.EMPTY);
     }
-    else if(getNumberOfNeighborsWithGivenState(new State(burningStateName)) >0 && treeCatchesFire()){
-      return new State(burningStateName);
+    else if(getNumberOfNeighborsWithGivenState(new State(SpreadingOfFireState.BURNING)) >0 && treeCatchesFire()){
+      return new State(SpreadingOfFireState.BURNING);
     }
     else {
       return currentState;

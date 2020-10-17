@@ -1,6 +1,7 @@
 package model.neighborhoods.concrete;
 
 import controller.State;
+import controller.stateType.SegregationState;
 import controller.states.MovingState;
 import java.util.List;
 import java.util.Map;
@@ -10,13 +11,6 @@ import model.neighborhoods.InfluentialNeighborhood;
 public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   public static final String THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMove";
-  private final String EMPTY_PROPERTIES="emptyStateName";
-  public static final String XAGENT_PROPERTIES="xAgentStateName";
-  public static final String OAGENT_PROPERTIES="oAgentStateName";
-
-  private String xAgentStateName = getModelResources().getString(XAGENT_PROPERTIES);
-  private String oAgentStateName = getModelResources().getString(OAGENT_PROPERTIES);
-  private String emptyStateName = getModelResources().getString(EMPTY_PROPERTIES);
 
   private double thresholdToMove;
 
@@ -41,14 +35,14 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   public State getNextState(State currentState) {
     double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/getNumberOfNeighbors();
     boolean isSatisfied = thresholdToMove <= percentSameNeighbors;
-    if(currentState.equals(emptyStateName)) {
+    if(currentState.equals(SegregationState.EMPTY)) {
       return currentState;
     }
     else if(isSatisfied){
       return currentState;
     }
     else {
-      return handleMoveToNeighbor(currentState, new State(emptyStateName));
+      return handleMoveToNeighbor(currentState, new State(SegregationState.EMPTY));
     }
   }
 
@@ -61,9 +55,9 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    if(nextState.equals(emptyStateName)) {
-      State agentO = getAgentFromOverlappingNeighbors(new MovingState(oAgentStateName), statesOfOverlappingNeighborsOnCell);
-      State agentX = getAgentFromOverlappingNeighbors(new MovingState(xAgentStateName), statesOfOverlappingNeighborsOnCell);
+    if(nextState.equals(SegregationState.EMPTY)) {
+      State agentO = getAgentFromOverlappingNeighbors(new MovingState(SegregationState.OAGENT), statesOfOverlappingNeighborsOnCell);
+      State agentX = getAgentFromOverlappingNeighbors(new MovingState(SegregationState.XAGENT), statesOfOverlappingNeighborsOnCell);
       if(agentX!=null) {
         return agentX;
       }
