@@ -272,7 +272,7 @@ public class Grid {
     Object[] constructorArguments = {centerCellRow, centerCellColumn, stateGrid};
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, edgePolicyName, type, constructorArguments);
-    return (EdgePolicy)subclass;
+    return (EdgePolicy) subclass;
   }
 
   private Object applyReflectionToSubclassCreation(String classNamePrefix, String classNameSuffix, String className, Class<?>[] constructor, Object[] constructorArguments) {

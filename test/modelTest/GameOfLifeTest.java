@@ -8,21 +8,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameOfLifeTest {
 
-  private void checkStillLifeGridsEqual(String simulationType, State[][] initialMatrix) {
-    Grid currentGrid = new Grid(simulationType, initialMatrix);
+  private void checkStillLifeGridsEqual(String simulationType, String edgePolicy, String neighborPolicy, State[][] initialMatrix) {
+    Grid currentGrid = new Grid(simulationType, edgePolicy, neighborPolicy, initialMatrix);
     Grid nextGrid = currentGrid.getNextGrid();
     assertTrue(currentGrid.equals(nextGrid));
   }
 
-  private void checkTwoPeriodOscillator(String simulationType, State[][] gridInitialState, State[][] gridOneStepState) {
-    checkExpectedAndActualNextStateGridsEqual(simulationType, gridInitialState, gridOneStepState);
-    checkExpectedAndActualNextStateGridsEqual(simulationType, gridOneStepState, gridInitialState);
+  private void checkTwoPeriodOscillator(String simulationType, String edgePolicy, String neighborPolicy, State[][] gridInitialState, State[][] gridOneStepState) {
+    checkExpectedAndActualNextStateGridsEqual(simulationType, edgePolicy, neighborPolicy, gridInitialState, gridOneStepState);
+    checkExpectedAndActualNextStateGridsEqual(simulationType, edgePolicy, neighborPolicy, gridOneStepState, gridInitialState);
   }
 
-  private void checkExpectedAndActualNextStateGridsEqual(String simulationType, State[][] initialState, State[][] expectedNextState) {
-    Grid currentGrid = new Grid(simulationType, initialState);
+  private void checkExpectedAndActualNextStateGridsEqual(String simulationType, String edgePolicy, String neighborPolicy, State[][] initialState, State[][] expectedNextState) {
+    Grid currentGrid = new Grid(simulationType, edgePolicy, neighborPolicy, initialState);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid(simulationType, expectedNextState);
+    Grid expectedNextGrid = new Grid(simulationType, edgePolicy, neighborPolicy, expectedNextState);
     assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
 
@@ -35,7 +35,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkStillLifeGridsEqual("GameOfLife", block);
+    checkStillLifeGridsEqual("GameOfLife", "Finite", "Complete", block);
   }
 
   @Test
@@ -48,7 +48,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkStillLifeGridsEqual("GameOfLife", beehive);
+    checkStillLifeGridsEqual("GameOfLife", "Finite", "Complete", beehive);
   }
 
   @Test
@@ -62,7 +62,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkStillLifeGridsEqual("GameOfLife", loaf);
+    checkStillLifeGridsEqual("GameOfLife", "Finite", "Complete", loaf);
   }
 
   @Test
@@ -75,7 +75,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkStillLifeGridsEqual("GameOfLife", boat);
+    checkStillLifeGridsEqual("GameOfLife", "Finite", "Complete", boat);
   }
 
   @Test
@@ -88,7 +88,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkStillLifeGridsEqual("GameOfLife", tub);
+    checkStillLifeGridsEqual("GameOfLife", "Finite", "Complete", tub);
   }
 
   @Test
@@ -109,7 +109,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkTwoPeriodOscillator("GameOfLife", blinkerInitialState, blinkerOneStepState);
+    checkTwoPeriodOscillator("GameOfLife", "Finite", "Complete", blinkerInitialState, blinkerOneStepState);
   }
 
   @Test
@@ -132,7 +132,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    checkTwoPeriodOscillator("GameOfLife", beaconInitialState, beaconOneStepState);
+    checkTwoPeriodOscillator("GameOfLife", "Finite", "Complete", beaconInitialState, beaconOneStepState);
   }
 
   @Test
@@ -149,7 +149,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE)},
     };
 
-    checkExpectedAndActualNextStateGridsEqual("GameOfLife", edgesInitialState, edgesOneStepState);
+    checkExpectedAndActualNextStateGridsEqual("GameOfLife", "Finite", "Complete", edgesInitialState, edgesOneStepState);
   }
 
   @Test
@@ -166,7 +166,7 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
     };
 
-    checkExpectedAndActualNextStateGridsEqual("GameOfLife", edgesInitialState, edgesOneStepState);
+    checkExpectedAndActualNextStateGridsEqual("GameOfLife", "Finite", "Complete", edgesInitialState, edgesOneStepState);
   }
 
   @Test
@@ -183,6 +183,6 @@ class GameOfLifeTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
     };
 
-    checkExpectedAndActualNextStateGridsEqual("GameOfLife", edgesInitialState, edgesOneStepState);
+    checkExpectedAndActualNextStateGridsEqual("GameOfLife", "Finite", "Complete", edgesInitialState, edgesOneStepState);
   }
 }

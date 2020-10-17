@@ -65,17 +65,17 @@ class SegregationTest {
         {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("Segregation", grid);
+    Grid currentGrid = new Grid("Segregation", "Finite", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid("Segregation", possibleOutcome1);
-    Grid expected2 = new Grid("Segregation", possibleOutcome2);
-    Grid expected3 = new Grid("Segregation", possibleOutcome3);
-    Grid expected4 = new Grid("Segregation", possibleOutcome4);
-    Grid expected5 = new Grid("Segregation", possibleOutcome5);
-    Grid expected6 = new Grid("Segregation", possibleOutcome6);
-    Grid expected7 = new Grid("Segregation", possibleOutcome7);
-    Grid expected8 = new Grid("Segregation", possibleOutcome8);
+    Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome1);
+    Grid expected2 = new Grid("Segregation", "Finite", "Complete", possibleOutcome2);
+    Grid expected3 = new Grid("Segregation", "Finite", "Complete", possibleOutcome3);
+    Grid expected4 = new Grid("Segregation", "Finite", "Complete", possibleOutcome4);
+    Grid expected5 = new Grid("Segregation", "Finite", "Complete", possibleOutcome5);
+    Grid expected6 = new Grid("Segregation", "Finite", "Complete", possibleOutcome6);
+    Grid expected7 = new Grid("Segregation", "Finite", "Complete", possibleOutcome7);
+    Grid expected8 = new Grid("Segregation", "Finite", "Complete", possibleOutcome8);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4) || actualNextGrid.equals(expected5) || actualNextGrid.equals(expected6) || actualNextGrid.equals(expected7) || actualNextGrid.equals(expected8));
   }
@@ -92,9 +92,9 @@ class SegregationTest {
         {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.OAGENT)}
     };
 
-    Grid currentGrid = new Grid("Segregation", grid);
+    Grid currentGrid = new Grid("Segregation", "Finite", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expected1 = new Grid("Segregation", possibleOutcome);
+    Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome);
 
     assertTrue(actualNextGrid.equals(expected1));
   }
@@ -155,17 +155,17 @@ class SegregationTest {
         {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("Segregation", grid);
+    Grid currentGrid = new Grid("Segregation", "Finite", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid("Segregation", possibleOutcome1);
-    Grid expected2 = new Grid("Segregation", possibleOutcome2);
-    Grid expected3 = new Grid("Segregation", possibleOutcome3);
-    Grid expected4 = new Grid("Segregation", possibleOutcome4);
-    Grid expected5 = new Grid("Segregation", possibleOutcome5);
-    Grid expected6 = new Grid("Segregation", possibleOutcome6);
-    Grid expected7 = new Grid("Segregation", possibleOutcome7);
-    Grid expected8 = new Grid("Segregation", possibleOutcome8);
+    Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome1);
+    Grid expected2 = new Grid("Segregation", "Finite", "Complete", possibleOutcome2);
+    Grid expected3 = new Grid("Segregation", "Finite", "Complete", possibleOutcome3);
+    Grid expected4 = new Grid("Segregation", "Finite", "Complete", possibleOutcome4);
+    Grid expected5 = new Grid("Segregation", "Finite", "Complete", possibleOutcome5);
+    Grid expected6 = new Grid("Segregation", "Finite", "Complete", possibleOutcome6);
+    Grid expected7 = new Grid("Segregation", "Finite", "Complete", possibleOutcome7);
+    Grid expected8 = new Grid("Segregation", "Finite", "Complete", possibleOutcome8);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4) || actualNextGrid.equals(expected5) || actualNextGrid.equals(expected6) || actualNextGrid.equals(expected7) || actualNextGrid.equals(expected8));
   }
@@ -182,9 +182,9 @@ class SegregationTest {
         {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.XAGENT)}
     };
 
-    Grid currentGrid = new Grid("Segregation", grid);
+    Grid currentGrid = new Grid("Segregation", "Finite", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expected1 = new Grid("Segregation", possibleOutcome);
+    Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome);
 
     assertTrue(actualNextGrid.equals(expected1));
   }

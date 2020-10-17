@@ -5,6 +5,7 @@ import controller.stateType.GameOfLifeState;
 import controller.stateType.PercolationState;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import model.Cell;
 import model.Grid;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid("GameOfLife", states);
+    Grid grid = new Grid("GameOfLife", "Finite", "Complete", states);
   }
 
   //test used to verify no exception is thrown
@@ -35,7 +36,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid("GameOfLife", states);
+    Grid grid = new Grid("GameOfLife", "Finite", "Complete", states);
   }
 
   @Test
@@ -54,8 +55,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid("GameOfLife", statesOne);
-    Grid gridTwo = new Grid("GameOfLife", statesTwo);
+    Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
     assertTrue(gridOne.equals(gridTwo));
   }
 
@@ -75,8 +76,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid("GameOfLife", statesOne);
-    Grid gridTwo = new Grid("GameOfLife", statesTwo);
+    Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
     assertFalse(gridOne.equals(gridTwo));
   }
 
@@ -95,8 +96,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid gridOne = new Grid("GameOfLife", statesOne);
-    Grid gridTwo = new Grid("GameOfLife", statesTwo);
+    Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
+    Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
     assertFalse(gridOne.equals(gridTwo));
   }
 
@@ -109,7 +110,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid("GameOfLife", block);
+    Grid grid = new Grid("GameOfLife", "Finite", "Complete", block);
     assertTrue(grid.currentGridIsStable());
   }
 
@@ -122,7 +123,7 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid("GameOfLife", unstableMatrix);
+    Grid grid = new Grid("GameOfLife", "Finite", "Complete", unstableMatrix);
     assertFalse(grid.currentGridIsStable());
   }
 
@@ -135,8 +136,8 @@ class GridTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid grid = new Grid("GameOfLife", matrix);
-    List<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
+    Grid grid = new Grid("GameOfLife", "Finite", "Complete", matrix);
+    Set<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
 
     assertEquals(actualCells.size(), 3);
   }
@@ -148,8 +149,8 @@ class GridTest {
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.BLOCKED)}
     };
 
-    Grid grid = new Grid("Percolation", matrix);
-    List<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
+    Grid grid = new Grid("Percolation", "Finite", "Rectangle", matrix);
+    Set<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
 
     assertEquals(actualCells.size(), 2);
   }

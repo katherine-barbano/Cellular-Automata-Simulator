@@ -22,9 +22,9 @@ class RockPaperScissorsTest {
         {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "Finite", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -41,9 +41,9 @@ class RockPaperScissorsTest {
         {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "Finite", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -60,9 +60,9 @@ class RockPaperScissorsTest {
         {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.SCISSORS)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "Finite", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -79,9 +79,9 @@ class RockPaperScissorsTest {
         {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "Finite", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
@@ -98,9 +98,9 @@ class RockPaperScissorsTest {
         {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "Finite", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
