@@ -14,6 +14,7 @@ import org.assertj.core.internal.bytebuddy.matcher.StringMatcher.Mode;
 public abstract class Neighborhood {
 
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
+  public static final String POSITION_NOT_FOUND_EXCEPTION_PROPERTIES = "positionNotFoundExceptionMessage";
 
   private Map<int[], Neighborhood> neighborhoodsOfNeighbors;
   private ResourceBundle modelResources;
@@ -39,7 +40,8 @@ public abstract class Neighborhood {
         return neighborhoodsOfNeighbors.get(position);
       }
     }
-    throw new ModelException("Eaten not found");
+    String positionNotFoundExceptionMessage = modelResources.getString(POSITION_NOT_FOUND_EXCEPTION_PROPERTIES);
+    throw new ModelException(positionNotFoundExceptionMessage);
   }
 
   public Map<int[], Neighborhood> getNeighborhoodsOfNeighbors() {

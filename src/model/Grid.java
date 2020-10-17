@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import model.neighborPolicies.CompleteNeighborPolicy;
 
 public class Grid {
 
@@ -260,6 +261,8 @@ public class Grid {
     Class<?>[] type = {EdgePolicy.class};
     EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
     Object[] constructorArguments = {edgePolicy};
+
+    NeighborPolicy test = new CompleteNeighborPolicy(edgePolicy);
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
     return (NeighborPolicy) subclass;

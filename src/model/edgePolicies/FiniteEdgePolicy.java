@@ -17,7 +17,8 @@ public class FiniteEdgePolicy extends EdgePolicy {
     }
     catch(IndexOutOfBoundsException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist
-      throw new ModelException("According to finite edge policy, the neighbor at this relative position cannot be added to neighborPositionToState.");
+      String edgePolicyAddExceptionMessage = getModelResources().getString(EdgePolicy.EDGE_POLICY_EXCEPTION_PROPERTIES);
+      throw new ModelException(edgePolicyAddExceptionMessage);
     }
   }
 }
