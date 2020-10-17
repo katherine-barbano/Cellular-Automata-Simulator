@@ -19,7 +19,7 @@ public class ControllerMain extends Application {
   //public static final int FRAMES_PER_SECOND = 60;
   //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static double secondDelay = 1.0;
-  public final double SPEED_CHANGE_AMOUNT = .1;
+  public final double SPEED_CHANGE_AMOUNT = .25;
   public static final int FRAME_SIZE = 400;
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 400;
@@ -106,12 +106,15 @@ public class ControllerMain extends Application {
   void increaseSpeed() {
     secondDelay-= SPEED_CHANGE_AMOUNT;
     System.out.println("increasing");
-    //start(currentStage);
+    setUpStage(currentStage);
+    isPaused = false;
   }
 
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
     secondDelay += SPEED_CHANGE_AMOUNT;
     System.out.println("decreasing");
+    setUpStage(currentStage);
+    isPaused = false;
   }
 
   void stepByButton() {
