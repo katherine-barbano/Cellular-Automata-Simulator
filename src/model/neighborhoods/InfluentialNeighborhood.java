@@ -14,7 +14,7 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
     super(neighborPolicy);
   }
 
-  public State handleMoveToNeighbor(State currentState, State neighborState) {
+  protected State handleMoveToNeighbor(State currentState, State neighborState) {
     List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(neighborState);
     ((MovingState)currentState).setNextPositionMove(positionsOfEmptyNeighbors);
     int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();

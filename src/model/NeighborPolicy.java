@@ -72,30 +72,30 @@ public abstract class NeighborPolicy {
 
 
   protected boolean equals(Neighborhood neighborhood) {
-    Map<int[],State> otherNeighborPositionToState = neighborhood.getNeighborPositionToState();
-    boolean direction1 = compareNeighborhoodInOneDirection(otherNeighborPositionToState,neighborPositionToState);
-    boolean direction2 = compareNeighborhoodInOneDirection(neighborPositionToState,otherNeighborPositionToState);
-    return direction1 && direction2;
+    boolean valueEquality = compareNeighborhoods(neighborhood);
+    boolean sizeEquality = getNumberOfNeighbors() == neighborhood.getNumberOfNeighbors();
+    return valueEquality && sizeEquality;
   }
 
-  private boolean compareNeighborhoodInOneDirection(Map<int[],State> otherNeighborPositionToState, Map<int[],State> thisNeighborPositionToState) {
-    for (int[] otherKey: otherNeighborPositionToState.keySet()) {
-      Set<int[]> thisNeighborKeySet = thisNeighborPositionToState.keySet();
-
-      boolean thisNeighborContainsKey = false;
-      int[] thisNeighborKey = new int[2];
-      for(int[] thisKey:thisNeighborKeySet) {
-        if(keysAreEqual(thisKey,otherKey)) {
-          thisNeighborContainsKey=true;
-          thisNeighborKey = thisKey;
-        }
-      }
-
-      if(!thisNeighborContainsKey || !otherNeighborPositionToState.get(otherKey).equals(thisNeighborPositionToState.get(thisNeighborKey))) {
+  private boolean compareNeighborhoods(Neighborhood otherNeighbor) {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      boolean attemptToRetrieveKey = tryToRetrieveThisKeyFromNeighbor(thisKey, otherNeighbor);
+      if(attemptToRetrieveKey == false) {
         return false;
       }
     }
     return true;
+  }
+
+  private boolean tryToRetrieveThisKeyFromNeighbor(int[] thisKey, Neighborhood otherNeighbor) {
+    try
+    {
+      otherNeighbor.getStateFromNeighborPosition(thisKey);
+      return true;
+    }
+    catch(ModelException e) {
+      return false;
+    }
   }
 
   protected int getNumberOfNeighborsWithGivenState(State targetState) {

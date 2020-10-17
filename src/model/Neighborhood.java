@@ -23,7 +23,6 @@ public abstract class Neighborhood {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     neighborhoodsOfNeighbors = new HashMap<>();
     this.neighborPolicy = neighborPolicy;
-    createNeighborMap(centerCellRow, centerCellColumn, stateGrid);
   }
 
   public abstract State getNextState(State currentState);
@@ -52,17 +51,18 @@ public abstract class Neighborhood {
   }
 
   public boolean equals(Neighborhood neighborhood) {
-    Map<int[],State> otherNeighborPositionToState = neighborhood.getNeighborPositionToState();
-    boolean direction1 = compareNeighborhoodInOneDirection(otherNeighborPositionToState,neighborPositionToState);
-    boolean direction2 = compareNeighborhoodInOneDirection(neighborPositionToState,otherNeighborPositionToState);
-    return direction1 && direction2;
+    return neighborPolicy.equals(neighborhood.getNeighborPolicy());
+  }
+
+  protected NeighborPolicy getNeighborPolicy() {
+    return neighborPolicy;
   }
 
   protected boolean neighborPositionToStateContainsState(State target) {
     return neighborPolicy.neighborPositionToStateContainsState(target);
   }
 
-  protected void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
+  public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
     neighborPolicy.replaceNeighborStateWithNewState(neighborKey, newState);
   }
 
