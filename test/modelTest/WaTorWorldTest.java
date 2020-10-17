@@ -49,8 +49,6 @@ class WaTorWorldTest {
     Grid expected3 = new Grid("WaTorWorld", possibleOutcome3);
     Grid expected4 = new Grid("WaTorWorld", possibleOutcome4);
 
-    printGrid(actualNextGrid);
-
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
 
@@ -88,16 +86,11 @@ class WaTorWorldTest {
 
     Grid currentGrid = new Grid("WaTorWorld", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    printGrid(currentGrid);
 
     Grid expected1 = new Grid("WaTorWorld", possibleOutcome1);
-    printGrid(expected1);
     Grid expected2 = new Grid("WaTorWorld", possibleOutcome2);
-    printGrid(expected2);
     Grid expected3 = new Grid("WaTorWorld", possibleOutcome3);
-    printGrid(expected3);
     Grid expected4 = new Grid("WaTorWorld", possibleOutcome4);
-    printGrid(expected4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
@@ -173,8 +166,6 @@ class WaTorWorldTest {
     Grid gridTurn1 = currentGrid.getNextGrid();
     Grid outcomeGrid = new Grid("WaTorWorld",outcome);
 
-    printGrid(gridTurn1);
-
     assertTrue(outcomeGrid.equals(gridTurn1));
   }
 
@@ -218,7 +209,6 @@ class WaTorWorldTest {
     Grid outcomeGrid3 = new Grid("WaTorWorld",outcome3);
     Grid outcomeGrid4 = new Grid("WaTorWorld",outcome4);
 
-    printGrid(gridTurn1);
 
     assertTrue(outcomeGrid1.equals(gridTurn1) || outcomeGrid2.equals(gridTurn1) || outcomeGrid3.equals(gridTurn1) || outcomeGrid4.equals(gridTurn1));
   }
@@ -247,7 +237,7 @@ class WaTorWorldTest {
   private void printGrid(Grid grid) {
     for(int r = 0; r<3; r++) {
       for(int c = 0; c<4; c++) {
-        System.out.print(grid.getCell(r,c).getCurrentState());
+        System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
       }
       System.out.println();
     }

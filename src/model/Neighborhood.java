@@ -149,7 +149,7 @@ public abstract class Neighborhood {
   public void printNeighborPositionToState() {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       System.out.print(thisKey[0]+","+thisKey[1]+"=");
-      System.out.print(neighborPositionToState.get(thisKey)+", ");
+      System.out.print(neighborPositionToState.get(thisKey).getStateType()+", ");
     }
     System.out.println();
   }
