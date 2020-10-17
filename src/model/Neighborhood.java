@@ -2,6 +2,7 @@ package model;
 
 import controller.State;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -57,5 +58,27 @@ public abstract class Neighborhood {
     return direction1 && direction2;
   }
 
+  protected boolean neighborPositionToStateContainsState(State target) {
+    return neighborPolicy.neighborPositionToStateContainsState(target);
+  }
 
+  protected void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
+    neighborPolicy.replaceNeighborStateWithNewState(neighborKey, newState);
+  }
+
+  protected State getStateFromNeighborPosition(int[] position) {
+    return neighborPolicy.getStateFromNeighborPosition(position);
+  }
+
+  protected int getNumberOfNeighborsWithGivenState(State targetState) {
+    return neighborPolicy.getNumberOfNeighborsWithGivenState(targetState);
+  }
+
+  protected int getNumberOfNeighbors() {
+    return neighborPolicy.getNumberOfNeighbors();
+  }
+
+  protected List<int[]> positionsOfTargetStateNeighbors(State state) {
+    return neighborPolicy.positionsOfTargetStateNeighbors(state);
+  }
 }

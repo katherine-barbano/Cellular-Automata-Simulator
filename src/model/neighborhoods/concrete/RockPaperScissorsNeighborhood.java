@@ -3,6 +3,7 @@ package model.neighborhoods.concrete;
 import controller.State;
 import controller.stateType.RockPaperScissorsState;
 import java.util.Map;
+import model.NeighborPolicy;
 import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
@@ -10,13 +11,8 @@ public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String THRESHOLD_TO_LOSE_PROPERTIES = "RockPaperScissors_thresholdToLose";
 
-  public RockPaperScissorsNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
-  }
-
-  @Override
-  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
-    createNeighborMapForAdjacentAndDiagonal(centerCellRow, centerCellColumn, allStatesInCSV);
+  public RockPaperScissorsNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
   }
 
   @Override

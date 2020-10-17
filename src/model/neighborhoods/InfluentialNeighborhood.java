@@ -5,12 +5,13 @@ import controller.states.MovingState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import model.NeighborPolicy;
 import model.Neighborhood;
 
 public abstract class InfluentialNeighborhood extends Neighborhood {
 
-  public InfluentialNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
+  public InfluentialNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
   }
 
   public State handleMoveToNeighbor(State currentState, State neighborState) {
@@ -36,16 +37,5 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
       newArray[index] = array[index]*(-1);
     }
     return newArray;
-  }
-
-   public List<int[]> positionsOfTargetStateNeighbors(State state) {
-    List<int[]> emptyIndices = new ArrayList<>();
-    Map<int[], State> neighborPositionToState = getNeighborPositionToState();
-    for(int[] thisKey:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(thisKey).equals(state)) {
-        emptyIndices.add(thisKey);
-      }
-    }
-    return emptyIndices;
   }
 }

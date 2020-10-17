@@ -5,6 +5,7 @@ import controller.stateType.SegregationState;
 import controller.states.MovingState;
 import java.util.List;
 import java.util.Map;
+import model.NeighborPolicy;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
@@ -14,14 +15,9 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   private double thresholdToMove;
 
-  public SegregationNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
+  public SegregationNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
     thresholdToMove = Double.parseDouble(getModelResources().getString(THRESHOLD_TO_MOVE_PROPERTIES));
-  }
-
-  @Override
-  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
-    createNeighborMapForAdjacentAndDiagonal(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
   /***

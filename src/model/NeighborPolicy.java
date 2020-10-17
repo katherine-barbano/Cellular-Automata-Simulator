@@ -1,6 +1,8 @@
 package model;
 
 import controller.State;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -110,6 +112,16 @@ public abstract class NeighborPolicy {
 
   protected int getNumberOfNeighbors() {
     return neighborPositionToState.size();
+  }
+
+  protected List<int[]> positionsOfTargetStateNeighbors(State state) {
+    List<int[]> emptyIndices = new ArrayList<>();
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      if(neighborPositionToState.get(thisKey).equals(state)) {
+        emptyIndices.add(thisKey);
+      }
+    }
+    return emptyIndices;
   }
 
   //for help debugging

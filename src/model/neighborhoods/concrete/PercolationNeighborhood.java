@@ -2,17 +2,13 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.PercolationState;
+import model.NeighborPolicy;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
-  public PercolationNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
-  }
-
-  @Override
-  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
-    createNeighborMapForAdjacentNeighborsOnly(centerCellRow, centerCellColumn, allStatesInCSV);
+  public PercolationNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
   }
 
   @Override

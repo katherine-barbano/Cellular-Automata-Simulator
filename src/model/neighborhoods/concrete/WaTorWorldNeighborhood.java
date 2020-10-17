@@ -6,6 +6,7 @@ import controller.states.MovingState;
 import controller.states.MovingStateWithAge;
 import java.util.List;
 import java.util.Map;
+import model.NeighborPolicy;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
@@ -13,8 +14,8 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   public static final String MIN_BREED_AGE_PROPERTIES = "WaTorWorld_MinimumBreedingAge";
 
-  public WaTorWorldNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
+  public WaTorWorldNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
   }
 
   @Override
@@ -171,8 +172,4 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     return oldestSeaCreature;
   }
 
-  @Override
-  public void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV){
-    createNeighborMapForAdjacentNeighborsOnly(centerCellRow, centerCellColumn, allStatesInCSV);
-  }
 }
