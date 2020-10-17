@@ -280,20 +280,18 @@ public class Grid {
   }
 
   public boolean equals (Grid otherGrid) {
-    Cell[][] otherGridCellMatrix = otherGrid.getCellGrid();
-    Cell[][] thisGridCellMatrix = getCellGrid();
 
-    if(otherGridCellMatrix.length!=thisGridCellMatrix.length) {
+    if(otherGrid.getGridNumberOfRows()!=getGridNumberOfRows()) {
       return false;
     }
-    if(otherGridCellMatrix[0].length!=thisGridCellMatrix[0].length) {
+    if(otherGrid.getGridNumberOfColumns()!=getGridNumberOfColumns()) {
       return false;
     }
 
-    for(int row = 0; row< thisGridCellMatrix.length; row++) {
-      for(int column = 0; column< thisGridCellMatrix[0].length; column++) {
-        Cell otherCell = otherGridCellMatrix[row][column];
-        Cell thisCell = thisGridCellMatrix[row][column];
+    for(int row = 0; row< getGridNumberOfRows(); row++) {
+      for(int column = 0; column< getGridNumberOfColumns(); column++) {
+        Cell otherCell = otherGrid.getCell(row,column);
+        Cell thisCell = getCell(row, column);
         boolean onlyOneCellEmpty = (otherCell==null && thisCell!=null) || (otherCell!=null && thisCell==null);
         boolean bothCellsEmpty = otherCell==null && thisCell==null;
         if(onlyOneCellEmpty || (!bothCellsEmpty && !otherCell.equals(thisCell))) {
