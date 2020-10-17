@@ -3,21 +3,26 @@ package model;
 import controller.State;
 import controller.StateType;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class Grid {
 
-  public static final String CLASS_NAME_PREFIX_PROPERTIES = "classNamePrefix";
-  public static final String CLASS_NAME_SUFFIX_PROPERTIES = "classNameSuffix";
-  public static final String SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES = "simulationTypeExceptionMessage";
+  public static final String NEIGHBORHOOD_NAME_PREFIX_PROPERTIES = "neighborhoodNamePrefix";
+  public static final String NEIGHBORHOOD_NAME_SUFFIX_PROPERTIES = "neighborhoodNameSuffix";
+  public static final String NEIGHBOR_POLICY_NAME_PREFIX_PROPERTIES = "neighborPolicyNamePrefix";
+  public static final String NEIGHBOR_POLICY_NAME_SUFFIX_PROPERTIES = "neighborPolicyNameSuffix";
+  public static final String EDGE_POLICY_NAME_PREFIX_PROPERTIES = "edgePolicyNamePrefix";
+  public static final String EDGE_POLICY_NAME_SUFFIX_PROPERTIES = "edgePolicyNameSuffix";
+  public static final String REFLECTION_EXCEPTION_MESSAGE_PROPERTIES = "reflectionExceptionMessage";
 
   private Cell[][] cellGrid;
   private String simulationType;
+  private String edgePolicyName;
+  private String neighborPolicyName;
   private ResourceBundle modelResources;
 
   /***
@@ -25,9 +30,8 @@ public class Grid {
    * @param simulationType type of simulation from SimulationType enum
    * @param allStatesInCSV State[][] of all the states in the csv file
    */
-  public Grid(String simulationType, State[][] allStatesInCSV) {
-    modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
-    this.simulationType = simulationType;
+  public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV) {
+    setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
     cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
     initializeCurrentCellGrid(allStatesInCSV);
   }
@@ -39,10 +43,33 @@ public class Grid {
    * @param rowLength number of rows in grid
    * @param columnLength number of columns in grid
    */
-  public Grid(String simulationType, int rowLength, int columnLength) {
-    modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
-    this.simulationType = simulationType;
+  public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, int rowLength, int columnLength) {
+    setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
     cellGrid = new Cell[rowLength][columnLength];
+  }
+
+  private void setupPrivateVariables(String simulationType, String edgePolicyName, String neighborPolicyName) {
+    modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
+    this.simulationType = formatClassName(simulationType);
+    this.edgePolicyName = formatClassName(edgePolicyName);
+    this.neighborPolicyName = formatClassName(neighborPolicyName);
+  }
+
+  private String formatClassName(String input) {
+    String formattedString = "";
+    String[] inputWords = input.split(" ");
+    for(String word:inputWords)
+    {
+      if(word.length() > 0) {
+        String firstLetter = word.substring(0,1);
+        formattedString += String.format("%s", firstLetter.toUpperCase());
+      }
+      if(word.length() > 1) {
+        String restOfWord = word.substring(1);
+        formattedString += String.format("%s", restOfWord.toLowerCase());
+      }
+    }
+    return formattedString;
   }
 
   /***
@@ -145,7 +172,7 @@ public class Grid {
   }
 
   private Grid getGridWithNextCells() {
-    Grid nextGrid = new Grid(simulationType, cellGrid.length, cellGrid[0].length);
+    Grid nextGrid = new Grid(simulationType, edgePolicyName, neighborPolicyName, cellGrid.length, cellGrid[0].length);
     for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
       for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
         addNextCellToNextGrid(nextGrid, gridRow, gridColumn);
@@ -217,20 +244,47 @@ public class Grid {
   }
 
   private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
+    String classNamePrefix = modelResources.getString(NEIGHBORHOOD_NAME_PREFIX_PROPERTIES);
+    String classNameSuffix = modelResources.getString(NEIGHBORHOOD_NAME_SUFFIX_PROPERTIES);
+    Class<?>[] type = {NeighborPolicy.class};
+    NeighborPolicy neighborPolicy = createNeighborPolicy(centerCellRow, centerCellColumn, stateGrid);
+    Object[] constructorArguments = {neighborPolicy};
+
+    Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, simulationType, type, constructorArguments);
+    return (Neighborhood) subclass;
+  }
+
+  private NeighborPolicy createNeighborPolicy(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
+    String classNamePrefix = modelResources.getString(NEIGHBOR_POLICY_NAME_PREFIX_PROPERTIES);
+    String classNameSuffix = modelResources.getString(NEIGHBOR_POLICY_NAME_SUFFIX_PROPERTIES);
+    Class<?>[] type = {EdgePolicy.class};
+    EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
+    Object[] constructorArguments = {edgePolicy};
+
+    Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
+    return (NeighborPolicy) subclass;
+  }
+
+  private EdgePolicy createEdgePolicy(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
+    String classNamePrefix = modelResources.getString(EDGE_POLICY_NAME_PREFIX_PROPERTIES);
+    String classNameSuffix = modelResources.getString(EDGE_POLICY_NAME_SUFFIX_PROPERTIES);
+    Class<?>[] type = {int.class,int.class,State[][].class};
+    Object[] constructorArguments = {centerCellRow, centerCellColumn, stateGrid};
+
+    Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, edgePolicyName, type, constructorArguments);
+    return (EdgePolicy)subclass;
+  }
+
+  private Object applyReflectionToSubclassCreation(String classNamePrefix, String classNameSuffix, String className, Class<?>[] constructor, Object[] constructorArguments) {
     try {
       //code referenced from https://java2blog.com/invoke-constructor-using-reflection-java/ provided on course website
-      String classNamePrefix = modelResources.getString(CLASS_NAME_PREFIX_PROPERTIES);
-      String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
-
-      Class<?> cl = Class.forName(classNamePrefix + simulationType + classNameSuffix);
-      Class<?>[] type = { int.class,int.class,State[][].class};
-      Constructor<?> cons = cl.getConstructor(type);
-      Object[] obj = {centerCellRow,centerCellColumn,stateGrid};
-      Object newInstance = cons.newInstance(obj);
-      return (Neighborhood)newInstance;
+      String fullClassName = String.format("%s%s%s", classNamePrefix, className, classNameSuffix);
+      Class<?> cl = Class.forName(fullClassName);
+      Constructor<?> cons = cl.getConstructor(constructor);
+      return cons.newInstance(constructorArguments);
     }
     catch(Exception e) {
-      String simulationTypeExceptionMessage = modelResources.getString(SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES);
+      String simulationTypeExceptionMessage = modelResources.getString(REFLECTION_EXCEPTION_MESSAGE_PROPERTIES);
       throw new ModelException(simulationTypeExceptionMessage);
     }
   }
@@ -299,17 +353,17 @@ public class Grid {
    * Note: This method is NOT returning a reference to the data structure of the Grid!!!
    *
    * This is returning which cells have the same state type as the target argument. Because
-   * we have to return multiple cells, we have to return a list, but that list does NOT reference
+   * we have to return multiple cells, we have to return a set, but that set does NOT reference
    * the position of any cells, or the structure that is used to store the cells in Grid.
    * This is used as a helper to provide data to the graph in View, rather than having the
    * view have to do the checking itself for each cell.
    *
-   * So there are still no public references to the Grid's data structure, this is just a generic List.
+   * So there are still no public references to the Grid's data structure, this is just a generic set.
    * @param target
    * @return
    */
-  public List<Cell> getAllCellsWithSameStateTypeAsTarget(StateType target) {
-    List<Cell> cellsWithTargetStateType = new ArrayList<>();
+  public Set<Cell> getAllCellsWithSameStateTypeAsTarget(StateType target) {
+    Set<Cell> cellsWithTargetStateType = new HashSet<>();
     for(int row = 0; row<cellGrid.length; row++) {
       for(int column = 0; column<cellGrid[0].length; column++) {
         Cell currentCell = cellGrid[row][column];
