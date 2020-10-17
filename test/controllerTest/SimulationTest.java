@@ -1,3 +1,4 @@
+/*
 package controllerTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -156,3 +157,4 @@ public class SimulationTest {
     assertEquals(new State("Alive"), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
   }
 }
+*/

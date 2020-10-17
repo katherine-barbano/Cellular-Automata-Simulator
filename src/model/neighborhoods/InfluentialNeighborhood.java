@@ -19,7 +19,7 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
     int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
     deleteMovedStateFromNeighborhoodsOfNeighbors(neighborState);
-    return new State(neighborState.toString());
+    return new State(neighborState.getStateType());
   }
 
   public void deleteMovedStateFromNeighborhoodsOfNeighbors(State newState) {
