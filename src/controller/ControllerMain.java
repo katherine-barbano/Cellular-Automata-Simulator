@@ -10,8 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
 import javax.swing.JFileChooser;
-import model.Neighborhood;
-import model.SimulationType;
 import view.SimulationView;
 
 public class ControllerMain extends Application {

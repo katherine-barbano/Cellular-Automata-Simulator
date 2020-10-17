@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import model.Grid;
-import model.SimulationType;
 
 public class PercolationSimulation extends Simulation{
 

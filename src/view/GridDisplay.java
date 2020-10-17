@@ -1,6 +1,7 @@
 package view;
 
 import controller.State;
+import controller.StateType;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.css.StyleClass;
@@ -45,7 +46,7 @@ public class GridDisplay extends GridPane {
     return this;
   }
 
-  public List<CellDisplay> getCellListByState(State inputState){
+  public List<CellDisplay> getCellListByState(StateType inputState){
     List<CellDisplay> stateCells = new ArrayList();
     for(Node cell: this.getChildren()){
         checkStateOfCellDisplay(stateCells,inputState,cell);
@@ -53,7 +54,7 @@ public class GridDisplay extends GridPane {
     return stateCells;
   }
 
-  private void checkStateOfCellDisplay(List<CellDisplay> currentCellList, State searchState, Node node){
+  private void checkStateOfCellDisplay(List<CellDisplay> currentCellList, StateType searchState, Node node){
     CellDisplay cellDisplay = (CellDisplay) node;
     if (cellDisplay.getMyState().equals(searchState))
       currentCellList.add(cellDisplay);

@@ -9,7 +9,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import model.Grid;
-import model.SimulationType;
 
 public class SegregationSimulation extends Simulation{
 

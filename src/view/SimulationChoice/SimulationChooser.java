@@ -1,6 +1,5 @@
 package view.SimulationChoice;
 
-import controller.Simulation;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -9,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
-import model.SimulationType;
 
 public class SimulationChooser extends ChoiceBox {
 

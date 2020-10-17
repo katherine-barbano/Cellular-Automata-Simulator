@@ -1,11 +1,7 @@
 package modelTest;
 
 import controller.State;
-import controller.states.MovingStateWithAge;
 import model.Grid;
-import model.Neighborhood;
-import model.SimulationType;
-import model.neighborhoods.concrete.SpreadingOfFireNeighborhood;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import model.Grid;
-import model.SimulationType;
 
 public class RockPaperScissorsSimulation extends Simulation{
   private static final String STORING_FILE_NAME = "data/outputGrids/rockPaperScissors";

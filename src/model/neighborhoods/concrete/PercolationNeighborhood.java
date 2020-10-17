@@ -7,12 +7,6 @@ import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
-  public static final String OPEN_PROPERTIES="openStateName";
-  public static final String WATER_PROPERTIES="waterStateName";
-
-  private String openStateName = getModelResources().getString(OPEN_PROPERTIES);
-  private String waterStateName = getModelResources().getString(WATER_PROPERTIES);
-
   public PercolationNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     super(centerCellRow, centerCellColumn, stateGrid);
   }

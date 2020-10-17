@@ -13,7 +13,7 @@ public class Grid {
   public static final String SIMULATION_TYPE_EXCEPTION_MESSAGE_PROPERTIES = "simulationTypeExceptionMessage";
 
   private Cell[][] cellGrid;
-  private SimulationType simulationType;
+  private String simulationType;
   private ResourceBundle modelResources;
 
   /***
@@ -21,7 +21,7 @@ public class Grid {
    * @param simulationType type of simulation from SimulationType enum
    * @param allStatesInCSV State[][] of all the states in the csv file
    */
-  public Grid(SimulationType simulationType, State[][] allStatesInCSV) {
+  public Grid(String simulationType, State[][] allStatesInCSV) {
     modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
@@ -35,7 +35,7 @@ public class Grid {
    * @param rowLength number of rows in grid
    * @param columnLength number of columns in grid
    */
-  public Grid(SimulationType simulationType, int rowLength, int columnLength) {
+  public Grid(String simulationType, int rowLength, int columnLength) {
     modelResources = ResourceBundle.getBundle(Neighborhood.MODEL_RESOURCE_PATH);
     this.simulationType = simulationType;
     cellGrid = new Cell[rowLength][columnLength];
@@ -241,7 +241,7 @@ public class Grid {
       String classNamePrefix = modelResources.getString(CLASS_NAME_PREFIX_PROPERTIES);
       String classNameSuffix = modelResources.getString(CLASS_NAME_SUFFIX_PROPERTIES);
 
-      Class<?> cl = Class.forName(classNamePrefix + simulationType.toString() + classNameSuffix);
+      Class<?> cl = Class.forName(classNamePrefix + simulationType + classNameSuffix);
       Class<?>[] type = { int.class,int.class,State[][].class};
       Constructor<?> cons = cl.getConstructor(type);
       Object[] obj = {centerCellRow,centerCellColumn,stateGrid};
@@ -254,7 +254,7 @@ public class Grid {
     }
   }
 
-  State[][] createStateIntegerGridFromCellGrid() {
+  private State[][] createStateIntegerGridFromCellGrid() {
     State[][] stateIntegerGrid = new State[cellGrid.length][cellGrid[0].length];
     for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
       for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
@@ -279,25 +279,19 @@ public class Grid {
     cellGrid[cellRow][cellColumn] = newCell;
   }
 
-  Cell[][] getCellGrid() {
-    return cellGrid;
-  }
-
   public boolean equals (Grid otherGrid) {
-    Cell[][] otherGridCellMatrix = otherGrid.getCellGrid();
-    Cell[][] thisGridCellMatrix = getCellGrid();
 
-    if(otherGridCellMatrix.length!=thisGridCellMatrix.length) {
+    if(otherGrid.getGridNumberOfRows()!=getGridNumberOfRows()) {
       return false;
     }
-    if(otherGridCellMatrix[0].length!=thisGridCellMatrix[0].length) {
+    if(otherGrid.getGridNumberOfColumns()!=getGridNumberOfColumns()) {
       return false;
     }
 
-    for(int row = 0; row< thisGridCellMatrix.length; row++) {
-      for(int column = 0; column< thisGridCellMatrix[0].length; column++) {
-        Cell otherCell = otherGridCellMatrix[row][column];
-        Cell thisCell = thisGridCellMatrix[row][column];
+    for(int row = 0; row< getGridNumberOfRows(); row++) {
+      for(int column = 0; column< getGridNumberOfColumns(); column++) {
+        Cell otherCell = otherGrid.getCell(row,column);
+        Cell thisCell = getCell(row, column);
         boolean onlyOneCellEmpty = (otherCell==null && thisCell!=null) || (otherCell!=null && thisCell==null);
         boolean bothCellsEmpty = otherCell==null && thisCell==null;
         if(onlyOneCellEmpty || (!bothCellsEmpty && !otherCell.equals(thisCell))) {
