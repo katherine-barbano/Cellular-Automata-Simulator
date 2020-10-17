@@ -1,6 +1,7 @@
 package modelTest;
 
 import controller.State;
+import controller.stateType.SpreadingOfFireState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,13 +11,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireEmpty() {
     State[][] firstGrid = new State[][] {
-        {new State("Empty"), new State("Empty")},
-        {new State("Empty"), new State("Empty")}
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Empty"), new State("Empty")},
-        {new State("Empty"), new State("Empty")}
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -29,13 +30,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireTrees() {
     State[][] firstGrid = new State[][] {
-        {new State("Tree"), new State("Tree")},
-        {new State("Tree"), new State("Tree")}
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.TREE)},
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.TREE)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Tree"), new State("Tree")},
-        {new State("Tree"), new State("Tree")}
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.TREE)},
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.TREE)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -48,13 +49,13 @@ class SpreadingOfFireTest {
   @Test
   void getNextGridSpreadingOfFireTreesAndEmpty() {
     State[][] firstGrid = new State[][] {
-        {new State("Tree"), new State("Empty")},
-        {new State("Empty"), new State("Tree")}
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.TREE)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Tree"), new State("Empty")},
-        {new State("Empty"), new State("Tree")}
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.TREE)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);
@@ -67,18 +68,18 @@ class SpreadingOfFireTest {
   @Test
   void getNextStateSpreadingOfFireWithFire() {
     State[][] firstGrid = new State[][] {
-        {new State("Empty"), new State("Empty")},
-        {new State("Tree"), new State("Burning")}
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.BURNING)}
     };
 
     State[][] expectGrid1 = new State[][] {
-        {new State("Empty"), new State("Empty")},
-        {new State("Tree"), new State("Empty")}
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.EMPTY)}
     };
 
     State[][] expectGrid2 = new State[][] {
-        {new State("Empty"), new State("Empty")},
-        {new State("Burning"), new State("Empty")}
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
+        {new State(SpreadingOfFireState.BURNING), new State(SpreadingOfFireState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SPREADING_OF_FIRE, firstGrid);

@@ -1,6 +1,7 @@
 package modelTest;
 
 import controller.State;
+import controller.stateType.RockPaperScissorsState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,15 +11,15 @@ class RockPaperScissorsTest {
   @Test
   void getNextGridRockPaperScissorsMixThreeStates() {
     State[][] firstGrid = new State[][] {
-        {new State("Rock"), new State("Scissors"), new State("Rock"), new State("Paper")},
-        {new State("Scissors"), new State("Rock"), new State("Scissors"), new State("Rock")},
-        {new State("Paper"), new State("Scissors"), new State("Paper"), new State("Paper")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)},
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK)},
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Rock"), new State("Rock"), new State("Rock"), new State("Paper")},
-        {new State("Scissors"), new State("Rock"), new State("Rock"), new State("Paper")},
-        {new State("Paper"), new State("Scissors"), new State("Paper"), new State("Paper")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)},
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)},
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
     Grid currentGrid = new Grid(SimulationType.ROCK_PAPER_SCISSORS, firstGrid);
@@ -31,13 +32,13 @@ class RockPaperScissorsTest {
   @Test
   void getNextGridRockPaperScissorsRockBeatsScissors() {
     State[][] firstGrid = new State[][] {
-        {new State("Scissors"), new State("Rock")},
-        {new State("Rock"), new State("Rock")}
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK)},
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Rock"), new State("Rock")},
-        {new State("Rock"), new State("Rock")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK)},
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK)}
     };
 
     Grid currentGrid = new Grid(SimulationType.ROCK_PAPER_SCISSORS, firstGrid);
@@ -50,13 +51,13 @@ class RockPaperScissorsTest {
   @Test
   void getNextGridRockPaperScissorsScissorsBeatsPaper() {
     State[][] firstGrid = new State[][] {
-        {new State("Scissors"), new State("Scissors")},
-        {new State("Paper"), new State("Scissors")}
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.SCISSORS)},
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.SCISSORS)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Scissors"), new State("Scissors")},
-        {new State("Scissors"), new State("Scissors")}
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.SCISSORS)},
+        {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.SCISSORS)}
     };
 
     Grid currentGrid = new Grid(SimulationType.ROCK_PAPER_SCISSORS, firstGrid);
@@ -69,13 +70,13 @@ class RockPaperScissorsTest {
   @Test
   void getNextGridRockPaperScissorsPaperBeatsRock() {
     State[][] firstGrid = new State[][] {
-        {new State("Rock"), new State("Paper")},
-        {new State("Paper"), new State("Paper")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)},
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Paper"), new State("Paper")},
-        {new State("Paper"), new State("Paper")}
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)},
+        {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.PAPER)}
     };
 
     Grid currentGrid = new Grid(SimulationType.ROCK_PAPER_SCISSORS, firstGrid);
@@ -88,13 +89,13 @@ class RockPaperScissorsTest {
   @Test
   void getNextGridRockPaperScissorsThresholdTooSmallForChange() {
     State[][] firstGrid = new State[][] {
-        {new State("Rock"), new State("Scissors")},
-        {new State("Rock"), new State("Paper")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS)},
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State("Rock"), new State("Scissors")},
-        {new State("Rock"), new State("Paper")}
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS)},
+        {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.PAPER)}
     };
 
     Grid currentGrid = new Grid(SimulationType.ROCK_PAPER_SCISSORS, firstGrid);

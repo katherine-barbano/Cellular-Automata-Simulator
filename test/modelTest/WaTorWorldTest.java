@@ -1,6 +1,7 @@
 package modelTest;
 
 import controller.State;
+import controller.stateType.WaTorWorldState;
 import controller.states.MovingStateWithAge;
 import model.Grid;
 import org.junit.jupiter.api.Test;
@@ -11,33 +12,33 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldFishMovement() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome1 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome2 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome3 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome4 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -56,33 +57,33 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkMovement() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome1 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome2 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome3 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome4 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -104,9 +105,9 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldFishBreed() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -118,7 +119,7 @@ class WaTorWorldTest {
     int fishCount = 0;
     for(int row=0;row<3;row++) {
       for(int column=0;column<4;column++) {
-        if(gridTurn4.getCell(row,column).getCurrentState().equals("Fish")) {
+        if(gridTurn4.getCell(row,column).getCurrentState().equals(WaTorWorldState.FISH)) {
           fishCount++;
         }
       }
@@ -130,9 +131,9 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkBreed() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -145,7 +146,7 @@ class WaTorWorldTest {
     int sharkCount = 0;
     for(int row=0;row<3;row++) {
       for(int column=0;column<4;column++) {
-        if(gridTurn5.getCell(row,column).getCurrentState().equals("Shark")) {
+        if(gridTurn5.getCell(row,column).getCurrentState().equals(WaTorWorldState.SHARK)) {
           sharkCount++;
         }
       }
@@ -157,15 +158,15 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkEatFish() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] outcome = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);
@@ -180,33 +181,33 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldSharkSurroundedFish() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] outcome1 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] outcome2 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] outcome3 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
     State[][] outcome4 = new State[][] {
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Shark"), new MovingStateWithAge("Fish"), new MovingStateWithAge("Empty")},
-        {new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty"), new MovingStateWithAge("Empty")}
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY)},
+        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
 
@@ -226,13 +227,13 @@ class WaTorWorldTest {
   @Test
   void getNextGridWaTorWorldAllFish() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")}
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH)}
     };
 
     State[][] outcome = new State[][] {
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")},
-        {new MovingStateWithAge("Fish"), new MovingStateWithAge("Fish")}
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH)},
+        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.FISH)}
     };
 
     Grid currentGrid = new Grid(SimulationType.WATOR_WORLD, grid);

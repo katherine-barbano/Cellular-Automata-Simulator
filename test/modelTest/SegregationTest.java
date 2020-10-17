@@ -1,6 +1,7 @@
 package modelTest;
 
 import controller.State;
+import controller.stateType.SegregationState;
 import controller.states.MovingState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
@@ -11,57 +12,57 @@ class SegregationTest {
   @Test
   void getNextGridSegregationUnsatisfiedOAgent() {
     State[][] grid = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome1 = new State[][] {
-        {new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome2 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome3 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome4 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome5 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome6 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("OAgent"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome7 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome8 = new State[][] {
-        {new MovingState("OAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SEGREGATION, grid);
@@ -82,13 +83,13 @@ class SegregationTest {
   @Test
   void getNextGridSegregationSatisfiedOAgent() {
     State[][] grid = new State[][] {
-        {new MovingState("OAgent"), new MovingState("OAgent")},
-        {new MovingState("OAgent"), new MovingState("OAgent")}
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.OAGENT)},
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.OAGENT)}
     };
 
     State[][] possibleOutcome = new State[][] {
-        {new MovingState("OAgent"), new MovingState("OAgent")},
-        {new MovingState("OAgent"), new MovingState("OAgent")}
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.OAGENT)},
+        {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.OAGENT)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SEGREGATION, grid);
@@ -101,57 +102,57 @@ class SegregationTest {
   @Test
   void getNextGridSegregationUnsatisfiedXAgent() {
     State[][] grid = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome1 = new State[][] {
-        {new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome2 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome3 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome4 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome5 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome6 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("XAgent"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome7 = new State[][] {
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     State[][] possibleOutcome8 = new State[][] {
-        {new MovingState("XAgent"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")},
-        {new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty"), new MovingState("Empty")}
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SEGREGATION, grid);
@@ -172,13 +173,13 @@ class SegregationTest {
   @Test
   void getNextGridSegregationSatisfiedXAgent() {
     State[][] grid = new State[][] {
-        {new MovingState("XAgent"), new MovingState("XAgent")},
-        {new MovingState("XAgent"), new MovingState("XAgent")}
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.XAGENT)},
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.XAGENT)}
     };
 
     State[][] possibleOutcome = new State[][] {
-        {new MovingState("XAgent"), new MovingState("XAgent")},
-        {new MovingState("XAgent"), new MovingState("XAgent")}
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.XAGENT)},
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.XAGENT)}
     };
 
     Grid currentGrid = new Grid(SimulationType.SEGREGATION, grid);
