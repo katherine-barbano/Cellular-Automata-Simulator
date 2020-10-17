@@ -2,7 +2,7 @@ package model;
 
 import controller.State;
 
-abstract class EdgePolicy {
+public abstract class EdgePolicy {
 
   private int centerCellRow;
   private int centerCellColumn;
@@ -28,4 +28,10 @@ abstract class EdgePolicy {
     return states;
   }
 
+  protected State getNeighborStateFromAdjacentPosition(int[] neighborPosition) throws IndexOutOfBoundsException{
+    int neighborRow = centerCellRow + neighborPosition[0];
+    int neighborColumn = centerCellColumn + neighborPosition[1];
+
+    return states[neighborRow][neighborColumn];
+  }
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import org.assertj.core.internal.bytebuddy.matcher.StringMatcher.Mode;
 
 /***
  * States represented as the integers from csv file.
@@ -40,17 +41,6 @@ public abstract class Neighborhood {
    * @param centerCellColumn Starting with index 0, column number of center cell
    */
   public abstract void createNeighborMap(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV);
-
-  /***
-   * Assume there are no states in CSV with "-1". Returns -1 if given neighborPosition is out of bounds
-   * for allStatesInCSV (i.e. center cell is on the outer edge of allStatesInCSV).
-   */
-  public State getNeighborStateFromAdjacentPosition(int[] neighborPosition, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) throws IndexOutOfBoundsException{
-    int neighborRow = centerCellRow + neighborPosition[0];
-    int neighborColumn = centerCellColumn + neighborPosition[1];
-
-    return allStatesInCSV[neighborRow][neighborColumn];
-  }
 
   public boolean neighborPositionToStateContainsState(State target) {
     for(int[] position:neighborPositionToState.keySet()) {
@@ -180,8 +170,17 @@ public abstract class Neighborhood {
     int[] relativePositionOfNeighbor = new int[coordinateDimensions];
     relativePositionOfNeighbor[0] = row;
     relativePositionOfNeighbor[1] = column;
-    putNeighborPositionIntoMap(relativePositionOfNeighbor,
-        centerCellRow, centerCellColumn, allStatesInCSV);
+    putIntoNeighborPositionToState(relativePositionOfNeighbor, centerCellRow, centerCellColumn, allStatesInCSV);
+  }
+
+  private void putIntoNeighborPositionToState(int[] relativePositionOfNeighbor, int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+    try {
+      putNeighborPositionIntoMap(relativePositionOfNeighbor, centerCellRow, centerCellColumn,
+          allStatesInCSV);
+    }
+    catch(ModelException e) {
+      //this ModelException means that according to edge policy, there should not be a neighbor at this relative position. So don't add anything to the map in this case.
+    }
   }
 
   public int getNumberOfNeighborsWithGivenState(State targetState) {
