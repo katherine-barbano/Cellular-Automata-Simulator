@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class Grid {
 
@@ -104,7 +105,7 @@ public class Grid {
         Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
 
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
-        populateStatesOfOverlappingNeighborsRedo(centerCellNeighborhood, row, column, statesOfOverlappingNeighbors);
+        populateStatesOfOverlappingNeighborsRedo(row, column, statesOfOverlappingNeighbors);
         centerCell.setStatesOfOverlappingNeighbors(statesOfOverlappingNeighbors);
 
         Cell updatedCell = centerCell.getCellFromOverlappingNeighbors();
@@ -114,44 +115,13 @@ public class Grid {
     }
   }
 
-  /***
-   * Iterate through each neighbor of the center cell
-   * @param statesOfOverlappingNeighbors
-   * @param row
-   * @param column
-   * @param centerCellNeighborhood
-   */
-  private void populateStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors, int row, int column, Neighborhood centerCellNeighborhood) {
-    Map<int[], State> centerCellNeighborPositionToState = centerCellNeighborhood.getNeighborPositionToState();
-    for (int[] neighborPosition : centerCellNeighborPositionToState.keySet()) {
-      putStatesOfOverlappingNeighborsCenterCell(row, column, neighborPosition, statesOfOverlappingNeighbors);
-    }
-  }
-
-  private void populateStatesOfOverlappingNeighborsRedo(Neighborhood centerNeighborhood, int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
+  private void populateStatesOfOverlappingNeighborsRedo(int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = cellGrid[row][column].getNeighborhoodsOfNeighbors();
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
       Neighborhood neighborhoodOfNeighbor = neighborhoodsOfNeighbors.get(neighborPosition);
       State stateOfCenterCellInNeighborsNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(positionOfCenterCellInNeighbor);
       statesOfOverlappingNeighbors.put(neighborPosition,stateOfCenterCellInNeighborsNeighbor);
-    }
-  }
-
-  private void putStatesOfOverlappingNeighborsCenterCell(int row, int column, int[] neighborPositionRelativeToCenterCell, Map<int[], State> statesOfOverlappingNeighbors) {
-    try{
-      Cell neighborCellOfNeighbor = cellGrid[row + neighborPositionRelativeToCenterCell[0]][column + neighborPositionRelativeToCenterCell[1]];
-      Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
-      int[] positionOfCenterCellInNeighborsNeighborhood = negateArray(neighborPositionRelativeToCenterCell);
-      State stateOfNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(
-          positionOfCenterCellInNeighborsNeighborhood);
-      statesOfOverlappingNeighbors.put(neighborPositionRelativeToCenterCell,stateOfNeighbor);
-    }
-    catch(ModelException e) {
-      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
-    }
-    catch(NullPointerException e) {
-      //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist. Nothing should happen in this case because edge cells do not need to keep track of neighbors beyond the edge of the grid
     }
   }
 
@@ -165,8 +135,8 @@ public class Grid {
 
   private Map<int[], Neighborhood> getNeighborhoodsOfNeighbors(Neighborhood centerCellNeighborhood, int row, int column) {
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = new HashMap<>();
-    Map<int[], State> centerNeighborPositionToState = centerCellNeighborhood.getNeighborPositionToState();
-    for (int[] neighborPosition : centerNeighborPositionToState.keySet()) {
+    Set<int[]> centerNeighborRelativePositions = centerCellNeighborhood.allPossibleRelativePositions();
+    for (int[] neighborPosition : centerNeighborRelativePositions) {
       Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
       neighborhoodsOfNeighbors.put(neighborPosition, neighborhoodOfNeighbor);

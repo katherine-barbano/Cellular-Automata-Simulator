@@ -124,6 +124,10 @@ public abstract class NeighborPolicy {
     return emptyIndices;
   }
 
+  protected Set<int[]> allPossibleRelativePositions() {
+    return neighborPositionToState.keySet();
+  }
+
   //for help debugging
   public void printNeighborPositionToState() {
     for(int[] thisKey:neighborPositionToState.keySet()) {

@@ -81,4 +81,8 @@ public abstract class Neighborhood {
   protected List<int[]> positionsOfTargetStateNeighbors(State state) {
     return neighborPolicy.positionsOfTargetStateNeighbors(state);
   }
+
+  protected Set<int[]> allPossibleRelativePositions() {
+    return neighborPolicy.allPossibleRelativePositions();
+  }
 }
