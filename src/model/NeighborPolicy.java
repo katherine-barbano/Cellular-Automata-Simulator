@@ -18,10 +18,10 @@ public abstract class NeighborPolicy {
   protected NeighborPolicy(EdgePolicy edgePolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     this.edgePolicy = edgePolicy;
-    neighborPositionToState = createNeighborPositionToState();
+    createNeighborPositionToState();
   }
 
-  protected abstract Map<int[], State> createNeighborPositionToState();
+  protected abstract void createNeighborPositionToState();
 
   protected EdgePolicy getEdgePolicy() {
     return edgePolicy;
@@ -37,7 +37,7 @@ public abstract class NeighborPolicy {
     neighborPositionToState.put(relativePositionOfNeighbor, neighborState);
   }
 
-  public boolean neighborPositionToStateContainsState(State target) {
+  protected boolean neighborPositionToStateContainsState(State target) {
     for(int[] position:neighborPositionToState.keySet()) {
       if(neighborPositionToState.get(position).equals(target)) {
         return true;
@@ -46,7 +46,7 @@ public abstract class NeighborPolicy {
     return false;
   }
 
-  public void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
+  protected void replaceNeighborStateWithNewState(int[] neighborKey, State newState) {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       if(keysAreEqual(thisKey,neighborKey)) {
         neighborPositionToState.put(thisKey,newState);
@@ -54,11 +54,11 @@ public abstract class NeighborPolicy {
     }
   }
 
-  public boolean keysAreEqual(int[] thisKey, int[] otherKey) {
+  protected boolean keysAreEqual(int[] thisKey, int[] otherKey) {
     return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
   }
 
-  public State getStateFromNeighborPosition(int[] position) {
+  protected State getStateFromNeighborPosition(int[] position) {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       if(keysAreEqual(thisKey,position)) {
         return neighborPositionToState.get(thisKey);
@@ -69,7 +69,7 @@ public abstract class NeighborPolicy {
   }
 
 
-  public boolean equals(Neighborhood neighborhood) {
+  protected boolean equals(Neighborhood neighborhood) {
     Map<int[],State> otherNeighborPositionToState = neighborhood.getNeighborPositionToState();
     boolean direction1 = compareNeighborhoodInOneDirection(otherNeighborPositionToState,neighborPositionToState);
     boolean direction2 = compareNeighborhoodInOneDirection(neighborPositionToState,otherNeighborPositionToState);
@@ -96,7 +96,7 @@ public abstract class NeighborPolicy {
     return true;
   }
 
-  public int getNumberOfNeighborsWithGivenState(State targetState) {
+  protected int getNumberOfNeighborsWithGivenState(State targetState) {
     Map<int[], State> adjacentNeighborsToState = neighborPositionToState;
     int numberNeighbors=0;
     for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
@@ -108,8 +108,17 @@ public abstract class NeighborPolicy {
     return numberNeighbors;
   }
 
-  public int getNumberOfNeighbors() {
+  protected int getNumberOfNeighbors() {
     return neighborPositionToState.size();
+  }
+
+  //for help debugging
+  public void printNeighborPositionToState() {
+    for(int[] thisKey:neighborPositionToState.keySet()) {
+      System.out.print(thisKey[0]+","+thisKey[1]+"=");
+      System.out.print(neighborPositionToState.get(thisKey).getStateType()+", ");
+    }
+    System.out.println();
   }
 
 }
