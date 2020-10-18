@@ -68,7 +68,7 @@ public class CellFormatBar extends HBox {
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for (CellDisplay cell : cellsWithChosenState) {
       cell.setFill(chosenFill.getCellColor());
-      cell.getMyState().setStateColor(chosenFill);
+      SimulationView.STATE_COLOR_MAP.put(chosenState,chosenFill);
     }
   }
 

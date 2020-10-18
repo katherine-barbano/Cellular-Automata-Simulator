@@ -50,7 +50,8 @@ class GraphViewTest extends DukeApplicationTest {
   @Test
   void updateGraph(){
     Grid newGrid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-    myView.updateCurrentGrid(newGrid,10);
+    myView.updateCurrentGrid(newGrid,10.57);
+    sleep(10000);
   }
 
 }

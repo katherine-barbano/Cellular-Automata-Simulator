@@ -53,8 +53,8 @@ public abstract class Simulation {
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/" + propertiesFileName
-            + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName;
+           // + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {

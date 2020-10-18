@@ -17,7 +17,7 @@ public class SimulationGraph extends LineChart {
 
   public static final Axis TIME_AXIS = new NumberAxis();
   public static final Axis NUMBER_CELLS_AXIS = new NumberAxis();
-  private Map<StateType,Series> myStateSeriesMap;
+  private Map<StateType,XYChart.Series> myStateSeriesMap;
 
   public SimulationGraph(StateType[] states){
     super(TIME_AXIS,NUMBER_CELLS_AXIS);
@@ -32,16 +32,16 @@ public class SimulationGraph extends LineChart {
   }
 
   private void createSeriesForStates(StateType[] states){
-    myStateSeriesMap = new HashMap<StateType,Series>();
+    myStateSeriesMap = new HashMap<StateType,XYChart.Series>();
     for(int stateNum=0; stateNum<states.length; stateNum++){
-      Series stateSeries = new Series();
+      XYChart.Series stateSeries = new XYChart.Series<>();
       stateSeries.setName(states[stateNum].toString());
       myStateSeriesMap.put(states[stateNum], stateSeries);
     }
   }
 
   public void updateStateSeries(StateType state, double elapsedTime, int numCells){
-    myStateSeriesMap.get(state).getData().add((int) elapsedTime,numCells);
+    myStateSeriesMap.get(state).getData().add(new XYChart.Data(elapsedTime,numCells));
   }
 
 
