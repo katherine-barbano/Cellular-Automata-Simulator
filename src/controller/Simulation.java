@@ -40,8 +40,8 @@ public abstract class Simulation {
 
   public Simulation(String newSimulationName) {
     this.simulationName = newSimulationName;
-    readInPropertiesFile();
-    simulationFileLocation = "data/gameOfLifeSample/" + propertiesInformation.get("fileName");
+    readPropertiesFile(newSimulationName);
+    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
@@ -71,8 +71,9 @@ public abstract class Simulation {
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) {
-    simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
-    currentGrid = new Grid(simulationName, createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    simulationFileLocation = "data/initialConfigurations/" + newFileLocation;
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
