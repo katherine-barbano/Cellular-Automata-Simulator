@@ -13,11 +13,12 @@ import javafx.scene.control.Tooltip;
  */
 public class CellColorChooser extends ChoiceBox {
 
-  public static final CellColors[] CELL_COLORS = {CellColors.BLACK ,CellColors.WHITE, CellColors.RED, CellColors.ORANGE,CellColors.YELLOW,
-                                              CellColors.GREEN,CellColors.BLUE,CellColors.PURPLE};
+  public static final CellColors[] CELL_COLORS = {CellColors.BLACK , CellColors.WHITE, CellColors.RED, CellColors.ORANGE,
+      CellColors.YELLOW,
+                                              CellColors.GREEN, CellColors.BLUE, CellColors.PURPLE};
   public static final String[] CELL_COLOR_NAMES= {"Black", "White", "Red", "Orange","Yellow","Green","Blue","Purple"};
   private ObservableList myColors;
-  private CellColors myChosenColor;
+  private CellFill myChosenColor;
 
   public CellColorChooser(){
     super();
@@ -40,11 +41,11 @@ public class CellColorChooser extends ChoiceBox {
    * Accessor for the Users chosen color
    * @return the chosen CellColor
    */
-  public CellColors getChosenColor(){
+  public CellFill getChosenColor(){
     return myChosenColor;
   }
 
-  public void setMyChosenColor(CellColors color){
+  public void setMyChosenColor(CellFill color){
     myChosenColor=color;
   }
 }

@@ -2,11 +2,8 @@ package view;
 
 import controller.State;
 import controller.StateType;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import view.CellFormat.CellColors;
 
@@ -24,7 +21,8 @@ public class CellDisplay extends Rectangle {
     this.myGridDisplay = gridDisplay;
 
     this.currentColor = SimulationView.STATE_COLOR_MAP.get(myStateType);
-    this.setFill(currentColor.getCellColor());
+    this.setFill(currentColor.getCellFill());
+
     getStyleClass().add("cell-display");
 
     this.setOnMouseClicked(mouseEvent->handleMouseEvent());
@@ -37,7 +35,7 @@ public class CellDisplay extends Rectangle {
   private void setMyState(StateType inputState){
     myStateType = inputState;
     currentColor = SimulationView.STATE_COLOR_MAP.get(myStateType);
-    this.setFill(currentColor.getCellColor());
+    this.setFill(currentColor.getCellFill());
 
     myGridDisplay.updateCellInGrid(myGridDisplay.getRowIndex(this), myGridDisplay.getColumnIndex(this),inputState);
   }

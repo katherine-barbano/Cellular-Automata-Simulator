@@ -59,7 +59,7 @@ class SimulationViewTest extends DukeApplicationTest {
 
   @Test
   void UISetup(){
-    sleep(1000);
+    sleep(10000);
   }
 
 

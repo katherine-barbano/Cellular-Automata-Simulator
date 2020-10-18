@@ -16,21 +16,20 @@ import javafx.scene.paint.Paint;
  */
 public class ImageChooser extends ChoiceBox {
   public static final String[] IMAGE_PROPERTIES = {"StarryNightImage","PolkaDotImage"};
-  public static final CellColors[] CELL_PHOTOS = {CellColors.STARRY_NIGHT,CellColors.POLKA_DOTS};
-  public static final String[] CELL_PHOTO_NAMES = {"Starry Night", "Polka Dots"};
-  private Paint[] myImagePatterns = new Paint[IMAGE_PROPERTIES.length];
+  public static final CellFill[] CELL_PHOTOS = CellImages.values();
+  private String[] myImageNames = new String[IMAGE_PROPERTIES.length];
   private ObservableList myPhotos;
-  private CellColors myChosenImage;
+  private CellFill myChosenImage;
 
   public ImageChooser(ResourceBundle resources){
     super();
 
-    getImagesFromResources(resources);
-
     this.setId("image-chooser");
     this.setTooltip(new Tooltip("Select a Photo: "));
 
-    myPhotos = FXCollections.observableArrayList(Arrays.asList(CELL_PHOTO_NAMES));
+    getImageNamesFromProperty(resources);
+
+    myPhotos = FXCollections.observableArrayList(Arrays.asList(myImageNames));
     this.setItems(myPhotos);
 
     this.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -42,18 +41,17 @@ public class ImageChooser extends ChoiceBox {
     });
   }
 
-  public CellColors getChosenImage(){
+  public void getImageNamesFromProperty(ResourceBundle resources){
+    for(int imageNum=0; imageNum<myImageNames.length;imageNum++){
+      myImageNames[imageNum]=resources.getString(CELL_PHOTOS[imageNum].toString());
+    }
+  }
+
+  public CellFill getChosenImage(){
     return myChosenImage;
   }
 
-  public void setMyChosenImage(CellColors image){ myChosenImage = image; }
-
-  private void getImagesFromResources(ResourceBundle resources){
-    for(int fileNum=0;fileNum<myImagePatterns.length;fileNum++){
-      String filePath = resources.getString(IMAGE_PROPERTIES[fileNum]);
-      CELL_PHOTOS[fileNum].setCellImage(filePath);
-    }
-  }
+  public void setMyChosenImage(CellFill image){ myChosenImage = image; }
 
 
 }

@@ -77,16 +77,16 @@ class CellFormatBarTest extends DukeApplicationTest {
   void testImageChoice(){
     //Test Choosing Starry Night Image for Alive cells
     myStateChooser.setMySelection(ALIVE);
-    myImageChooser.setMyChosenImage(CellColors.STARRY_NIGHT);
+    myImageChooser.setMyChosenImage(CellImages.STARRY_NIGHT);
     clickOn(myImageButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
 
-    assertEquals(CellColors.STARRY_NIGHT, cell.getCurrentColor());
+    assertEquals(CellImages.STARRY_NIGHT, cell.getCurrentColor());
 
     //Test that cells have Starry Night Images after updating the grid
     javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
-    assertEquals(CellColors.STARRY_NIGHT, cell2.getCurrentColor());
+    assertEquals(CellImages.STARRY_NIGHT, cell2.getCurrentColor());
 
 
   }

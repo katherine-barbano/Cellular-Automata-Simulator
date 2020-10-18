@@ -58,8 +58,10 @@ public class GridDisplay extends GridPane {
 
   private void checkStateOfCellDisplay(List<CellDisplay> currentCellList, StateType searchState, Node node){
     CellDisplay cellDisplay = (CellDisplay) node;
-    if (cellDisplay.getMyStateType().equals(searchState))
+
+    if (cellDisplay.getMyStateType().equals(searchState)){
       currentCellList.add(cellDisplay);
+    }
   }
 
   public void updateCellInGrid(int row, int col, StateType newState){
