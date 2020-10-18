@@ -90,7 +90,9 @@ public class ControllerMain extends Application {
   void saveFile() {
     System.out.println("saving");
     isPaused = true;
-    currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
+    //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
+    currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
+    System.out.println("finished");
   }
 
   void checkChangeSimulation() {

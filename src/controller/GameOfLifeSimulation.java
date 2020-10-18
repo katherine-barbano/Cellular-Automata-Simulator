@@ -72,8 +72,8 @@ public class GameOfLifeSimulation extends Simulation {
       try {
         String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
         File file = new File(input);
-        //FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
-        FileWriter csvWriter = new FileWriter(file.getName());
+        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
+        //FileWriter csvWriter = new FileWriter(file.getName());
         csvWriter.append(Integer.toString(numberRows));
         csvWriter.append(",");
         csvWriter.append(Integer.toString(numberCols));
@@ -82,6 +82,9 @@ public class GameOfLifeSimulation extends Simulation {
 
         for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
           for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+            State x = gridToStore.getCell(row,col).getCurrentState();
+            Integer t = integerForStates.get(gridToStore.getCell(row,col).getCurrentState());
+            String s = t.toString();
             csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState()).toString());
             //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
             csvWriter.append(",");

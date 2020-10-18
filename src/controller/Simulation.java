@@ -2,7 +2,10 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import controller.stateType.GameOfLifeState;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.Group;
+import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
 
@@ -87,6 +91,49 @@ public abstract class Simulation {
   abstract public void storeNewCellConfig(Grid gridToStore);
 
  // abstract public String readInPropertiesFile();
+
+  public void saveNewCellConfiguration(Grid gridToStore) {
+    try {
+      String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
+      File file = new File(input);
+      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
+      //FileWriter csvWriter = new FileWriter(file.getName());
+      csvWriter.append(Integer.toString(rowNumber));
+      csvWriter.append(",");
+      csvWriter.append(Integer.toString(colNumber));
+      csvWriter.append(",");
+      csvWriter.append("\n");
+
+      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
+        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+          //StateType x = new GameOfLifeState(gridToStore.getCell(row,col).getCurrentState());
+          Integer t = integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType());
+          String s = t.toString();
+          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
+          //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
+          csvWriter.append(",");
+        }
+        csvWriter.append("\n");
+      }
+      csvWriter.flush();
+      csvWriter.close();
+      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
+      ClassLoader loader = Thread.currentThread().getContextClassLoader();
+      Properties props = new Properties();
+      try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+        props.load(resourceStream);
+      }
+      Object s = "fileName";
+      props.replace(s, props.get(s), input);
+      System.out.println("saved");
+    } catch (IOException e) {
+      //System.out.println("not working");
+      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("InvalidFile");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
+  }
+
 
   abstract public StateType[] getStateTypesForSimulation();
 
