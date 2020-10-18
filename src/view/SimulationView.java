@@ -146,11 +146,11 @@ public class SimulationView {
   }
 
   public void setDarkMode(){
-    myScene.getStylesheets().add(DARK_MODE_CSS);
+    myScene.getStylesheets().add(RESOURCES + DARK_MODE_CSS);
   }
 
   public void setLightMode(){
-    myScene.getStylesheets().add(LIGHT_MODE_CSS);
+    myScene.getStylesheets().remove(RESOURCES + DARK_MODE_CSS);
   }
 
 }

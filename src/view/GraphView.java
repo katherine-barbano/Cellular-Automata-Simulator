@@ -31,8 +31,7 @@ public class GraphView {
   private StateType[] myStates;
 
   /**
-   * Create Simulation View from initial Grid
-   * @param grid Initial grid in scene
+   *
    */
   public GraphView(Grid grid){
     myBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE);
@@ -40,11 +39,7 @@ public class GraphView {
   }
 
   /**
-   * Setup the Scene for the UI
-   * @param simulationType Type of simulation
-   * @param width Width of window
-   * @param height Height of Window
-   * @return Scene to be displayed in window
+   *
    */
   public Scene setupScene(String simulationType,  StateType[] states, int width, int height) {
     this.myWidth=width;
@@ -52,6 +47,8 @@ public class GraphView {
     this.myStates = states;
 
     createUIElements(simulationType);
+    addUIElementsToRoot();
+    updateGraph(0);
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
@@ -71,7 +68,12 @@ public class GraphView {
     myRoot.getChildren().add(myGraph);
   }
 
-  public void updateGraphForNewGrid(double elapsedTime){
+  public void updateCurrentGrid(Grid nextGrid,double elapsedTime){
+    myGrid = nextGrid;
+    updateGraph(elapsedTime);
+  }
+
+  public void updateGraph(double elapsedTime){
     for(StateType state: myStates){
       int numCellsWithState = myGrid.getAllCellsWithSameStateTypeAsTarget(state);
       myGraph.updateStateSeries(state,elapsedTime,numCellsWithState);

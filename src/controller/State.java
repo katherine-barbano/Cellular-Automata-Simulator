@@ -5,14 +5,12 @@ import view.CellFormat.CellColors;
 
 public class State {
 
-  public static final CellColors DEFAULT_COLOR = CellColors.BLACK;
-
   private StateType stateType;
   private CellColors stateColor;
 
   public State(StateType stateName) {
     this.stateType = stateName;
-    this.stateColor = DEFAULT_COLOR;
+    this.stateColor = stateName.getDefaultColor();
   }
 
   public StateType getStateType(){
