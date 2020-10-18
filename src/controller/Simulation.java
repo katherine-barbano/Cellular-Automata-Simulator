@@ -43,9 +43,12 @@ public abstract class Simulation {
     this.propertiesInformation = new HashMap<String, String>();
     readPropertiesFile(newSimulationName);
     simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
     this.possibleStateTypes = getStateTypesForSimulation();
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), possibleStateTypes));
+
+    //currentGrid = new Grid(simulationName, "Finite", "Complete", createStates(readCellStatesFile(), possibleStateTypes));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -53,8 +56,8 @@ public abstract class Simulation {
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/" + propertiesFileName;
-           // + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant*/
+        //String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
