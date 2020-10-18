@@ -22,8 +22,8 @@ public class SpreadingOfFireSimulation extends Simulation {
     super("SpreadingOfFire");
   }
 
-  @Override
-  public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
+  //@Override
+  //public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
 /*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = SpreadingOfFireState.values();
@@ -42,8 +42,8 @@ public class SpreadingOfFireSimulation extends Simulation {
       }
     }
     return cellStates;*/
-    return null;
-  }
+  //  return null;
+//  }
 
 /*  @Override
   public String readInPropertiesFile() {

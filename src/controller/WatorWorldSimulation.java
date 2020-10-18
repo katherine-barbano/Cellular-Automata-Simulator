@@ -22,8 +22,8 @@ public class WatorWorldSimulation extends Simulation{
     super("WatorWorld");
   }
 
-  @Override
-  public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
+  //@Override
+  //public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
 /*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = WaTorWorldState.values();
@@ -42,8 +42,8 @@ public class WatorWorldSimulation extends Simulation{
       }
     }
     return cellStates;*/
-    return null;
-  }
+    //return null;
+  //}
 
 /*  @Override
   public String readInPropertiesFile() {
