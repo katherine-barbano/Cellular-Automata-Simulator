@@ -13,33 +13,33 @@ import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangleToroidalTest {
+public class CompleteKleinBottleTest {
 
   @Test
-  void rectangleToroidalPoliciesGameOfLife() {
+  void completeKleinBottlePoliciesGameOfLife() {
     State[][] firstGrid = new State[][] {
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE)}
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE)},
-        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)}
+        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid currentGrid = new Grid("GameOfLife", "Toroidal", "Rectangle", firstGrid);
+    Grid currentGrid = new Grid("GameOfLife", "KleinBottle", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("GameOfLife", "Toroidal", "Rectangle", expectedGrid);
+    Grid expectedNextGrid = new Grid("GameOfLife", "KleinBottle", "Complete", expectedGrid);
+
+    printGrid(currentGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
 
   @Test
-  void rectangleToroidalPoliciesPercolation() {
+  void completeKleinBottlePoliciesPercolation() {
     State[][] firstGrid = new State[][] {
         {new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
@@ -52,15 +52,15 @@ class RectangleToroidalTest {
         {new State(PercolationState.WATER), new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.WATER)}
     };
 
-    Grid currentGrid = new Grid("Percolation", "Toroidal", "Rectangle",  firstGrid);
+    Grid currentGrid = new Grid("Percolation", "KleinBottle", "Complete",  firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("Percolation", "Toroidal", "Rectangle",  expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", "KleinBottle", "Complete",  expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
 
   @Test
-  void rectangleToroidalPoliciesRockPaperScissors() {
+  void completeKleinBottlePoliciesRockPaperScissors() {
     State[][] firstGrid = new State[][] {
         {new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK)},
         {new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.ROCK), new State(RockPaperScissorsState.ROCK)},
@@ -73,15 +73,15 @@ class RectangleToroidalTest {
         {new State(RockPaperScissorsState.PAPER), new State(RockPaperScissorsState.SCISSORS), new State(RockPaperScissorsState.PAPER)}
     };
 
-    Grid currentGrid = new Grid("RockPaperScissors", "Toroidal", "Rectangle", firstGrid);
+    Grid currentGrid = new Grid("RockPaperScissors", "KleinBottle", "Complete", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("RockPaperScissors", "Toroidal", "Rectangle", expectedGrid);
+    Grid expectedNextGrid = new Grid("RockPaperScissors", "KleinBottle", "Complete", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
 
   @Test
-  void rectangleToroidalPoliciesSegregation() {
+  void completeKleinBottlePoliciesSegregation() {
     State[][] grid = new State[][] {
         {new MovingState(SegregationState.OAGENT), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
         {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.EMPTY)},
@@ -113,19 +113,19 @@ class RectangleToroidalTest {
     };
 
 
-    Grid currentGrid = new Grid("Segregation", "Toroidal", "Rectangle", grid);
+    Grid currentGrid = new Grid("Segregation", "KleinBottle", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome1);
-    Grid expected2 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome2);
-    Grid expected3 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome3);
-    Grid expected4 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome4);
+    Grid expected1 = new Grid("Segregation", "KleinBottle", "Complete", possibleOutcome1);
+    Grid expected2 = new Grid("Segregation", "KleinBottle", "Complete", possibleOutcome2);
+    Grid expected3 = new Grid("Segregation", "KleinBottle", "Complete", possibleOutcome3);
+    Grid expected4 = new Grid("Segregation", "KleinBottle", "Complete", possibleOutcome4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
 
   @Test
-  void rectangleToroidalPoliciesSpreadingOfFire() {
+  void completeKleinBottlePoliciesSpreadingOfFire() {
     State[][] firstGrid = new State[][] {
         {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)},
         {new State(SpreadingOfFireState.TREE), new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.BURNING)}
@@ -141,16 +141,16 @@ class RectangleToroidalTest {
         {new State(SpreadingOfFireState.BURNING), new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("SpreadingOfFire", "Finite", "Rectangle",  firstGrid);
+    Grid currentGrid = new Grid("SpreadingOfFire", "Finite", "Complete",  firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectGrid1Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid1);
-    Grid expectGrid2Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid2);
+    Grid expectGrid1Result = new Grid("SpreadingOfFire", "Finite", "Complete",  expectGrid1);
+    Grid expectGrid2Result = new Grid("SpreadingOfFire", "Finite", "Complete",  expectGrid2);
 
     assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
   }
 
   @Test
-  void rectangleToroidalPoliciesWaTorWorld() {
+  void completeKleinBottlePoliciesWaTorWorld() {
     State[][] grid = new State[][] {
         {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
@@ -181,13 +181,13 @@ class RectangleToroidalTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("WaTorWorld", "Finite", "Rectangle", grid);
+    Grid currentGrid = new Grid("WaTorWorld", "Finite", "Complete", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome1);
-    Grid expected2 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome2);
-    Grid expected3 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome3);
-    Grid expected4 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome4);
+    Grid expected1 = new Grid("WaTorWorld", "Finite", "Complete", possibleOutcome1);
+    Grid expected2 = new Grid("WaTorWorld", "Finite", "Complete", possibleOutcome2);
+    Grid expected3 = new Grid("WaTorWorld", "Finite", "Complete", possibleOutcome3);
+    Grid expected4 = new Grid("WaTorWorld", "Finite", "Complete", possibleOutcome4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
@@ -196,10 +196,12 @@ class RectangleToroidalTest {
   private void printGrid(Grid grid) {
     for(int r = 0; r<grid.getGridNumberOfRows(); r++) {
       for(int c = 0; c<grid.getGridNumberOfColumns(); c++) {
-        System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
+        //System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
+        grid.getCell(r,c).getNeighborhood().printNeighborPositionToState();
       }
       System.out.println();
     }
     System.out.println();
   }
+
 }
