@@ -1,5 +1,6 @@
 package controller;
 
+import controller.stateType.SpreadingOfFireState;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,26 +14,26 @@ public class SpreadingOfFireSimulation extends Simulation {
   private static final String STORING_FILE_NAME = "data/outputGrids/spreadingOfFire";
   private int numberRows;
   private int numberCols;
-  private HashMap<Integer,State> statesForInteger;
-  private HashMap<State, Integer> integerForStates;
+  private HashMap<Integer,StateType> statesForInteger;
+  private HashMap<StateType, Integer> integerForStates;
   ;
 
   public SpreadingOfFireSimulation() {
-    super(SimulationType.PERCOLATION, "testingFire.csv");
+    super("SpreadingOfFire");
   }
 
-  @Override
-  public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    /*statesForInteger = new HashMap<>();
+  //@Override
+  //public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
+/*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
-    State possibleStatesInGameOfLife[] = GameOfLifeState.values();
+    StateType possibleStatesInGameOfLife[] = SpreadingOfFireState.values();
     int stateNumber = 0;
-    for(State state : possibleStatesInGameOfLife) {
+    for(StateType state : possibleStatesInGameOfLife) {
       integerForStates.put(state, stateNumber);
       statesForInteger.put(stateNumber,state);
       stateNumber++;
     }
-    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
+    StateType[][] cellStates = new StateType[integerCellStates.length][integerCellStates[0].length];
     numberRows = integerCellStates.length;
     numberCols = integerCellStates[0].length;
     for (int row = 0; row < integerCellStates.length; row++) {
@@ -41,10 +42,10 @@ public class SpreadingOfFireSimulation extends Simulation {
       }
     }
     return cellStates;*/
-    return null;
-  }
+  //  return null;
+//  }
 
-  @Override
+/*  @Override
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
@@ -57,6 +58,11 @@ public class SpreadingOfFireSimulation extends Simulation {
       System.out.println("exception");
     }
     return null;
+  }*/
+
+  @Override
+  public StateType[] getStateTypesForSimulation() {
+    return SpreadingOfFireState.values();
   }
 
   @Override
