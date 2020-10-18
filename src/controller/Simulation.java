@@ -20,7 +20,7 @@ public abstract class Simulation {
 
   private Grid currentGrid;
   private Grid nextGrid;
-  private final SimulationType simulationName;
+  private final String simulationName;
   private String simulationFileLocation;
   private SimulationView simulationView;
   private Group root;
@@ -34,14 +34,13 @@ public abstract class Simulation {
 
 
 
-  public Simulation(SimulationType SimulationNameType, String propertiesName) {
-    simulationName = SimulationNameType;
+  public Simulation(String newSimulationName, String propertiesName) {
+    this.simulationName = newSimulationName;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
-    currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
+    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(newSimulationName);
+    currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
-    //readPropertiesFile("GameOfLife.properties");
   }
 
 
@@ -81,7 +80,7 @@ public abstract class Simulation {
 
   abstract public String readInPropertiesFile();
 
-  abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
+  abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
 
   public int[][] readCellStatesFile() throws ControllerException {

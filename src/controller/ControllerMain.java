@@ -1,5 +1,6 @@
 package controller;
 
+import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.util.ResourceBundle;
 import javafx.application.Application;
@@ -24,7 +25,8 @@ public class ControllerMain extends Application {
   public static final int SCREEN_HEIGHT = 400;
   private Scene myScene;
   private Group root;
-  private Simulation currentSimulation = new GameOfLifeSimulation();
+  //private Simulation currentSimulation = new GameOfLifeSimulation();
+  private Simulation currentSimulation;
   private boolean isPaused;
   private Stage currentStage;
 
@@ -54,7 +56,7 @@ public class ControllerMain extends Application {
    */
   Scene setupScene(int width, int height) {
     root = new Group();
-    //currentSimulation = new GameOfLifeSimulation();
+    currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
     myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
@@ -75,7 +77,6 @@ public class ControllerMain extends Application {
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun);
-
   }
 
   void saveFile() {
@@ -84,7 +85,7 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
-    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType() == SimulationType.GAME_OF_LIFE) {
+    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
       currentSimulation = new GameOfLifeSimulation();
       setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
       System.out.println("game now");
@@ -92,7 +93,7 @@ public class ControllerMain extends Application {
       currentStage.show();
     }
 
-    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType() == SimulationType.PERCOLATION) {
+    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("Percolation")) {
       currentSimulation = new PercolationSimulation();
       setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
       System.out.println("percolation now");

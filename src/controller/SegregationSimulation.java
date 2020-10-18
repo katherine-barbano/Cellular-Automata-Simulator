@@ -1,5 +1,6 @@
 package controller;
 
+import controller.stateType.SegregationState;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,26 +16,26 @@ public class SegregationSimulation extends Simulation{
   private static final String STORING_FILE_NAME = "data/outputGrids/segregation";
   private int numberRows;
   private int numberCols;
-  private HashMap<Integer,State> statesForInteger;
-  private HashMap<State, Integer> integerForStates;
+  private HashMap<Integer,StateType> statesForInteger;
+  private HashMap<StateType, Integer> integerForStates;
   ;
 
   public SegregationSimulation() {
-    super(SimulationType.PERCOLATION, "testingSegregation.csv");
+    super("Segregation", "testingSegregation.csv");
   }
 
   @Override
-  public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    /*statesForInteger = new HashMap<>();
+  public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
+    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
-    State possibleStatesInGameOfLife[] = GameOfLifeState.values();
+    StateType possibleStatesInGameOfLife[] = SegregationState.values();
     int stateNumber = 0;
-    for(State state : possibleStatesInGameOfLife) {
+    for(StateType state : possibleStatesInGameOfLife) {
       integerForStates.put(state, stateNumber);
       statesForInteger.put(stateNumber,state);
       stateNumber++;
     }
-    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
+    StateType[][] cellStates = new StateType[integerCellStates.length][integerCellStates[0].length];
     numberRows = integerCellStates.length;
     numberCols = integerCellStates[0].length;
     for (int row = 0; row < integerCellStates.length; row++) {
@@ -42,8 +43,7 @@ public class SegregationSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;*/
-    return null;
+    return cellStates;
   }
 
   @Override
