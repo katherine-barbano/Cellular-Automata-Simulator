@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import java.io.FileWriter;
@@ -15,7 +14,6 @@ public class RockPaperScissorsSimulation extends Simulation{
   private int numberCols;
   private HashMap<Integer,State> statesForInteger;
   private HashMap<State, Integer> integerForStates;
-  ;
 
   public RockPaperScissorsSimulation() {
     super(SimulationType.PERCOLATION, "testingRPS.csv");
@@ -23,8 +21,7 @@ public class RockPaperScissorsSimulation extends Simulation{
 
   @Override
   public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    */
-/*statesForInteger = new HashMap<>();
+    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     State possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -41,9 +38,7 @@ public class RockPaperScissorsSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;*//*
-
-    return null;
+    return cellStates;
   }
 
   @Override
@@ -91,4 +86,3 @@ public class RockPaperScissorsSimulation extends Simulation{
   }
 
 }
-*/

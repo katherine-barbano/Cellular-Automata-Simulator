@@ -1,4 +1,3 @@
-/*
 package view.buttons;
 
 
@@ -6,11 +5,9 @@ import controller.ControllerMain;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
-*/
 /**
  * The Step button will step to the next frame (only when the game is paused).
- *//*
-
+ */
 public class StepButton extends Button {
 
   public static final String STEP_BUTTON_PROPERTIES = "StepButton";
@@ -27,4 +24,4 @@ public class StepButton extends Button {
     //ControllerMain.updateShapes();
   }
 
-}*/
+}

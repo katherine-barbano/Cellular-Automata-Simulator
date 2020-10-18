@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import java.io.File;
@@ -18,7 +17,6 @@ public class SegregationSimulation extends Simulation{
   private int numberCols;
   private HashMap<Integer,State> statesForInteger;
   private HashMap<State, Integer> integerForStates;
-  ;
 
   public SegregationSimulation() {
     super(SimulationType.PERCOLATION, "testingSegregation.csv");
@@ -26,8 +24,7 @@ public class SegregationSimulation extends Simulation{
 
   @Override
   public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    */
-/*statesForInteger = new HashMap<>();
+    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     State possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -44,7 +41,7 @@ public class SegregationSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;*//*
+    return cellStates;
 
     return null;
   }
@@ -96,4 +93,3 @@ public class SegregationSimulation extends Simulation{
     }
   }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package view;
 
 import java.util.ResourceBundle;
@@ -40,4 +39,3 @@ public class TitleBar extends FlowPane {
 
 
 }
-*/

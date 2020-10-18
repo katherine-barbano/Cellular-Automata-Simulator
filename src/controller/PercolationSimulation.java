@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import java.io.FileWriter;
@@ -16,7 +15,6 @@ public class PercolationSimulation extends Simulation{
   private int numberCols;
   private HashMap<Integer,State> statesForInteger;
   private HashMap<State, Integer> integerForStates;
-  ;
 
   public PercolationSimulation() {
     super(SimulationType.PERCOLATION, "testingPercolation.csv");
@@ -24,8 +22,7 @@ public class PercolationSimulation extends Simulation{
 
   @Override
   public State[][] createStatesFromInteger(int[][] integerCellStates) {
-    */
-/*statesForInteger = new HashMap<>();
+    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     State possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -42,9 +39,7 @@ public class PercolationSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;*//*
-
-    return null;
+    return cellStates;
   }
 
   @Override
@@ -91,4 +86,3 @@ public class PercolationSimulation extends Simulation{
     }
   }
 }
-*/

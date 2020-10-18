@@ -1,4 +1,3 @@
-/*
 package view;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -152,4 +151,4 @@ class SimulationViewTest extends DukeApplicationTest {
     return intMatrix;
   }
 
-}*/
+}

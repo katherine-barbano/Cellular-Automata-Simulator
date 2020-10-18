@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import java.io.File;
@@ -40,11 +39,9 @@ public class ControllerMain extends Application {
     animation.play();
   }
 
-  */
-/*
+  /*
    * Sets up the stage size and title
-   *//*
-
+   */
   protected void setUpStage(Stage stage) {
     setupScene(FRAME_SIZE, FRAME_SIZE);
     stage.setScene(myScene);
@@ -52,11 +49,9 @@ public class ControllerMain extends Application {
     isPaused = true;
   }
 
-  */
-/*
+  /*
    * Create the game's "scene": what shapes will be in the game and their starting properties
-   *//*
-
+   */
   Scene setupScene(int width, int height) {
     root = new Group();
     //currentSimulation = new GameOfLifeSimulation();
@@ -158,4 +153,3 @@ public class ControllerMain extends Application {
 
 
 }
-*/
