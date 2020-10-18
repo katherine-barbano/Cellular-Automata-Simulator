@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
-import javax.swing.JOptionPane;
 
 public abstract class Simulation {
 
@@ -31,6 +30,7 @@ public abstract class Simulation {
   private int colNumber;
   private HashMap<Integer, StateType> statesForInteger;
   private HashMap<StateType, Integer> integerForStates;
+  private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
  // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
@@ -40,13 +40,12 @@ public abstract class Simulation {
 
   public Simulation(String newSimulationName) {
     this.simulationName = newSimulationName;
-    //readPropertiesFile(newSimulationName);
-    //simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-    simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-    //currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        //propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
-    currentGrid = new Grid(simulationName, "Finite",
-        "Complete", createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    this.propertiesInformation = new HashMap<String, String>();
+    readPropertiesFile(newSimulationName);
+    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+    this.possibleStateTypes = getStateTypesForSimulation();
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), possibleStateTypes));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -76,7 +75,7 @@ public abstract class Simulation {
   public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = "data/initialConfigurations/" + newFileLocation;
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
@@ -88,10 +87,14 @@ public abstract class Simulation {
 
   abstract public StateType[] getStateTypesForSimulation();
 
+  public StateType[] getPossibleStateTypes() {
+    return possibleStateTypes;
+  }
+
   //CHECK - remove this method!
  // abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
-  public State[][] createStateTypes(int[][] integerCellStates,
+  public State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
@@ -147,7 +150,7 @@ public abstract class Simulation {
   public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
-      updateToNextSimulation();
+      //updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
     }
   }
