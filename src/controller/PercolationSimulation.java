@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import controller.stateType.PercolationState;
@@ -21,10 +22,13 @@ public class PercolationSimulation extends Simulation{
   public PercolationSimulation() {
     super("Percolation");
   }
+*/
 /*
   @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-*//*    statesForInteger = new HashMap<>();
+*//*
+*/
+/*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = PercolationState.values();
     int stateNumber = 0;
@@ -42,9 +46,13 @@ public class PercolationSimulation extends Simulation{
       }
     }
     return cellStates;*//*
+*/
+/*
     return null;
-  }*/
+  }*//*
 
+
+*/
 /*  @Override
   public String readInPropertiesFile() {
     try {
@@ -58,7 +66,8 @@ public class PercolationSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }*/
+  }*//*
+
 
   @Override
   public StateType[] getStateTypesForSimulation() {
@@ -94,3 +103,4 @@ public class PercolationSimulation extends Simulation{
     }
   }
 }
+*/

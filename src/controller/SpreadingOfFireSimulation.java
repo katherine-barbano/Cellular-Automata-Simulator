@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import controller.stateType.SpreadingOfFireState;
@@ -24,6 +25,7 @@ public class SpreadingOfFireSimulation extends Simulation {
 
   //@Override
   //public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
+*/
 /*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = SpreadingOfFireState.values();
@@ -41,10 +43,12 @@ public class SpreadingOfFireSimulation extends Simulation {
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;*/
+    return cellStates;*//*
+
   //  return null;
 //  }
 
+*/
 /*  @Override
   public String readInPropertiesFile() {
     try {
@@ -58,7 +62,8 @@ public class SpreadingOfFireSimulation extends Simulation {
       System.out.println("exception");
     }
     return null;
-  }*/
+  }*//*
+
 
   @Override
   public StateType[] getStateTypesForSimulation() {
@@ -95,3 +100,4 @@ public class SpreadingOfFireSimulation extends Simulation {
   }
 }
 
+*/

@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import controller.stateType.SegregationState;
@@ -24,9 +25,12 @@ public class SegregationSimulation extends Simulation{
     super("Segregation");
   }
 
+*/
 /*  @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-*//*    statesForInteger = new HashMap<>();
+*//*
+*/
+/*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = SegregationState.values();
     int stateNumber = 0;
@@ -44,9 +48,13 @@ public class SegregationSimulation extends Simulation{
       }
     }
     return cellStates;*//*
+*/
+/*
     return null;
-  }*/
+  }*//*
 
+
+*/
 /*  @Override
   public String readInPropertiesFile() {
     try {
@@ -60,7 +68,8 @@ public class SegregationSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }*/
+  }*//*
+
 
   @Override
   public StateType[] getStateTypesForSimulation() {
@@ -99,3 +108,4 @@ public class SegregationSimulation extends Simulation{
     }
   }
 }
+*/

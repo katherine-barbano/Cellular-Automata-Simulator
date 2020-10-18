@@ -1,3 +1,4 @@
+/*
 package view.CellFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -85,4 +86,4 @@ class CellFormatBarTest extends DukeApplicationTest {
 
   }
 
-}
+}*/

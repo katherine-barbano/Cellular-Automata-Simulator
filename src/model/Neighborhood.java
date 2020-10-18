@@ -34,6 +34,10 @@ public abstract class Neighborhood {
     this.neighborhoodsOfNeighbors = neighborhoodsOfNeighbors;
   }
 
+  public int[] getPositionOfNeighbor(int[] relativePosition) {
+    return neighborPolicy.getPositionOfNeighbor(relativePosition);
+  }
+
   public Neighborhood findPositionInNeighborhoodOfNeighbors(int[] openPosition) {
     for(int[] position:neighborhoodsOfNeighbors.keySet()) {
       if(position[0] == openPosition[0] && position[1] == openPosition[1]) {

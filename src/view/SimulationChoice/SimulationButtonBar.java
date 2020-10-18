@@ -1,3 +1,4 @@
+/*
 package view.SimulationChoice;
 
 import java.util.ResourceBundle;
@@ -30,3 +31,4 @@ public class SimulationButtonBar extends HBox {
   }
 
 }
+*/

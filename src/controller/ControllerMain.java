@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import controller.stateType.GameOfLifeState;
@@ -41,9 +42,11 @@ public class ControllerMain extends Application {
     animation.play();
   }
 
-  /*
+  */
+/*
    * Sets up the stage size and title
-   */
+   *//*
+
   protected void setUpStage(Stage stage) {
     setupScene(FRAME_SIZE, FRAME_SIZE);
     stage.setScene(myScene);
@@ -51,9 +54,11 @@ public class ControllerMain extends Application {
     isPaused = true;
   }
 
-  /*
+  */
+/*
    * Create the game's "scene": what shapes will be in the game and their starting properties
-   */
+   *//*
+
   Scene setupScene(int width, int height) {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
@@ -85,6 +90,7 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
+*/
 /*    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
       currentSimulation = new GameOfLifeSimulation();
       setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
@@ -99,7 +105,8 @@ public class ControllerMain extends Application {
       System.out.println("percolation now");
       currentStage.setScene(myScene);
       currentStage.show();
-    }*/
+    }*//*
+
   }
 
   void increaseSpeed() {
@@ -154,3 +161,4 @@ public class ControllerMain extends Application {
   }
 
 }
+*/

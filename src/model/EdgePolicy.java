@@ -22,6 +22,8 @@ public abstract class EdgePolicy {
 
   protected abstract State getNeighborStateFromPositionForInitialization(int[] relativePositionOfNeighbor);
 
+  public abstract int[] getPositionOfNeighbor(int[] relativePositionOfNeighbor);
+
   protected int getCenterCellRow() {
     return centerCellRow;
   }
@@ -39,9 +41,13 @@ public abstract class EdgePolicy {
   }
 
   protected State getNeighborStateFromAdjacentPosition(int[] neighborPosition) throws IndexOutOfBoundsException{
-    int neighborRow = centerCellRow + neighborPosition[0];
-    int neighborColumn = centerCellColumn + neighborPosition[1];
+    int[] nonRelativePositions = getNonRelativePositions(neighborPosition);
+    return states[nonRelativePositions[0]][nonRelativePositions[1]];
+  }
 
-    return states[neighborRow][neighborColumn];
+  protected int[] getNonRelativePositions(int[] relativePosition) {
+    int neighborRow = centerCellRow + relativePosition[0];
+    int neighborColumn = centerCellColumn + relativePosition[1];
+    return new int[]{neighborRow, neighborColumn};
   }
 }

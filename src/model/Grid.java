@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import model.edgePolicies.ToroidalEdgePolicy;
 import model.neighborPolicies.CompleteNeighborPolicy;
+import model.neighborPolicies.RectangleNeighborPolicy;
 import model.neighborhoods.concrete.GameOfLifeNeighborhood;
 
 public class Grid {
@@ -166,7 +168,8 @@ public class Grid {
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = new HashMap<>();
     Set<int[]> centerNeighborRelativePositions = centerCellNeighborhood.allPossibleRelativePositions();
     for (int[] neighborPosition : centerNeighborRelativePositions) {
-      Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
+      int[] positionOfNeighbor = centerCellNeighborhood.getPositionOfNeighbor(neighborPosition);
+      Cell neighborCellOfNeighbor = cellGrid[positionOfNeighbor[0]][positionOfNeighbor[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
       neighborhoodsOfNeighbors.put(neighborPosition, neighborhoodOfNeighbor);
     }
@@ -262,6 +265,8 @@ public class Grid {
     Class<?>[] type = {EdgePolicy.class};
     EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
     Object[] constructorArguments = {edgePolicy};
+
+    NeighborPolicy rect = new RectangleNeighborPolicy(edgePolicy);
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
     return (NeighborPolicy) subclass;
