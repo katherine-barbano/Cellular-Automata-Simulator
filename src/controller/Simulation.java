@@ -40,13 +40,12 @@ public abstract class Simulation {
 
   public Simulation(String newSimulationName) {
     this.simulationName = newSimulationName;
-    //readPropertiesFile(newSimulationName);
-    //simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-    simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-    //currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        //propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
-    currentGrid = new Grid(simulationName, "Finite",
-        "Complete", createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    readPropertiesFile(newSimulationName);
+    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    //currentGrid = new Grid(simulationName, "Finite",
+        //"Complete", createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -54,8 +53,8 @@ public abstract class Simulation {
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/" + propertiesFileName;
-           // + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName
+            + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
