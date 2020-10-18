@@ -1,11 +1,11 @@
 package view.CellFormat;
 
-import controller.State;
 import controller.StateType;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 import view.CellDisplay;
 import view.GridDisplay;
 import view.SimulationView;
@@ -54,20 +54,20 @@ public class CellFormatBar extends HBox {
 
    private void updateCellColor() {
     StateType chosenState = myStateChoice.getMySelection();
-    CellColors chosenColor= myColorChoice.getChosenColor();
+    CellFill chosenColor= myColorChoice.getChosenColor();
     updateAllCellsWithChosenState(chosenState,chosenColor);
   }
 
   private void updateCellImage() {
     StateType chosenState = myStateChoice.getMySelection();
-    CellColors chosenImage = myImageChoice.getChosenImage();
+    CellFill chosenImage = myImageChoice.getChosenImage();
     updateAllCellsWithChosenState(chosenState,chosenImage);
   }
 
-  private void updateAllCellsWithChosenState(StateType chosenState, CellColors chosenFill){
+  private void updateAllCellsWithChosenState(StateType chosenState, CellFill chosenFill){
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for (CellDisplay cell : cellsWithChosenState) {
-      cell.setFill(chosenFill.getCellColor());
+      cell.setFill(chosenFill.getCellFill());
       SimulationView.STATE_COLOR_MAP.put(chosenState,chosenFill);
     }
   }

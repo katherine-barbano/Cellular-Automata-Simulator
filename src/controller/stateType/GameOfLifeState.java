@@ -2,19 +2,20 @@ package controller.stateType;
 
 import controller.StateType;
 import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 
 public enum GameOfLifeState implements StateType {
   ALIVE(CellColors.BLACK),
   DEAD(CellColors.WHITE);
 
-  private CellColors defaultColor;
+  private CellFill defaultColor;
 
-  GameOfLifeState(CellColors color){
+  GameOfLifeState(CellFill color){
     this.defaultColor = color;
   }
 
   @Override
-  public CellColors getDefaultColor(){
+  public CellFill getDefaultColor() {
     return defaultColor;
   }
 }

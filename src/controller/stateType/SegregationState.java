@@ -2,20 +2,21 @@ package controller.stateType;
 
 import controller.StateType;
 import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 
 public enum SegregationState implements StateType {
   XAGENT(CellColors.BLUE),
   OAGENT(CellColors.BLACK),
   EMPTY(CellColors.WHITE);
 
-  private CellColors defaultColor;
+  private CellFill defaultColor;
 
-  SegregationState(CellColors color){
+  SegregationState(CellFill color){
     this.defaultColor = color;
   }
 
   @Override
-  public CellColors getDefaultColor() {
+  public CellFill getDefaultColor() {
     return defaultColor;
   }
 }
