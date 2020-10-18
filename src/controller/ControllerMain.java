@@ -61,7 +61,6 @@ public class ControllerMain extends Application {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    //CHECK - need to update sim view to take in new variables
     myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
         SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
@@ -76,15 +75,18 @@ public class ControllerMain extends Application {
   }
 
   void step () {
+    //System.out.println("stepping");
     updateShapes(!isPaused);
     checkChangeSimulation();
   }
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun);
+    //System.out.println("updating");
   }
 
   void saveFile() {
+    System.out.println("saving");
     isPaused = true;
     currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
   }

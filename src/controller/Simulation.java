@@ -40,6 +40,7 @@ public abstract class Simulation {
 
   public Simulation(String newSimulationName) {
     this.simulationName = newSimulationName;
+    this.propertiesInformation = new HashMap<String, String>();
     readPropertiesFile(newSimulationName);
     simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
     this.possibleStateTypes = getStateTypesForSimulation();
@@ -149,7 +150,7 @@ public abstract class Simulation {
   public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
-      updateToNextSimulation();
+      //updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
     }
   }
