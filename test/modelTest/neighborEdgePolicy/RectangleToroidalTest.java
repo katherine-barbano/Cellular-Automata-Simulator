@@ -141,10 +141,10 @@ class RectangleToroidalTest {
         {new State(SpreadingOfFireState.BURNING), new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("SpreadingOfFire", "Finite", "Rectangle",  firstGrid);
+    Grid currentGrid = new Grid("SpreadingOfFire", "Toroidal", "Rectangle",  firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectGrid1Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid1);
-    Grid expectGrid2Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid2);
+    Grid expectGrid1Result = new Grid("SpreadingOfFire", "Toroidal", "Rectangle",  expectGrid1);
+    Grid expectGrid2Result = new Grid("SpreadingOfFire", "Toroidal", "Rectangle",  expectGrid2);
 
     assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
   }
@@ -181,13 +181,13 @@ class RectangleToroidalTest {
         {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
     };
 
-    Grid currentGrid = new Grid("WaTorWorld", "Finite", "Rectangle", grid);
+    Grid currentGrid = new Grid("WaTorWorld", "Toroidal", "Rectangle", grid);
     Grid actualNextGrid = currentGrid.getNextGrid();
 
-    Grid expected1 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome1);
-    Grid expected2 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome2);
-    Grid expected3 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome3);
-    Grid expected4 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome4);
+    Grid expected1 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome1);
+    Grid expected2 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome2);
+    Grid expected3 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome3);
+    Grid expected4 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome4);
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
