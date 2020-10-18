@@ -3,9 +3,9 @@ package model.edgePolicies;
 import controller.State;
 import model.EdgePolicy;
 
-public class ToroidalEdgePolicy extends InfiniteEdgePolicy {
+public class KleinBottleEdgePolicy extends InfiniteEdgePolicy {
 
-  public ToroidalEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+  public KleinBottleEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     super(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
