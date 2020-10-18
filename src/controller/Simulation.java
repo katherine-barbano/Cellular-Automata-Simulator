@@ -5,10 +5,12 @@ import com.opencsv.exceptions.CsvException;
 import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -123,9 +125,24 @@ public abstract class Simulation {
       try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
         props.load(resourceStream);
       }
+      File propFile = new File(resourceName);
+    /*
       Object s = "fileName";
-      props.replace(s, props.get(s), input);
+      System.out.println(props.get(s));
+      Object q = props.get("fileName");
+      props.setProperty("fileName", "work");
+      System.out.println(props.get(s));
       System.out.println("saved");
+    */
+      OutputStream out = new FileOutputStream(new File(
+          String.valueOf(loader.getResourceAsStream(resourceName))));
+      //OutputStream out = new FileOutputStream(propFile);
+      props.setProperty("wont", "why");
+      props.setProperty("fileName", file.getName());
+      props.store(out, null);
+      //props.save(out,null);
+      out.close();
+      System.out.println("done");
     } catch (IOException e) {
       //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").

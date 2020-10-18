@@ -142,11 +142,10 @@ public class ControllerMain extends Application {
       isPaused = true;
       FileChooser fileChooser = new FileChooser();
       fileChooser.setTitle("Open Resource File");
-      fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Simulation Files", "*.sim"));
+      fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Simulation Files", "*.sim", "*.csv"));
       File selectedFile = fileChooser.showOpenDialog(currentStage);
       if (selectedFile != null) {
-        System.out.println("not null");
-        //currentStage.display(selectedFile);
+        currentSimulation.setSimulationFileLocation(selectedFile.getName());
       }
      /* FileChooser f = new FileChooser();
       f.showSaveDialog(null);
@@ -156,8 +155,6 @@ public class ControllerMain extends Application {
       SimulationView currSimView = currentSimulation.getSimulationView();
       myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
-      //myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-      //    SCREEN_WIDTH, SCREEN_HEIGHT); currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
       currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
