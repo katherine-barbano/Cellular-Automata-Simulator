@@ -2,12 +2,14 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import controller.stateType.GameOfLifeState;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -28,6 +30,8 @@ public abstract class Simulation {
 
   private int rowNumber;
   private int colNumber;
+  private HashMap<Integer, StateType> statesForInteger;
+  private HashMap<StateType, Integer> integerForStates;
  // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
   private final String PROPERTIES_LOCATION = "simulationProperties/";
@@ -38,7 +42,7 @@ public abstract class Simulation {
     this.simulationName = newSimulationName;
     //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
     simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(newSimulationName);
-    currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
+    currentGrid = new Grid(simulationName, createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
@@ -68,9 +72,9 @@ public abstract class Simulation {
     }
 
 //CHECK can remove this method if initializing in the constructor itself
-  public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
+  public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
-    currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
+    currentGrid = new Grid(simulationName, createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
@@ -80,8 +84,28 @@ public abstract class Simulation {
 
   abstract public String readInPropertiesFile();
 
+  abstract public StateType[] getStateTypesForSimulation();
+
   abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
+  public State[][] createStateTypes(int[][] integerCellStates,
+    StateType[] possibleStatesForSimulation) {
+    statesForInteger = new HashMap<>();
+    integerForStates = new HashMap<>();
+    int stateNumber = 0;
+    for(StateType state : possibleStatesForSimulation) {
+      integerForStates.put(state, stateNumber);
+      statesForInteger.put(stateNumber,state);
+      stateNumber++;
+    }
+    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
+    for (int row = 0; row < integerCellStates.length; row++) {
+      for (int col = 0; col < integerCellStates[0].length; col++) {
+        cellStates[row][col] = new State(statesForInteger.get(integerCellStates[row][col]));
+      }
+    }
+    return cellStates;
+  }
 
   public int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates = new int[0][];

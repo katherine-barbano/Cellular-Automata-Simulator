@@ -23,7 +23,7 @@ public class RockPaperScissorsSimulation extends Simulation{
 
   @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-    statesForInteger = new HashMap<>();
+/*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = RockPaperScissorsState.values();
     int stateNumber = 0;
@@ -40,8 +40,8 @@ public class RockPaperScissorsSimulation extends Simulation{
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;
-    //return null;
+    return cellStates;*/
+    return null;
   }
 
   @Override
@@ -57,6 +57,11 @@ public class RockPaperScissorsSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
+  }
+
+  @Override
+  public StateType[] getStateTypesForSimulation() {
+    return RockPaperScissorsState.values();
   }
 
   @Override

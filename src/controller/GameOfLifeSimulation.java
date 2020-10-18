@@ -26,7 +26,7 @@ public class GameOfLifeSimulation extends Simulation {
 
   @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-    statesForInteger = new HashMap<>();
+/*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -43,8 +43,8 @@ public class GameOfLifeSimulation extends Simulation {
         cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
       }
     }
-    return cellStates;
-   // return null;
+    return cellStates;*/
+    return null;
   }
 
   @Override
@@ -60,6 +60,11 @@ public class GameOfLifeSimulation extends Simulation {
       System.out.println("exception");
     }
     return null;
+  }
+
+  @Override
+  public StateType[] getStateTypesForSimulation() {
+    return GameOfLifeState.values();
   }
 
   @Override
