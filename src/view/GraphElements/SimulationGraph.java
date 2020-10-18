@@ -37,8 +37,8 @@ public class SimulationGraph extends LineChart {
     }
   }
 
-  public void updateStateSeries(StateType state, int timeValue, int numCells){
-    myStateSeriesMap.get(state).getData().add(timeValue,numCells);
+  public void updateStateSeries(StateType state, double elapsedTime, int numCells){
+    myStateSeriesMap.get(state).getData().add((int) elapsedTime,numCells);
   }
 
 

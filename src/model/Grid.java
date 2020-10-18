@@ -364,17 +364,17 @@ public class Grid {
    * @param target
    * @return
    */
-  public Set<Cell> getAllCellsWithSameStateTypeAsTarget(StateType target) {
-    Set<Cell> cellsWithTargetStateType = new HashSet<>();
+  public int getAllCellsWithSameStateTypeAsTarget(StateType target) {
+    int numCellsWithTargetStateType=0;
     for(int row = 0; row<cellGrid.length; row++) {
       for(int column = 0; column<cellGrid[0].length; column++) {
         Cell currentCell = cellGrid[row][column];
         State currentState = currentCell.getCurrentState();
         if(currentState.equals(target)) {
-          cellsWithTargetStateType.add(currentCell);
+          numCellsWithTargetStateType++;
         }
       }
     }
-    return cellsWithTargetStateType;
+    return numCellsWithTargetStateType;
   }
 }

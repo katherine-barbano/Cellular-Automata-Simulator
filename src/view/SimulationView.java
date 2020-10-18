@@ -81,7 +81,7 @@ public class SimulationView {
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
     myGridHeight = findGridHeight();
-    myGridDisplay = new GridDisplay(myGrid, myGridHeight);
+    myGridDisplay = new GridDisplay(myGrid, myGridHeight, simulationType);
     myCellFormatBar = new CellFormatBar(myGridDisplay, states, myBundle);
   }
 

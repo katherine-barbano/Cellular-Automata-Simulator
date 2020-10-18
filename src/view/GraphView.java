@@ -26,8 +26,8 @@ public class GraphView {
   private VBox myRoot;
   private ResourceBundle myBundle;
 
-  private Node myTitleBar;
-  private Node myGraph;
+  private FlowPane myTitleBar;
+  private SimulationGraph myGraph;
   private StateType[] myStates;
 
   /**
@@ -71,9 +71,10 @@ public class GraphView {
     myRoot.getChildren().add(myGraph);
   }
 
-  public void updateGraphForNewGrid(){
+  public void updateGraphForNewGrid(double elapsedTime){
     for(StateType state: myStates){
-      //myGraph.updateSeries(state,myGrid.getNumCellsForStateType(state))
+      int numCellsWithState = myGrid.getAllCellsWithSameStateTypeAsTarget(state);
+      myGraph.updateStateSeries(state,elapsedTime,numCellsWithState);
     }
   }
 
