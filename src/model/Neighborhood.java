@@ -87,4 +87,8 @@ public abstract class Neighborhood {
   protected Set<int[]> allPossibleRelativePositions() {
     return neighborPolicy.allPossibleRelativePositions();
   }
+
+  public void printNeighborPositionToState() {
+    neighborPolicy.printNeighborPositionToState();
+  }
 }

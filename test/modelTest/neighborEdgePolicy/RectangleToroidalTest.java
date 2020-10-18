@@ -2,6 +2,7 @@ package modelTest.neighborEdgePolicy;
 
 import controller.State;
 import controller.stateType.GameOfLifeState;
+import controller.stateType.PercolationState;
 import controller.stateType.RockPaperScissorsState;
 import controller.stateType.SegregationState;
 import controller.states.MovingState;
@@ -39,8 +40,25 @@ class RectangleToroidalTest {
 
   @Test
   void rectangleFinitePoliciesPercolation() {
-    PercolationTest test = new PercolationTest();
-    test.getNextGridPercolationMixOfThreeStates();
+    State[][] firstGrid = new State[][] {
+        {new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
+        {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
+        {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.WATER)}
+    };
+
+    State[][] expectedGrid = new State[][] {
+        {new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.WATER)},
+        {new State(PercolationState.WATER), new State(PercolationState.WATER), new State(PercolationState.WATER), new State(PercolationState.WATER)},
+        {new State(PercolationState.WATER), new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.WATER)}
+    };
+
+    Grid currentGrid = new Grid("Percolation", "Toroidal", "Rectangle",  firstGrid);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+    Grid expectedNextGrid = new Grid("Percolation", "Toroidal", "Rectangle",  expectedGrid);
+
+    printGrid(actualNextGrid);
+
+    assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
 
   @Test
@@ -104,5 +122,16 @@ class RectangleToroidalTest {
   void rectangleFinitePoliciesWaTorWorld() {
     WaTorWorldTest test = new WaTorWorldTest();
     test.getNextGridWaTorWorldFishMovement();
+  }
+
+  //for help debugging
+  private void printGrid(Grid grid) {
+    for(int r = 0; r<3; r++) {
+      for(int c = 0; c<4; c++) {
+        System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
+      }
+      System.out.println();
+    }
+    System.out.println();
   }
 }

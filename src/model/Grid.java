@@ -90,14 +90,14 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid initialNextGridFromSurroundingStates = getInitialNextGrid();
-    /*for(int r=0;r<3;r++) {
+    for(int r=0;r<3;r++) {
       for (int c=0;c<4;c++) {
-        System.out.println(initialNextGridFromSurroundingStates.getCell(r,c).getCurrentState().getStateType());
-        //initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+        //System.out.println(initialNextGridFromSurroundingStates.getCell(r,c).getCurrentState().getStateType());
+        initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
       }
       System.out.println();
     }
-    System.out.println();*/
+    System.out.println();
     Grid nextGridAfterInfluentialNeighborsHaveMoved = getNextGridAfterMove(initialNextGridFromSurroundingStates);
     return nextGridAfterInfluentialNeighborsHaveMoved;
   }

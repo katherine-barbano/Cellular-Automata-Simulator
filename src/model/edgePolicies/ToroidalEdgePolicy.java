@@ -14,6 +14,7 @@ public class ToroidalEdgePolicy extends EdgePolicy {
   @Override
   protected State getNeighborStateFromPositionForInitialization(int[] relativePositionOfNeighbor) {
     try {
+      System.out.println(relativePositionOfNeighbor[0] +","+relativePositionOfNeighbor[1]);
       return getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor);
     }
     catch(IndexOutOfBoundsException e) {
@@ -46,6 +47,7 @@ public class ToroidalEdgePolicy extends EdgePolicy {
     if(neighborColumn >= states.length || neighborColumn < 0) {
       handleColumnWrapping(states, neighborRow, neighborColumn, positionNeighbor);
     }
+    System.out.println("Pos:"+positionNeighbor[0] +""+ positionNeighbor[1]);
     return new int[]{positionNeighbor[0], positionNeighbor[1]};
   }
 
