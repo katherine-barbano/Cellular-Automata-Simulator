@@ -86,7 +86,7 @@ public abstract class Simulation {
   abstract public StateType[] getStateTypesForSimulation();
 
   //CHECK - remove this method!
-  abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
+ // abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
   public State[][] createStateTypes(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
