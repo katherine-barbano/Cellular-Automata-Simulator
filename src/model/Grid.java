@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import model.edgePolicies.ToroidalEdgePolicy;
 import model.neighborPolicies.CompleteNeighborPolicy;
+import model.neighborPolicies.RectangleNeighborPolicy;
 import model.neighborhoods.concrete.GameOfLifeNeighborhood;
 
 public class Grid {
@@ -88,14 +90,14 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid initialNextGridFromSurroundingStates = getInitialNextGrid();
-    /*for(int r=0;r<3;r++) {
+    for(int r=0;r<3;r++) {
       for (int c=0;c<4;c++) {
-        System.out.println(initialNextGridFromSurroundingStates.getCell(r,c).getCurrentState().getStateType());
-        //initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+        //System.out.println(initialNextGridFromSurroundingStates.getCell(r,c).getCurrentState().getStateType());
+        initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
       }
       System.out.println();
     }
-    System.out.println();*/
+    System.out.println();
     Grid nextGridAfterInfluentialNeighborsHaveMoved = getNextGridAfterMove(initialNextGridFromSurroundingStates);
     return nextGridAfterInfluentialNeighborsHaveMoved;
   }
@@ -166,7 +168,8 @@ public class Grid {
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = new HashMap<>();
     Set<int[]> centerNeighborRelativePositions = centerCellNeighborhood.allPossibleRelativePositions();
     for (int[] neighborPosition : centerNeighborRelativePositions) {
-      Cell neighborCellOfNeighbor = cellGrid[row + neighborPosition[0]][column + neighborPosition[1]];
+      int[] positionOfNeighbor = centerCellNeighborhood.getPositionOfNeighbor(neighborPosition);
+      Cell neighborCellOfNeighbor = cellGrid[positionOfNeighbor[0]][positionOfNeighbor[1]];
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
       neighborhoodsOfNeighbors.put(neighborPosition, neighborhoodOfNeighbor);
     }
@@ -262,6 +265,8 @@ public class Grid {
     Class<?>[] type = {EdgePolicy.class};
     EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
     Object[] constructorArguments = {edgePolicy};
+
+    NeighborPolicy rect = new RectangleNeighborPolicy(edgePolicy);
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
     return (NeighborPolicy) subclass;

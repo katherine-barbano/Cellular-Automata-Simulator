@@ -14,46 +14,58 @@ public class ToroidalEdgePolicy extends EdgePolicy {
   @Override
   protected State getNeighborStateFromPositionForInitialization(int[] relativePositionOfNeighbor) {
     try {
+      System.out.println(relativePositionOfNeighbor[0] +","+relativePositionOfNeighbor[1]);
       return getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor);
     }
     catch(IndexOutOfBoundsException e) {
-      return handleOutOfBoundsIndex(relativePositionOfNeighbor);
+      int[] position = getPositionOfOutOfBoundsNeighbor(relativePositionOfNeighbor);
+      return getStates()[position[0]][position[1]];
+    }
+  }
+
+  @Override
+  public int[] getPositionOfNeighbor(int[] relativePositionOfNeighbor) {
+    try {
+      getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor);
+      return getNonRelativePositions(relativePositionOfNeighbor);
+    }
+    catch(IndexOutOfBoundsException e) {
+      return getPositionOfOutOfBoundsNeighbor(relativePositionOfNeighbor);
     }
   }
 
   //If index is out of bounds, this means the center cell is on the edge, and the neighbor should be taken from the opposite side of the Grid
-  private State handleOutOfBoundsIndex(int[] relativePositionOfNeighbor) {
+  private int[] getPositionOfOutOfBoundsNeighbor(int[] relativePositionOfNeighbor) {
     State[][] states = getStates();
-    int neighborRow = getCenterCellRow() + relativePositionOfNeighbor[0];
-    int neighborColumn = getCenterCellColumn() + relativePositionOfNeighbor[1];
-    int positionDimensions = Integer.parseInt(getModelResources().getString(COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES));
-    int[] newRelativePositionNeighbor = new int[positionDimensions];
+    int[] positionNeighbor = getNonRelativePositions(relativePositionOfNeighbor);
+    int neighborRow = positionNeighbor[0];
+    int neighborColumn = positionNeighbor[1];
+
     if(neighborRow >= states.length || neighborRow < 0) {
-      handleRowWrapping(states, neighborRow, neighborColumn, newRelativePositionNeighbor);
+      handleRowWrapping(states, neighborRow, neighborColumn, positionNeighbor);
     }
-    else {
-      handleColumnWrapping(states, neighborRow, neighborColumn, newRelativePositionNeighbor);
+    if(neighborColumn >= states.length || neighborColumn < 0) {
+      handleColumnWrapping(states, neighborRow, neighborColumn, positionNeighbor);
     }
-    return getNeighborStateFromAdjacentPosition(newRelativePositionNeighbor);
+    System.out.println("Pos:"+positionNeighbor[0] +""+ positionNeighbor[1]);
+    return new int[]{positionNeighbor[0], positionNeighbor[1]};
   }
 
-  private void handleRowWrapping(State[][] states, int neighborRow, int neighborColumn, int[] newRelativePositionNeighbor) {
+  private void handleRowWrapping(State[][] states, int neighborRow, int neighborColumn, int[] positionNeighbor) {
     if(neighborRow < 0) {
-      newRelativePositionNeighbor[0] = states.length-1;
+      positionNeighbor[0] = states.length-1;
     }
     else {
-      newRelativePositionNeighbor[0] = 0;
+      positionNeighbor[0] = 0;
     }
-    newRelativePositionNeighbor[1] = neighborColumn;
   }
 
-  private void handleColumnWrapping(State[][] states, int neighborRow, int neighborColumn, int[] newRelativePositionNeighbor) {
+  private void handleColumnWrapping(State[][] states, int neighborRow, int neighborColumn, int[] positionNeighbor) {
     if(neighborColumn < 0) {
-      newRelativePositionNeighbor[1] = states[0].length-1;
+      positionNeighbor[1] = states[0].length-1;
     }
     else {
-      newRelativePositionNeighbor[1] = 0;
+      positionNeighbor[1] = 0;
     }
-    newRelativePositionNeighbor[0] = neighborRow;
   }
 }
