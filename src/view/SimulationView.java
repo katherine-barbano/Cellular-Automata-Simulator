@@ -1,12 +1,15 @@
 package view;
 
 import controller.StateType;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Grid;
+import view.CellFormat.CellColors;
 import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
 import view.SimulationChoice.SimulationButtonBar;
@@ -23,6 +26,7 @@ public class SimulationView {
   public static final String DARK_MODE_CSS = "darkMode.css";
   public static final String RESOURCE_BUNDLE = "View";
   public static final int BUTTON_BAR_HEIGHT = 50;
+  public static final Map<StateType, CellColors> STATE_COLOR_MAP = new HashMap<>();
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -61,6 +65,7 @@ public class SimulationView {
     this.myWidth=width;
     this.myHeight=height;
 
+    initializeStateColorMap(states);
     createUIElements(simulationType, states);
     addUIElementsToRoot();
     setDarkLightModeActions();
@@ -151,6 +156,13 @@ public class SimulationView {
 
   public void setLightMode(){
     myScene.getStylesheets().remove(RESOURCES + DARK_MODE_CSS);
+  }
+
+
+  private void initializeStateColorMap(StateType[] stateTypes){
+    for(StateType state: stateTypes){
+      STATE_COLOR_MAP.put(state,state.getDefaultColor());
+    }
   }
 
 }

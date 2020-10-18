@@ -14,31 +14,29 @@ public class CellDisplay extends Rectangle {
 
   public static final String STATE_ENUM_SUFFIX = "State";
   public static final String STATE_TYPE_FOLDER ="controller.stateType.";
-  private State myState;
   private StateType myStateType;
   private CellColors currentColor;
   private GridDisplay myGridDisplay;
 
-  public CellDisplay(State state, double cellSize, GridDisplay gridDisplay){
+  public CellDisplay(StateType state, double cellSize, GridDisplay gridDisplay){
     super(cellSize,cellSize);
-    this.myState = state;
-    this.myStateType = myState.getStateType();
+    this.myStateType = state;
     this.myGridDisplay = gridDisplay;
 
-    this.currentColor = myState.getStateColor();
+    this.currentColor = SimulationView.STATE_COLOR_MAP.get(myStateType);
     this.setFill(currentColor.getCellColor());
     getStyleClass().add("cell-display");
 
     this.setOnMouseClicked(mouseEvent->handleMouseEvent());
   }
 
-  public State getMyState(){
-    return myState;
-  }
+  public StateType getMyStateType() { return myStateType; }
 
-  public void setMyState(StateType inputState){
+  public CellColors getCurrentColor(){ return currentColor; }
+
+  private void setMyState(StateType inputState){
     myStateType = inputState;
-    currentColor = myState.getStateColor();
+    currentColor = SimulationView.STATE_COLOR_MAP.get(myStateType);
     this.setFill(currentColor.getCellColor());
 
     myGridDisplay.updateCellInGrid(myGridDisplay.getRowIndex(this), myGridDisplay.getColumnIndex(this),inputState);

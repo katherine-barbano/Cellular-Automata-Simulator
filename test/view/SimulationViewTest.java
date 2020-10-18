@@ -50,7 +50,7 @@ class SimulationViewTest extends DukeApplicationTest {
   void clickOnCell(){
     CellDisplay cell = (CellDisplay) myGridDisplay.getChildren().get(0);
     clickOn(cell);
-    assertEquals(DEAD,cell.getMyState());
+    assertEquals(DEAD,cell.getMyStateType());
 
     assertEquals(DEAD,myGridDisplay.getMyGrid().getCell(0,0).getCurrentState());
     assertEquals(DEAD,myView.getCurrentGridInDisplay().getCell(0,0).getCurrentState());
@@ -71,7 +71,7 @@ class SimulationViewTest extends DukeApplicationTest {
       for(int col=0; col<TEST_GRID[row].length;col++){
         int cellIndex = TEST_GRID[row].length *row +col;
         CellDisplay cellDisplay= (CellDisplay) cells.get(cellIndex);
-        State cellState = cellDisplay.getMyState();
+        StateType cellState = cellDisplay.getMyStateType();
         assertEquals(cellState, TEST_GRID[row][col]);
       }
     }
@@ -91,7 +91,7 @@ class SimulationViewTest extends DukeApplicationTest {
       int col = myGridDisplay.getColumnIndex(cell);
 
       CellDisplay cellDisplay = (CellDisplay) cell;
-      State cellState=cellDisplay.getMyState();
+      StateType cellState=cellDisplay.getMyStateType();
       assertEquals(cellState,gridMatrix[row][col]);
     }
   }
