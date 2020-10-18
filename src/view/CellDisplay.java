@@ -13,6 +13,7 @@ import view.CellFormat.CellColors;
 public class CellDisplay extends Rectangle {
 
   public static final String STATE_ENUM_SUFFIX = "State";
+  public static final String STATE_TYPE_FOLDER ="controller.stateType.";
   private State myState;
   private StateType myStateType;
   private CellColors currentColor;
@@ -50,8 +51,8 @@ public class CellDisplay extends Rectangle {
   private StateType getNextState(StateType currentState){
 
     try {
-      Class<?> StateEnum = Class.forName(myGridDisplay.getMySimulationType()+STATE_ENUM_SUFFIX);
-      List<StateType> states= Arrays.asList((StateType[])StateEnum.getEnumConstants());
+      Class<?> StateEnum = Class.forName(STATE_TYPE_FOLDER + myGridDisplay.getMySimulationType()+STATE_ENUM_SUFFIX);
+      List<StateType> states = Arrays.asList((StateType[])StateEnum.getEnumConstants());
       int currentStateIndex = states.indexOf(currentState);
       return states.get((currentStateIndex+1)% states.size());
     } catch (ClassNotFoundException e) {

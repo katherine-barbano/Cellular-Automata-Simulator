@@ -36,6 +36,10 @@ public abstract class NeighborPolicy {
     putValidNeighborsIntoMapWithEdgePolicy(relativePositionOfNeighbor);
   }
 
+  public int[] getPositionOfNeighbor(int[] relativePosition) {
+    return edgePolicy.getPositionOfNeighbor(relativePosition);
+  }
+
   private void putValidNeighborsIntoMapWithEdgePolicy(int[] relativePositionOfNeighbor) {
     try {
       State neighborState = edgePolicy

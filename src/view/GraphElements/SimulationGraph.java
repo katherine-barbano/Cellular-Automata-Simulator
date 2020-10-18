@@ -26,6 +26,9 @@ public class SimulationGraph extends LineChart {
     createSeriesForStates(states);
 
     this.getData().addAll(myStateSeriesMap.values());
+
+    this.getStyleClass().add("simulation-graph");
+    this.setId("simulationGraph");
   }
 
   private void createSeriesForStates(StateType[] states){
