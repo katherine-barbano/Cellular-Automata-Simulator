@@ -14,11 +14,13 @@ import model.Grid;
 public class GridDisplay extends GridPane {
 
   private Grid myGrid;
+  private String mySimulationType;
   private double myCellSize;
 
-  public GridDisplay(Grid grid, double height){
+  public GridDisplay(Grid grid, double height, String simulationType){
     super();
     this.myGrid=grid;
+    this.mySimulationType=simulationType;
     this.setAlignment(Pos.CENTER);
     this.setPrefHeight(height);
     this.getStyleClass().add("grid-display");
@@ -60,11 +62,15 @@ public class GridDisplay extends GridPane {
       currentCellList.add(cellDisplay);
   }
 
-  public void updateCellInGrid(int row, int col, State newState){
-    myGrid.getCell(row,col).setCurrentState(newState);
+  public void updateCellInGrid(int row, int col, StateType newState){
+    myGrid.getCell(row,col).getCurrentState().setStateType(newState);
   }
 
   public Grid getMyGrid(){
     return myGrid;
+  }
+
+  public String getMySimulationType(){
+    return mySimulationType;
   }
 }
