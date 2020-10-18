@@ -81,7 +81,7 @@ public abstract class Simulation {
 
   abstract public void storeNewCellConfig(Grid gridToStore);
 
-  abstract public String readInPropertiesFile();
+ // abstract public String readInPropertiesFile();
 
   abstract public StateType[] getStateTypesForSimulation();
 

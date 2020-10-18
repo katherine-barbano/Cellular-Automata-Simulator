@@ -44,7 +44,7 @@ public class RockPaperScissorsSimulation extends Simulation{
     return null;
   }
 
-  @Override
+/*  @Override
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
@@ -57,7 +57,7 @@ public class RockPaperScissorsSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }
+  }*/
 
   @Override
   public StateType[] getStateTypesForSimulation() {

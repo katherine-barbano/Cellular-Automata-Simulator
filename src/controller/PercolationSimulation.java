@@ -45,7 +45,7 @@ public class PercolationSimulation extends Simulation{
     return null;
   }
 
-  @Override
+/*  @Override
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
@@ -58,7 +58,7 @@ public class PercolationSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }
+  }*/
 
   @Override
   public StateType[] getStateTypesForSimulation() {

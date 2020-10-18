@@ -47,7 +47,7 @@ public class SegregationSimulation extends Simulation{
     return null;
   }
 
-  @Override
+/*  @Override
   public String readInPropertiesFile() {
     try {
       Properties myProperties = new Properties();
@@ -60,7 +60,7 @@ public class SegregationSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }
+  }*/
 
   @Override
   public StateType[] getStateTypesForSimulation() {
