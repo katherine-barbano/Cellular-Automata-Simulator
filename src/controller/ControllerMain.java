@@ -4,11 +4,14 @@ import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.util.ResourceBundle;
 import javafx.application.Application;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import javax.swing.JFileChooser;
 import view.SimulationView;
@@ -58,7 +61,8 @@ public class ControllerMain extends Application {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    //myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
+    //CHECK - need to update sim view to take in new variables
+    myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
@@ -85,6 +89,8 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
+
+
 /*    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
       currentSimulation = new GameOfLifeSimulation();
       setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
@@ -127,13 +133,21 @@ public class ControllerMain extends Application {
   void selectNewFile() throws ControllerException {
     try {
       isPaused = true;
-      JFileChooser j = new JFileChooser();
-      j.showSaveDialog(null);
-      File file = j.getSelectedFile();
-      System.out.println(file.getName());
-      currentSimulation.setSimulationFileLocation(file.getName());
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle("Open Resource File");
+      fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Simulation Files", "*.sim"));
+      File selectedFile = fileChooser.showOpenDialog(currentStage);
+      if (selectedFile != null) {
+        System.out.println("not null");
+        //currentStage.display(selectedFile);
+      }
+     /* FileChooser f = new FileChooser();
+      f.showSaveDialog(null);
+      File file = f.getSelectedFile();*/
+      //System.out.println(file.getName());
+      //currentSimulation.setSimulationFileLocation(file.getName());
       SimulationView currSimView = currentSimulation.getSimulationView();
-     // myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
+      myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
       currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
       currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
