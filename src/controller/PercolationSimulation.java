@@ -19,7 +19,7 @@ public class PercolationSimulation extends Simulation{
   ;
 
   public PercolationSimulation() {
-    super("Percolation", "testingPercolation.csv");
+    super("Percolation");
   }
 
   @Override

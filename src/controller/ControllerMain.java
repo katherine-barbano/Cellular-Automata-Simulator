@@ -58,7 +58,7 @@ public class ControllerMain extends Application {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
+    //myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
@@ -85,7 +85,7 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
-    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
+/*    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
       currentSimulation = new GameOfLifeSimulation();
       setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
       System.out.println("game now");
@@ -99,7 +99,7 @@ public class ControllerMain extends Application {
       System.out.println("percolation now");
       currentStage.setScene(myScene);
       currentStage.show();
-    }
+    }*/
   }
 
   void increaseSpeed() {
@@ -131,10 +131,9 @@ public class ControllerMain extends Application {
       j.showSaveDialog(null);
       File file = j.getSelectedFile();
       System.out.println(file.getName());
-      //setUpStage(currentStage);
       currentSimulation.setSimulationFileLocation(file.getName());
       SimulationView currSimView = currentSimulation.getSimulationView();
-      myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
+     // myScene = currSimView.setupScene(SimulationType.GAME_OF_LIFE, SCREEN_WIDTH, SCREEN_HEIGHT);
       currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
       currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
@@ -153,7 +152,5 @@ public class ControllerMain extends Application {
   public static void main (String[] args) {
     launch(args);
   }
-
-
 
 }

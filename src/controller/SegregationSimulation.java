@@ -21,7 +21,7 @@ public class SegregationSimulation extends Simulation{
   ;
 
   public SegregationSimulation() {
-    super("Segregation", "testingSegregation.csv");
+    super("Segregation");
   }
 
   @Override

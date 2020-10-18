@@ -19,7 +19,7 @@ public class SpreadingOfFireSimulation extends Simulation {
   ;
 
   public SpreadingOfFireSimulation() {
-    super("SpreadingOfFire", "testingFire.csv");
+    super("SpreadingOfFire");
   }
 
   @Override

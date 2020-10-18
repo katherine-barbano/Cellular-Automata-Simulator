@@ -2,7 +2,6 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
-import controller.stateType.GameOfLifeState;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,35 +31,35 @@ public abstract class Simulation {
   private int colNumber;
   private HashMap<Integer, StateType> statesForInteger;
   private HashMap<StateType, Integer> integerForStates;
+  private HashMap<String, String> propertiesInformation;
  // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
   private final String PROPERTIES_LOCATION = "simulationProperties/";
 
 
 
-  public Simulation(String newSimulationName, String propertiesName) {
+  public Simulation(String newSimulationName) {
     this.simulationName = newSimulationName;
-    //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(newSimulationName);
-    currentGrid = new Grid(simulationName, createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    readInPropertiesFile();
+    simulationFileLocation = "data/gameOfLifeSample/" + propertiesInformation.get("fileName");
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
 
 
-
-  public String readPropertiesFile(String propertiesFileName) throws ControllerException {
+  public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/"+propertiesFileName + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName
+            + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
-        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+        try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
           props.load(resourceStream);
         }
         for (Object s : props.keySet()) {
-          if (s.toString().equals("fileName")) {
-            return props.get(s).toString();
-          }
+          propertiesInformation.put(s.toString(), props.get(s).toString());
         }
       }
       catch (Exception e) {
@@ -68,8 +67,7 @@ public abstract class Simulation {
             getString("InvalidFile");
         throw new ControllerException(improperPropertiesFileMessage);
       }
-      return "";
-    }
+  }
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) {
@@ -86,6 +84,7 @@ public abstract class Simulation {
 
   abstract public StateType[] getStateTypesForSimulation();
 
+  //CHECK - remove this method!
   abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
   public State[][] createStateTypes(int[][] integerCellStates,
@@ -108,7 +107,7 @@ public abstract class Simulation {
   }
 
   public int[][] readCellStatesFile() throws ControllerException {
-    int[][] cellStates = new int[0][];
+    int[][] cellStates;
     try {
       List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
       rowNumber = Integer.parseInt(readFiles.get(0)[0]);
@@ -123,7 +122,6 @@ public abstract class Simulation {
       String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidConfigSize");
       throw new ControllerException(incorrectConfigurationExceptionMessage);
-      //System.out.println("not working");
     }
     return cellStates;
   }
@@ -145,30 +143,33 @@ public abstract class Simulation {
   public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
-      this.currentGrid = nextGrid;
-      this.nextGrid = currentGrid.getNextGrid();
+      updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
-      }
     }
+  }
 
-    public void checkGridUpdatesInDisplay(){
+  public void checkGridUpdatesInDisplay(){
     Grid newGrid = simulationView.getCurrentGridInDisplay();
     this.currentGrid=newGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    }
+  }
 
-    public void updateSimulation(boolean shouldRun) {
+  public void updateToNextSimulation() {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    }
+  }
 
-    public List<Integer> getMatrixSize() {
+  public void updateSimulation(boolean shouldRun) {
+    this.currentGrid = nextGrid;
+    this.nextGrid = currentGrid.getNextGrid();
+  }
+
+  public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);
     sizeValues.add(colNumber);
     return sizeValues;
-    }
-
+  }
 
   public SimulationView getSimulationView() {
     return simulationView;

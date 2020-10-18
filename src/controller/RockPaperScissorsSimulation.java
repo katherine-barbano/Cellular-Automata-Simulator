@@ -18,7 +18,7 @@ public class RockPaperScissorsSimulation extends Simulation{
   ;
 
   public RockPaperScissorsSimulation() {
-    super("RockPaperScissors", "testingRPS.csv");
+    super("RockPaperScissors");
   }
 
   @Override

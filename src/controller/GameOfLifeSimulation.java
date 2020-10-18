@@ -21,7 +21,7 @@ public class GameOfLifeSimulation extends Simulation {
   ;
 
   public GameOfLifeSimulation() {
-    super("GameOfLife", "GameOfLife");
+    super("GameOfLife");
   }
 
   @Override

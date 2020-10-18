@@ -19,7 +19,7 @@ public class WatorWorldSimulation extends Simulation{
   ;
 
   public WatorWorldSimulation() {
-    super("WatorWorld", "testingWatorWorld.csv");
+    super("WatorWorld");
   }
 
   @Override
