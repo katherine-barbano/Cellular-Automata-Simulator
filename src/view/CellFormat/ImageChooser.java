@@ -15,9 +15,9 @@ import javafx.scene.paint.Paint;
  * a chosen state.
  */
 public class ImageChooser extends ChoiceBox {
-  public static final String[] IMAGE_PROPERTIES = {"StarryNightImage","PolkaDotImage"};
   public static final CellFill[] CELL_PHOTOS = CellImages.values();
-  private String[] myImageNames = new String[IMAGE_PROPERTIES.length];
+  public static final String LABEL_SUFFIX = "_text";
+  private String[] myImageNames = new String[CELL_PHOTOS.length];
   private ObservableList myPhotos;
   private CellFill myChosenImage;
 
@@ -43,7 +43,7 @@ public class ImageChooser extends ChoiceBox {
 
   public void getImageNamesFromProperty(ResourceBundle resources){
     for(int imageNum=0; imageNum<myImageNames.length;imageNum++){
-      myImageNames[imageNum]=resources.getString(CELL_PHOTOS[imageNum].toString());
+      myImageNames[imageNum]=resources.getString(CELL_PHOTOS[imageNum].toString()+LABEL_SUFFIX);
     }
   }
 

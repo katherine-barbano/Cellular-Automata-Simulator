@@ -18,14 +18,14 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class SimulationViewTest extends DukeApplicationTest {
-  public static final State ALIVE = new State(GameOfLifeState.ALIVE);
-  public static final State DEAD = new State(GameOfLifeState.DEAD);
+  public static final StateType ALIVE = GameOfLifeState.ALIVE;
+  public static final StateType DEAD = GameOfLifeState.DEAD;
   public static final StateType[] MY_STATES = GameOfLifeState.values();
   public static final String SIMULATION_TYPE ="GameOfLife";
   public static final String EDGE_POLICY_TYPE ="Finite";
   public static final String NEIGHBOR_POLICY_TYPE ="Complete";
 
-  public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
+  public static final State[][] TEST_GRID ={{new State(ALIVE),new State(ALIVE),new State(ALIVE)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
   private SimulationView myView;
   private Scene myScene;
   private GridDisplay myGridDisplay;
@@ -52,8 +52,8 @@ class SimulationViewTest extends DukeApplicationTest {
     clickOn(cell);
     assertEquals(DEAD,cell.getMyStateType());
 
-    assertEquals(DEAD,myGridDisplay.getMyGrid().getCell(0,0).getCurrentState());
-    assertEquals(DEAD,myView.getCurrentGridInDisplay().getCell(0,0).getCurrentState());
+    assertEquals(DEAD,myGridDisplay.getMyGrid().getCell(0,0).getCurrentState().getStateType());
+    assertEquals(DEAD,myView.getCurrentGridInDisplay().getCell(0,0).getCurrentState().getStateType());
 
   }
 
@@ -72,7 +72,7 @@ class SimulationViewTest extends DukeApplicationTest {
         int cellIndex = TEST_GRID[row].length *row +col;
         CellDisplay cellDisplay= (CellDisplay) cells.get(cellIndex);
         StateType cellState = cellDisplay.getMyStateType();
-        assertEquals(cellState, TEST_GRID[row][col]);
+        assertEquals(cellState, TEST_GRID[row][col].getStateType());
       }
     }
   }
@@ -81,7 +81,7 @@ class SimulationViewTest extends DukeApplicationTest {
   @Test
   void TestUpdateGridDisplay() throws FileNotFoundException {
     //int[][] gridMatrix = getIntMatrixFromInputFile("data/gameOfLifeSample/testingGOL.csv");
-    State[][] gridMatrix = {{ALIVE,ALIVE,ALIVE,ALIVE},{ALIVE,ALIVE,DEAD,ALIVE},{DEAD,ALIVE,ALIVE,ALIVE}};
+    State[][] gridMatrix = {{new State(ALIVE),new State(ALIVE),new State(ALIVE),new State(ALIVE)},{new State(ALIVE),new State(ALIVE),new State(DEAD),new State(ALIVE)},{new State(DEAD),new State(ALIVE),new State(ALIVE),new State(ALIVE)}};
     Grid newGrid = new Grid (SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,gridMatrix);
     javafxRun(()->myView.updateGridDisplay(newGrid));
 
@@ -92,7 +92,7 @@ class SimulationViewTest extends DukeApplicationTest {
 
       CellDisplay cellDisplay = (CellDisplay) cell;
       StateType cellState=cellDisplay.getMyStateType();
-      assertEquals(cellState,gridMatrix[row][col]);
+      assertEquals(cellState,gridMatrix[row][col].getStateType());
     }
   }
 

@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import javafx.scene.shape.Rectangle;
 import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 
 public class CellDisplay extends Rectangle {
 
   public static final String STATE_ENUM_SUFFIX = "State";
   public static final String STATE_TYPE_FOLDER ="controller.stateType.";
   private StateType myStateType;
-  private CellColors currentColor;
+  private CellFill currentColor;
   private GridDisplay myGridDisplay;
 
   public CellDisplay(StateType state, double cellSize, GridDisplay gridDisplay){
@@ -30,7 +31,7 @@ public class CellDisplay extends Rectangle {
 
   public StateType getMyStateType() { return myStateType; }
 
-  public CellColors getCurrentColor(){ return currentColor; }
+  public CellFill getCurrentColor(){ return currentColor; }
 
   private void setMyState(StateType inputState){
     myStateType = inputState;

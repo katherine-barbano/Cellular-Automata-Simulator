@@ -38,7 +38,9 @@ public enum CellColors implements CellFill{
 
   @Override
   public String toString(){
-    return this.name().toLowerCase();
+    String lowercaseName = this.name().toLowerCase();
+    String firstLetter = this.name().substring(0,1);
+    return firstLetter + lowercaseName.substring(1);
   }
 
 }
