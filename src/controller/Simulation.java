@@ -147,13 +147,28 @@ public abstract class Simulation {
     return currentGrid;
   }
 
-  public void updateSimulationGrid(boolean shouldRun) {
+/*  public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
       //updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
     }
+  }*/
+
+  public void updateSimulationGrid(boolean shouldRun) {
+    if (shouldRun) {
+      //checkGridUpdatesInDisplay();
+      this.currentGrid = nextGrid;
+      this.nextGrid = currentGrid.getNextGrid();
+      simulationView.updateGridDisplay(currentGrid);
+    }
   }
+
+  public void updateSimulation(boolean shouldRun) {
+    this.currentGrid = nextGrid;
+    this.nextGrid = currentGrid.getNextGrid();
+  }
+
 
   public void checkGridUpdatesInDisplay(){
     Grid newGrid = simulationView.getCurrentGridInDisplay();
@@ -166,10 +181,6 @@ public abstract class Simulation {
     this.nextGrid = currentGrid.getNextGrid();
   }
 
-  public void updateSimulation(boolean shouldRun) {
-    this.currentGrid = nextGrid;
-    this.nextGrid = currentGrid.getNextGrid();
-  }
 
   public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();

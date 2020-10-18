@@ -61,8 +61,10 @@ public class ControllerMain extends Application {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
     SimulationView currSimView = currentSimulation.getSimulationView();
-    myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-        SCREEN_WIDTH, SCREEN_HEIGHT);
+    //myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
+    //    SCREEN_WIDTH, SCREEN_HEIGHT);
+    myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+            SCREEN_WIDTH, SCREEN_HEIGHT);
     currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
@@ -150,8 +152,10 @@ public class ControllerMain extends Application {
       //System.out.println(file.getName());
       //currentSimulation.setSimulationFileLocation(file.getName());
       SimulationView currSimView = currentSimulation.getSimulationView();
-      myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-          SCREEN_WIDTH, SCREEN_HEIGHT); currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
+      myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+          SCREEN_WIDTH, SCREEN_HEIGHT);
+      //myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
+      //    SCREEN_WIDTH, SCREEN_HEIGHT); currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
       currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
