@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import controller.stateType.GameOfLifeState;
@@ -25,12 +24,9 @@ public class GameOfLifeSimulation extends Simulation {
     super("GameOfLife");
   }
 
-*/
 /*  @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-*//*
-*/
-/*    statesForInteger = new HashMap<>();
+*//*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = GameOfLifeState.values();
     int stateNumber = 0;
@@ -48,13 +44,9 @@ public class GameOfLifeSimulation extends Simulation {
       }
     }
     return cellStates;*//*
-*/
-/*
     return null;
-  }*//*
+  }*/
 
-
-*/
 /*  @Override
   public String readInPropertiesFile() {
     try {
@@ -68,8 +60,7 @@ public class GameOfLifeSimulation extends Simulation {
       System.out.println("exception");
     }
     return null;
-  }*//*
-
+  }*/
 
   @Override
   public StateType[] getStateTypesForSimulation() {
@@ -115,4 +106,4 @@ public class GameOfLifeSimulation extends Simulation {
         throw new ControllerException(invalidFileExceptionMessage);
       }
   }
-}*/
+}

@@ -1,4 +1,3 @@
-/*
 package controller;
 
 import controller.stateType.RockPaperScissorsState;
@@ -22,12 +21,9 @@ public class RockPaperScissorsSimulation extends Simulation{
     super("RockPaperScissors");
   }
 
-*/
 /*  @Override
   public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-*//*
-*/
-/*    statesForInteger = new HashMap<>();
+*//*    statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     StateType possibleStatesInGameOfLife[] = RockPaperScissorsState.values();
     int stateNumber = 0;
@@ -45,13 +41,9 @@ public class RockPaperScissorsSimulation extends Simulation{
       }
     }
     return cellStates;*//*
-*/
-/*
     return null;
-  }*//*
+  }*/
 
-
-*/
 /*  @Override
   public String readInPropertiesFile() {
     try {
@@ -65,8 +57,7 @@ public class RockPaperScissorsSimulation extends Simulation{
       System.out.println("exception");
     }
     return null;
-  }*//*
-
+  }*/
 
   @Override
   public StateType[] getStateTypesForSimulation() {
@@ -103,4 +94,3 @@ public class RockPaperScissorsSimulation extends Simulation{
   }
 
 }
-*/

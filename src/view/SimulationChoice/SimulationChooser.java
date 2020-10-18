@@ -1,4 +1,3 @@
-/*
 package view.SimulationChoice;
 
 import java.util.Arrays;
@@ -51,4 +50,3 @@ public class SimulationChooser extends ChoiceBox {
   }
 
 }
-*/
