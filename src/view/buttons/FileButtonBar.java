@@ -3,14 +3,13 @@ package view.buttons;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import view.SimulationView;
 
 /**
  * File Button Bar contains Buttons to save the tile Configuration to a file, and to upload a
  * file with a new tile configuration.
  */
 public class FileButtonBar extends HBox {
-
-  public static final int BUTTON_BAR_HEIGHT=50;
 
   private Button mySave;
   private Button myNewFile;
@@ -23,7 +22,7 @@ public class FileButtonBar extends HBox {
     this.myNewFile = new NewFileButton(bundle);
     this.getChildren().add(myNewFile);
 
-    this.setPrefHeight(BUTTON_BAR_HEIGHT);
+    this.setPrefHeight(SimulationView.BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
   }
 

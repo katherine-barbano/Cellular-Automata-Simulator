@@ -16,7 +16,7 @@ import view.GraphElements.SimulationGraph;
 public class GraphView {
 
   public static final String RESOURCES = "resources/";
-  public static final String STYLESHEET = "view.css";
+  public static final String STYLESHEET = "lightMode.css";
   public static final String RESOURCE_BUNDLE = "View";
 
   private int myWidth;

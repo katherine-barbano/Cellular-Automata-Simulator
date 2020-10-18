@@ -3,12 +3,14 @@ package view;
 import controller.StateType;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Grid;
 import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
 import view.SimulationChoice.SimulationButtonBar;
+import view.buttons.DarkLightModeBar;
 import view.buttons.FileButtonBar;
 
 /**
@@ -17,9 +19,10 @@ import view.buttons.FileButtonBar;
 public class SimulationView {
 
   public static final String RESOURCES = "resources/";
-  public static final String STYLESHEET = "view.css";
+  public static final String LIGHT_MODE_CSS = "lightMode.css";
+  public static final String DARK_MODE_CSS = "darkMode.css";
   public static final String RESOURCE_BUNDLE = "View";
-  //public static final State[] STATES_PLACEHOLDER = GameOfLifeState.values();
+  public static final int BUTTON_BAR_HEIGHT = 50;
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -28,11 +31,13 @@ public class SimulationView {
   private int myHeight;
   private int myWidth;
 
+  private Scene myScene;
   private TitleBar myTitleBar;
   private GridDisplay myGridDisplay;
   private double myGridHeight;
   private ControlButtonBar myControlButtons;
   private CellFormatBar myCellFormatBar;
+  private DarkLightModeBar myDarkLightModeBar;
   private FileButtonBar myFileButtons;
   private SimulationButtonBar mySimulationButtons;
 
@@ -58,10 +63,11 @@ public class SimulationView {
 
     createUIElements(simulationType, states);
     addUIElementsToRoot();
+    setDarkLightModeActions();
 
-    Scene scene= new Scene(myRoot, width, height);
-    scene.getStylesheets().add(RESOURCES+STYLESHEET);
-    return scene;
+    myScene= new Scene(myRoot, width, height);
+    myScene.getStylesheets().add(RESOURCES+ LIGHT_MODE_CSS);
+    return myScene;
   }
 
   private void createUIElements(String simulationType, StateType[] states){
@@ -70,6 +76,7 @@ public class SimulationView {
 
     myTitleBar=new TitleBar(myBundle, simulationType);
     myControlButtons = new ControlButtonBar(myBundle);
+    myDarkLightModeBar = new DarkLightModeBar(myBundle);
     myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
 
@@ -83,6 +90,7 @@ public class SimulationView {
     myRoot.getChildren().add(myGridDisplay);
     myRoot.getChildren().add(myControlButtons);
     myRoot.getChildren().add(myCellFormatBar);
+    myRoot.getChildren().add(myDarkLightModeBar);
     myRoot.getChildren().add(myFileButtons);
     myRoot.getChildren().add(mySimulationButtons);
   }
@@ -130,6 +138,19 @@ public class SimulationView {
 
   public SimulationButtonBar getMySimulationButtons() {
     return mySimulationButtons;
+  }
+
+  private void setDarkLightModeActions(){
+    myDarkLightModeBar.getMyDarkButton().setOnAction(event -> setDarkMode());
+    myDarkLightModeBar.getMyLightButton().setOnAction(event -> setLightMode());
+  }
+
+  public void setDarkMode(){
+    myScene.getStylesheets().add(DARK_MODE_CSS);
+  }
+
+  public void setLightMode(){
+    myScene.getStylesheets().add(LIGHT_MODE_CSS);
   }
 
 }
