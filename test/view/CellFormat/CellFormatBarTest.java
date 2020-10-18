@@ -3,6 +3,8 @@ package view.CellFormat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import controller.State;
+import controller.StateType;
+import controller.stateType.GameOfLifeState;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Grid;
@@ -14,10 +16,14 @@ import view.SimulationView;
 
 class CellFormatBarTest extends DukeApplicationTest {
 
-  public static final State ALIVE = new State("Alive");
-  public static final State DEAD = new State("Dead");
-  public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
-  public static final State[][] TEST_GRID2 ={{DEAD,DEAD,DEAD},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
+  public static final StateType ALIVE = GameOfLifeState.ALIVE;
+  public static final StateType DEAD = GameOfLifeState.DEAD;
+  public static final StateType[] MY_STATES = GameOfLifeState.values();
+  public static final String SIMULATION_TYPE ="GameOfLife";
+  public static final String EDGE_POLICY_TYPE ="Finite";
+  public static final String NEIGHBOR_POLICY_TYPE ="Complete";
+  public static final State[][] TEST_GRID ={{new State(ALIVE),new State(ALIVE),new State(ALIVE)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
+  public static final State[][] TEST_GRID2 ={{new State(DEAD),new State(DEAD),new State(DEAD)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
   private SimulationView myView;
   private Scene myScene;
   private GridDisplay myGridDisplay;
@@ -31,9 +37,9 @@ class CellFormatBarTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) throws Exception {
 
-    Grid grid = new Grid(SimulationType.GAME_OF_LIFE, TEST_GRID);
+    Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
     myView = new SimulationView(grid);
-    myScene = myView.setupScene(SimulationType.GAME_OF_LIFE,400,400);
+    myScene = myView.setupScene(SIMULATION_TYPE,MY_STATES,400,400);
     stage.setScene(myScene);
     stage.setTitle("Game of Life");
     stage.show();
@@ -62,7 +68,7 @@ class CellFormatBarTest extends DukeApplicationTest {
     assertEquals(CellColors.BLUE, cell.getMyState().getStateColor());
 
     //Test that cells have Blue Color after updating the grid
-    javafxRun(()->myView.updateGridDisplay(new Grid(SimulationType.GAME_OF_LIFE,TEST_GRID2)));
+    javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
     assertEquals(CellColors.BLUE, cell2.getMyState().getStateColor());
   }
@@ -78,7 +84,7 @@ class CellFormatBarTest extends DukeApplicationTest {
     assertEquals(CellColors.STARRY_NIGHT, cell.getMyState().getStateColor());
 
     //Test that cells have Starry Night Images after updating the grid
-    javafxRun(()->myView.updateGridDisplay(new Grid(SimulationType.GAME_OF_LIFE,TEST_GRID2)));
+    javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
     assertEquals(CellColors.STARRY_NIGHT, cell2.getMyState().getStateColor());
 

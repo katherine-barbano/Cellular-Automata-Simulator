@@ -137,9 +137,9 @@ class GridTest {
     };
 
     Grid grid = new Grid("GameOfLife", "Finite", "Complete", matrix);
-    Set<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
+    int actualCells = grid.getAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
 
-    assertEquals(actualCells.size(), 3);
+    assertEquals(actualCells, 3);
   }
 
   @Test
@@ -150,8 +150,8 @@ class GridTest {
     };
 
     Grid grid = new Grid("Percolation", "Finite", "Rectangle", matrix);
-    Set<Cell> actualCells = grid.getAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
+    int actualCells = grid.getAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
 
-    assertEquals(actualCells.size(), 2);
+    assertEquals(actualCells, 2);
   }
 }
