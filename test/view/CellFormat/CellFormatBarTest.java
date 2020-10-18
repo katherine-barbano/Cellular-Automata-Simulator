@@ -65,12 +65,12 @@ class CellFormatBarTest extends DukeApplicationTest {
     clickOn(myColorButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
 
-    assertEquals(CellColors.BLUE, cell.getMyState().getStateColor());
+    assertEquals(CellColors.BLUE, cell.getCurrentColor());
 
     //Test that cells have Blue Color after updating the grid
     javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
-    assertEquals(CellColors.BLUE, cell2.getMyState().getStateColor());
+    assertEquals(CellColors.BLUE, cell2.getCurrentColor());
   }
 
   @Test
@@ -81,12 +81,12 @@ class CellFormatBarTest extends DukeApplicationTest {
     clickOn(myImageButton);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
 
-    assertEquals(CellColors.STARRY_NIGHT, cell.getMyState().getStateColor());
+    assertEquals(CellColors.STARRY_NIGHT, cell.getCurrentColor());
 
     //Test that cells have Starry Night Images after updating the grid
     javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
-    assertEquals(CellColors.STARRY_NIGHT, cell2.getMyState().getStateColor());
+    assertEquals(CellColors.STARRY_NIGHT, cell2.getCurrentColor());
 
 
   }
