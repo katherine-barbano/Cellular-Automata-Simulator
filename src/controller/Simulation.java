@@ -42,8 +42,10 @@ public abstract class Simulation {
     this.simulationName = newSimulationName;
     readPropertiesFile(newSimulationName);
     simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
+    //currentGrid = new Grid(simulationName, "Finite",
+        //"Complete", createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
   }
