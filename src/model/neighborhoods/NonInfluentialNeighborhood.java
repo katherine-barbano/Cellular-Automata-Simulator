@@ -2,12 +2,13 @@ package model.neighborhoods;
 
 import controller.State;
 import java.util.Map;
+import model.NeighborPolicy;
 import model.Neighborhood;
 
 public abstract class NonInfluentialNeighborhood extends Neighborhood {
 
-  public NonInfluentialNeighborhood(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
-    super(centerCellRow, centerCellColumn, stateGrid);
+  public NonInfluentialNeighborhood(NeighborPolicy neighborPolicy) {
+    super(neighborPolicy);
   }
 
   @Override

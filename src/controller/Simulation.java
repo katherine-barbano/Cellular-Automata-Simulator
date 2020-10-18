@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -20,7 +21,7 @@ public abstract class Simulation {
 
   private Grid currentGrid;
   private Grid nextGrid;
-  private final SimulationType simulationName;
+  private final String simulationName;
   private String simulationFileLocation;
   private SimulationView simulationView;
   private Group root;
@@ -28,36 +29,37 @@ public abstract class Simulation {
 
   private int rowNumber;
   private int colNumber;
+  private HashMap<Integer, StateType> statesForInteger;
+  private HashMap<StateType, Integer> integerForStates;
+  private HashMap<String, String> propertiesInformation;
  // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
   private final String PROPERTIES_LOCATION = "simulationProperties/";
 
 
 
-  public Simulation(SimulationType SimulationNameType, String propertiesName) {
-    simulationName = SimulationNameType;
-    //simulationFileLocation = "data/gameOfLifeSample/" + simulationConfigurationName;
-    simulationFileLocation = "data/gameOfLifeSample/" + readPropertiesFile(SimulationNameType.toString());
-    currentGrid = new Grid(SimulationNameType, createStatesFromInteger(readCellStatesFile()));
+  public Simulation(String newSimulationName) {
+    this.simulationName = newSimulationName;
+    readPropertiesFile(newSimulationName);
+    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
-    //readPropertiesFile("GameOfLife.properties");
   }
 
 
-
-  public String readPropertiesFile(String propertiesFileName) throws ControllerException {
+  public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/"+propertiesFileName + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName
+            + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
-        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+        try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
           props.load(resourceStream);
         }
         for (Object s : props.keySet()) {
-          if (s.toString().equals("fileName")) {
-            return props.get(s).toString();
-          }
+          propertiesInformation.put(s.toString(), props.get(s).toString());
         }
       }
       catch (Exception e) {
@@ -65,13 +67,13 @@ public abstract class Simulation {
             getString("InvalidFile");
         throw new ControllerException(improperPropertiesFileMessage);
       }
-      return "";
-    }
+  }
 
 //CHECK can remove this method if initializing in the constructor itself
-  public void setSimulationFileLocation(String newFileLocation) { //CHECK might not need to pass root in
-    simulationFileLocation = "data/gameOfLifeSample/" + newFileLocation;
-    currentGrid = new Grid(simulationName, createStatesFromInteger(readCellStatesFile()));
+  public void setSimulationFileLocation(String newFileLocation) {
+    simulationFileLocation = "data/initialConfigurations/" + newFileLocation;
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"), createStateTypes(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
@@ -79,13 +81,34 @@ public abstract class Simulation {
 
   abstract public void storeNewCellConfig(Grid gridToStore);
 
-  abstract public String readInPropertiesFile();
+ // abstract public String readInPropertiesFile();
 
-  abstract public State[][] createStatesFromInteger(int[][] integerCellStates);
+  abstract public StateType[] getStateTypesForSimulation();
 
+  //CHECK - remove this method!
+ // abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
+
+  public State[][] createStateTypes(int[][] integerCellStates,
+    StateType[] possibleStatesForSimulation) {
+    statesForInteger = new HashMap<>();
+    integerForStates = new HashMap<>();
+    int stateNumber = 0;
+    for(StateType state : possibleStatesForSimulation) {
+      integerForStates.put(state, stateNumber);
+      statesForInteger.put(stateNumber,state);
+      stateNumber++;
+    }
+    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
+    for (int row = 0; row < integerCellStates.length; row++) {
+      for (int col = 0; col < integerCellStates[0].length; col++) {
+        cellStates[row][col] = new State(statesForInteger.get(integerCellStates[row][col]));
+      }
+    }
+    return cellStates;
+  }
 
   public int[][] readCellStatesFile() throws ControllerException {
-    int[][] cellStates = new int[0][];
+    int[][] cellStates;
     try {
       List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
       rowNumber = Integer.parseInt(readFiles.get(0)[0]);
@@ -100,7 +123,6 @@ public abstract class Simulation {
       String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidConfigSize");
       throw new ControllerException(incorrectConfigurationExceptionMessage);
-      //System.out.println("not working");
     }
     return cellStates;
   }
@@ -122,30 +144,33 @@ public abstract class Simulation {
   public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
-      this.currentGrid = nextGrid;
-      this.nextGrid = currentGrid.getNextGrid();
+      updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
-      }
     }
+  }
 
-    public void checkGridUpdatesInDisplay(){
+  public void checkGridUpdatesInDisplay(){
     Grid newGrid = simulationView.getCurrentGridInDisplay();
     this.currentGrid=newGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    }
+  }
 
-    public void updateSimulation(boolean shouldRun) {
+  public void updateToNextSimulation() {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    }
+  }
 
-    public List<Integer> getMatrixSize() {
+  public void updateSimulation(boolean shouldRun) {
+    this.currentGrid = nextGrid;
+    this.nextGrid = currentGrid.getNextGrid();
+  }
+
+  public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);
     sizeValues.add(colNumber);
     return sizeValues;
-    }
-
+  }
 
   public SimulationView getSimulationView() {
     return simulationView;

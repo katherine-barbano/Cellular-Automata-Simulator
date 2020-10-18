@@ -1,6 +1,7 @@
 package controller.states;
 
 import controller.State;
+import controller.StateType;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ public class MovingState extends State {
 
   private int[] nextPosition;
 
-  public MovingState(String name) {
+  public MovingState(StateType name) {
     super(name);
   }
 
