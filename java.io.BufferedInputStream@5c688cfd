@@ -1,9 +1,0 @@
-#Sun Oct 18 18:47:26 EDT 2020
-fileName=oppa.csv
-authorOfSimulation=Katherine Barbano
-kind=GameOfLife
-neighborPolicy=Complete
-description=This simulation illustrates the life cycle of bacteria and its future generations
-wont=why
-edgePolicy=Finite
-title=Game of Life Simulation

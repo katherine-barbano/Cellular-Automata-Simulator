@@ -1,8 +1,0 @@
-#Sun Oct 18 18:22:03 EDT 2020
-fileName=testingagain
-authorOfSimulation=Katherine Barbano
-kind=GameOfLife
-neighborPolicy=Complete
-description=This simulation illustrates the life cycle of bacteria and its future generations
-edgePolicy=Finite
-title=Game of Life Simulation
