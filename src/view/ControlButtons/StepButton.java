@@ -1,7 +1,6 @@
-package view.buttons;
+package view.ControlButtons;
 
 
-import controller.ControllerMain;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 

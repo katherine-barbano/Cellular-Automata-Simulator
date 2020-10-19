@@ -1,4 +1,4 @@
-package view.buttons;
+package view.DarkLightModeButtons;
 
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
@@ -19,6 +19,7 @@ public class DarkLightModeBar extends HBox {
 
     this.setPrefHeight(SimulationView.BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
+    this.setId("dark-light-bar");
   }
 
   public Button getMyLightButton() { return myLightButton; }
