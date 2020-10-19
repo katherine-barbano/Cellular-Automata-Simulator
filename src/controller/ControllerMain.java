@@ -47,7 +47,8 @@ public class ControllerMain extends Application {
   private Stage secondStage= new Stage();
   private GraphView myGraphView;
   private Scene myGraphScene;
-  private int stepCount;
+  private boolean viewGraph = false;
+  private int stepCount=0;
   private ResourceBundle myBundle = ResourceBundle.getBundle(SPEED_VALUES);
   private double minSpeed;
   private double maxSpeed;
@@ -86,7 +87,6 @@ public class ControllerMain extends Application {
   private void setupSimulationScenes(Stage stage, String language){
     this.myLanguageChoice=language;
     setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
-    setupGraph();
     setUpStage(stage);
   }
 
@@ -99,8 +99,11 @@ public class ControllerMain extends Application {
         stage.show();
         isPaused = true;
 
-        secondStage.setScene(myGraphScene);
-        secondStage.show();
+        if(viewGraph && myGraphScene !=null){
+          System.out.println("Viewing Graph");
+          secondStage.setScene(myGraphScene);
+          secondStage.show();
+        }
 
       } catch (ControllerException e) {
         displayError(e.getMessage());
@@ -128,9 +131,9 @@ public class ControllerMain extends Application {
     return myScene;
   }
 
-  private void setupGraph(){
+  private void setupGraph(String simType){
     myGraphView = new GraphView(currentSimulation.getCurrentGrid(), myLanguageChoice);
-    myGraphScene = myGraphView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
+    myGraphScene = myGraphView.setupScene(simType, stepCount, currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
   }
 
   private void setUpButtons() {
@@ -148,6 +151,8 @@ public class ControllerMain extends Application {
     } catch (ControllerException e) {
       displayError(e.getMessage());
     }
+    currentSimView.getMyOpenGraphViewBar().getMyStartGraphViewButton().setOnAction(event -> showGraphOnClick());
+    secondStage.setOnHidden(event ->{   viewGraph = false; });
     }
 
   void step () {
@@ -164,7 +169,9 @@ public class ControllerMain extends Application {
     currentSimulation.updateSimulationGrid(shouldRun, currentSimView);
     if(shouldRun){
       stepCount++;
-      myGraphView.updateCurrentGrid(currentSimulation.getCurrentGrid(),stepCount);
+      if(myGraphView != null){
+        myGraphView.updateCurrentGrid(currentSimulation.getCurrentGrid(),stepCount);
+      }
     }
 
   }
@@ -181,11 +188,19 @@ public class ControllerMain extends Application {
     }
   }
 
+  void showGraphOnClick(){
+    viewGraph=true;
+    setupGraph(currentSimulation.getSimulatonName());
+    secondStage.setScene(myGraphScene);
+    secondStage.show();
+  }
+
   void checkChangeSimulation() {
     String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
         .getMyChosenType();
     if (simulationChosen != null) {
       try {
+        stepCount=0;
         String fullClassName = String.format("controller." + simulationChosen + "Simulation");
         Class<?> cl = Class.forName(fullClassName);
         Constructor<?> cons = cl.getConstructor();
@@ -194,7 +209,9 @@ public class ControllerMain extends Application {
         currentSimulation = test;
         System.out.println(currentSimulation.getPropertiesInformation().get("kind"));
         setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, simulationChosen);
-        setupGraph();
+        if(viewGraph){
+          setupGraph(simulationChosen);
+        }
         setUpStage(currentStage);
         //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
 

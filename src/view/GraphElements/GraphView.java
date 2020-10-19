@@ -40,12 +40,12 @@ public class GraphView {
   /**
    *
    */
-  public Scene setupScene(String simulationType,  StateType[] states, int width, int height) {
+  public Scene setupScene(String simulationType, double stepNumber, StateType[] states, int width, int height) {
     this.myStates = states;
 
     createUIElements(simulationType);
     addUIElementsToRoot();
-    updateGraph(0);
+    updateGraph(stepNumber);
 
     Scene scene= new Scene(myRoot, width, height);
     scene.getStylesheets().add(RESOURCES+STYLESHEET);
@@ -70,10 +70,10 @@ public class GraphView {
     updateGraph(elapsedTime);
   }
 
-  public void updateGraph(double elapsedTime){
+  public void updateGraph(double stepNumber){
     for(StateType state: myStates){
       int numCellsWithState = myGrid.getCountAllCellsWithSameStateTypeAsTarget(state);
-      myGraph.updateStateSeries(state,elapsedTime,numCellsWithState);
+      myGraph.updateStateSeries(state,stepNumber,numCellsWithState);
     }
   }
 
