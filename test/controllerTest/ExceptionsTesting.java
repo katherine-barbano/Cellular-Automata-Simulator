@@ -1,6 +1,5 @@
 package controllerTest;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import controller.ControllerException;
@@ -50,20 +49,22 @@ public class ExceptionsTesting {
   }
 
   @Test
+  void testPropertiesFileIncorrectLocation() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    String incorrectPropertiesLocation = "invalidProperties";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesLocation));
+  }
+
+  @Test
   void testPropertiesFileWithNoFileNameListed() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     //this properties file is incorrect because it indicates the configuration is based on the file
     //but it does not list a file name
-    String incorrectPropertiesFile = "invalidProperties";
+    String incorrectPropertiesFile = "newPropertyFiles.invalidProperties";
     assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesFile));
   }
 
-  @Test
-  void testPropertiesFileIncorrectLocation() {
-    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
-    String incorrectPropertiesLocation = "ControllerError";
-    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesLocation));
-  }
+
 
 
 }

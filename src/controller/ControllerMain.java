@@ -268,9 +268,7 @@ public class ControllerMain extends Application {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
       displayError(noFileExceptionMessage);
-      //throw new ControllerException(noFileExceptionMessage);
-      //currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
-    }
+      }
   }
 
   public void displayError(String message){
