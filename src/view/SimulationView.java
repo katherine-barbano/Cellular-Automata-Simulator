@@ -1,6 +1,5 @@
 package view;
 
-import controller.Simulation;
 import controller.StateType;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +7,14 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import model.Grid;
 import view.CellFormat.CellFill;
 import view.CellFormat.CellFormatBar;
-import view.buttons.ControlButtonBar;
+import view.ControlButtons.ControlButtonBar;
 import view.SimulationChoice.SimulationButtonBar;
-import view.buttons.DarkLightModeBar;
-import view.buttons.FileButtonBar;
+import view.DarkLightModeButtons.DarkLightModeBar;
+import view.FileButtons.FileButtonBar;
 
 /**
  * SimulationView sets up and updates the User Interface.

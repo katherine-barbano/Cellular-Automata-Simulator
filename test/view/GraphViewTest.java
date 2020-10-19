@@ -1,7 +1,5 @@
 package view;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import controller.ControllerMain;
 import controller.State;
 import controller.StateType;
@@ -11,6 +9,7 @@ import javafx.stage.Stage;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
+import view.GraphElements.GraphView;
 import view.GraphElements.SimulationGraph;
 
 class GraphViewTest extends DukeApplicationTest {
