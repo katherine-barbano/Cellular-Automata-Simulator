@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import model.Grid;
 
-public class WatorWorldSimulation extends Simulation{
+public class WaTorWorldSimulation extends Simulation{
 
   private static final String STORING_FILE_NAME = "data/outputGrids/watorWorld";
   private int numberRows;
@@ -18,7 +18,7 @@ public class WatorWorldSimulation extends Simulation{
   private HashMap<StateType, Integer> integerForStates;
   ;
 
-  public WatorWorldSimulation() {
+  public WaTorWorldSimulation() {
     super("WatorWorld");
   }
 
