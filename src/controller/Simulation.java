@@ -46,7 +46,7 @@ public abstract class Simulation {
   private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
   private final String STORING_FILE_NAME = "data/outputGrids/";
-  private final String PROPERTIES_LOCATION = "simulationProperties/";
+  private final String PROPERTIES_LOCATION = "data/simulationProperties/";
 
 
 
@@ -103,28 +103,31 @@ public abstract class Simulation {
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
       TextInputDialog dialog = new TextInputDialog();
-      dialog.setTitle("Text Input Dialog");
-      dialog.setHeaderText("Look, a Text Input Dialog");
+      dialog.setTitle("To Save a New File");
+      Properties properties = new Properties();
+      //dialog.setHeaderText("");
       dialog.setContentText("Please enter new file name:");
       dialog.showAndWait();
-      String res = dialog.getResult()+".csv";
+      String newFileName = dialog.getResult();
+      properties.setProperty("fileName", newFileName);
+      File file = new File(newFileName + CSV_SUFFIX);
+      File nFile = new File(PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
+
       dialog.setContentText("Please enter new author");
       dialog.showAndWait();
-      String author = dialog.getResult();
+      properties.setProperty("author", dialog.getResult());
+      //String newAuthorName = dialog.getResult();
       dialog.setContentText("Please enter new description");
       dialog.showAndWait();
-      String description = dialog.getResult();
-      System.out.println(res);
+      properties.setProperty("description", dialog.getResult());
+      String newDescription = dialog.getResult();
 
-      File file = new File(res);
-      Properties properties = new Properties();
-      properties.setProperty("fileName", res);
-      properties.setProperty("author", author);
-      properties.setProperty("description", description);
 
-      File nFile = new File("test2.properties");
+
+
+
       FileOutputStream fileOut = new FileOutputStream(nFile);
-      properties.store(fileOut, "Favorite Things");
+      properties.store(fileOut, null);
       fileOut.close();
       //result.ifPresent(name -> System.out.println("Your name: " + name));
 
