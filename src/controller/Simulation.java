@@ -104,28 +104,24 @@ public abstract class Simulation {
     try {
       TextInputDialog dialog = new TextInputDialog();
       dialog.setTitle("To Save a New File");
-      Properties properties = new Properties();
       //dialog.setHeaderText("");
       dialog.setContentText("Please enter new file name:");
       dialog.showAndWait();
       String newFileName = dialog.getResult();
-      properties.setProperty("fileName", newFileName);
       File file = new File(newFileName + CSV_SUFFIX);
-      File nFile = new File(PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
 
       dialog.setContentText("Please enter new author");
       dialog.showAndWait();
-      properties.setProperty("author", dialog.getResult());
-      //String newAuthorName = dialog.getResult();
+      String newAuthorName = dialog.getResult();
       dialog.setContentText("Please enter new description");
       dialog.showAndWait();
-      properties.setProperty("description", dialog.getResult());
       String newDescription = dialog.getResult();
+      Properties properties = new Properties();
+      properties.setProperty("fileName", newFileName);
+      properties.setProperty("author", newAuthorName);
+      properties.setProperty("description", newDescription);
 
-
-
-
-
+      File nFile = new File(PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
       FileOutputStream fileOut = new FileOutputStream(nFile);
       properties.store(fileOut, null);
       fileOut.close();

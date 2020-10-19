@@ -25,7 +25,7 @@ public class ControllerMain extends Application {
   //public static final int FRAMES_PER_SECOND = 60;
   //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static double secondDelay = 1.0;
-  public final double SPEED_CHANGE_AMOUNT = .25;
+  public final double SPEED_CHANGE_AMOUNT = .50;
   public static final int FRAME_SIZE = 400;
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 400;
@@ -52,12 +52,17 @@ public class ControllerMain extends Application {
   public void start(Stage stage) {
     currentStage = stage;
       chooseLanguageAndSetupStage();
-      KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
-      Timeline animation = new Timeline();
-      animation.setCycleCount(Timeline.INDEFINITE);
-      animation.getKeyFrames().add(frame);
-      animation.play();
+    startAnimation(secondDelay);
   }
+
+  private void startAnimation(double speedAmount) {
+    KeyFrame frame = new KeyFrame(Duration.seconds(speedAmount), e -> step());
+    Timeline animation = new Timeline();
+    animation.setCycleCount(Timeline.INDEFINITE);
+    animation.getKeyFrames().add(frame);
+    animation.play();
+  }
+
 
   private void chooseLanguageAndSetupStage(){
     myLanguageScreen = new LanguageScreen();
@@ -186,16 +191,20 @@ public class ControllerMain extends Application {
   }
 
   void increaseSpeed() {
-    secondDelay-= SPEED_CHANGE_AMOUNT;
-    System.out.println("increasing");
-    setUpStage(currentStage);
-    isPaused = false;
+    if (secondDelay-SPEED_CHANGE_AMOUNT > 0) {
+      secondDelay -= SPEED_CHANGE_AMOUNT;
+      System.out.println("increasing");
+      startAnimation(secondDelay);
+      setUpStage(currentStage);
+      isPaused = false;
+    }
   }
 
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
     secondDelay += SPEED_CHANGE_AMOUNT;
     System.out.println("decreasing");
     setUpStage(currentStage);
+    startAnimation(secondDelay);
     isPaused = false;
   }
 
