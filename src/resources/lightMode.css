@@ -6,6 +6,10 @@
   -fx-spacing: 5;
 }
 
+#language-vbox{
+  -fx-spacing: 10;
+}
+
 .grid-display{
   -fx-alignment: center;
   -fx-hgap: 3;
@@ -25,12 +29,12 @@
   -fx-fill: white;
 }
 
-#title-bar{
+.title-bar{
   -fx-background-color: azure;
   -fx-alignment:center;
   -fx-padding: 10px;
 }
 
-#title-text{
+.title-text{
   -fx-text-alignment: center;
 }

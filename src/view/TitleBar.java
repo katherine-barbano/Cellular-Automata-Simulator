@@ -15,7 +15,7 @@ public class TitleBar extends FlowPane {
   public TitleBar(ResourceBundle resources, String simulationType){
     super();
 
-    this.setId("title-bar");
+    this.getStyleClass().add("title-bar");
     this.myResources=resources;
 
     addText(simulationType);
@@ -28,7 +28,7 @@ public class TitleBar extends FlowPane {
   private void addText(String simulationType){
     String title = myResources.getString(simulationType+TITLE_STRING_IN_RESOURCES);
     this.titleText= new Text(title);
-    this.titleText.setId("title-text");
+    this.titleText.getStyleClass().add("title-text");
     this.getChildren().add(titleText);
   }
 
