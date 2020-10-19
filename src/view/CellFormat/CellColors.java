@@ -1,10 +1,8 @@
 package view.CellFormat;
 
-
-import java.util.ResourceBundle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import view.SimulationView;
+
 
 /**
  * All Possible colors and images to fill the cells.
@@ -12,12 +10,12 @@ import view.SimulationView;
 public enum CellColors implements CellFill{
   BLACK(Color.BLACK),
   WHITE(Color.WHITE),
-  RED(Color.RED),
-  ORANGE(Color.ORANGE),
-  YELLOW(Color.YELLOW),
-  GREEN(Color.GREEN),
-  BLUE(Color.BLUE),
-  PURPLE(Color.PURPLE);
+  RED(Color.web("#FF8371")),
+  ORANGE(Color.web("#FFAD71")),
+  YELLOW(Color.web("#FEF47D")),
+  GREEN(Color.web("#CDFE9B")),
+  BLUE(Color.web("#80C5FF")),
+  PURPLE(Color.web("#E0BCFF"));
 
   private Paint cellFill;
 

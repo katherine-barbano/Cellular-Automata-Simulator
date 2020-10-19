@@ -12,7 +12,14 @@ import view.SimulationView;
 public enum CellImages implements CellFill {
 
   STARRY_NIGHT(),
-  POLKA_DOTS();
+  POLKA_DOTS(),
+  FIRE(),
+  FISH(),
+  ROCK(),
+  PAPER(),
+  SCISSORS(),
+  SHARK(),
+  TREE();
 
   public static final String IMAGE_PROPERTIES_SUFFIX = "_image";
   public static final String IMAGE_BUNDLE="Images";
