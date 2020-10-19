@@ -10,17 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 import javafx.scene.Group;
 import javafx.scene.control.TextInputDialog;
-import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
 
@@ -32,7 +28,7 @@ public abstract class Simulation {
   private final String simulationName;
   private String simulationFileLocation;
   //private SimulationView simulationView;
-  private Group root;
+  //private Group root;
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
@@ -113,6 +109,15 @@ public abstract class Simulation {
     System.out.println("new simulation set");
   }
 
+  public void setNewPropertiesFile(String newPropertiesFile) {
+    this.propertiesInformation = new HashMap<String, String>();
+    readPropertiesFile(this.simulationName);
+    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.possibleStateTypes = getStateTypesForSimulation();
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    currentGrid = createCorrectGrid();
+    nextGrid = currentGrid.getNextGrid();
+  }
   //abstract public void storeNewCellConfig(Grid gridToStore);
 
  // abstract public String readInPropertiesFile();
@@ -319,8 +324,9 @@ public abstract class Simulation {
   public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
     if (shouldRun) {
       checkGridUpdatesInDisplay(simulationView);
-      this.currentGrid = nextGrid;
-      this.nextGrid = currentGrid.getNextGrid();
+      updateSimulation();
+      //this.currentGrid = nextGrid;
+      //this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
     }
   }
@@ -331,10 +337,10 @@ public abstract class Simulation {
     this.nextGrid = currentGrid.getNextGrid();
   }
 
-  public void updateSimulation(boolean shouldRun) {
+  public void updateSimulation() {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    System.out.println("updated");
+    //System.out.println("updated");
   }
 
 

@@ -27,51 +27,76 @@ public class SimulationTest {
   void testInitialGOLBlinker() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     mySimulation.setSimulationFileLocation("testInitialGOLBlinker.csv");
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState().getStateType());
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState().getStateType());
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 3).getCurrentState().getStateType());
-    //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
-    mySimulation.updateSimulation(true);
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState().getStateType());
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState().getStateType());
-    assertEquals(GameOfLifeState.DEAD, mySimulation.getCurrentGrid().getCell(2, 3).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.ALIVE,
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.ALIVE,
+        mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.ALIVE,
+        mySimulation.getCurrentGrid().getCell(1, 3).getCurrentState().getStateType());
+    //based on this initial file, and edge and neighbor policy default for game of life
+    mySimulation.updateSimulation();
+    assertEquals(GameOfLifeState.DEAD,
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.DEAD,
+        mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.DEAD,
+        mySimulation.getCurrentGrid().getCell(1, 3).getCurrentState().getStateType());
   }
 
-  /*
+
   @Test
   void testInitialGOLBlock() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     mySimulation.setSimulationFileLocation("testInitialGOLBlock.csv");
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState());
+    assertEquals(GameOfLifeState.DEAD,
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState().getStateType());
+    assertEquals(GameOfLifeState.DEAD,
+        mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState().getStateType());
 
     //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
-    mySimulation.updateSimulation(true);
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState());
+    mySimulation.updateSimulation();
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(2, 2).getCurrentState().getStateType());
   }
+
 
   @Test
   void testInitialGOLTub() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     mySimulation.setSimulationFileLocation("testInitialGOLTub.csv");
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(3, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 3).getCurrentState());
+    assertEquals((GameOfLifeState.ALIVE),
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.ALIVE),
+        mySimulation.getCurrentGrid().getCell(1, 3).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.ALIVE),
+        mySimulation.getCurrentGrid().getCell(3, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.ALIVE),
+        mySimulation.getCurrentGrid().getCell(3, 3).getCurrentState().getStateType());
 
     //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
-    mySimulation.updateSimulation(true);
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(3, 2).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
-    assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 3).getCurrentState());
+    mySimulation.updateSimulation();
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(1, 3).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(3, 1).getCurrentState().getStateType());
+    assertEquals((GameOfLifeState.DEAD),
+        mySimulation.getCurrentGrid().getCell(3, 3).getCurrentState().getStateType());
   }
+}
 
+/*
   @Test
   void testInitialGOLBoat() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
@@ -83,7 +108,7 @@ public class SimulationTest {
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 3).getCurrentState());
 
     //based on this initial file, we know that the next grid should have 1 in (2,1), (2,2,) and (2,3)
-    mySimulation.updateSimulation(true);
+    mySimulation.updateSimulation();
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 1).getCurrentState());
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(1, 2).getCurrentState());
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(3, 2).getCurrentState());
@@ -157,5 +182,7 @@ public class SimulationTest {
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(0, 2).getCurrentState());
     assertEquals(new State(GameOfLifeState.ALIVE), mySimulation.getCurrentGrid().getCell(2, 1).getCurrentState());
   }
-*/
+
 }
+
+ */
