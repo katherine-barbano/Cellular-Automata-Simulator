@@ -370,5 +370,9 @@ public abstract class Simulation {
     return colNumber;
   }
 
+  public String getSimulatonName(){
+    return simulationName;
+  }
+
 
 }
