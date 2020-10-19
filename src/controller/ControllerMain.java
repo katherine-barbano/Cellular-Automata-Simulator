@@ -3,7 +3,10 @@ package controller;
 import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.util.ResourceBundle;
+import java.util.ResourceBundle.Control;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -13,7 +16,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import javax.swing.JFileChooser;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
@@ -30,29 +32,33 @@ public class ControllerMain extends Application {
   private Group root;
   //private Simulation currentSimulation = new GameOfLifeSimulation();
   private Simulation currentSimulation;
-  private SimulationView currentSimView;
+  private SimulationView currentSimView = new SimulationView();
   private boolean isPaused;
   private Stage currentStage;
 
   @Override
   public void start(Stage stage) {
     currentStage = stage;
-    setUpStage(stage);
-    KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
-    Timeline animation = new Timeline();
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.getKeyFrames().add(frame);
-    animation.play();
+      setUpStage(stage);
+      KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
+      Timeline animation = new Timeline();
+      animation.setCycleCount(Timeline.INDEFINITE);
+      animation.getKeyFrames().add(frame);
+      animation.play();
   }
 
   /*
    * Sets up the stage size and title
    */
   protected void setUpStage(Stage stage) {
-    setupScene(FRAME_SIZE, FRAME_SIZE);
-    stage.setScene(myScene);
-    stage.show();
-    isPaused = true;
+      try {
+        setupScene(FRAME_SIZE, FRAME_SIZE);
+        stage.setScene(myScene);
+        stage.show();
+        isPaused = true;
+      } catch (ControllerException e) {
+        displayError(e.getMessage());
+      }
   }
 
   /*
@@ -60,24 +66,35 @@ public class ControllerMain extends Application {
    */
   Scene setupScene(int width, int height) {
     root = new Group();
-    currentSimulation = new GameOfLifeSimulation();
-    //SimulationView currSimView = currentSimulation.getSimulationView();
-    currentSimView = new SimulationView(currentSimulation.getCurrentGrid());
-    //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
-    myScene = currentSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-        SCREEN_WIDTH, SCREEN_HEIGHT);
-    //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
-    //        SCREEN_WIDTH, SCREEN_HEIGHT);
+    currentSimView = new SimulationView();
+   // try {
+      currentSimulation = new GameOfLifeSimulation();
+      //SimulationView currSimView = currentSimulation.getSimulationView();
+      currentSimView = new SimulationView(currentSimulation.getCurrentGrid());
+      //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
+      myScene = currentSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
+          SCREEN_WIDTH, SCREEN_HEIGHT);
+      //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+      //        SCREEN_WIDTH, SCREEN_HEIGHT);
+      setUpButtons();
+
+      //currSimView.getMySimulationButtons().
+    //} catch (Exception e) {
+    //  throw new ControllerException("set up scene method not working");
+      //currentSimView.addExceptionMessage("nope");
+    //  }
+    return myScene;
+  }
+
+  private void setUpButtons() {
     currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currentSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
     currentSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
-            selectNewFile());
-    currentSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
-    currentSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
-    //currSimView.getMySimulationButtons().
-    return myScene;
-
+        selectNewFile());
+    currentSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event -> increaseSpeed());
+    currentSimView.getMyControlButtons().getSlowDownButton()
+        .setOnAction(event -> decreaseSpeed());
   }
 
   void step () {
@@ -102,7 +119,6 @@ public class ControllerMain extends Application {
 
   void checkChangeSimulation() {
     if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType() != null) {
-
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("GameOfLife")) {
         currentSimulation = new GameOfLifeSimulation();
@@ -179,6 +195,16 @@ public class ControllerMain extends Application {
       //throw new ControllerException(noFileExceptionMessage);
       //currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
     }
+  }
+
+  public void displayError(String message){
+    //Text ExceptionText = new Text(message);
+    //myRoot.getChildren().add(ExceptionText);
+    Alert alert = new Alert(AlertType.ERROR);
+    //alert.setTitle(myResources.getString("ErrorTitle"));
+    alert.setContentText(message);
+    alert.showAndWait();
+
   }
 
   public static void main (String[] args) {

@@ -1,10 +1,13 @@
 package view;
 
+import controller.Simulation;
 import controller.StateType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -56,6 +59,9 @@ public class SimulationView {
 
   public SimulationView() {
     myRoot = new VBox();
+    myRoot.getStyleClass().add("vbox");
+    myScene= new Scene(myRoot, 400, 400);
+    myScene.getStylesheets().add(RESOURCES+ LIGHT_MODE_CSS);
   }
 
   /**
@@ -141,8 +147,13 @@ public class SimulationView {
   }
 
   public void addExceptionMessage(String message){
-    Text ExceptionText = new Text(message);
-    myRoot.getChildren().add(ExceptionText);
+    //Text ExceptionText = new Text(message);
+    //myRoot.getChildren().add(ExceptionText);
+    Alert alert = new Alert(AlertType.ERROR);
+    //alert.setTitle(myResources.getString("ErrorTitle"));
+    alert.setContentText(message);
+    alert.showAndWait();
+
   }
 
   public SimulationButtonBar getMySimulationButtons() {

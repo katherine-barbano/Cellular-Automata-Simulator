@@ -2,7 +2,6 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
-import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,16 +44,18 @@ public abstract class Simulation {
 
 
 
-  public Simulation(String newSimulationName) {
-    this.simulationName = newSimulationName;
-    this.propertiesInformation = new HashMap<String, String>();
-    readPropertiesFile(newSimulationName);
-    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-    this.possibleStateTypes = getStateTypesForSimulation();
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), possibleStateTypes));
-    nextGrid = currentGrid.getNextGrid();
+  public Simulation(String newSimulationName){
+      this.simulationName = newSimulationName;
+      this.propertiesInformation = new HashMap<String, String>();
+      readPropertiesFile(newSimulationName);
+      simulationFileLocation =
+          "data/initialConfigurations/" + propertiesInformation.get("fileName");
+      //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
+      this.possibleStateTypes = getStateTypesForSimulation();
+      currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+          propertiesInformation.get("neighborPolicy"),
+          createStates(readCellStatesFile(), possibleStateTypes));
+      nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
   }
 
