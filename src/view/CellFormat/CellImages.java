@@ -15,7 +15,8 @@ public enum CellImages implements CellFill {
   POLKA_DOTS();
 
   public static final String IMAGE_PROPERTIES_SUFFIX = "_image";
-  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE);
+  public static final String IMAGE_BUNDLE="Images";
+  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+IMAGE_BUNDLE );
   private Paint cellFill;
 
 

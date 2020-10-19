@@ -33,8 +33,8 @@ public class GraphView {
   /**
    *
    */
-  public GraphView(Grid grid){
-    myBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE);
+  public GraphView(Grid grid, String language){
+    myBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE+language);
     myGrid = grid;
   }
 
