@@ -54,8 +54,11 @@ public abstract class Simulation {
       this.simulationName = newSimulationName;
       this.propertiesInformation = new HashMap<String, String>();
       readPropertiesFile(newSimulationName);
-      simulationFileLocation =
+      if (propertiesInformation.containsKey("fileName")) {
+        simulationFileLocation =
           "data/initialConfigurations/" + propertiesInformation.get("fileName");
+      }
+
       //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
       this.possibleStateTypes = getStateTypesForSimulation();
       currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
