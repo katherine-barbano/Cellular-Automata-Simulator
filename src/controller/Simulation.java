@@ -109,7 +109,7 @@ public abstract class Simulation {
 
   public void setNewPropertiesFile(String newPropertiesFile) {
     this.propertiesInformation = new HashMap<String, String>();
-    readPropertiesFile(this.simulationName);
+    readPropertiesFile(newPropertiesFile);
     this.configurationType = propertiesInformation.get("stateConfiguration");
     this.possibleStateTypes = getStateTypesForSimulation();
     this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
@@ -186,7 +186,7 @@ public abstract class Simulation {
     csvWriter.close();
   }
 
-  public State[][] createInitialGridConfiguration(String configType) {
+  public State[][] createInitialGridConfiguration(String configType) throws ControllerException {
     try {
       if (configType.equals("file")) {
         simulationFileLocation =
@@ -198,10 +198,10 @@ public abstract class Simulation {
           getString("InvalidFileName");
       throw new ControllerException(invalidFileExceptionMessage);
     }
-    //else if (configType.equals("random")) {
+/*    //else if (configType.equals("random")) {
     if (configType.equals("probability")) {
 
-    }
+    }*/
     return createRandomLocationConfig();
 
   }

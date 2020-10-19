@@ -1,5 +1,6 @@
 package controllerTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import controller.ControllerException;
@@ -46,7 +47,16 @@ public class ExceptionsTesting {
     //mySimulation.setSimulationFileLocation(negativeValuesFile);
     //This file is incorrectly formatted - it contains non integer values
     assertThrows(ControllerException.class, () -> mySimulation.setSimulationFileLocation(negativeValuesFile));
-
   }
+
+  @Test
+  void testPropertiesFileWithNoFileNameListed() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    //this properties file is incorrect because it indicates the configuration is based on the file
+    //but it does not list a file name
+    String incorrectPropertiesFile = "invalidProperties";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesFile));
+  }
+
 
 }
