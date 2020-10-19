@@ -19,8 +19,6 @@ public enum CellColors implements CellFill{
   BLUE(Color.BLUE),
   PURPLE(Color.PURPLE);
 
-  public static final String IMAGE_PROPERTIES_SUFFIX = "_image";
-  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE);
   private Paint cellFill;
 
   CellColors(Paint color) {

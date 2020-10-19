@@ -2,6 +2,7 @@ package view;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import controller.ControllerMain;
 import controller.State;
 import controller.StateType;
 import controller.stateType.GameOfLifeState;
@@ -28,7 +29,7 @@ class GraphViewTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) throws Exception {
     Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-    myView = new GraphView(grid);
+    myView = new GraphView(grid, ControllerMain.ENGLISH_LANGUAGE);
     myScene = myView.setupScene(SIMULATION_TYPE,MY_STATES,400,400);
     stage.setScene(myScene);
     stage.setTitle("Game of Life");
@@ -50,7 +51,7 @@ class GraphViewTest extends DukeApplicationTest {
   @Test
   void updateGraph(){
     Grid newGrid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-    myView.updateCurrentGrid(newGrid,10.57);
+    myView.updateCurrentGrid(newGrid,10);
     sleep(10000);
   }
 

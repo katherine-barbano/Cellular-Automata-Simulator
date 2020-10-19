@@ -15,7 +15,7 @@ import javafx.scene.paint.Paint;
  * a chosen state.
  */
 public class ImageChooser extends ChoiceBox {
-  public static final CellFill[] CELL_PHOTOS = CellImages.values();
+  private CellFill[] CELL_PHOTOS = CellImages.values();
   public static final String LABEL_SUFFIX = "_text";
   private String[] myImageNames = new String[CELL_PHOTOS.length];
   private ObservableList myPhotos;

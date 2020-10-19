@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import view.GraphView;
 import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
@@ -42,6 +43,10 @@ public class ControllerMain extends Application {
   private SimulationView currentSimView = new SimulationView();
   private boolean isPaused;
   private Stage currentStage;
+  private Stage secondStage;
+  private GraphView myGraphView;
+  private Scene myGraphScene;
+  private int stepCount;
 
   @Override
   public void start(Stage stage) {
@@ -74,6 +79,12 @@ public class ControllerMain extends Application {
         stage.setScene(myScene);
         stage.show();
         isPaused = true;
+
+        secondStage=new Stage();
+        setupGraph();
+        secondStage.setScene(myGraphScene);
+        secondStage.show();
+
       } catch (ControllerException e) {
         displayError(e.getMessage());
       }
@@ -104,6 +115,11 @@ public class ControllerMain extends Application {
     return myScene;
   }
 
+  private void setupGraph(){
+    myGraphView = new GraphView(currentSimulation.getCurrentGrid(), myLanguageChoice);
+    myGraphScene = myGraphView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
+  }
+
   private void setUpButtons() {
     currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
@@ -126,6 +142,11 @@ public class ControllerMain extends Application {
 
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun, currentSimView);
+    if(shouldRun){
+      stepCount++;
+      myGraphView.updateCurrentGrid(currentSimulation.getCurrentGrid(),stepCount);
+    }
+
     //currentSimView.updateGridDisplay(currentSimulation.getCurrentGrid());
     //System.out.println("updating");
   }
