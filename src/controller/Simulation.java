@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import javafx.scene.Group;
@@ -38,7 +39,7 @@ public abstract class Simulation {
   private final String PROPERTIES_SUFFIX = ".properties";
 
 
-
+  private final int randomConfigRowColNumber = 4;
   private int rowNumber;
   private int colNumber;
   private HashMap<Integer, StateType> statesForInteger;
@@ -238,6 +239,19 @@ public abstract class Simulation {
       simulationView.updateGridDisplay(currentGrid);
     }
   }*/
+
+  public State[][] createRandomLocationConfig() {
+    State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
+    StateType[] possibilities = getPossibleStateTypes();
+    Random random = new Random();
+    for (int row = 0; row < randomConfigRowColNumber; row ++) {
+      for (int col = 0; col < randomConfigRowColNumber; col++) {
+        int randomIndex = random.nextInt(possibleStateTypes.length-1);
+        randomLocationCells[row][col] = new State(possibilities[randomIndex]);
+      }
+    }
+    return randomLocationCells;
+  }
 
 
 
