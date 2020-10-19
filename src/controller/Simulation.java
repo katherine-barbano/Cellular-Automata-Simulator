@@ -285,6 +285,14 @@ public abstract class Simulation {
     return randomLocationCells;
   }
 
+  public State[][] createProbabilityBasedStateConfiguration(double probability) {
+    State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
+    StateType[] possibleStates = getPossibleStateTypes();
+
+
+    return null;
+  }
+
 
 
   public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {

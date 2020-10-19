@@ -203,6 +203,46 @@ public class ControllerMain extends Application {
       }
 
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("Segregation")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("segregation now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Segregation");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("RockPaperScissors")) {
+        currentSimulation = new RockPaperScissorsSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("rps now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "RockPaperScissors");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("SpreadingOfFire")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("fire now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "SpreadingOfFire");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("WatorWorld")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("wator world now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "WatorWorld");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("Percolation")) {
         currentSimulation = new PercolationSimulation();
         //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
