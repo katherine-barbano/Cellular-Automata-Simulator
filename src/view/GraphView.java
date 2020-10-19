@@ -75,7 +75,7 @@ public class GraphView {
 
   public void updateGraph(double elapsedTime){
     for(StateType state: myStates){
-      int numCellsWithState = myGrid.getAllCellsWithSameStateTypeAsTarget(state);
+      int numCellsWithState = myGrid.getCountAllCellsWithSameStateTypeAsTarget(state);
       myGraph.updateStateSeries(state,elapsedTime,numCellsWithState);
     }
   }

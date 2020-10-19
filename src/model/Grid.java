@@ -209,8 +209,9 @@ public class Grid {
   }
 
   private void updateNewNeighborhood(int gridRow, int gridColumn) {
-    State[][] stateIntegerGrid = createStateIntegerGridFromCellGrid();
-    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(gridRow, gridColumn, stateIntegerGrid);
+    State[][] stateMatrix = createStateMatrixFromCellGrid();
+    Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(gridRow, gridColumn,
+        stateMatrix);
     Cell cell = cellGrid[gridRow][gridColumn];
     cell.setNeighborhood(cellNeighborhood);
   }
@@ -306,25 +307,25 @@ public class Grid {
     }
   }
 
-  private State[][] createStateIntegerGridFromCellGrid() {
-    State[][] stateIntegerGrid = new State[cellGrid.length][cellGrid[0].length];
+  private State[][] createStateMatrixFromCellGrid() {
+    State[][] stateMatrix = new State[cellGrid.length][cellGrid[0].length];
     for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
       for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
-        stateIntegerGrid = cellAddedToStateIntegerGrid(cellGridRow,cellGridColumn,stateIntegerGrid);
+        stateMatrix = cellAddedToStateMatrix(cellGridRow,cellGridColumn, stateMatrix);
       }
     }
-    return stateIntegerGrid;
+    return stateMatrix;
   }
 
-  private State[][] cellAddedToStateIntegerGrid(int cellGridRow, int cellGridColumn, State[][] stateIntegerGrid) {
+  private State[][] cellAddedToStateMatrix(int cellGridRow, int cellGridColumn, State[][] stateMatrix) {
     if (cellGrid[cellGridRow][cellGridColumn] == null) {
-      stateIntegerGrid[cellGridRow][cellGridColumn] = null;
+      stateMatrix[cellGridRow][cellGridColumn] = null;
     }
     else {
       Cell cellAtIndex = cellGrid[cellGridRow][cellGridColumn];
-      stateIntegerGrid[cellGridRow][cellGridColumn] = cellAtIndex.getCurrentState();
+      stateMatrix[cellGridRow][cellGridColumn] = cellAtIndex.getCurrentState();
     }
-    return stateIntegerGrid;
+    return stateMatrix;
   }
 
   void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
@@ -370,7 +371,7 @@ public class Grid {
     return optionalProbability;
   }
 
-  public int getAllCellsWithSameStateTypeAsTarget(StateType target) {
+  public int getCountAllCellsWithSameStateTypeAsTarget(StateType target) {
     int numCellsWithTargetStateType=0;
     for(int row = 0; row<cellGrid.length; row++) {
       for(int column = 0; column<cellGrid[0].length; column++) {
