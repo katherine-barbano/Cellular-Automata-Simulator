@@ -15,7 +15,7 @@ public class HexagonalNeighborPolicy extends NeighborPolicy {
       for(int column = -1; column<=1; column++) {
         boolean isCorner = row==column;
         boolean isRectangle = Math.abs(row)!=Math.abs(column);
-        boolean isNotZero = (row!=0 && column!=0);
+        boolean isNotZero = !(row==0 && column==0);
         if((isCorner||isRectangle) && isNotZero) {
           makePositionAndPutIntoMap(row, column);
         }

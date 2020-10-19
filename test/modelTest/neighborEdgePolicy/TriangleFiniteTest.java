@@ -1,16 +1,17 @@
 package modelTest.neighborEdgePolicy;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import controller.State;
 import controller.stateType.GameOfLifeState;
 import controller.stateType.PercolationState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-class CornerToroidalTest {
+class TriangleFiniteTest {
 
   @Test
-  void cornerToroidalPoliciesGameOfLife() {
+  void triangleFinitePoliciesGameOfLife() {
     State[][] firstGrid = new State[][] {
         {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
@@ -25,15 +26,15 @@ class CornerToroidalTest {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
-    Grid currentGrid = new Grid("GameOfLife", "Toroidal", "Corner", firstGrid);
+    Grid currentGrid = new Grid("GameOfLife", "Finite", "Triangle", firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("GameOfLife", "Toroidal", "Corner", expectedGrid);
+    Grid expectedNextGrid = new Grid("GameOfLife", "Finite", "Triangle", expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
 
   @Test
-  void cornerToroidalPoliciesPercolation() {
+  void triangleFinitePoliciesPercolation() {
     State[][] firstGrid = new State[][] {
         {new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
@@ -46,9 +47,9 @@ class CornerToroidalTest {
         {new State(PercolationState.WATER), new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.OPEN)}
     };
 
-    Grid currentGrid = new Grid("Percolation", "Toroidal", "Corner",  firstGrid);
+    Grid currentGrid = new Grid("Percolation", "Finite", "Triangle",  firstGrid);
     Grid actualNextGrid = currentGrid.getNextGrid();
-    Grid expectedNextGrid = new Grid("Percolation", "Toroidal", "Corner",  expectedGrid);
+    Grid expectedNextGrid = new Grid("Percolation", "Finite", "Triangle",  expectedGrid);
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }

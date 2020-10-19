@@ -12,7 +12,9 @@ public class TriangleNeighborPolicy extends NeighborPolicy {
   @Override
   public void createNeighborPositionToState() {
     for(int column = -1; column<=1; column++) {
+      if(Math.abs(column)==1) {
         makePositionAndPutIntoMap(1, column);
+      }
     }
     makePositionAndPutIntoMap(-1,0);
   }
