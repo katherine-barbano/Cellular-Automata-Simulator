@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 import javafx.scene.Group;
 import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
@@ -134,11 +135,11 @@ public abstract class Simulation {
       System.out.println(props.get(s));
       System.out.println("saved");
     */
-      OutputStream out = new FileOutputStream(new File(
-          String.valueOf(loader.getResourceAsStream(resourceName))));
+      OutputStream out = new FileOutputStream(
+          String.valueOf(loader.getResourceAsStream(resourceName)));
       //OutputStream out = new FileOutputStream(propFile);
-      props.setProperty("wont", "why");
       props.setProperty("fileName", file.getName());
+      //props.put("fileName", file.getName());
       props.store(out, null);
       //props.save(out,null);
       out.close();
