@@ -2,10 +2,8 @@ package controllerTest.SimulationTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import controller.RockPaperScissorsSimulation;
 import controller.Simulation;
 import controller.SpreadingOfFireSimulation;
-import controller.stateType.RockPaperScissorsState;
 import controller.stateType.SpreadingOfFireState;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,6 @@ public class SpreadingOfFireSimulationTest {
     assertEquals(SpreadingOfFireState.EMPTY,  myGrid.getCell(1, 2).getCurrentState().getStateType());
     assertEquals(SpreadingOfFireState.EMPTY,  myGrid.getCell(1, 0).getCurrentState().getStateType());
     assertEquals(SpreadingOfFireState.EMPTY, myGrid.getCell(2, 2).getCurrentState().getStateType());
-
   }
 
   @Test
