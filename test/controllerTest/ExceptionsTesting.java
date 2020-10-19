@@ -58,5 +58,12 @@ public class ExceptionsTesting {
     assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesFile));
   }
 
+  @Test
+  void testPropertiesFileIncorrectLocation() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    String incorrectPropertiesLocation = "ControllerError";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesLocation));
+  }
+
 
 }
