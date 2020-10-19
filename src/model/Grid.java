@@ -3,7 +3,9 @@ package model;
 import controller.State;
 import controller.StateType;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -18,7 +20,7 @@ public class Grid {
   public static final String EDGE_POLICY_NAME_SUFFIX_PROPERTIES = "edgePolicyNameSuffix";
   public static final String REFLECTION_EXCEPTION_MESSAGE_PROPERTIES = "reflectionExceptionMessage";
 
-  private Cell[][] cellGrid;
+  private List<List<Cell>> cellGrid;
   private String simulationType;
   private String edgePolicyName;
   private String neighborPolicyName;
@@ -32,7 +34,7 @@ public class Grid {
    */
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV) {
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
-    cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
+    cellGrid = createEmptyCellGrid(allStatesInCSV.length, allStatesInCSV[0].length);
     initializeCurrentCellGrid(allStatesInCSV);
   }
 
@@ -45,14 +47,14 @@ public class Grid {
    */
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, int rowLength, int columnLength, double optionalProbability) {
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
-    cellGrid = new Cell[rowLength][columnLength];
+    cellGrid = createEmptyCellGrid(rowLength, columnLength);
     this.optionalProbability = optionalProbability;
   }
 
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV, double optionalProbability) {
     this.optionalProbability = optionalProbability;
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
-    cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
+    cellGrid = createEmptyCellGrid(allStatesInCSV.length, allStatesInCSV[0].length);
     initializeCurrentCellGrid(allStatesInCSV);
   }
 
@@ -61,6 +63,18 @@ public class Grid {
     this.simulationType = formatClassName(simulationType);
     this.edgePolicyName = formatClassName(edgePolicyName);
     this.neighborPolicyName = formatClassName(neighborPolicyName);
+  }
+
+  private List<List<Cell>> createEmptyCellGrid(int rowCount, int columnCount) {
+    List<List<Cell>> cellListOfLists = new ArrayList<>();
+    for(int row=0; row<rowCount;row++) {
+      List<Cell> cellList = new ArrayList<>();
+      for (int column = 0; column < columnCount; column++) {
+        cellList.add(null);
+      }
+      cellListOfLists.add(cellList);
+    }
+    return cellListOfLists;
   }
 
   private String formatClassName(String input) {
@@ -118,9 +132,9 @@ public class Grid {
    * neighbors of neighbors that overlap on the center cell.
    */
   private void updateCellsFromOverlappedNeighborsAfterInitialMove() {
-    for(int row = 0; row<cellGrid.length; row++) {
-      for(int column = 0; column<cellGrid[0].length; column++) {
-        Cell centerCell = cellGrid[row][column];
+    for(int row = 0; row<cellGrid.size(); row++) {
+      for(int column = 0; column<cellGrid.get(row).size(); column++) {
+        Cell centerCell = cellGrid.get(row).get(column);
         Neighborhood centerCellNeighborhood = centerCell.getNeighborhood();
 
         Map<int[], State> statesOfOverlappingNeighbors = new HashMap<>();
@@ -129,13 +143,13 @@ public class Grid {
 
         Cell updatedCell = centerCell.getCellFromOverlappingNeighbors();
         updatedCell.setNeighborhood(centerCellNeighborhood);
-        cellGrid[row][column] = updatedCell;
+        cellGrid.get(row).set(column, updatedCell);
       }
     }
   }
 
   private void populateStatesOfOverlappingNeighbors(int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
-    Map<int[], Neighborhood> neighborhoodsOfNeighbors = cellGrid[row][column].getNeighborhoodsOfNeighbors();
+    Map<int[], Neighborhood> neighborhoodsOfNeighbors = cellGrid.get(row).get(column).getNeighborhoodsOfNeighbors();
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
       putValidNeighborPositionsIntoStatesOfOverlappingNeighbors(neighborPosition, neighborhoodsOfNeighbors, statesOfOverlappingNeighbors);
     }
@@ -167,7 +181,7 @@ public class Grid {
     Set<int[]> centerNeighborRelativePositions = centerCellNeighborhood.allPossibleRelativePositions();
     for (int[] neighborPosition : centerNeighborRelativePositions) {
       int[] positionOfNeighbor = centerCellNeighborhood.getPositionOfNeighbor(neighborPosition);
-      Cell neighborCellOfNeighbor = cellGrid[positionOfNeighbor[0]][positionOfNeighbor[1]];
+      Cell neighborCellOfNeighbor = cellGrid.get(positionOfNeighbor[0]).get(positionOfNeighbor[1]);
       Neighborhood neighborhoodOfNeighbor = neighborCellOfNeighbor.getNeighborhood();
       neighborhoodsOfNeighbors.put(neighborPosition, neighborhoodOfNeighbor);
     }
@@ -175,9 +189,9 @@ public class Grid {
   }
 
   private Grid getGridWithNextCells() {
-    Grid nextGrid = new Grid(simulationType, edgePolicyName, neighborPolicyName, cellGrid.length, cellGrid[0].length, optionalProbability);
-    for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
-      for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
+    Grid nextGrid = new Grid(simulationType, edgePolicyName, neighborPolicyName, cellGrid.size(), cellGrid.get(0).size(), optionalProbability);
+    for(int gridRow = 0; gridRow < cellGrid.size(); gridRow++) {
+      for(int gridColumn =0; gridColumn < cellGrid.get(gridRow).size(); gridColumn++) {
         addNextCellToNextGrid(nextGrid, gridRow, gridColumn);
       }
     }
@@ -185,24 +199,24 @@ public class Grid {
   }
 
   private void addNextCellToNextGrid(Grid nextGrid, int gridRow, int gridColumn) {
-    Cell currentCell = cellGrid[gridRow][gridColumn];
+    Cell currentCell = cellGrid.get(gridRow).get(gridColumn);
     Cell nextCell = currentCell.getNextCell();
     nextGrid.addCellToGrid(nextCell, gridRow, gridColumn);
   }
 
   private void updateNeighborhoodsWithOldNeighborhoods(Grid oldGrid) {
-    for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
-      for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
+    for(int gridRow = 0; gridRow < cellGrid.size(); gridRow++) {
+      for(int gridColumn =0; gridColumn < cellGrid.get(gridRow).size(); gridColumn++) {
         Neighborhood cellNeighborhood = oldGrid.getCell(gridRow, gridColumn).getNeighborhood();
-        Cell cell = cellGrid[gridRow][gridColumn];
+        Cell cell = cellGrid.get(gridRow).get(gridColumn);
         cell.setNeighborhood(cellNeighborhood);
       }
     }
   }
 
   private void updateNeighborhoodsWithNewNeighborhoods() {
-    for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
-      for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
+    for(int gridRow = 0; gridRow < cellGrid.size(); gridRow++) {
+      for(int gridColumn =0; gridColumn < cellGrid.get(gridRow).size(); gridColumn++) {
         updateNewNeighborhood(gridRow, gridColumn);
       }
     }
@@ -212,7 +226,7 @@ public class Grid {
     State[][] stateMatrix = createStateMatrixFromCellGrid();
     Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(gridRow, gridColumn,
         stateMatrix);
-    Cell cell = cellGrid[gridRow][gridColumn];
+    Cell cell = cellGrid.get(gridRow).get(gridColumn);
     cell.setNeighborhood(cellNeighborhood);
   }
 
@@ -234,15 +248,15 @@ public class Grid {
   private void putCellWithNeighborhoodInGrid(int csvRow, int csvColumn, State[][] allStatesInCSV) {
     Neighborhood cellNeighborhood = createNeighborhoodForSimulationType(csvRow, csvColumn, allStatesInCSV);
     Cell cellInPosition = new Cell(cellNeighborhood, allStatesInCSV[csvRow][csvColumn]);
-    cellGrid[csvRow][csvColumn] = cellInPosition;
+    cellGrid.get(csvRow).set(csvColumn, cellInPosition);
   }
 
   private void updateNeighborhoodsOfNeighbors() {
-    for(int row = 0; row<cellGrid.length; row++) {
-      for(int column = 0; column < cellGrid[0].length; column++) {
-        Neighborhood centerNeighborhood = cellGrid[row][column].getNeighborhood();
+    for(int row = 0; row<cellGrid.size(); row++) {
+      for(int column = 0; column < cellGrid.get(row).size(); column++) {
+        Neighborhood centerNeighborhood = cellGrid.get(row).get(column).getNeighborhood();
         Map<int[], Neighborhood> neighborhoodOfNeighbors = getNeighborhoodsOfNeighbors(centerNeighborhood);
-        cellGrid[row][column].setNeighborhoodsOfNeighbors(neighborhoodOfNeighbors);
+        cellGrid.get(row).get(column).setNeighborhoodsOfNeighbors(neighborhoodOfNeighbors);
       }
     }
   }
@@ -308,9 +322,9 @@ public class Grid {
   }
 
   private State[][] createStateMatrixFromCellGrid() {
-    State[][] stateMatrix = new State[cellGrid.length][cellGrid[0].length];
-    for (int cellGridRow = 0; cellGridRow < cellGrid.length; cellGridRow++) {
-      for (int cellGridColumn = 0; cellGridColumn < cellGrid[cellGridRow].length; cellGridColumn++) {
+    State[][] stateMatrix = new State[cellGrid.size()][cellGrid.get(0).size()];
+    for (int cellGridRow = 0; cellGridRow < cellGrid.size(); cellGridRow++) {
+      for (int cellGridColumn = 0; cellGridColumn < cellGrid.get(cellGridRow).size(); cellGridColumn++) {
         stateMatrix = cellAddedToStateMatrix(cellGridRow,cellGridColumn, stateMatrix);
       }
     }
@@ -318,18 +332,18 @@ public class Grid {
   }
 
   private State[][] cellAddedToStateMatrix(int cellGridRow, int cellGridColumn, State[][] stateMatrix) {
-    if (cellGrid[cellGridRow][cellGridColumn] == null) {
+    if (cellGrid.get(cellGridRow).get(cellGridColumn) == null) {
       stateMatrix[cellGridRow][cellGridColumn] = null;
     }
     else {
-      Cell cellAtIndex = cellGrid[cellGridRow][cellGridColumn];
+      Cell cellAtIndex = cellGrid.get(cellGridRow).get(cellGridColumn);
       stateMatrix[cellGridRow][cellGridColumn] = cellAtIndex.getCurrentState();
     }
     return stateMatrix;
   }
 
   void addCellToGrid(Cell newCell, int cellRow, int cellColumn) {
-    cellGrid[cellRow][cellColumn] = newCell;
+    cellGrid.get(cellRow).set(cellColumn, newCell);
   }
 
   public boolean equals (Grid otherGrid) {
@@ -356,15 +370,15 @@ public class Grid {
   }
 
   public Cell getCell(int rowNumber, int columnNumber) {
-    return cellGrid[rowNumber][columnNumber];
+    return cellGrid.get(rowNumber).get(columnNumber);
   }
 
   public int getGridNumberOfRows() {
-    return cellGrid.length;
+    return cellGrid.size();
   }
 
   public int getGridNumberOfColumns() {
-    return cellGrid[0].length;
+    return cellGrid.get(0).size();
   }
 
   public double getOptionalProbability() {
@@ -373,9 +387,9 @@ public class Grid {
 
   public int getCountAllCellsWithSameStateTypeAsTarget(StateType target) {
     int numCellsWithTargetStateType=0;
-    for(int row = 0; row<cellGrid.length; row++) {
-      for(int column = 0; column<cellGrid[0].length; column++) {
-        Cell currentCell = cellGrid[row][column];
+    for(int row = 0; row<cellGrid.size(); row++) {
+      for(int column = 0; column<cellGrid.get(row).size(); column++) {
+        Cell currentCell = cellGrid.get(row).get(column);
         State currentState = currentCell.getCurrentState();
         if(currentState.equals(target)) {
           numCellsWithTargetStateType++;
