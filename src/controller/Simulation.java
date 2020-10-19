@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,6 +47,7 @@ public abstract class Simulation {
   private HashMap<String, String> propertiesInformation;
   private final String STORING_FILE_NAME = "data/outputGrids/";
   private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
+ // private final String PROPERTIES_EXTENSION = ".properties";
 
 
 
@@ -79,8 +79,7 @@ public abstract class Simulation {
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant*/
-        //String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX; // could also be a constant*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -161,7 +160,7 @@ public abstract class Simulation {
       csvWriter.flush();
       csvWriter.close();
 
-    } catch (IOException e) {
+    } catch (Exception e) {
       //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidFile");

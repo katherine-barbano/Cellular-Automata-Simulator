@@ -167,11 +167,15 @@ public class ControllerMain extends Application {
   }
 
   void saveFile() {
-    System.out.println("saving");
-    isPaused = true;
-    //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
-    currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
-    System.out.println("finished");
+    try {
+      System.out.println("saving");
+      isPaused = true;
+      //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
+      currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
+      System.out.println("finished");
+    } catch (ControllerException e) {
+      displayError(e.getMessage());
+    }
   }
 
   void checkChangeSimulation() {
