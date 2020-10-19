@@ -27,7 +27,7 @@ public class SimulationView {
   public static final String RESOURCES = "resources/";
   public static final String LIGHT_MODE_CSS = "lightMode.css";
   public static final String DARK_MODE_CSS = "darkMode.css";
-  public static final String RESOURCE_BUNDLE = "ViewEnglish";
+  public static final String RESOURCE_BUNDLE = "View";
   public static final int BUTTON_BAR_HEIGHT = 50;
   public static final Map<StateType, CellFill> STATE_COLOR_MAP = new HashMap<>();
 
@@ -52,8 +52,8 @@ public class SimulationView {
    * Create Simulation View from initial Grid
    * @param grid Initial grid in scene
    */
-  public SimulationView(Grid grid){
-    myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE);
+  public SimulationView(Grid grid, String language){
+    myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE+language);
     myGrid=grid;
   }
 

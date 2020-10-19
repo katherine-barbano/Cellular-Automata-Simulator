@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
@@ -28,8 +29,14 @@ public class ControllerMain extends Application {
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 400;
+  public static final int LANGUAGE_SCREEN_HEIGHT = 80;
+  public static final String ENGLISH_LANGUAGE="English";
+  public static final String SPANISH_LANGUAGE="Spanish";
+  public static final String FRENCH_LANGUAGE="French";
   private Scene myScene;
   private Group root;
+  private LanguageScreen myLanguageScreen;
+  private String myLanguageChoice;
   //private Simulation currentSimulation = new GameOfLifeSimulation();
   private Simulation currentSimulation;
   private SimulationView currentSimView = new SimulationView();
@@ -39,7 +46,7 @@ public class ControllerMain extends Application {
   @Override
   public void start(Stage stage) {
     currentStage = stage;
-      setUpStage(stage);
+      chooseLanguageAndSetupStage();
       KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
       Timeline animation = new Timeline();
       animation.setCycleCount(Timeline.INDEFINITE);
@@ -47,10 +54,21 @@ public class ControllerMain extends Application {
       animation.play();
   }
 
+  private void chooseLanguageAndSetupStage(){
+    myLanguageScreen = new LanguageScreen();
+    currentStage.setScene(myLanguageScreen.setupScene(SCREEN_WIDTH,LANGUAGE_SCREEN_HEIGHT));
+    currentStage.show();
+
+    myLanguageScreen.getMyEnglishButton().setOnAction(event -> setUpStage(currentStage,ENGLISH_LANGUAGE));
+    myLanguageScreen.getMySpanishButton().setOnAction(event -> setUpStage(currentStage,SPANISH_LANGUAGE));
+    myLanguageScreen.getMyFrenchButton().setOnAction(event -> setUpStage(currentStage,FRENCH_LANGUAGE));
+  }
+
   /*
    * Sets up the stage size and title
    */
-  protected void setUpStage(Stage stage) {
+  protected void setUpStage(Stage stage, String language) {
+    this.myLanguageChoice=language;
       try {
         setupScene(FRAME_SIZE, FRAME_SIZE);
         stage.setScene(myScene);
@@ -70,7 +88,7 @@ public class ControllerMain extends Application {
    // try {
       currentSimulation = new GameOfLifeSimulation();
       //SimulationView currSimView = currentSimulation.getSimulationView();
-      currentSimView = new SimulationView(currentSimulation.getCurrentGrid());
+      currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
       //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
       myScene = currentSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -99,8 +117,11 @@ public class ControllerMain extends Application {
 
   void step () {
     //System.out.println("stepping");
-    updateShapes(!isPaused);
-    checkChangeSimulation();
+    if(currentSimulation!=null){
+      updateShapes(!isPaused);
+      checkChangeSimulation();
+    }
+
   }
 
   private void updateShapes(boolean shouldRun) {
@@ -142,14 +163,14 @@ public class ControllerMain extends Application {
   void increaseSpeed() {
     secondDelay-= SPEED_CHANGE_AMOUNT;
     System.out.println("increasing");
-    setUpStage(currentStage);
+    setUpStage(currentStage,myLanguageChoice);
     isPaused = false;
   }
 
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
     secondDelay += SPEED_CHANGE_AMOUNT;
     System.out.println("decreasing");
-    setUpStage(currentStage);
+    setUpStage(currentStage, myLanguageChoice);
     isPaused = false;
   }
 
