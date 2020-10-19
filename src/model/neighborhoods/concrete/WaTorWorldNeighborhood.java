@@ -68,8 +68,10 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   private State handleBreeding(State currentState, List<int[]> positionsOfEmptyNeighbors) {
     int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
-    replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto, currentState);
-    handleAgingAndStationary(currentState);
+    if(positionToBreedInto != null) {
+      replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto, currentState);
+      handleAgingAndStationary(currentState);
+    }
     return currentState;
   }
 
