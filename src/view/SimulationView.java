@@ -57,12 +57,6 @@ public class SimulationView {
     myGrid=grid;
   }
 
-  public SimulationView() {
-    myRoot = new VBox();
-    myRoot.getStyleClass().add("vbox");
-    myScene= new Scene(myRoot, 400, 400);
-    myScene.getStylesheets().add(RESOURCES+ LIGHT_MODE_CSS);
-  }
 
   /**
    * Setup the Scene for the UI

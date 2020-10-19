@@ -9,21 +9,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import javafx.scene.Group;
+import javafx.scene.control.TextInputDialog;
 import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
 
 public abstract class Simulation {
 
+  private State[][] gridStateFormation;
   private Grid currentGrid;
   private Grid nextGrid;
   private final String simulationName;
@@ -31,39 +34,50 @@ public abstract class Simulation {
   //private SimulationView simulationView;
   private Group root;
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
+  private final String CSV_SUFFIX = ".csv";
+  private final String SIM_SUFFIX = ".sim";
+  private final String PROPERTIES_SUFFIX = ".properties";
+  private String configurationType;
 
 
+  private final int randomConfigRowColNumber = 4;
   private int rowNumber;
   private int colNumber;
   private HashMap<Integer, StateType> statesForInteger;
   private HashMap<StateType, Integer> integerForStates;
   private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
-  private final String STORING_FILE_NAME = "data/outputGrids/";
-  private final String PROPERTIES_LOCATION = "simulationProperties/";
-
+  private final String STORING_FILE_NAME = "data/initialConfigurations/";
+  private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
+ // private final String PROPERTIES_EXTENSION = ".properties";
 
 
   public Simulation(String newSimulationName){
-      this.simulationName = newSimulationName;
-      this.propertiesInformation = new HashMap<String, String>();
-      readPropertiesFile(newSimulationName);
-      simulationFileLocation =
-          "data/initialConfigurations/" + propertiesInformation.get("fileName");
-      //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-      this.possibleStateTypes = getStateTypesForSimulation();
-      currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+    this.simulationName = newSimulationName;
+    this.propertiesInformation = new HashMap<String, String>();
+    readPropertiesFile(newSimulationName);
+    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.possibleStateTypes = getStateTypesForSimulation();
+    //this.gridStateFormation = createStates(readCellStatesFile(), possibleStateTypes);
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
+
+     /* currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
           propertiesInformation.get("neighborPolicy"),
-          createStates(readCellStatesFile(), possibleStateTypes));
-      nextGrid = currentGrid.getNextGrid();
+          createStates(readCellStatesFile(), possibleStateTypes), Double.parseDouble(propertiesInformation.get("probability")));
+   */
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+
+    nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
   }
+
+  //abstract Grid createCorrectGrid();
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant*/
-        //String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX; // could also be a constant*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -96,55 +110,80 @@ public abstract class Simulation {
 
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
-      String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
-      File file = new File(input);
-      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
-      //FileWriter csvWriter = new FileWriter(file.getName());
-      csvWriter.append(Integer.toString(rowNumber));
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("To Save a New File");
+      //dialog.setHeaderText("");
+      dialog.setContentText("Please enter new file name:");
+      dialog.showAndWait();
+      String newFileName = dialog.getResult();
+      File file = new File(newFileName + CSV_SUFFIX);
+
+      dialog.setContentText("Please enter new title");
+      dialog.showAndWait();
+      String newTitle = dialog.getResult();
+
+      dialog.setContentText("Please enter new author");
+      dialog.showAndWait();
+      String newAuthorName = dialog.getResult();
+      dialog.setContentText("Please enter new description");
+      dialog.showAndWait();
+      String newDescription = dialog.getResult();
+
+      Properties properties = new Properties();
+      properties.setProperty("fileName", newFileName);
+      properties.setProperty("title", newTitle);
+      properties.setProperty("author", newAuthorName);
+      properties.setProperty("description", newDescription);
+
+      File nFile = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
+      FileOutputStream fileOut = new FileOutputStream(nFile);
+      properties.store(fileOut, null);
+      fileOut.close();
+
+      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
+    //FileWriter csvWriter = new FileWriter(file.getName());
+      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
       csvWriter.append(",");
-      csvWriter.append(Integer.toString(colNumber));
+      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
       csvWriter.append(",");
       csvWriter.append("\n");
+      createMapOfStates(possibleStateTypes);
 
       for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
         for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
           csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
-           csvWriter.append(",");
+          if (col != gridToStore.getGridNumberOfColumns() - 1) {
+            csvWriter.append(",");
+          }
         }
         csvWriter.append("\n");
       }
       csvWriter.flush();
       csvWriter.close();
-      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
-      ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      Properties props = new Properties();
-      try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
-        props.load(resourceStream);
-      }
-      File propFile = new File(resourceName);
-    /*
-      Object s = "fileName";
-      System.out.println(props.get(s));
-      Object q = props.get("fileName");
-      props.setProperty("fileName", "work");
-      System.out.println(props.get(s));
-      System.out.println("saved");
-    */
-      OutputStream out = new FileOutputStream(
-          String.valueOf(loader.getResourceAsStream(resourceName)));
-      //OutputStream out = new FileOutputStream(propFile);
-      props.setProperty("fileName", file.getName());
-      //props.put("fileName", file.getName());
-      props.store(out, null);
-      //props.save(out,null);
-      out.close();
-      System.out.println("done");
-    } catch (IOException e) {
+
+    } catch (Exception e) {
       //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
+  }
+
+  public State[][] createInitialGridConfiguration(String configType) {
+    try {
+      if (configType.equals("file")) {
+        simulationFileLocation =
+            "data/initialConfigurations/" + propertiesInformation.get("fileName");
+        return createStates(readCellStatesFile(), possibleStateTypes);
+      }
+    } catch (Exception e) {
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
+    //else if (configType.equals("random")) {
+      return createRandomLocationConfig();
+
   }
 
 
@@ -159,14 +198,7 @@ public abstract class Simulation {
 
   public State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
-    statesForInteger = new HashMap<>();
-    integerForStates = new HashMap<>();
-    int stateNumber = 0;
-    for(StateType state : possibleStatesForSimulation) {
-      integerForStates.put(state, stateNumber);
-      statesForInteger.put(stateNumber,state);
-      stateNumber++;
-    }
+    createMapOfStates(possibleStatesForSimulation);
     State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
     for (int row = 0; row < integerCellStates.length; row++) {
       for (int col = 0; col < integerCellStates[0].length; col++) {
@@ -176,10 +208,28 @@ public abstract class Simulation {
     return cellStates;
   }
 
+  private void createMapOfStates(StateType[] possibleStatesForSimulation) {
+    statesForInteger = new HashMap<>();
+    integerForStates = new HashMap<>();
+    int stateNumber = 0;
+    for(StateType state : possibleStatesForSimulation) {
+      integerForStates.put(state, stateNumber);
+      statesForInteger.put(stateNumber,state);
+      stateNumber++;
+    }
+  }
+
   public int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
+    List<String[]> readFiles = new ArrayList<String[]>();
     try {
-      List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
+      readFiles = readAll(new FileInputStream(simulationFileLocation));
+    } catch (Exception e) {
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
+    try {
       rowNumber = Integer.parseInt(readFiles.get(0)[0]);
       colNumber = Integer.parseInt(readFiles.get(0)[1]);
       cellStates = new int[rowNumber][colNumber];
@@ -189,7 +239,7 @@ public abstract class Simulation {
         }
       }
     } catch (Exception f){
-      String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+      String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
           getString("InvalidConfigSize");
       throw new ControllerException(incorrectConfigurationExceptionMessage);
     }
@@ -202,7 +252,10 @@ public abstract class Simulation {
     }
     catch (IOException | CsvException e) {
       //e.printStackTrace();
-      return Collections.emptyList();
+      //return Collections.emptyList();
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
     }
   }
 
@@ -217,6 +270,28 @@ public abstract class Simulation {
       simulationView.updateGridDisplay(currentGrid);
     }
   }*/
+
+  public State[][] createRandomLocationConfig() {
+    State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
+    StateType[] possibilities = getPossibleStateTypes();
+    Random random = new Random();
+    for (int row = 0; row < randomConfigRowColNumber; row ++) {
+      for (int col = 0; col < randomConfigRowColNumber; col++) {
+        int randomIndex = random.nextInt(possibleStateTypes.length);
+        System.out.println(randomIndex);
+        randomLocationCells[row][col] = new State(possibilities[randomIndex]);
+      }
+    }
+    return randomLocationCells;
+  }
+
+  public State[][] createProbabilityBasedStateConfiguration(double probability) {
+    State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
+    StateType[] possibleStates = getPossibleStateTypes();
+
+
+    return null;
+  }
 
 
 
