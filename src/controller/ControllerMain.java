@@ -1,11 +1,8 @@
 package controller;
 
-import controller.stateType.GameOfLifeState;
-import controller.stateType.PercolationState;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
-import java.util.ResourceBundle.Control;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -16,10 +13,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.stage.Window;
 import javafx.util.Duration;
-import model.ModelException;
-import view.GraphView;
+import view.GraphElements.GraphView;
 import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
@@ -32,8 +27,8 @@ public class ControllerMain extends Application {
   public static final int FRAME_SIZE = 400;
   public final String SPEED_VALUES = "resources/SimulationSpeeds";
  // public static final Paint BACKGROUND = Color.AZURE;
-  public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
+  public static final int SCREEN_WIDTH = 500;
+  public static final int SCREEN_HEIGHT = 500;
   public static final int LANGUAGE_SCREEN_HEIGHT = 80;
   public static final String ENGLISH_LANGUAGE="English";
   public static final String SPANISH_LANGUAGE="Spanish";

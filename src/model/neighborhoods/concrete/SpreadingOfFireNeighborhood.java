@@ -11,7 +11,7 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
   public static final String PROBABILITY_CATCH_DEFAULT_PROPERTIES = "SpreadingOfFire_probabilityOfCatchingDefault";
 
   private double probabilityCatchFire;
-  private Random random;
+  private final Random random;
   private double nextDouble;
 
   public SpreadingOfFireNeighborhood(NeighborPolicy neighborPolicy) {

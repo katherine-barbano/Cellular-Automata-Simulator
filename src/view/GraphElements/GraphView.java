@@ -1,4 +1,4 @@
-package view;
+package view.GraphElements;
 
 import controller.StateType;
 import java.util.ResourceBundle;
@@ -11,16 +11,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Grid;
 import view.GraphElements.SimulationGraph;
+import view.SimulationView;
+import view.TitleBar;
 
 
 public class GraphView {
 
   public static final String RESOURCES = "resources/";
   public static final String STYLESHEET = "lightMode.css";
-  public static final String RESOURCE_BUNDLE = "View";
 
-  private int myWidth;
-  private int myHeight;
 
   private Grid myGrid;
   private VBox myRoot;
@@ -42,8 +41,6 @@ public class GraphView {
    *
    */
   public Scene setupScene(String simulationType,  StateType[] states, int width, int height) {
-    this.myWidth=width;
-    this.myHeight=height;
     this.myStates = states;
 
     createUIElements(simulationType);
@@ -75,7 +72,7 @@ public class GraphView {
 
   public void updateGraph(double elapsedTime){
     for(StateType state: myStates){
-      int numCellsWithState = myGrid.getAllCellsWithSameStateTypeAsTarget(state);
+      int numCellsWithState = myGrid.getCountAllCellsWithSameStateTypeAsTarget(state);
       myGraph.updateStateSeries(state,elapsedTime,numCellsWithState);
     }
   }

@@ -1,4 +1,4 @@
-package view.buttons;
+package view.FileButtons;
 
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;

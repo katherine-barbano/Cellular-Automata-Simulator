@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import org.assertj.core.internal.bytebuddy.matcher.StringMatcher.Mode;
 
 /***
  * States represented as the integers from csv file.
@@ -17,8 +16,8 @@ public abstract class Neighborhood {
   public static final String POSITION_NOT_FOUND_EXCEPTION_PROPERTIES = "positionNotFoundExceptionMessage";
 
   private Map<int[], Neighborhood> neighborhoodsOfNeighbors;
-  private ResourceBundle modelResources;
-  private NeighborPolicy neighborPolicy;
+  private final ResourceBundle modelResources;
+  private final NeighborPolicy neighborPolicy;
 
   public Neighborhood(NeighborPolicy neighborPolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
@@ -86,9 +85,5 @@ public abstract class Neighborhood {
 
   protected Set<int[]> allPossibleRelativePositions() {
     return neighborPolicy.allPossibleRelativePositions();
-  }
-
-  public void printNeighborPositionToState() {
-    neighborPolicy.printNeighborPositionToState();
   }
 }

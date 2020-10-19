@@ -15,8 +15,8 @@ public abstract class NeighborPolicy {
   public static final String COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES = "neighborPositionCoordinateSize";
 
   private Map<int[], State> neighborPositionToState;
-  private EdgePolicy edgePolicy;
-  private ResourceBundle modelResources;
+  private final EdgePolicy edgePolicy;
+  private final ResourceBundle modelResources;
 
   protected NeighborPolicy(EdgePolicy edgePolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
@@ -139,14 +139,4 @@ public abstract class NeighborPolicy {
   protected Set<int[]> allPossibleRelativePositions() {
     return neighborPositionToState.keySet();
   }
-
-  //for help debugging
-  public void printNeighborPositionToState() {
-    for(int[] thisKey:neighborPositionToState.keySet()) {
-      System.out.print(thisKey[0]+","+thisKey[1]+"=");
-      System.out.print(neighborPositionToState.get(thisKey).getStateType()+", ");
-    }
-    System.out.println();
-  }
-
 }

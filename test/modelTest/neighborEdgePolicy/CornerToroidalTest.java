@@ -52,17 +52,4 @@ class CornerToroidalTest {
 
     assertTrue(actualNextGrid.equals(expectedNextGrid));
   }
-
-  //for help debugging
-  private void printGrid(Grid grid) {
-    for(int r = 0; r<grid.getGridNumberOfRows(); r++) {
-      for(int c = 0; c<grid.getGridNumberOfColumns(); c++) {
-        //System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
-        grid.getCell(r,c).getNeighborhood().printNeighborPositionToState();
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
-
 }

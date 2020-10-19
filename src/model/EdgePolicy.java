@@ -8,10 +8,10 @@ public abstract class EdgePolicy {
   public static final String EDGE_POLICY_EXCEPTION_PROPERTIES = "edgePolicyAddExceptionMessage";
   public static final String MODEL_RESOURCE_PATH = "resources/Model";
 
-  private int centerCellRow;
-  private int centerCellColumn;
-  private State[][] states;
-  private ResourceBundle modelResources;
+  private final int centerCellRow;
+  private final int centerCellColumn;
+  private final State[][] states;
+  private final ResourceBundle modelResources;
 
   protected EdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);

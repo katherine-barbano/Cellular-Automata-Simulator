@@ -4,7 +4,6 @@ import controller.State;
 import controller.stateType.PercolationState;
 import controller.stateType.SpreadingOfFireState;
 import controller.stateType.WaTorWorldState;
-import controller.states.MovingStateWithAge;
 import model.Grid;
 import modelTest.neighborhood.GameOfLifeTest;
 import modelTest.neighborhood.RockPaperScissorsTest;
@@ -96,27 +95,27 @@ class CompleteFiniteTest {
   @Test
   void completeFinitePoliciesWaTorWorld() {
     State[][] grid = new State[][] {
-        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+        {new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome1 = new State[][] {
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome2 = new State[][] {
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
     };
 
     State[][] possibleOutcome3 = new State[][] {
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-        {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+        {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
     };
 
     Grid currentGrid = new Grid("WaTorWorld", "Finite", "Rectangle", grid);

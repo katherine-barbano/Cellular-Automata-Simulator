@@ -128,7 +128,7 @@ class GridTest {
   }
 
   @Test
-  void getAllCellsWithSameStateTypeAsTargetTwoStates() {
+  void getCountAllCellsWithSameStateTypeAsTargetTwoStates() {
     State[][] matrix = new State[][] {
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
@@ -137,20 +137,20 @@ class GridTest {
     };
 
     Grid grid = new Grid("GameOfLife", "Finite", "Complete", matrix);
-    int actualCells = grid.getAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
+    int actualCells = grid.getCountAllCellsWithSameStateTypeAsTarget(GameOfLifeState.ALIVE);
 
     assertEquals(actualCells, 3);
   }
 
   @Test
-  void getAllCellsWithSameStateTypeAsTargetThreeStates() {
+  void getCountAllCellsWithSameStateTypeAsTargetThreeStates() {
     State[][] matrix = new State[][] {
         {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.WATER)},
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.BLOCKED)}
     };
 
     Grid grid = new Grid("Percolation", "Finite", "Rectangle", matrix);
-    int actualCells = grid.getAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
+    int actualCells = grid.getCountAllCellsWithSameStateTypeAsTarget(PercolationState.BLOCKED);
 
     assertEquals(actualCells, 2);
   }
