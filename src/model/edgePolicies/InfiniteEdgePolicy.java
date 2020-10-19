@@ -55,13 +55,13 @@ public abstract class InfiniteEdgePolicy extends EdgePolicy {
     int centerCellRow = getCenterCellRow();
     int centerCellColumn = getCenterCellColumn();
     if(centerCellRow == 0 && centerCellColumn==0) {
-      return relativePositionOfNeighbor[0]<0 && relativePositionOfNeighbor[1]<0 && centerCellRow == centerCellColumn;
+      return relativePositionOfNeighbor[0]<0 && relativePositionOfNeighbor[1]<0;
     }
     else if(centerCellRow == 0 && centerCellColumn==states[0].length-1) {
       return relativePositionOfNeighbor[0]<0 && relativePositionOfNeighbor[1]>0 && centerCellColumn == states[0].length-1;
     }
     else if(centerCellRow == states.length-1 && centerCellColumn==0) {
-      return relativePositionOfNeighbor[0]>0 && relativePositionOfNeighbor[1]<0 && centerCellColumn == 0;
+      return relativePositionOfNeighbor[0]>0 && relativePositionOfNeighbor[1]<0;
     }
     else if(centerCellRow == states.length-1 && centerCellColumn==states[0].length-1){
       return relativePositionOfNeighbor[0]>0 && relativePositionOfNeighbor[1]>0 && centerCellColumn == states[0].length-1;

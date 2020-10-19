@@ -207,16 +207,4 @@ public class SegregationTest {
     assertEquals(actualProbability, 1.0);
     assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
-
-  //for help debugging
-  private void printGrid(Grid grid) {
-    for(int r = 0; r<3; r++) {
-      for(int c = 0; c<4; c++) {
-        System.out.print(grid.getCell(r,c).getCurrentState());
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
-
 }

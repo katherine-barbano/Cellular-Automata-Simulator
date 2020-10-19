@@ -2,9 +2,7 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.RockPaperScissorsState;
-import java.util.Map;
 import model.NeighborPolicy;
-import model.Neighborhood;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
