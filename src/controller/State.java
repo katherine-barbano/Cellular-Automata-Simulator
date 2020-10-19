@@ -1,13 +1,18 @@
 package controller;
 
-import view.CellFormat.CellColors;
+import java.util.List;
+import java.util.Random;
 
 public class State {
 
   private StateType stateType;
+  private int[] nextPosition;
+  private int age;
 
   public State(StateType stateName) {
     this.stateType = stateName;
+    this.age = 0;
+    setNextPositionStationary();
   }
 
   public StateType getStateType(){
@@ -22,5 +27,37 @@ public class State {
 
   public boolean equals(StateType otherStateType) {
     return stateType == otherStateType;
+  }
+
+  public int[] getNextPosition() {
+    return this.nextPosition;
+  }
+
+  public boolean nextPositionIsStationary() {
+    return nextPosition[0] == 0 && nextPosition[1] == 0;
+  }
+
+  public void setNextPositionMove(List<int[]> newOpenPositions) {
+    if(newOpenPositions.size()>0) {
+      this.nextPosition = getOpenPosition((newOpenPositions));
+    }
+  }
+
+  public void setNextPositionStationary() {
+    this.nextPosition = new int[]{0,0};
+  }
+
+  public int[] getOpenPosition(List<int[]> openPositions) {
+    Random random = new Random();
+    int randomIndex = random.nextInt(openPositions.size());
+    return openPositions.get(randomIndex);
+  }
+
+  public int getAge(){
+    return this.age;
+  }
+
+  public void setAge(int newAge) {
+    this.age = newAge;
   }
 }

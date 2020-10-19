@@ -1,7 +1,6 @@
 package model.neighborhoods;
 
 import controller.State;
-import controller.states.MovingState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,8 @@ public abstract class InfluentialNeighborhood extends Neighborhood {
 
   protected State handleMoveToNeighbor(State currentState, State neighborState) {
     List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(neighborState);
-    ((MovingState)currentState).setNextPositionMove(positionsOfEmptyNeighbors);
-    int[] positionToMoveInto = ((MovingState)currentState).getNextPosition();
+    currentState.setNextPositionMove(positionsOfEmptyNeighbors);
+    int[] positionToMoveInto = currentState.getNextPosition();
     replaceNeighborStateWithNewState(positionToMoveInto,currentState);
     deleteMovedStateFromNeighborhoodsOfNeighbors(neighborState);
     return new State(neighborState.getStateType());
