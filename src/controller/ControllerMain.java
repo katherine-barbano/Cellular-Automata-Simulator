@@ -77,6 +77,7 @@ public class ControllerMain extends Application {
     currentSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
     //currSimView.getMySimulationButtons().
     return myScene;
+
   }
 
   void step () {
@@ -153,6 +154,7 @@ public class ControllerMain extends Application {
       File selectedFile = fileChooser.showOpenDialog(currentStage);
       if (selectedFile != null) {
         currentSimulation.setSimulationFileLocation(selectedFile.getName());
+        currentSimView.updateGridDisplay(currentSimulation.getCurrentGrid());
       }
      /* FileChooser f = new FileChooser();
       f.showSaveDialog(null);
@@ -160,7 +162,7 @@ public class ControllerMain extends Application {
       //System.out.println(file.getName());
       //currentSimulation.setSimulationFileLocation(file.getName());
       //SimulationView currSimView = currentSimulation.getSimulationView();
-      SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
+/*      SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
       myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
       //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
@@ -170,7 +172,7 @@ public class ControllerMain extends Application {
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
           selectNewFile());
       currentStage.setScene(myScene);
-      currentStage.show();
+      currentStage.show();*/
     } catch(Exception e) {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");

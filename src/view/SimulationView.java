@@ -54,6 +54,10 @@ public class SimulationView {
     myGrid=grid;
   }
 
+  public SimulationView() {
+    myRoot = new VBox();
+  }
+
   /**
    * Setup the Scene for the UI
    * @param simulationType Type of simulation
