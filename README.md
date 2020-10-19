@@ -33,6 +33,8 @@ Features implemented:
 
 Assumptions or Simplifications:
 
+-The optional probability provided cannot be 0.0 in the Grid constructor. If you do provide 0.0, it will use the default probability instead.
+
 Interesting data files:
 
 Known Bugs:
