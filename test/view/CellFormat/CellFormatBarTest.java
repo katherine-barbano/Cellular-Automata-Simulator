@@ -22,6 +22,7 @@ class CellFormatBarTest extends DukeApplicationTest {
   public static final String SIMULATION_TYPE ="GameOfLife";
   public static final String EDGE_POLICY_TYPE ="Finite";
   public static final String NEIGHBOR_POLICY_TYPE ="Complete";
+  public static final String LANGUAGE="English";
   public static final State[][] TEST_GRID ={{new State(ALIVE),new State(ALIVE),new State(ALIVE)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
   public static final State[][] TEST_GRID2 ={{new State(DEAD),new State(DEAD),new State(DEAD)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
   private SimulationView myView;
@@ -38,7 +39,7 @@ class CellFormatBarTest extends DukeApplicationTest {
   public void start(Stage stage) throws Exception {
 
     Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-    myView = new SimulationView(grid);
+    myView = new SimulationView(grid, LANGUAGE);
     myScene = myView.setupScene(SIMULATION_TYPE,MY_STATES,400,400);
     stage.setScene(myScene);
     stage.setTitle("Game of Life");
