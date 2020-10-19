@@ -2,15 +2,15 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.SegregationState;
-import java.util.List;
 import java.util.Map;
+import model.ModelException;
 import model.NeighborPolicy;
-import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
 public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   public static final String DEFAULT_THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMoveDefault";
+  public static final String AGENT_NOT_FOUND_EXCEPTION_MESSAGE = "agentNotFoundExceptionMessage";
 
   private double thresholdToMove;
 
@@ -35,7 +35,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getNextState(State currentState) {
-    double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/getNumberOfNeighbors();
+    double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/(double)getNumberOfNeighbors();
     boolean isSatisfied = thresholdToMove <= percentSameNeighbors;
     if(currentState.equals(SegregationState.EMPTY)) {
       return currentState;
@@ -57,17 +57,26 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    if(nextState.equals(SegregationState.EMPTY)) {
-      State agentO = getAgentFromOverlappingNeighbors(new State(SegregationState.OAGENT), statesOfOverlappingNeighborsOnCell);
-      State agentX = getAgentFromOverlappingNeighbors(new State(SegregationState.XAGENT), statesOfOverlappingNeighborsOnCell);
-      if(agentX!=null) {
-        return agentX;
+    try {
+      if(nextState.equals(SegregationState.EMPTY)) {
+        return returnAgentFromOverlappingNeighbors(statesOfOverlappingNeighborsOnCell);
       }
-      else if(agentO!=null){
-        return agentO;
+      else {
+        return nextState;
       }
     }
-    return nextState;
+    catch(ModelException e) {
+      return nextState;
+    }
+  }
+
+  private State returnAgentFromOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighborsOnCell) {
+    try {
+      return getAgentFromOverlappingNeighbors(new State(SegregationState.OAGENT), statesOfOverlappingNeighborsOnCell);
+    }
+    catch(ModelException e) {
+      return getAgentFromOverlappingNeighbors(new State(SegregationState.XAGENT), statesOfOverlappingNeighborsOnCell);
+    }
   }
 
   private State getAgentFromOverlappingNeighbors(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
@@ -77,6 +86,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
         return currentState;
       }
     }
-    return null;
+    String errorMessage = getModelResources().getString(AGENT_NOT_FOUND_EXCEPTION_MESSAGE);
+    throw new ModelException(errorMessage);
   }
 }

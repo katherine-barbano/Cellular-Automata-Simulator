@@ -33,10 +33,6 @@ public class State {
     return this.nextPosition;
   }
 
-  public boolean nextPositionIsStationary() {
-    return nextPosition[0] == 0 && nextPosition[1] == 0;
-  }
-
   public void setNextPositionMove(List<int[]> newOpenPositions) {
     if(newOpenPositions.size()>0) {
       this.nextPosition = getOpenPosition((newOpenPositions));

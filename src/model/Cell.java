@@ -30,8 +30,7 @@ public class Cell {
 
   Cell getNextCell() {
     State nextState = neighborhood.getNextState(currentState);
-    Cell nextCell = new Cell(nextState);
-    return nextCell;
+    return new Cell(nextState);
   }
 
   public State getCurrentState() {
@@ -60,8 +59,7 @@ public class Cell {
   Cell getCellFromOverlappingNeighbors() {
     State nextState = neighborhood.getStateOfOverlappingNeighbors(getCurrentState(),
         statesOfOverlappingNeighborsOnCell);
-    Cell nextCell = new Cell(nextState);
-    return nextCell;
+    return new Cell(nextState);
   }
 
   void setStatesOfOverlappingNeighbors(Map<int[], State> statesOfOverlappingNeighbors) {
