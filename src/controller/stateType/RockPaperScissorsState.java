@@ -6,9 +6,9 @@ import view.CellFormat.CellFill;
 import view.CellFormat.CellImages;
 
 public enum RockPaperScissorsState implements StateType {
-  ROCK(CellColors.BLACK),
-  PAPER(CellColors.WHITE),
-  SCISSORS(CellImages.POLKA_DOTS);
+  ROCK(CellImages.ROCK),
+  PAPER(CellImages.PAPER),
+  SCISSORS(CellImages.SCISSORS);
 
   private CellFill defaultColor;
 

@@ -31,8 +31,8 @@ public class ControllerMain extends Application {
   public static final int FRAME_SIZE = 400;
   public final String SPEED_VALUES = "resources/SimulationSpeeds";
  // public static final Paint BACKGROUND = Color.AZURE;
-  public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
+  public static final int SCREEN_WIDTH = 500;
+  public static final int SCREEN_HEIGHT = 500;
   public static final int LANGUAGE_SCREEN_HEIGHT = 80;
   public static final String ENGLISH_LANGUAGE="English";
   public static final String SPANISH_LANGUAGE="Spanish";

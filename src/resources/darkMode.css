@@ -1,3 +1,11 @@
 .vbox{
-  -fx-background-color: black;
+  -fx-background-color: #3e3e3e;
+}
+
+.button{
+  -fx-background-color: azure;
+}
+
+.title-bar{
+  -fx-background-color: lightBlue;
 }
