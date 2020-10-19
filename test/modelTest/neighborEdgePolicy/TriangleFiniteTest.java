@@ -13,15 +13,15 @@ class TriangleFiniteTest {
   @Test
   void triangleFinitePoliciesGameOfLife() {
     State[][] firstGrid = new State[][] {
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
 
     State[][] expectedGrid = new State[][] {
-        {new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+        {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
         {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
     };
@@ -44,7 +44,7 @@ class TriangleFiniteTest {
     State[][] expectedGrid = new State[][] {
         {new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.OPEN)},
         {new State(PercolationState.OPEN), new State(PercolationState.WATER), new State(PercolationState.OPEN), new State(PercolationState.OPEN)},
-        {new State(PercolationState.WATER), new State(PercolationState.BLOCKED), new State(PercolationState.WATER), new State(PercolationState.OPEN)}
+        {new State(PercolationState.OPEN), new State(PercolationState.BLOCKED), new State(PercolationState.OPEN), new State(PercolationState.OPEN)}
     };
 
     Grid currentGrid = new Grid("Percolation", "Finite", "Triangle",  firstGrid);
@@ -58,8 +58,8 @@ class TriangleFiniteTest {
   private void printGrid(Grid grid) {
     for(int r = 0; r<grid.getGridNumberOfRows(); r++) {
       for(int c = 0; c<grid.getGridNumberOfColumns(); c++) {
-        //System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
-        grid.getCell(r,c).getNeighborhood().printNeighborPositionToState();
+        System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
+        //grid.getCell(r,c).getNeighborhood().printNeighborPositionToState();
       }
       System.out.println();
     }

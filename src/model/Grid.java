@@ -149,10 +149,20 @@ public class Grid {
   private void populateStatesOfOverlappingNeighborsRedo(int row, int column, Map<int[], State> statesOfOverlappingNeighbors) {
     Map<int[], Neighborhood> neighborhoodsOfNeighbors = cellGrid[row][column].getNeighborhoodsOfNeighbors();
     for(int[] neighborPosition : neighborhoodsOfNeighbors.keySet()) {
+      putValidNeighborPositionsIntoStatesOfOverlappingNeighbors(neighborPosition, neighborhoodsOfNeighbors, statesOfOverlappingNeighbors);
+    }
+  }
+
+  private void putValidNeighborPositionsIntoStatesOfOverlappingNeighbors(int[] neighborPosition, Map<int[], Neighborhood> neighborhoodsOfNeighbors, Map<int[], State> statesOfOverlappingNeighbors) {
+    try {
       int[] positionOfCenterCellInNeighbor = negateArray(neighborPosition);
       Neighborhood neighborhoodOfNeighbor = neighborhoodsOfNeighbors.get(neighborPosition);
-      State stateOfCenterCellInNeighborsNeighbor = neighborhoodOfNeighbor.getStateFromNeighborPosition(positionOfCenterCellInNeighbor);
-      statesOfOverlappingNeighbors.put(neighborPosition,stateOfCenterCellInNeighborsNeighbor);
+      State stateOfCenterCellInNeighborsNeighbor = neighborhoodOfNeighbor
+          .getStateFromNeighborPosition(positionOfCenterCellInNeighbor);
+      statesOfOverlappingNeighbors.put(neighborPosition, stateOfCenterCellInNeighborsNeighbor);
+    }
+    catch(ModelException e) {
+      //for NeighborPolicies like TriangleNeighborPolicy, if cell A has a neighbor B, A won't necessarily be a neighbor of B. In this case, nothing should be put into the map since the neighbors don't overlap in that direciton.
     }
   }
 
