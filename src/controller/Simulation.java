@@ -2,7 +2,6 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
-import controller.stateType.GameOfLifeState;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,6 +30,7 @@ public abstract class Simulation {
   private String simulationFileLocation;
   //private SimulationView simulationView;
   private Group root;
+  private final String ERRORS_LOCATION = "resources/ControllerErrors";
 
 
   private int rowNumber;
@@ -39,30 +39,29 @@ public abstract class Simulation {
   private HashMap<StateType, Integer> integerForStates;
   private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
- // private int[][] cells;
   private final String STORING_FILE_NAME = "data/outputGrids/";
   private final String PROPERTIES_LOCATION = "simulationProperties/";
 
 
 
-  public Simulation(String newSimulationName) {
-    this.simulationName = newSimulationName;
-    this.propertiesInformation = new HashMap<String, String>();
-    readPropertiesFile(newSimulationName);
-    simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-    this.possibleStateTypes = getStateTypesForSimulation();
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), possibleStateTypes));
-
-    //currentGrid = new Grid(simulationName, "Finite", "Complete", createStates(readCellStatesFile(), possibleStateTypes));
-    nextGrid = currentGrid.getNextGrid();
+  public Simulation(String newSimulationName){
+      this.simulationName = newSimulationName;
+      this.propertiesInformation = new HashMap<String, String>();
+      readPropertiesFile(newSimulationName);
+      simulationFileLocation =
+          "data/initialConfigurations/" + propertiesInformation.get("fileName");
+      //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
+      this.possibleStateTypes = getStateTypesForSimulation();
+      currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+          propertiesInformation.get("neighborPolicy"),
+          createStates(readCellStatesFile(), possibleStateTypes));
+      nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
   }
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
-      try {
+      try{
         String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant*/
         //String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -75,7 +74,7 @@ public abstract class Simulation {
         }
       }
       catch (Exception e) {
-        String improperPropertiesFileMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+        String improperPropertiesFileMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
             getString("InvalidFile");
         throw new ControllerException(improperPropertiesFileMessage);
       }
