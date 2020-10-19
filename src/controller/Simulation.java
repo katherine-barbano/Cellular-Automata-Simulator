@@ -47,10 +47,9 @@ public abstract class Simulation {
   private HashMap<StateType, Integer> integerForStates;
   private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
-  private final String STORING_FILE_NAME = "data/outputGrids/";
+  private final String STORING_FILE_NAME = "data/initialConfigurations/";
   private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
  // private final String PROPERTIES_EXTENSION = ".properties";
-
 
 
   public Simulation(String newSimulationName){
@@ -143,16 +142,19 @@ public abstract class Simulation {
 
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
     //FileWriter csvWriter = new FileWriter(file.getName());
-      csvWriter.append(Integer.toString(rowNumber));
+      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
       csvWriter.append(",");
-      csvWriter.append(Integer.toString(colNumber));
+      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
       csvWriter.append(",");
       csvWriter.append("\n");
+      createMapOfStates(possibleStateTypes);
 
       for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
         for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
           csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
-           csvWriter.append(",");
+          if (col != gridToStore.getGridNumberOfColumns() - 1) {
+            csvWriter.append(",");
+          }
         }
         csvWriter.append("\n");
       }
@@ -168,9 +170,16 @@ public abstract class Simulation {
   }
 
   public State[][] createInitialGridConfiguration(String configType) {
-    if (configType.equals("file")) {
-      simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
-      return createStates(readCellStatesFile(), possibleStateTypes);
+    try {
+      if (configType.equals("file")) {
+        simulationFileLocation =
+            "data/initialConfigurations/" + propertiesInformation.get("fileName");
+        return createStates(readCellStatesFile(), possibleStateTypes);
+      }
+    } catch (Exception e) {
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
     }
     //else if (configType.equals("random")) {
       return createRandomLocationConfig();
@@ -189,6 +198,17 @@ public abstract class Simulation {
 
   public State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
+    createMapOfStates(possibleStatesForSimulation);
+    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
+    for (int row = 0; row < integerCellStates.length; row++) {
+      for (int col = 0; col < integerCellStates[0].length; col++) {
+        cellStates[row][col] = new State(statesForInteger.get(integerCellStates[row][col]));
+      }
+    }
+    return cellStates;
+  }
+
+  private void createMapOfStates(StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
     int stateNumber = 0;
@@ -197,13 +217,6 @@ public abstract class Simulation {
       statesForInteger.put(stateNumber,state);
       stateNumber++;
     }
-    State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
-    for (int row = 0; row < integerCellStates.length; row++) {
-      for (int col = 0; col < integerCellStates[0].length; col++) {
-        cellStates[row][col] = new State(statesForInteger.get(integerCellStates[row][col]));
-      }
-    }
-    return cellStates;
   }
 
   public int[][] readCellStatesFile() throws ControllerException {
@@ -239,7 +252,10 @@ public abstract class Simulation {
     }
     catch (IOException | CsvException e) {
       //e.printStackTrace();
-      return Collections.emptyList();
+      //return Collections.emptyList();
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
     }
   }
 
