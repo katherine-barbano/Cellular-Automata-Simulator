@@ -2,24 +2,22 @@ package controllerTest.SimulationTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import controller.PercolationSimulation;
 import controller.RockPaperScissorsSimulation;
+import controller.SegregationSimulation;
 import controller.Simulation;
-import controller.stateType.PercolationState;
 import controller.stateType.RockPaperScissorsState;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.shape.StrokeLineCap;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 
-public class RockPaperScissorsSimulationTest {
-
+public class SegregationSimulationTest {
+/*
   @Test
   void testSimulationCreatesArray() {
-    Simulation mySimulation = new RockPaperScissorsSimulation();
+    Simulation mySimulation = new SegregationSimulation();
     List<Integer> toCompare = new ArrayList<>();
-    //CHECK these change depending on starting state of rps simulation
+    //CHECK these change depending on starting state of segregation simulation
     toCompare.add(3);
     toCompare.add(4);
     assertEquals(toCompare, mySimulation.getMatrixSize());
@@ -77,6 +75,5 @@ public class RockPaperScissorsSimulationTest {
     assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(2, 2).getCurrentState().getStateType());
     assertEquals(RockPaperScissorsState.SCISSORS,  myGrid.getCell(4, 2).getCurrentState().getStateType());
   }
-
-
+   */
 }
