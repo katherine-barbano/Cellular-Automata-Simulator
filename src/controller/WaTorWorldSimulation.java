@@ -19,7 +19,7 @@ public class WaTorWorldSimulation extends Simulation{
   ;
 
   public WaTorWorldSimulation() {
-    super("WatorWorld");
+    super("WaTorWorld");
   }
 
   //@Override
