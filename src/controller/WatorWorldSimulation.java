@@ -65,7 +65,7 @@ public class WatorWorldSimulation extends Simulation{
     return WaTorWorldState.values();
   }
 
-  @Override
+/*  @Override
   public void storeNewCellConfig(Grid gridToStore) {
     try {
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
@@ -91,5 +91,5 @@ public class WatorWorldSimulation extends Simulation{
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
-  }
+  }*/
 }

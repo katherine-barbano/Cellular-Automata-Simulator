@@ -65,7 +65,7 @@ public class SpreadingOfFireSimulation extends Simulation {
     return SpreadingOfFireState.values();
   }
 
-  @Override
+/*  @Override
   public void storeNewCellConfig(Grid gridToStore) {
     try {
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
@@ -92,6 +92,6 @@ public class SpreadingOfFireSimulation extends Simulation {
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
-  }
+  }*/
 }
 

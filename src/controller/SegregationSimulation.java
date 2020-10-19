@@ -67,7 +67,7 @@ public class SegregationSimulation extends Simulation{
     return SegregationState.values();
   }
 
-  @Override
+/*  @Override
   public void storeNewCellConfig(Grid gridToStore) {
     try {
       String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
@@ -97,5 +97,5 @@ public class SegregationSimulation extends Simulation{
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
-  }
+  }*/
 }
