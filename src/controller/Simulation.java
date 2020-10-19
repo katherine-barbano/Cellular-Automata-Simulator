@@ -68,13 +68,20 @@ public abstract class Simulation {
           propertiesInformation.get("neighborPolicy"),
           createStates(readCellStatesFile(), possibleStateTypes), Double.parseDouble(propertiesInformation.get("probability")));
    */
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
-
+    //currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+    currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
   }
 
-  //abstract Grid createCorrectGrid();
+  public Grid createCorrectGrid() {
+    if (propertiesInformation.containsKey("probability")) {
+      return new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),
+          this.gridStateFormation, Double.parseDouble(propertiesInformation.get("probability")));
+    }
+    return new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+  }
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {

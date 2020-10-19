@@ -60,6 +60,7 @@ public class PercolationSimulation extends Simulation{
     return null;
   }*/
 
+
   @Override
   public StateType[] getStateTypesForSimulation() {
     return PercolationState.values();
