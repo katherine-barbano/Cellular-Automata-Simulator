@@ -110,14 +110,20 @@ public abstract class Simulation {
       String newFileName = dialog.getResult();
       File file = new File(newFileName + CSV_SUFFIX);
 
+      dialog.setContentText("Please enter new title");
+      dialog.showAndWait();
+      String newTitle = dialog.getResult();
+
       dialog.setContentText("Please enter new author");
       dialog.showAndWait();
       String newAuthorName = dialog.getResult();
       dialog.setContentText("Please enter new description");
       dialog.showAndWait();
       String newDescription = dialog.getResult();
+
       Properties properties = new Properties();
       properties.setProperty("fileName", newFileName);
+      properties.setProperty("title", newTitle);
       properties.setProperty("author", newAuthorName);
       properties.setProperty("description", newDescription);
 

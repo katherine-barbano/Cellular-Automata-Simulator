@@ -2,6 +2,7 @@ package controller;
 
 import controller.stateType.GameOfLifeState;
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 import javafx.application.Application;
@@ -174,7 +175,20 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
-    if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType() != null) {
+    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType();
+    if (simulationChosen != null) {
+     try {
+       Class<?>[] type = {Simulation.class};
+       Object[] constructorArgs = {String.class};
+       String fullClassName = String.format("controller." + simulationChosen + "Simulation");
+       Class<?> cl = Class.forName(fullClassName);
+       Constructor<?> cons = cl.getConstructor(type);
+       cons.newInstance(constructorArgs);
+
+     } catch(Exception e) {
+       System.out.println("didnt work");
+     }
+
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("GameOfLife")) {
         currentSimulation = new GameOfLifeSimulation();
@@ -191,7 +205,6 @@ public class ControllerMain extends Application {
         //System.out.println(currentSimulation.toString());
         System.out.println("percolation now");
         //currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
-        System.out.println("Please amma");
         setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Percolation");
         setupGraph();
         setUpStage(currentStage);
