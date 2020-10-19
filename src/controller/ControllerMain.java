@@ -180,6 +180,7 @@ public class ControllerMain extends Application {
         .getMyChosenType();
     if (simulationChosen != null) {
       try {
+        stepCount=0;
         String fullClassName = String.format("controller." + simulationChosen + "Simulation");
         Class<?> cl = Class.forName(fullClassName);
         Constructor<?> cons = cl.getConstructor();
