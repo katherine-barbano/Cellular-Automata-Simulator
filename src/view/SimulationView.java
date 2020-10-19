@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Grid;
 import view.CellFormat.CellFill;
@@ -27,6 +29,7 @@ public class SimulationView {
   public static final String RESOURCE_BUNDLE = "View";
   public static final int BUTTON_BAR_HEIGHT = 50;
   public static final Map<StateType, CellFill> STATE_COLOR_MAP = new HashMap<>();
+  public static final String START_GRAPH_PROPERTIES = "GraphViewButton";
 
   private Grid myGrid;
   private ResourceBundle myBundle;
@@ -44,6 +47,8 @@ public class SimulationView {
   private DarkLightModeBar myDarkLightModeBar;
   private FileButtonBar myFileButtons;
   private SimulationButtonBar mySimulationButtons;
+  private OpenGraphViewBar myOpenGraphViewBar;
+  private int numButtonBars=6;
 
   /**
    * Create Simulation View from initial Grid
@@ -85,10 +90,12 @@ public class SimulationView {
     myDarkLightModeBar = new DarkLightModeBar(myBundle);
     myFileButtons = new FileButtonBar(myBundle);
     mySimulationButtons = new SimulationButtonBar(myBundle);
+    myOpenGraphViewBar = new OpenGraphViewBar(myBundle);
 
     myGridHeight = findGridHeight();
     myGridDisplay = new GridDisplay(myGrid, myGridHeight, simulationType);
     myCellFormatBar = new CellFormatBar(myGridDisplay, states, myBundle);
+
   }
 
   private void addUIElementsToRoot(){
@@ -99,6 +106,7 @@ public class SimulationView {
     myRoot.getChildren().add(myDarkLightModeBar);
     myRoot.getChildren().add(myFileButtons);
     myRoot.getChildren().add(mySimulationButtons);
+    myRoot.getChildren().add(myOpenGraphViewBar);
   }
 
   /**
@@ -115,8 +123,7 @@ public class SimulationView {
    * @return Height of the GridDisplay
    */
   public double findGridHeight(){
-    return myHeight - myTitleBar.getPrefHeight() - myControlButtons.getPrefHeight() - mySimulationButtons.getPrefHeight() - myFileButtons
-        .getPrefHeight() - myControlButtons.getPrefHeight();
+    return myHeight - numButtonBars * BUTTON_BAR_HEIGHT;
   }
 
   /**
@@ -132,6 +139,10 @@ public class SimulationView {
    * @return the FileButtonBar
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
+
+  public OpenGraphViewBar getMyOpenGraphViewBar() {
+    return myOpenGraphViewBar;
+  }
 
   public Grid getCurrentGridInDisplay(){
     return myGrid;
