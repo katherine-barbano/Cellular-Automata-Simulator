@@ -26,6 +26,7 @@ import view.SimulationView;
 
 public abstract class Simulation {
 
+  private State[][] gridStateFormation;
   private Grid currentGrid;
   private Grid nextGrid;
   private final String simulationName;
@@ -36,6 +37,7 @@ public abstract class Simulation {
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
+  private String configurationType;
 
 
   private final int randomConfigRowColNumber = 4;
@@ -52,23 +54,20 @@ public abstract class Simulation {
 
 
   public Simulation(String newSimulationName){
-      this.simulationName = newSimulationName;
-      this.propertiesInformation = new HashMap<String, String>();
-      readPropertiesFile(newSimulationName);
-      if (propertiesInformation.containsKey("fileName")) {
-        simulationFileLocation =
-          "data/initialConfigurations/" + propertiesInformation.get("fileName");
-      }
+    this.simulationName = newSimulationName;
+    this.propertiesInformation = new HashMap<String, String>();
+    readPropertiesFile(newSimulationName);
+    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.possibleStateTypes = getStateTypesForSimulation();
+    //this.gridStateFormation = createStates(readCellStatesFile(), possibleStateTypes);
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
 
-      //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-      this.possibleStateTypes = getStateTypesForSimulation();
      /* currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
           propertiesInformation.get("neighborPolicy"),
           createStates(readCellStatesFile(), possibleStateTypes), Double.parseDouble(propertiesInformation.get("probability")));
    */
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"),
-        createStates(readCellStatesFile(), possibleStateTypes));
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
 
     nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
@@ -168,6 +167,16 @@ public abstract class Simulation {
     }
   }
 
+  public State[][] createInitialGridConfiguration(String configType) {
+    if (configType.equals("file")) {
+      simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+      return createStates(readCellStatesFile(), possibleStateTypes);
+    }
+    //else if (configType.equals("random")) {
+      return createRandomLocationConfig();
+
+  }
+
 
   abstract public StateType[] getStateTypesForSimulation();
 
@@ -252,7 +261,8 @@ public abstract class Simulation {
     Random random = new Random();
     for (int row = 0; row < randomConfigRowColNumber; row ++) {
       for (int col = 0; col < randomConfigRowColNumber; col++) {
-        int randomIndex = random.nextInt(possibleStateTypes.length-1);
+        int randomIndex = random.nextInt(possibleStateTypes.length);
+        System.out.println(randomIndex);
         randomLocationCells[row][col] = new State(possibilities[randomIndex]);
       }
     }
