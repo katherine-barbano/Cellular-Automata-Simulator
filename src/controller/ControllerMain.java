@@ -33,6 +33,7 @@ public class ControllerMain extends Application {
   public static final String ENGLISH_LANGUAGE="English";
   public static final String SPANISH_LANGUAGE="Spanish";
   public static final String FRENCH_LANGUAGE="French";
+  private final String ERRORS_LOCATION = "resources/ControllerErrors";
   private Scene myScene;
   private Group root;
   private LanguageScreen myLanguageScreen;
@@ -141,8 +142,13 @@ public class ControllerMain extends Application {
     currentSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event -> increaseSpeed());
     currentSimView.getMyControlButtons().getSlowDownButton()
         .setOnAction(event -> decreaseSpeed());
-    currentSimView.getMySimulationButtons().getMySimulationButton().setOnAction(event -> checkChangeSimulation());
-  }
+    try {
+      currentSimView.getMySimulationButtons().getMySimulationButton()
+          .setOnAction(event -> checkChangeSimulation());
+    } catch (ControllerException e) {
+      displayError(e.getMessage());
+    }
+    }
 
   void step () {
     //System.out.println("stepping");
@@ -194,7 +200,9 @@ public class ControllerMain extends Application {
         //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
 
       } catch (Exception e) {
-        System.out.println("didnt work");
+        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+            getString("InvalidSimulationName");
+        throw new ControllerException(invalidFileExceptionMessage);
       }
     }
   }
