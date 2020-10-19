@@ -13,7 +13,7 @@ public class FiniteEdgePolicy extends EdgePolicy {
   }
 
   @Override
-  protected State getNeighborStateFromPositionForInitialization(int[] relativePositionOfNeighbor) {
+  public State getNeighborStateFromPositionForInitialization(int[] relativePositionOfNeighbor) {
     try {
       return getNeighborStateFromAdjacentPosition(relativePositionOfNeighbor);
     }
