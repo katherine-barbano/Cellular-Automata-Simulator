@@ -6,13 +6,14 @@ import controller.RockPaperScissorsSimulation;
 import controller.SegregationSimulation;
 import controller.Simulation;
 import controller.stateType.RockPaperScissorsState;
+import controller.stateType.SegregationState;
 import java.util.ArrayList;
 import java.util.List;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 
 public class SegregationSimulationTest {
-/*
+
   @Test
   void testSimulationCreatesArray() {
     Simulation mySimulation = new SegregationSimulation();
@@ -25,20 +26,14 @@ public class SegregationSimulationTest {
 
   @Test
   void testInitialDefaultGridConfiguration() {
-    Simulation mySimulation = new RockPaperScissorsSimulation();
+    Simulation mySimulation = new SegregationSimulation();
     Grid myGrid = mySimulation.getCurrentGrid();
-    assertEquals(RockPaperScissorsState.PAPER,  myGrid.getCell(0, 0).getCurrentState().getStateType());
-    assertEquals(RockPaperScissorsState.ROCK, myGrid.getCell(1, 1).getCurrentState().getStateType());
-    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(0, 3).getCurrentState().getStateType());
+    assertEquals(SegregationState.XAGENT,  myGrid.getCell(2, 0).getCurrentState().getStateType());
+    assertEquals(SegregationState.OAGENT, myGrid.getCell(0, 0).getCurrentState().getStateType());
+    assertEquals(SegregationState.EMPTY, myGrid.getCell(0, 1).getCurrentState().getStateType());
 
-    mySimulation.updateSimulation();
-
-    myGrid = mySimulation.getCurrentGrid();
-    assertEquals(RockPaperScissorsState.PAPER,  myGrid.getCell(1, 1).getCurrentState().getStateType());
-    assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(0, 0).getCurrentState().getStateType());
-    assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(0, 2).getCurrentState().getStateType());
-    assertEquals(RockPaperScissorsState.ROCK,  myGrid.getCell(2, 3).getCurrentState().getStateType());
-  }
+     }
+  /*
 
   @Test
   void testSettingNewConfiguration() {
