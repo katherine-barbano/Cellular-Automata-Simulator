@@ -67,9 +67,9 @@ public class GameOfLifeSimulation extends Simulation {
   public StateType[] getStateTypesForSimulation() {
     return GameOfLifeState.values();
   }
-
+/*
   @Override
-  public void storeNewCellConfig(Grid gridToStore) {
+  public void storeNewCellConfig(Grid gridToStore) {*/
 /*      try {
         String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
         File file = new File(input);
@@ -115,5 +115,5 @@ public class GameOfLifeSimulation extends Simulation {
             getString("InvalidFile");
         throw new ControllerException(invalidFileExceptionMessage);
       }*/
-  }
+
 }

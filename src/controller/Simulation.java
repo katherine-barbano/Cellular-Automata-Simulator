@@ -29,7 +29,7 @@ public abstract class Simulation {
   private Grid nextGrid;
   private final String simulationName;
   private String simulationFileLocation;
-  private SimulationView simulationView;
+  //private SimulationView simulationView;
   private Group root;
 
 
@@ -57,7 +57,7 @@ public abstract class Simulation {
 
     //currentGrid = new Grid(simulationName, "Finite", "Complete", createStates(readCellStatesFile(), possibleStateTypes));
     nextGrid = currentGrid.getNextGrid();
-    simulationView = new SimulationView(currentGrid);
+   // simulationView = new SimulationView(currentGrid);
   }
 
 
@@ -87,11 +87,11 @@ public abstract class Simulation {
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
-    simulationView = new SimulationView(currentGrid);
+    //simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
   }
 
-  abstract public void storeNewCellConfig(Grid gridToStore);
+  //abstract public void storeNewCellConfig(Grid gridToStore);
 
  // abstract public String readInPropertiesFile();
 
@@ -109,12 +109,8 @@ public abstract class Simulation {
 
       for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
         for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-          //StateType x = new GameOfLifeState(gridToStore.getCell(row,col).getCurrentState());
-          Integer t = integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType());
-          String s = t.toString();
           csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
-          //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
-          csvWriter.append(",");
+           csvWriter.append(",");
         }
         csvWriter.append("\n");
       }
@@ -223,13 +219,21 @@ public abstract class Simulation {
     }
   }*/
 
-  public void updateSimulationGrid(boolean shouldRun) {
+
+
+  public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
     if (shouldRun) {
-      //checkGridUpdatesInDisplay();
+      checkGridUpdatesInDisplay(simulationView);
       this.currentGrid = nextGrid;
       this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
     }
+  }
+
+  public void checkGridUpdatesInDisplay(SimulationView currentSimView){
+    Grid newGrid = currentSimView.getCurrentGridInDisplay();
+    this.currentGrid=newGrid;
+    this.nextGrid = currentGrid.getNextGrid();
   }
 
   public void updateSimulation(boolean shouldRun) {
@@ -237,12 +241,6 @@ public abstract class Simulation {
     this.nextGrid = currentGrid.getNextGrid();
   }
 
-
-  public void checkGridUpdatesInDisplay(){
-    Grid newGrid = simulationView.getCurrentGridInDisplay();
-    this.currentGrid=newGrid;
-    this.nextGrid = currentGrid.getNextGrid();
-  }
 
   public void updateToNextSimulation() {
     this.currentGrid = nextGrid;
@@ -257,9 +255,9 @@ public abstract class Simulation {
     return sizeValues;
   }
 
-  public SimulationView getSimulationView() {
+/*  public SimulationView getSimulationView() {
     return simulationView;
-  }
+  }*/
 
 
   public int getRowNumber() {

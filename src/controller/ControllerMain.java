@@ -30,6 +30,7 @@ public class ControllerMain extends Application {
   private Group root;
   //private Simulation currentSimulation = new GameOfLifeSimulation();
   private Simulation currentSimulation;
+  private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
 
@@ -60,18 +61,20 @@ public class ControllerMain extends Application {
   Scene setupScene(int width, int height) {
     root = new Group();
     currentSimulation = new GameOfLifeSimulation();
-    SimulationView currSimView = currentSimulation.getSimulationView();
-    //myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-    //    SCREEN_WIDTH, SCREEN_HEIGHT);
-    myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
-            SCREEN_WIDTH, SCREEN_HEIGHT);
-    currSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
-    currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-    currSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
-    currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
+    //SimulationView currSimView = currentSimulation.getSimulationView();
+    currentSimView = new SimulationView(currentSimulation.getCurrentGrid());
+    //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
+    myScene = currentSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
+        SCREEN_WIDTH, SCREEN_HEIGHT);
+    //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+    //        SCREEN_WIDTH, SCREEN_HEIGHT);
+    currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
+    currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
+    currentSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
+    currentSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
             selectNewFile());
-    currSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
-    currSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
+    currentSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event-> increaseSpeed());
+    currentSimView.getMyControlButtons().getSlowDownButton().setOnAction(event-> decreaseSpeed());
     //currSimView.getMySimulationButtons().
     return myScene;
   }
@@ -83,7 +86,8 @@ public class ControllerMain extends Application {
   }
 
   private void updateShapes(boolean shouldRun) {
-    currentSimulation.updateSimulationGrid(shouldRun);
+    currentSimulation.updateSimulationGrid(shouldRun, currentSimView);
+    //currentSimView.updateGridDisplay(currentSimulation.getCurrentGrid());
     //System.out.println("updating");
   }
 
@@ -96,23 +100,26 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
+    if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType() != null) {
 
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("GameOfLife")) {
+        currentSimulation = new GameOfLifeSimulation();
+        setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("game now");
+        currentStage.setScene(myScene);
+        currentStage.show();
+      }
 
-/*    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("GameOfLife")) {
-      currentSimulation = new GameOfLifeSimulation();
-      setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-      System.out.println("game now");
-      currentStage.setScene(myScene);
-      currentStage.show();
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("Percolation")) {
+        currentSimulation = new PercolationSimulation();
+        setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("percolation now");
+        currentStage.setScene(myScene);
+        currentStage.show();
+      }
     }
-
-    if (currentSimulation.getSimulationView().getMySimulationButtons().getSimulationChooser().getMyChosenType().equals("Percolation")) {
-      currentSimulation = new PercolationSimulation();
-      setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-      System.out.println("percolation now");
-      currentStage.setScene(myScene);
-      currentStage.show();
-    }*/
   }
 
   void increaseSpeed() {
@@ -152,9 +159,12 @@ public class ControllerMain extends Application {
       File file = f.getSelectedFile();*/
       //System.out.println(file.getName());
       //currentSimulation.setSimulationFileLocation(file.getName());
-      SimulationView currSimView = currentSimulation.getSimulationView();
-      myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+      //SimulationView currSimView = currentSimulation.getSimulationView();
+      SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
+      myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
+      //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
+      //    SCREEN_WIDTH, SCREEN_HEIGHT);
       currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
       currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
       currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
@@ -165,7 +175,7 @@ public class ControllerMain extends Application {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
       //throw new ControllerException(noFileExceptionMessage);
-      currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
+      //currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
     }
   }
 
