@@ -46,7 +46,7 @@ public abstract class Simulation {
   private StateType[] possibleStateTypes;
   private HashMap<String, String> propertiesInformation;
   private final String STORING_FILE_NAME = "data/outputGrids/";
-  private final String PROPERTIES_LOCATION = "data/simulationProperties/";
+  private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
 
 
 
@@ -121,16 +121,11 @@ public abstract class Simulation {
       properties.setProperty("author", newAuthorName);
       properties.setProperty("description", newDescription);
 
-      File nFile = new File(PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
+      File nFile = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
       FileOutputStream fileOut = new FileOutputStream(nFile);
       properties.store(fileOut, null);
       fileOut.close();
-      //result.ifPresent(name -> System.out.println("Your name: " + name));
 
-      /*
-      String newFileName = JOptionPane.showInputDialog("Enter new file name");
-      File file = new File(newFileName);
-      String newTitle = JOptionPane.showInputDialog("Enter new title"); */
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
     //FileWriter csvWriter = new FileWriter(file.getName());
       csvWriter.append(Integer.toString(rowNumber));
@@ -148,30 +143,7 @@ public abstract class Simulation {
       }
       csvWriter.flush();
       csvWriter.close();
-/*      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
-      ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      Properties props = new Properties();
-      try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
-        props.load(resourceStream);
-      }
-      File propFile = new File(resourceName);*/
-    /*
-      Object s = "fileName";
-      System.out.println(props.get(s));
-      Object q = props.get("fileName");
-      props.setProperty("fileName", "work");
-      System.out.println(props.get(s));
-      System.out.println("saved");
-    */
-/*      OutputStream out = new FileOutputStream(
-          String.valueOf(loader.getResourceAsStream(resourceName)));
-      //OutputStream out = new FileOutputStream(propFile);
-      props.setProperty("fileName", file.getName());
-      //props.put("fileName", file.getName());
-      props.store(out, null);
-      //props.save(out,null);
-      out.close();
-      System.out.println("done");*/
+
     } catch (IOException e) {
       //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
