@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import controller.State;
 import controller.StateType;
 import controller.stateType.WaTorWorldState;
-import controller.states.MovingStateWithAge;
 import java.io.FileNotFoundException;
 import java.util.List;
 import javafx.scene.Node;
@@ -23,23 +22,22 @@ public class WaTorWorldTest extends DukeApplicationTest {
   public static final String NEIGHBOR_POLICY_TYPE ="Complete";
   public static final String LANGUAGE="English";
   State[][] firstGrid = new State[][] {
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
   };
 
   State[][] expectedGrid = new State[][] {
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.FISH), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
   };
 
   State[][] expectGrid2 = new State[][] {
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.SHARK), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)},
-      {new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY), new MovingStateWithAge(WaTorWorldState.EMPTY)}
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)},
+      {new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.FISH), new State(WaTorWorldState.EMPTY), new State(WaTorWorldState.EMPTY)}
   };
-
 
   private SimulationView myView;
   private Scene myScene;
