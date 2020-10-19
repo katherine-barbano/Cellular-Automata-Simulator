@@ -28,6 +28,7 @@ public class Grid {
   private String edgePolicyName;
   private String neighborPolicyName;
   private ResourceBundle modelResources;
+  private double optionalProbability;
 
   /***
    * Constructor used for creating first initial grid from CSV file.
@@ -47,9 +48,15 @@ public class Grid {
    * @param rowLength number of rows in grid
    * @param columnLength number of columns in grid
    */
-  public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, int rowLength, int columnLength) {
+  public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, int rowLength, int columnLength, double optionalProbability) {
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
     cellGrid = new Cell[rowLength][columnLength];
+    this.optionalProbability = optionalProbability;
+  }
+
+  public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV, double optionalProbability) {
+    this(simulationType, edgePolicyName, neighborPolicyName, allStatesInCSV);
+    this.optionalProbability = optionalProbability;
   }
 
   private void setupPrivateVariables(String simulationType, String edgePolicyName, String neighborPolicyName) {
@@ -187,7 +194,7 @@ public class Grid {
   }
 
   private Grid getGridWithNextCells() {
-    Grid nextGrid = new Grid(simulationType, edgePolicyName, neighborPolicyName, cellGrid.length, cellGrid[0].length);
+    Grid nextGrid = new Grid(simulationType, edgePolicyName, neighborPolicyName, cellGrid.length, cellGrid[0].length, optionalProbability);
     for(int gridRow = 0; gridRow < cellGrid.length; gridRow++) {
       for(int gridColumn =0; gridColumn < cellGrid[0].length; gridColumn++) {
         addNextCellToNextGrid(nextGrid, gridRow, gridColumn);
@@ -261,12 +268,26 @@ public class Grid {
   private Neighborhood createNeighborhoodForSimulationType(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
     String classNamePrefix = modelResources.getString(NEIGHBORHOOD_NAME_PREFIX_PROPERTIES);
     String classNameSuffix = modelResources.getString(NEIGHBORHOOD_NAME_SUFFIX_PROPERTIES);
-    Class<?>[] type = {NeighborPolicy.class};
     NeighborPolicy neighborPolicy = createNeighborPolicy(centerCellRow, centerCellColumn, stateGrid);
-    Object[] constructorArguments = {neighborPolicy};
-
-    Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, simulationType, type, constructorArguments);
+    Object subclass = tryToCreateSubclassWithOptionalProbability(classNamePrefix, classNameSuffix, neighborPolicy);
     return (Neighborhood) subclass;
+  }
+
+  private Object tryToCreateSubclassWithOptionalProbability(String classNamePrefix, String classNameSuffix, NeighborPolicy neighborPolicy) {
+    try {
+      Class<?>[] type = {NeighborPolicy.class, double.class};
+      Object[] constructorArguments = {neighborPolicy, optionalProbability};
+      return applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, simulationType, type, constructorArguments);
+    }
+    catch(Exception e) {
+      return createSubclassWithoutOptionalProbability(classNamePrefix, classNameSuffix, neighborPolicy);
+    }
+  }
+
+  private Object createSubclassWithoutOptionalProbability(String classNamePrefix, String classNameSuffix, NeighborPolicy neighborPolicy) {
+    Class<?>[] type = {NeighborPolicy.class};
+    Object[] constructorArguments = {neighborPolicy};
+    return applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, simulationType, type, constructorArguments);
   }
 
   private NeighborPolicy createNeighborPolicy(int centerCellRow, int centerCellColumn, State[][] stateGrid) {
@@ -275,8 +296,6 @@ public class Grid {
     Class<?>[] type = {EdgePolicy.class};
     EdgePolicy edgePolicy = createEdgePolicy(centerCellRow, centerCellColumn, stateGrid);
     Object[] constructorArguments = {edgePolicy};
-
-    NeighborPolicy rect = new RectangleNeighborPolicy(edgePolicy);
 
     Object subclass = applyReflectionToSubclassCreation(classNamePrefix, classNameSuffix, neighborPolicyName, type, constructorArguments);
     return (NeighborPolicy) subclass;

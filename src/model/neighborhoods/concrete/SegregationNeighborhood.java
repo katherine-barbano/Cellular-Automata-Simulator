@@ -11,13 +11,20 @@ import model.neighborhoods.InfluentialNeighborhood;
 
 public class SegregationNeighborhood extends InfluentialNeighborhood {
 
-  public static final String THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMove";
+  public static final String DEFAULT_THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMoveDefault";
 
   private double thresholdToMove;
 
   public SegregationNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
-    thresholdToMove = Double.parseDouble(getModelResources().getString(THRESHOLD_TO_MOVE_PROPERTIES));
+    thresholdToMove = Double.parseDouble(getModelResources().getString(DEFAULT_THRESHOLD_TO_MOVE_PROPERTIES));
+  }
+
+  public SegregationNeighborhood(NeighborPolicy neighborPolicy, double optionalProbability) {
+    this(neighborPolicy);
+    if(optionalProbability != 0.0) {
+      thresholdToMove = optionalProbability;
+    }
   }
 
   /***
