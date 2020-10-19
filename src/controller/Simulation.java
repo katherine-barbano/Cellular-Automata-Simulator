@@ -105,7 +105,7 @@ public abstract class Simulation {
 
 //CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) {
-    simulationFileLocation = "data/initialConfigurations/" + newFileLocation;
+    simulationFileLocation = STORING_FILE_NAME + newFileLocation;
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
@@ -194,7 +194,10 @@ public abstract class Simulation {
       throw new ControllerException(invalidFileExceptionMessage);
     }
     //else if (configType.equals("random")) {
-      return createRandomLocationConfig();
+    if (configType.equals("probability")) {
+
+    }
+    return createRandomLocationConfig();
 
   }
 
@@ -331,6 +334,7 @@ public abstract class Simulation {
   public void updateSimulation(boolean shouldRun) {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
+    System.out.println("updated");
   }
 
 
