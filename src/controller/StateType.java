@@ -1,9 +1,10 @@
 package controller;
 
 import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 
 public interface StateType {
 
-  CellColors getDefaultColor();
+  CellFill getDefaultColor();
 
 }

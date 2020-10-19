@@ -2,20 +2,21 @@ package controller.stateType;
 
 import controller.StateType;
 import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 
 public enum PercolationState implements StateType {
   OPEN(CellColors.WHITE),
   WATER(CellColors.BLUE),
   BLOCKED(CellColors.BLACK);
 
-  private CellColors defaultColor;
+  private CellFill defaultColor;
 
-  PercolationState(CellColors color){
+  PercolationState(CellFill color){
     this.defaultColor = color;
   }
 
   @Override
-  public CellColors getDefaultColor() {
+  public CellFill getDefaultColor() {
     return defaultColor;
   }
 }

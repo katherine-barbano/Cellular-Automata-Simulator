@@ -3,15 +3,17 @@ package view.CellFormat;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import view.SimulationView;
 
 /**
  * All Possible colors and images to fill the cells.
  */
-public enum CellColors {
+public enum CellColors implements CellFill{
   BLACK(Color.BLACK),
   WHITE(Color.WHITE),
   RED(Color.RED),
@@ -19,35 +21,26 @@ public enum CellColors {
   YELLOW(Color.YELLOW),
   GREEN(Color.GREEN),
   BLUE(Color.BLUE),
-  PURPLE(Color.PURPLE),
-  STARRY_NIGHT(),
-  POLKA_DOTS();
+  PURPLE(Color.PURPLE);
 
-  public static final String DEFAULT_IMAGE_FILE_PATH= "data/images/Starsinthesky.jpg";
-  private Paint cellColor;
+  public static final String IMAGE_PROPERTIES_SUFFIX = "_image";
+  private final ResourceBundle resourceBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE);
+  private Paint cellFill;
 
   CellColors(Paint color) {
-    this.cellColor = color;
+    this.cellFill = color;
   }
 
-  CellColors(){
-    setCellImage(DEFAULT_IMAGE_FILE_PATH);
+
+  public Paint getCellFill() {
+    return this.cellFill;
   }
 
-  public void setCellImage(String filePath){
-    FileInputStream selectedFile = null;
-    try {
-      selectedFile = new FileInputStream(filePath);
-      Image cellImage = new Image(selectedFile);
-      cellColor = new ImagePattern(cellImage);
-    } catch (FileNotFoundException e) {
-      System.out.println("FileNotFound in CellColors");
-      cellColor = Color.GRAY;
-    }
-  }
-
-  public Paint getCellColor() {
-    return this.cellColor;
+  @Override
+  public String toString(){
+    String lowercaseName = this.name().toLowerCase();
+    String firstLetter = this.name().substring(0,1);
+    return firstLetter + lowercaseName.substring(1);
   }
 
 }

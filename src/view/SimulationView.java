@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Grid;
-import view.CellFormat.CellColors;
+import view.CellFormat.CellFill;
 import view.CellFormat.CellFormatBar;
 import view.buttons.ControlButtonBar;
 import view.SimulationChoice.SimulationButtonBar;
@@ -26,7 +26,7 @@ public class SimulationView {
   public static final String DARK_MODE_CSS = "darkMode.css";
   public static final String RESOURCE_BUNDLE = "View";
   public static final int BUTTON_BAR_HEIGHT = 50;
-  public static final Map<StateType, CellColors> STATE_COLOR_MAP = new HashMap<>();
+  public static final Map<StateType, CellFill> STATE_COLOR_MAP = new HashMap<>();
 
   private Grid myGrid;
   private ResourceBundle myBundle;

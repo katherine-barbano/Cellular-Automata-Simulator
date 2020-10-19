@@ -7,12 +7,12 @@ import view.SimulationView;
 
 public class SimulationButtonBar extends HBox {
 
-  private SimulationChooser myGameOfLife;
+  private SimulationChooser mySimulationChoices;
   private Button mySimulationButton;
 
   public SimulationButtonBar(ResourceBundle resources){
-    myGameOfLife = new SimulationChooser(resources);
-    this.getChildren().add(myGameOfLife);
+    mySimulationChoices = new SimulationChooser(resources);
+    this.getChildren().add(mySimulationChoices);
 
     mySimulationButton=new SetSimulationButton(resources);
     this.getChildren().add(mySimulationButton);
@@ -26,7 +26,7 @@ public class SimulationButtonBar extends HBox {
   }
 
   public SimulationChooser getSimulationChooser() {
-    return myGameOfLife;
+    return mySimulationChoices;
   }
 
 }
