@@ -46,6 +46,8 @@ public abstract class Simulation {
   private HashMap<Integer, StateType> statesForInteger;
   private HashMap<StateType, Integer> integerForStates;
   private StateType[] possibleStateTypes;
+
+
   private HashMap<String, String> propertiesInformation;
   private final String STORING_FILE_NAME = "data/initialConfigurations/";
   private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
@@ -131,9 +133,12 @@ public abstract class Simulation {
 
       Properties properties = new Properties();
       properties.setProperty("fileName", newFileName);
+      properties.setProperty("stateConfiguration", "file");
       properties.setProperty("title", newTitle);
       properties.setProperty("author", newAuthorName);
       properties.setProperty("description", newDescription);
+      properties.setProperty("edgePolicy", propertiesInformation.get("edgePolicy"));
+      properties.setProperty("neighborPolicy", propertiesInformation.get("neighborPolicy"));
 
       File nFile = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
       FileOutputStream fileOut = new FileOutputStream(nFile);
@@ -208,6 +213,8 @@ public abstract class Simulation {
     return cellStates;
   }
 
+
+
   private void createMapOfStates(StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
@@ -217,6 +224,10 @@ public abstract class Simulation {
       statesForInteger.put(stateNumber,state);
       stateNumber++;
     }
+  }
+
+  public HashMap<String, String> getPropertiesInformation() {
+    return propertiesInformation;
   }
 
   public int[][] readCellStatesFile() throws ControllerException {

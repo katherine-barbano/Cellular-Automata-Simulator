@@ -1,6 +1,7 @@
 package controller;
 
 import controller.stateType.GameOfLifeState;
+import controller.stateType.PercolationState;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
@@ -150,7 +151,8 @@ public class ControllerMain extends Application {
 
   void step () {
     //System.out.println("stepping");
-    if(currentSimulation!=null){
+    //if (currentSimulation != null) {
+    if(currentSimulation!=null && currentSimView != null){
       updateShapes(!isPaused);
       //checkChangeSimulation();
     }
@@ -179,20 +181,26 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
-    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType();
+    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
+        .getMyChosenType();
     if (simulationChosen != null) {
-     try {
-       Class<?>[] type = {Simulation.class};
-       Object[] constructorArgs = {String.class};
-       String fullClassName = String.format("controller." + simulationChosen + "Simulation");
-       Class<?> cl = Class.forName(fullClassName);
-       Constructor<?> cons = cl.getConstructor(type);
-       cons.newInstance(constructorArgs);
+      try {
+        String fullClassName = String.format("controller." + simulationChosen + "Simulation");
+        Class<?> cl = Class.forName(fullClassName);
+        Constructor<?> cons = cl.getConstructor();
+        cons.newInstance();
+        Simulation test = (Simulation) cons.newInstance();
+        currentSimulation = test;
+        System.out.println(currentSimulation.getPropertiesInformation().get("kind"));
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, simulationChosen);
+        setupGraph();
+        setUpStage(currentStage);
+        //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
 
-     } catch(Exception e) {
-       System.out.println("didnt work");
-     }
-
+      } catch (Exception e) {
+        System.out.println("didnt work");
+      }
+/*
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("GameOfLife")) {
         currentSimulation = new GameOfLifeSimulation();
@@ -256,6 +264,9 @@ public class ControllerMain extends Application {
         //currentStage.setScene(myScene);
        // currentStage.show();
       }
+    }
+
+ */
     }
   }
 
