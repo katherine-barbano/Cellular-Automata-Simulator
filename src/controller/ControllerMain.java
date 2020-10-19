@@ -43,7 +43,7 @@ public class ControllerMain extends Application {
   private SimulationView currentSimView = new SimulationView();
   private boolean isPaused;
   private Stage currentStage;
-  private Stage secondStage;
+  private Stage secondStage= new Stage();
   private GraphView myGraphView;
   private Scene myGraphScene;
   private int stepCount;
@@ -64,24 +64,28 @@ public class ControllerMain extends Application {
     currentStage.setScene(myLanguageScreen.setupScene(SCREEN_WIDTH,LANGUAGE_SCREEN_HEIGHT));
     currentStage.show();
 
-    myLanguageScreen.getMyEnglishButton().setOnAction(event -> setUpStage(currentStage,ENGLISH_LANGUAGE));
-    myLanguageScreen.getMySpanishButton().setOnAction(event -> setUpStage(currentStage,SPANISH_LANGUAGE));
-    myLanguageScreen.getMyFrenchButton().setOnAction(event -> setUpStage(currentStage,FRENCH_LANGUAGE));
+    myLanguageScreen.getMyEnglishButton().setOnAction(event -> setupSimulationScenes(currentStage,ENGLISH_LANGUAGE));
+    myLanguageScreen.getMySpanishButton().setOnAction(event -> setupSimulationScenes(currentStage,SPANISH_LANGUAGE));
+    myLanguageScreen.getMyFrenchButton().setOnAction(event -> setupSimulationScenes(currentStage,FRENCH_LANGUAGE));
+  }
+
+  private void setupSimulationScenes(Stage stage, String language){
+    this.myLanguageChoice=language;
+    setupScene(FRAME_SIZE, FRAME_SIZE);
+    setupGraph();
+    setUpStage(stage);
   }
 
   /*
    * Sets up the stage size and title
    */
-  protected void setUpStage(Stage stage, String language) {
-    this.myLanguageChoice=language;
+  protected void setUpStage(Stage stage) {
+
       try {
-        setupScene(FRAME_SIZE, FRAME_SIZE);
         stage.setScene(myScene);
         stage.show();
         isPaused = true;
 
-        secondStage=new Stage();
-        setupGraph();
         secondStage.setScene(myGraphScene);
         secondStage.show();
 
@@ -184,14 +188,14 @@ public class ControllerMain extends Application {
   void increaseSpeed() {
     secondDelay-= SPEED_CHANGE_AMOUNT;
     System.out.println("increasing");
-    setUpStage(currentStage,myLanguageChoice);
+    setUpStage(currentStage);
     isPaused = false;
   }
 
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
     secondDelay += SPEED_CHANGE_AMOUNT;
     System.out.println("decreasing");
-    setUpStage(currentStage, myLanguageChoice);
+    setUpStage(currentStage);
     isPaused = false;
   }
 
