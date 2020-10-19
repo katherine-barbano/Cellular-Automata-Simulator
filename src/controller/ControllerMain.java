@@ -1,6 +1,7 @@
 package controller;
 
 import controller.stateType.GameOfLifeState;
+import controller.stateType.PercolationState;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
@@ -150,7 +151,8 @@ public class ControllerMain extends Application {
 
   void step () {
     //System.out.println("stepping");
-    if(currentSimulation!=null){
+    //if (currentSimulation != null) {
+    if(currentSimulation!=null && currentSimView != null){
       updateShapes(!isPaused);
       //checkChangeSimulation();
     }
@@ -179,82 +181,24 @@ public class ControllerMain extends Application {
   }
 
   void checkChangeSimulation() {
-    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType();
+    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
+        .getMyChosenType();
     if (simulationChosen != null) {
-     try {
-       Class<?>[] type = {Simulation.class};
-       Object[] constructorArgs = {String.class};
-       String fullClassName = String.format("controller." + simulationChosen + "Simulation");
-       Class<?> cl = Class.forName(fullClassName);
-       Constructor<?> cons = cl.getConstructor(type);
-       cons.newInstance(constructorArgs);
-
-     } catch(Exception e) {
-       System.out.println("didnt work");
-     }
-
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("GameOfLife")) {
-        currentSimulation = new GameOfLifeSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        System.out.println("game now");
-        currentStage.setScene(myScene);
-        currentStage.show();
-      }
-
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("Segregation")) {
-        currentSimulation = new SegregationSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        System.out.println("segregation now");
-        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Segregation");
+      try {
+        String fullClassName = String.format("controller." + simulationChosen + "Simulation");
+        Class<?> cl = Class.forName(fullClassName);
+        Constructor<?> cons = cl.getConstructor();
+        cons.newInstance();
+        Simulation test = (Simulation) cons.newInstance();
+        currentSimulation = test;
+        System.out.println(currentSimulation.getPropertiesInformation().get("kind"));
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, simulationChosen);
         setupGraph();
         setUpStage(currentStage);
-      }
+        //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
 
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("RockPaperScissors")) {
-        currentSimulation = new RockPaperScissorsSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        System.out.println("rps now");
-        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "RockPaperScissors");
-        setupGraph();
-        setUpStage(currentStage);
-      }
-
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("SpreadingOfFire")) {
-        currentSimulation = new SegregationSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        System.out.println("fire now");
-        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "SpreadingOfFire");
-        setupGraph();
-        setUpStage(currentStage);
-      }
-
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("WatorWorld")) {
-        currentSimulation = new SegregationSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        System.out.println("wator world now");
-        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "WatorWorld");
-        setupGraph();
-        setUpStage(currentStage);
-      }
-
-      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
-          .equals("Percolation")) {
-        currentSimulation = new PercolationSimulation();
-        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
-        //System.out.println(currentSimulation.toString());
-        System.out.println("percolation now");
-        //currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
-        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Percolation");
-        setupGraph();
-        setUpStage(currentStage);
-
-        //currentStage.setScene(myScene);
-       // currentStage.show();
+      } catch (Exception e) {
+        System.out.println("didnt work");
       }
     }
   }
@@ -299,39 +243,21 @@ public class ControllerMain extends Application {
         currentSimulation.setSimulationFileLocation(selectedFile.getName());
         currentSimView.updateGridDisplay(currentSimulation.getCurrentGrid());
       }
-     /* FileChooser f = new FileChooser();
-      f.showSaveDialog(null);
-      File file = f.getSelectedFile();*/
-      //System.out.println(file.getName());
-      //currentSimulation.setSimulationFileLocation(file.getName());
-      //SimulationView currSimView = currentSimulation.getSimulationView();
-/*      SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
-      myScene = currSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
-          SCREEN_WIDTH, SCREEN_HEIGHT);
-      //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
-      //    SCREEN_WIDTH, SCREEN_HEIGHT);
-      currSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
-      currSimView.getMyFileButtons().getMySave().setOnAction(event ->saveFile());
-      currSimView.getMyFileButtons().getMyNewFile().setOnAction(event ->
-          selectNewFile());
-      currentStage.setScene(myScene);
-      currentStage.show();*/
+
     } catch(Exception e) {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
+      displayError(noFileExceptionMessage);
       //throw new ControllerException(noFileExceptionMessage);
       //currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
     }
   }
 
   public void displayError(String message){
-    //Text ExceptionText = new Text(message);
-    //myRoot.getChildren().add(ExceptionText);
     Alert alert = new Alert(AlertType.ERROR);
-    //alert.setTitle(myResources.getString("ErrorTitle"));
+    alert.setTitle("Error");
     alert.setContentText(message);
     alert.showAndWait();
-
   }
 
   public static void main (String[] args) {
