@@ -15,8 +15,8 @@ public abstract class NeighborPolicy {
   public static final String COORDINATE_DIMENSIONS_IN_MODEL_PROPERTIES = "neighborPositionCoordinateSize";
 
   private Map<int[], State> neighborPositionToState;
-  private EdgePolicy edgePolicy;
-  private ResourceBundle modelResources;
+  private final EdgePolicy edgePolicy;
+  private final ResourceBundle modelResources;
 
   protected NeighborPolicy(EdgePolicy edgePolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);

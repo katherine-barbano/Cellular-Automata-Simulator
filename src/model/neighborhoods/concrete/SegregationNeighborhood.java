@@ -2,10 +2,8 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.SegregationState;
-import java.util.List;
 import java.util.Map;
 import model.NeighborPolicy;
-import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
 public class SegregationNeighborhood extends InfluentialNeighborhood {
@@ -35,7 +33,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getNextState(State currentState) {
-    double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/getNumberOfNeighbors();
+    double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/(double)getNumberOfNeighbors();
     boolean isSatisfied = thresholdToMove <= percentSameNeighbors;
     if(currentState.equals(SegregationState.EMPTY)) {
       return currentState;

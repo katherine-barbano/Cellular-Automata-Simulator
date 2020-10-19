@@ -1,7 +1,6 @@
 package model.edgePolicies;
 
 import controller.State;
-import model.EdgePolicy;
 
 public class KleinBottleEdgePolicy extends InfiniteEdgePolicy {
 

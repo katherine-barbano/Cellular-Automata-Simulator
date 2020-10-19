@@ -4,6 +4,7 @@ import controller.State;
 import controller.stateType.WaTorWorldState;
 import java.util.List;
 import java.util.Map;
+import model.ModelException;
 import model.NeighborPolicy;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
@@ -73,14 +74,14 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   private void replaceEmptyWithNewlyBornSeaCreature(int[] positionToBreedInto, State currentState) {
     //TODO: use reflection here
-    State baby = null;
     if(currentState.equals(WaTorWorldState.FISH)) {
-      baby = new State(WaTorWorldState.FISH);
+      State baby = new State(WaTorWorldState.FISH);
+      replaceNeighborStateWithNewState(positionToBreedInto,baby);
     }
     else {
-      baby = new State(WaTorWorldState.SHARK);
+      State baby = new State(WaTorWorldState.SHARK);
+      replaceNeighborStateWithNewState(positionToBreedInto,baby);
     }
-    replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
 
   private State handleMove(State currentState) {
@@ -98,9 +99,12 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     return currentState;
   }
 
+  /*
+  //associated with bug listed as TODO
   private State handleEaten() {
     return handleEmptyState();
   }
+  */
 
   private State handleAgingAndStationary(State currentState) {
     ageByOne(currentState);
@@ -128,25 +132,26 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
    */
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    if(nextState.equals(WaTorWorldState.EMPTY)) {
-      State oldestShark = returnOldestSeaCreature(new State(WaTorWorldState.SHARK), statesOfOverlappingNeighborsOnCell);
-      State oldestFish = returnOldestSeaCreature(new State(WaTorWorldState.FISH), statesOfOverlappingNeighborsOnCell);
-      if(oldestShark != null) {
-        return oldestShark;
+    try {
+      if(nextState.equals(WaTorWorldState.EMPTY)) {
+        return returnOldestSharkOrFish(statesOfOverlappingNeighborsOnCell);
       }
-      if(oldestFish != null) {
-        return oldestFish;
+      else {
+        return nextState;
       }
     }
-    return nextState;
+    catch(ModelException e) {
+      return nextState;
+    }
   }
 
-  private State returnOldestSeaCreature(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
-    State oldestSeaCreature = getOldestSeaCreature(statesOfOverlappingNeighborsOnCell, targetState);
-    if(oldestSeaCreature !=null) {
-      return oldestSeaCreature;
+  private State returnOldestSharkOrFish(Map<int[], State> statesOfOverlappingNeighborsOnCell) {
+    try {
+      return getOldestSeaCreature(statesOfOverlappingNeighborsOnCell, new State(WaTorWorldState.SHARK));
     }
-    return null;
+    catch(ModelException e) {
+      return getOldestSeaCreature(statesOfOverlappingNeighborsOnCell, new State(WaTorWorldState.FISH));
+    }
   }
 
   /***
@@ -165,7 +170,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       }
     }
     if(greatestAge==-1) {
-      return null;
+      throw new ModelException("Oldest sea creature does not exist");
     }
     return oldestSeaCreature;
   }
