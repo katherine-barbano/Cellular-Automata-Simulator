@@ -9,6 +9,7 @@ import controller.stateType.PercolationState;
 import controller.stateType.RockPaperScissorsState;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.shape.StrokeLineCap;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 
@@ -40,42 +41,42 @@ public class RockPaperScissorsSimulationTest {
     assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(0, 2).getCurrentState().getStateType());
     assertEquals(RockPaperScissorsState.ROCK,  myGrid.getCell(2, 3).getCurrentState().getStateType());
   }
-/*
+
   @Test
   void testSettingNewConfiguration() {
-    Simulation mySimulation = new PercolationSimulation();
-    mySimulation.setSimulationFileLocation("testingPercolationConfigurationNew.csv");
+    Simulation mySimulation = new RockPaperScissorsSimulation();
+    mySimulation.setSimulationFileLocation("testingNewRPSConfiguration.csv");
     Grid myGrid = mySimulation.getCurrentGrid();
-    assertEquals(PercolationState.OPEN,  myGrid.getCell(1, 1).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER, myGrid.getCell(0, 0).getCurrentState().getStateType());
-    assertEquals(PercolationState.BLOCKED, myGrid.getCell(2, 2).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.ROCK,  myGrid.getCell(2, 1).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(2, 3).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(3, 3).getCurrentState().getStateType());
 
     mySimulation.updateSimulation();
 
     myGrid = mySimulation.getCurrentGrid();
-    assertEquals(PercolationState.WATER,  myGrid.getCell(1, 1).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER, myGrid.getCell(0, 0).getCurrentState().getStateType());
-    assertEquals(PercolationState.BLOCKED, myGrid.getCell(2, 2).getCurrentState().getStateType());
-    assertEquals(PercolationState.BLOCKED,  myGrid.getCell(2, 0).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS,  myGrid.getCell(1, 1).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(3, 3).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(2, 3).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.PAPER,  myGrid.getCell(2, 0).getCurrentState().getStateType());
   }
 
   @Test
   void testAnotherNewCellConfiguration() {
-    Simulation mySimulation = new PercolationSimulation();
-    mySimulation.setSimulationFileLocation("testPercolationConfiguration.csv");
+    Simulation mySimulation = new RockPaperScissorsSimulation();
+    mySimulation.setSimulationFileLocation("testingAnotherNewRPSConfiguration.csv");
     Grid myGrid = mySimulation.getCurrentGrid();
-    assertEquals(PercolationState.OPEN,  myGrid.getCell(4, 3).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER, myGrid.getCell(4, 2).getCurrentState().getStateType());
-    assertEquals(PercolationState.BLOCKED, myGrid.getCell(5, 1).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.ROCK,  myGrid.getCell(2, 2).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(3, 2).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(4, 2).getCurrentState().getStateType());
 
     mySimulation.updateSimulation();
 
     myGrid = mySimulation.getCurrentGrid();
-    assertEquals(PercolationState.WATER,  myGrid.getCell(1, 1).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER, myGrid.getCell(4, 3).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER, myGrid.getCell(4, 2).getCurrentState().getStateType());
-    assertEquals(PercolationState.WATER,  myGrid.getCell(5, 0).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.PAPER,  myGrid.getCell(1, 1).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS, myGrid.getCell(3, 2).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.PAPER, myGrid.getCell(2, 2).getCurrentState().getStateType());
+    assertEquals(RockPaperScissorsState.SCISSORS,  myGrid.getCell(4, 2).getCurrentState().getStateType());
   }
-  */
- 
+
+
 }
