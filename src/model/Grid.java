@@ -99,14 +99,6 @@ public class Grid {
    */
   public Grid getNextGrid() {
     Grid initialNextGridFromSurroundingStates = getInitialNextGrid();
-    /*for(int r=0;r<3;r++) {
-      for (int c=0;c<4;c++) {
-        //System.out.println(initialNextGridFromSurroundingStates.getCell(r,c).getCurrentState().getStateType());
-        initialNextGridFromSurroundingStates.getCell(r,c).getNeighborhood().printNeighborPositionToState();
-      }
-      System.out.println();
-    }
-    System.out.println();*/
     Grid nextGridAfterInfluentialNeighborsHaveMoved = getNextGridAfterMove(initialNextGridFromSurroundingStates);
     return nextGridAfterInfluentialNeighborsHaveMoved;
   }
@@ -121,14 +113,6 @@ public class Grid {
 
   private Grid getNextGridAfterMove(Grid initialNextGrid) {
     initialNextGrid.updateCellsFromOverlappedNeighborsAfterInitialMove();
-    /*for(int r=0;r<3;r++) {
-      for (int c=0;c<4;c++) {
-        //System.out.println(initialNextGrid.getCell(r,c).getCurrentState().getStateType());
-        initialNextGrid.getCell(r,c).getNeighborhood().printNeighborPositionToState();
-      }
-      System.out.println();
-    }
-    System.out.println();*/
     initialNextGrid.updateNeighborhoodsWithNewNeighborhoods();
     initialNextGrid.updateNeighborhoodsOfNeighbors();
     return initialNextGrid;

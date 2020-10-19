@@ -139,14 +139,4 @@ public abstract class NeighborPolicy {
   protected Set<int[]> allPossibleRelativePositions() {
     return neighborPositionToState.keySet();
   }
-
-  //for help debugging
-  public void printNeighborPositionToState() {
-    for(int[] thisKey:neighborPositionToState.keySet()) {
-      System.out.print(thisKey[0]+","+thisKey[1]+"=");
-      System.out.print(neighborPositionToState.get(thisKey).getStateType()+", ");
-    }
-    System.out.println();
-  }
-
 }

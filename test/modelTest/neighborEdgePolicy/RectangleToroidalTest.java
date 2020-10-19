@@ -189,15 +189,4 @@ class RectangleToroidalTest {
 
     assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
   }
-
-  //for help debugging
-  private void printGrid(Grid grid) {
-    for(int r = 0; r<grid.getGridNumberOfRows(); r++) {
-      for(int c = 0; c<grid.getGridNumberOfColumns(); c++) {
-        System.out.print(grid.getCell(r,c).getCurrentState().getStateType());
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
 }
