@@ -36,7 +36,7 @@ public abstract class Simulation {
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
-  
+
 
 
   private int rowNumber;
