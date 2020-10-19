@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import javafx.scene.Group;
+import javafx.scene.control.TextInputDialog;
 import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
@@ -31,6 +33,10 @@ public abstract class Simulation {
   //private SimulationView simulationView;
   private Group root;
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
+  private final String CSV_SUFFIX = ".csv";
+  private final String SIM_SUFFIX = ".sim";
+  private final String PROPERTIES_SUFFIX = ".properties";
+  
 
 
   private int rowNumber;
@@ -96,8 +102,22 @@ public abstract class Simulation {
 
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
-      String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
-      File file = new File(input);
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("Text Input Dialog");
+      dialog.setHeaderText("Look, a Text Input Dialog");
+      dialog.setContentText("Please enter new file name:");
+      dialog.showAndWait();
+      String res = dialog.getResult()+".csv";
+      System.out.println(res);
+
+      //Optional<String> result = dialog.showAndWait();
+      File file = new File(res);
+      //result.ifPresent(name -> System.out.println("Your name: " + name));
+
+      /*
+      String newFileName = JOptionPane.showInputDialog("Enter new file name");
+      File file = new File(newFileName);
+      String newTitle = JOptionPane.showInputDialog("Enter new title"); */
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
     //FileWriter csvWriter = new FileWriter(file.getName());
       csvWriter.append(Integer.toString(rowNumber));
