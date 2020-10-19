@@ -189,6 +189,26 @@ public class SegregationTest {
     assertTrue(actualNextGrid.equals(expected1));
   }
 
+  @Test
+  void segregationOptionalProbability() {
+    State[][] grid = new State[][] {
+        {new MovingState(SegregationState.XAGENT), new MovingState(SegregationState.EMPTY)}
+    };
+
+    Grid currentGrid = new Grid("Segregation", "Finite", "Complete", grid, 1.0);
+    double actualProbability = currentGrid.getOptionalProbability();
+
+    State[][] expectedGrid = new State[][] {
+        {new MovingState(SegregationState.EMPTY), new MovingState(SegregationState.XAGENT)}
+    };
+
+    Grid expectedNextGrid = new Grid("Segregation", "Finite", "Complete", expectedGrid, 1.0);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+
+    assertEquals(actualProbability, 1.0);
+    assertTrue(expectedNextGrid.equals(actualNextGrid));
+  }
+
   //for help debugging
   private void printGrid(Grid grid) {
     for(int r = 0; r<3; r++) {

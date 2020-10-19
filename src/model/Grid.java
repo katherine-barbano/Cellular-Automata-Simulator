@@ -55,8 +55,10 @@ public class Grid {
   }
 
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV, double optionalProbability) {
-    this(simulationType, edgePolicyName, neighborPolicyName, allStatesInCSV);
     this.optionalProbability = optionalProbability;
+    setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
+    cellGrid = new Cell[allStatesInCSV.length][allStatesInCSV[0].length];
+    initializeCurrentCellGrid(allStatesInCSV);
   }
 
   private void setupPrivateVariables(String simulationType, String edgePolicyName, String neighborPolicyName) {
@@ -383,6 +385,10 @@ public class Grid {
 
   public int getGridNumberOfColumns() {
     return cellGrid[0].length;
+  }
+
+  public double getOptionalProbability() {
+    return optionalProbability;
   }
 
   /***

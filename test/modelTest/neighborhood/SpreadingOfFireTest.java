@@ -1,7 +1,9 @@
 package modelTest.neighborhood;
 
 import controller.State;
+import controller.stateType.SegregationState;
 import controller.stateType.SpreadingOfFireState;
+import controller.states.MovingState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,6 +90,26 @@ public class SpreadingOfFireTest {
     Grid expectGrid2Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid2);
 
     assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
+  }
+
+  @Test
+  void spreadingOfFireOptionalProbability() {
+    State[][] grid = new State[][] {
+        {new State(SpreadingOfFireState.BURNING), new State(SpreadingOfFireState.TREE)}
+    };
+
+    Grid currentGrid = new Grid("SpreadingOfFire", "Finite", "Complete", grid, 1.0);
+    double actualProbability = currentGrid.getOptionalProbability();
+
+    State[][] expectedGrid = new State[][] {
+        {new State(SpreadingOfFireState.EMPTY), new State(SpreadingOfFireState.TREE)}
+    };
+
+    Grid expectedNextGrid = new Grid("SpreadingOfFire", "Finite", "Complete", expectedGrid, 1.0);
+    Grid actualNextGrid = currentGrid.getNextGrid();
+
+    assertEquals(actualProbability, 1.0);
+    assertTrue(expectedNextGrid.equals(actualNextGrid));
   }
 
 }
