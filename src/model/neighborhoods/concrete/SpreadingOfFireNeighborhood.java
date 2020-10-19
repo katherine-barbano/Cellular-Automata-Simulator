@@ -8,7 +8,7 @@ import model.neighborhoods.NonInfluentialNeighborhood;
 
 public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
-  public static final String PROBABILITY_CATCH_PROPERTIES = "SpreadingOfFire_probabilityOfCatching";
+  public static final String PROBABILITY_CATCH_DEFAULT_PROPERTIES = "SpreadingOfFire_probabilityOfCatchingDefault";
 
   private double probabilityCatchFire;
   private Random random;
@@ -16,9 +16,16 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   public SpreadingOfFireNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
-    probabilityCatchFire = Double.parseDouble(getModelResources().getString(PROBABILITY_CATCH_PROPERTIES));
+    probabilityCatchFire = Double.parseDouble(getModelResources().getString(PROBABILITY_CATCH_DEFAULT_PROPERTIES));
     random = new Random();
     nextDouble = random.nextDouble();
+  }
+
+  public SpreadingOfFireNeighborhood(NeighborPolicy neighborPolicy, double optionalProbability) {
+    this(neighborPolicy);
+    if(optionalProbability!=0.0) {
+      probabilityCatchFire = optionalProbability;
+    }
   }
 
   @Override

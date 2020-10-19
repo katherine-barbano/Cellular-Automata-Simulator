@@ -72,7 +72,7 @@ public abstract class NeighborPolicy {
     return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
   }
 
-  protected State getStateFromNeighborPosition(int[] position) {
+  public State getStateFromNeighborPosition(int[] position) {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       if(keysAreEqual(thisKey,position)) {
         return neighborPositionToState.get(thisKey);

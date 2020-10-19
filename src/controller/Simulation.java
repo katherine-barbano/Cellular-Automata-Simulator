@@ -108,10 +108,24 @@ public abstract class Simulation {
       dialog.setContentText("Please enter new file name:");
       dialog.showAndWait();
       String res = dialog.getResult()+".csv";
+      dialog.setContentText("Please enter new author");
+      dialog.showAndWait();
+      String author = dialog.getResult();
+      dialog.setContentText("Please enter new description");
+      dialog.showAndWait();
+      String description = dialog.getResult();
       System.out.println(res);
 
-      //Optional<String> result = dialog.showAndWait();
       File file = new File(res);
+      Properties properties = new Properties();
+      properties.setProperty("fileName", res);
+      properties.setProperty("author", author);
+      properties.setProperty("description", description);
+
+      File nFile = new File("test2.properties");
+      FileOutputStream fileOut = new FileOutputStream(nFile);
+      properties.store(fileOut, "Favorite Things");
+      fileOut.close();
       //result.ifPresent(name -> System.out.println("Your name: " + name));
 
       /*
@@ -135,13 +149,13 @@ public abstract class Simulation {
       }
       csvWriter.flush();
       csvWriter.close();
-      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
+/*      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
       Properties props = new Properties();
       try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
         props.load(resourceStream);
       }
-      File propFile = new File(resourceName);
+      File propFile = new File(resourceName);*/
     /*
       Object s = "fileName";
       System.out.println(props.get(s));
@@ -150,7 +164,7 @@ public abstract class Simulation {
       System.out.println(props.get(s));
       System.out.println("saved");
     */
-      OutputStream out = new FileOutputStream(
+/*      OutputStream out = new FileOutputStream(
           String.valueOf(loader.getResourceAsStream(resourceName)));
       //OutputStream out = new FileOutputStream(propFile);
       props.setProperty("fileName", file.getName());
@@ -158,7 +172,7 @@ public abstract class Simulation {
       props.store(out, null);
       //props.save(out,null);
       out.close();
-      System.out.println("done");
+      System.out.println("done");*/
     } catch (IOException e) {
       //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
@@ -202,7 +216,7 @@ public abstract class Simulation {
     try {
       readFiles = readAll(new FileInputStream(simulationFileLocation));
     } catch (Exception e) {
-      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
           getString("InvalidFileName");
       throw new ControllerException(invalidFileExceptionMessage);
     }
