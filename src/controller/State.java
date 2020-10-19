@@ -44,9 +44,14 @@ public class State {
   }
 
   public int[] getOpenPosition(List<int[]> openPositions) {
-    Random random = new Random();
-    int randomIndex = random.nextInt(openPositions.size());
-    return openPositions.get(randomIndex);
+    if(openPositions.size()>0) {
+      Random random = new Random();
+      int randomIndex = random.nextInt(openPositions.size());
+      return openPositions.get(randomIndex);
+    }
+    else {
+      return null;
+    }
   }
 
   public int getAge(){
