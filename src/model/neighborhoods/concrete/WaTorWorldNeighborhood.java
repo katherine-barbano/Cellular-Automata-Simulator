@@ -12,6 +12,7 @@ import model.neighborhoods.InfluentialNeighborhood;
 public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   public static final String MIN_BREED_AGE_PROPERTIES = "WaTorWorld_MinimumBreedingAge";
+  public static final String SEA_CREATURE_EXCEPTION_MESSAGE = "oldestSeaCreatureNotFoundExceptionMessage";
 
   public WaTorWorldNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
@@ -154,11 +155,6 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     }
   }
 
-  /***
-   * Returns null if no targetState in map
-   * @param neighborPositionToState
-   * @return
-   */
   private State getOldestSeaCreature (Map<int[], State> neighborPositionToState, State targetState) {
     State oldestSeaCreature = targetState;
     int greatestAge = -1;
@@ -170,7 +166,8 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
       }
     }
     if(greatestAge==-1) {
-      throw new ModelException("Oldest sea creature does not exist");
+      String errorMessage = getModelResources().getString(SEA_CREATURE_EXCEPTION_MESSAGE);
+      throw new ModelException(errorMessage);
     }
     return oldestSeaCreature;
   }
