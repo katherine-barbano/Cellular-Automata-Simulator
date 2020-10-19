@@ -2,8 +2,6 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.WaTorWorldState;
-import controller.states.MovingState;
-import controller.states.MovingStateWithAge;
 import java.util.List;
 import java.util.Map;
 import model.NeighborPolicy;
@@ -20,7 +18,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState) {
-    List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(WaTorWorldState.EMPTY));
+    List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(new State(WaTorWorldState.EMPTY));
     int minimumBreedingAge = Integer.parseInt(getModelResources().getString(MIN_BREED_AGE_PROPERTIES));
     if(currentState.equals(WaTorWorldState.SHARK)) {
       return handleSharkState(currentState, positionsOfEmptyNeighbors, minimumBreedingAge);
@@ -34,12 +32,12 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State handleSharkState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
-    List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(new MovingStateWithAge(WaTorWorldState.FISH));
+    List<int[]> positionsOfFishNeighbors = positionsOfTargetStateNeighbors(new State(WaTorWorldState.FISH));
 
     if(positionsOfFishNeighbors.size()>0) {
       return handleEat(currentState, positionsOfFishNeighbors);
     }
-    else if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
+    else if(currentState.getAge()>=minimumBreedingAge && positionsOfEmptyNeighbors.size()>0) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfFishNeighbors.size() == 0 && positionsOfEmptyNeighbors.size()>0) {
@@ -52,10 +50,10 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   private State handleFishState(State currentState, List<int[]> positionsOfEmptyNeighbors, int minimumBreedingAge) {
     //TODO: bug here preventing fish from getting eaten
-    /*if(((MovingState)currentState).nextPositionIsStationary()) {
+    /*if(currentState.nextPositionIsStationary()) {
       return handleEaten();
     }*/
-    if(((MovingStateWithAge)currentState).getAge()>=minimumBreedingAge) {
+    if(currentState.getAge()>=minimumBreedingAge) {
       return handleBreeding(currentState, positionsOfEmptyNeighbors);
     }
     else if(positionsOfEmptyNeighbors.size()>0) {
@@ -67,7 +65,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   }
 
   private State handleBreeding(State currentState, List<int[]> positionsOfEmptyNeighbors) {
-    int[] positionToBreedInto = ((MovingState)currentState).getOpenPosition(positionsOfEmptyNeighbors);
+    int[] positionToBreedInto = currentState.getOpenPosition(positionsOfEmptyNeighbors);
     replaceEmptyWithNewlyBornSeaCreature(positionToBreedInto, currentState);
     handleAgingAndStationary(currentState);
     return currentState;
@@ -77,10 +75,10 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     //TODO: use reflection here
     State baby = null;
     if(currentState.equals(WaTorWorldState.FISH)) {
-      baby = new MovingStateWithAge(WaTorWorldState.FISH);
+      baby = new State(WaTorWorldState.FISH);
     }
     else {
-      baby = new MovingStateWithAge(WaTorWorldState.SHARK);
+      baby = new State(WaTorWorldState.SHARK);
     }
     replaceNeighborStateWithNewState(positionToBreedInto,baby);
   }
@@ -93,7 +91,7 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   private State handleEat(State currentState, List<int[]> positionsOfFishNeighbors) {
     handleAgingAndStationary(currentState);
     State empty = new State(WaTorWorldState.EMPTY);
-    int[] openPosition = ((MovingState)currentState).getOpenPosition(positionsOfFishNeighbors);
+    int[] openPosition = currentState.getOpenPosition(positionsOfFishNeighbors);
     Neighborhood neighborhoodOfEaten = findPositionInNeighborhoodOfNeighbors(openPosition);
     replaceNeighborStateWithNewState(openPosition,empty);
     ((InfluentialNeighborhood)neighborhoodOfEaten).deleteMovedStateFromNeighborhoodsOfNeighbors(new State(WaTorWorldState.EMPTY));
@@ -106,13 +104,13 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   private State handleAgingAndStationary(State currentState) {
     ageByOne(currentState);
-    ((MovingState)currentState).setNextPositionStationary();
+    currentState.setNextPositionStationary();
     return currentState;
   }
 
   private void ageByOne(State currentState) {
-    int currentAge = ((MovingStateWithAge)currentState).getAge();
-    ((MovingStateWithAge)currentState).setAge(currentAge + 1);
+    int currentAge = currentState.getAge();
+    currentState.setAge(currentAge + 1);
   }
 
   private State handleEmptyState() {
@@ -131,8 +129,8 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     if(nextState.equals(WaTorWorldState.EMPTY)) {
-      State oldestShark = returnOldestSeaCreature(new MovingStateWithAge(WaTorWorldState.SHARK), statesOfOverlappingNeighborsOnCell);
-      State oldestFish = returnOldestSeaCreature(new MovingStateWithAge(WaTorWorldState.FISH), statesOfOverlappingNeighborsOnCell);
+      State oldestShark = returnOldestSeaCreature(new State(WaTorWorldState.SHARK), statesOfOverlappingNeighborsOnCell);
+      State oldestFish = returnOldestSeaCreature(new State(WaTorWorldState.FISH), statesOfOverlappingNeighborsOnCell);
       if(oldestShark != null) {
         return oldestShark;
       }
@@ -161,9 +159,9 @@ public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
     int greatestAge = -1;
     for(int[] key:neighborPositionToState.keySet()) {
       State currentState = neighborPositionToState.get(key);
-      if(currentState.equals(targetState) && ((MovingStateWithAge)currentState).getAge() > greatestAge) {
+      if(currentState.equals(targetState) && currentState.getAge() > greatestAge) {
         oldestSeaCreature = currentState;
-        greatestAge = ((MovingStateWithAge) currentState).getAge();
+        greatestAge = currentState.getAge();
       }
     }
     if(greatestAge==-1) {

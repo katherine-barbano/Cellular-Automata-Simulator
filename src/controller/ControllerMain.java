@@ -2,6 +2,7 @@ package controller;
 
 import controller.stateType.GameOfLifeState;
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 import javafx.application.Application;
@@ -16,6 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import model.ModelException;
 import view.GraphView;
 import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
@@ -25,8 +27,9 @@ public class ControllerMain extends Application {
   //public static final int FRAMES_PER_SECOND = 60;
   //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static double secondDelay = 1.0;
-  public final double SPEED_CHANGE_AMOUNT = .25;
+  public final double SPEED_CHANGE_AMOUNT = .50;
   public static final int FRAME_SIZE = 400;
+  public final String SPEED_VALUES = "resources/SimulationSpeeds";
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 500;
   public static final int SCREEN_HEIGHT = 500;
@@ -38,26 +41,40 @@ public class ControllerMain extends Application {
   private Group root;
   private LanguageScreen myLanguageScreen;
   private String myLanguageChoice;
-  //private Simulation currentSimulation = new GameOfLifeSimulation();
-  private Simulation currentSimulation;
-  private SimulationView currentSimView = new SimulationView();
+  private Simulation currentSimulation = new GameOfLifeSimulation();
+  //private Simulation currentSimulation;
+  //private SimulationView currentSimView = new SimulationView();
+  private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
   private Stage secondStage= new Stage();
   private GraphView myGraphView;
   private Scene myGraphScene;
   private int stepCount;
+  private ResourceBundle myBundle = ResourceBundle.getBundle(SPEED_VALUES);
+  private double minSpeed;
+  private double maxSpeed;
+  private double speedShiftAmount;
 
   @Override
   public void start(Stage stage) {
     currentStage = stage;
-      chooseLanguageAndSetupStage();
-      KeyFrame frame = new KeyFrame(Duration.seconds(secondDelay), e -> step());
-      Timeline animation = new Timeline();
-      animation.setCycleCount(Timeline.INDEFINITE);
-      animation.getKeyFrames().add(frame);
-      animation.play();
+    chooseLanguageAndSetupStage();
+    //currentSimulation = new GameOfLifeSimulation();
+    startAnimation(secondDelay);
+    minSpeed = Double.parseDouble(myBundle.getString("minSpeed"));
+    maxSpeed = Double.parseDouble(myBundle.getString("maxSpeed"));
+    speedShiftAmount = Double.parseDouble(myBundle.getString("speedShiftAmount"));
   }
+
+  private void startAnimation(double speedAmount) {
+    KeyFrame frame = new KeyFrame(Duration.seconds(speedAmount), e -> step());
+    Timeline animation = new Timeline();
+    animation.setCycleCount(Timeline.INDEFINITE);
+    animation.getKeyFrames().add(frame);
+    animation.play();
+  }
+
 
   private void chooseLanguageAndSetupStage(){
     myLanguageScreen = new LanguageScreen();
@@ -71,7 +88,7 @@ public class ControllerMain extends Application {
 
   private void setupSimulationScenes(Stage stage, String language){
     this.myLanguageChoice=language;
-    setupScene(FRAME_SIZE, FRAME_SIZE);
+    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
     setupGraph();
     setUpStage(stage);
   }
@@ -80,7 +97,6 @@ public class ControllerMain extends Application {
    * Sets up the stage size and title
    */
   protected void setUpStage(Stage stage) {
-
       try {
         stage.setScene(myScene);
         stage.show();
@@ -97,25 +113,21 @@ public class ControllerMain extends Application {
   /*
    * Create the game's "scene": what shapes will be in the game and their starting properties
    */
-  Scene setupScene(int width, int height) {
+  Scene setupScene(int width, int height, Simulation currSim, String newSimType) {
     root = new Group();
-    currentSimView = new SimulationView();
+    //currentSimView = new SimulationView();
    // try {
-      currentSimulation = new GameOfLifeSimulation();
+      currentSimulation = currSim;
+    //currentSimulation = currSim;
       //SimulationView currSimView = currentSimulation.getSimulationView();
       currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
       //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
-      myScene = currentSimView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),
+      myScene = currentSimView.setupScene(newSimType, currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
+    System.out.println("set up");
       //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
       //        SCREEN_WIDTH, SCREEN_HEIGHT);
       setUpButtons();
-
-      //currSimView.getMySimulationButtons().
-    //} catch (Exception e) {
-    //  throw new ControllerException("set up scene method not working");
-      //currentSimView.addExceptionMessage("nope");
-    //  }
     return myScene;
   }
 
@@ -133,13 +145,14 @@ public class ControllerMain extends Application {
     currentSimView.getMyControlButtons().getSpeedUpButton().setOnAction(event -> increaseSpeed());
     currentSimView.getMyControlButtons().getSlowDownButton()
         .setOnAction(event -> decreaseSpeed());
+    currentSimView.getMySimulationButtons().getMySimulationButton().setOnAction(event -> checkChangeSimulation());
   }
 
   void step () {
     //System.out.println("stepping");
     if(currentSimulation!=null){
       updateShapes(!isPaused);
-      checkChangeSimulation();
+      //checkChangeSimulation();
     }
 
   }
@@ -151,52 +164,120 @@ public class ControllerMain extends Application {
       myGraphView.updateCurrentGrid(currentSimulation.getCurrentGrid(),stepCount);
     }
 
-    //currentSimView.updateGridDisplay(currentSimulation.getCurrentGrid());
-    //System.out.println("updating");
   }
 
   void saveFile() {
-    System.out.println("saving");
-    isPaused = true;
-    //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
-    currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
-    System.out.println("finished");
+    try {
+      System.out.println("saving");
+      isPaused = true;
+      //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
+      currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
+      System.out.println("finished");
+    } catch (ControllerException e) {
+      displayError(e.getMessage());
+    }
   }
 
   void checkChangeSimulation() {
-    if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType() != null) {
+    String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType();
+    if (simulationChosen != null) {
+     try {
+       Class<?>[] type = {Simulation.class};
+       Object[] constructorArgs = {String.class};
+       String fullClassName = String.format("controller." + simulationChosen + "Simulation");
+       Class<?> cl = Class.forName(fullClassName);
+       Constructor<?> cons = cl.getConstructor(type);
+       cons.newInstance(constructorArgs);
+
+     } catch(Exception e) {
+       System.out.println("didnt work");
+     }
+
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("GameOfLife")) {
         currentSimulation = new GameOfLifeSimulation();
-        setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
         System.out.println("game now");
         currentStage.setScene(myScene);
         currentStage.show();
       }
 
       if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("Segregation")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("segregation now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Segregation");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("RockPaperScissors")) {
+        currentSimulation = new RockPaperScissorsSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("rps now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "RockPaperScissors");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("SpreadingOfFire")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("fire now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "SpreadingOfFire");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
+          .equals("WatorWorld")) {
+        currentSimulation = new SegregationSimulation();
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        System.out.println("wator world now");
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "WatorWorld");
+        setupGraph();
+        setUpStage(currentStage);
+      }
+
+      if (currentSimView.getMySimulationButtons().getSimulationChooser().getMyChosenType()
           .equals("Percolation")) {
         currentSimulation = new PercolationSimulation();
-        setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        //setupScene(SCREEN_WIDTH, SCREEN_WIDTH);
+        //System.out.println(currentSimulation.toString());
         System.out.println("percolation now");
-        currentStage.setScene(myScene);
-        currentStage.show();
+        //currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
+        setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "Percolation");
+        setupGraph();
+        setUpStage(currentStage);
+
+        //currentStage.setScene(myScene);
+       // currentStage.show();
       }
     }
   }
 
   void increaseSpeed() {
-    secondDelay-= SPEED_CHANGE_AMOUNT;
-    System.out.println("increasing");
-    setUpStage(currentStage);
-    isPaused = false;
+    if (secondDelay-speedShiftAmount > minSpeed) {
+      secondDelay -= speedShiftAmount;
+      System.out.println("increasing");
+     // startAnimation(secondDelay);
+      setUpStage(currentStage);
+      isPaused = false;
+    }
   }
 
   void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
-    secondDelay += SPEED_CHANGE_AMOUNT;
-    System.out.println("decreasing");
-    setUpStage(currentStage);
-    isPaused = false;
+    if (secondDelay + speedShiftAmount < maxSpeed) {
+      secondDelay += speedShiftAmount;
+      System.out.println("decreasing");
+      setUpStage(currentStage);
+      System.out.println(secondDelay);
+      //startAnimation(secondDelay);
+      isPaused = false;
+    }
   }
 
   void stepByButton() {

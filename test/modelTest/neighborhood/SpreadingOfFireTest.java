@@ -1,9 +1,7 @@
 package modelTest.neighborhood;
 
 import controller.State;
-import controller.stateType.SegregationState;
 import controller.stateType.SpreadingOfFireState;
-import controller.states.MovingState;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

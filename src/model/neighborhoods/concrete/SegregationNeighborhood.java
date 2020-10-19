@@ -2,7 +2,6 @@ package model.neighborhoods.concrete;
 
 import controller.State;
 import controller.stateType.SegregationState;
-import controller.states.MovingState;
 import java.util.List;
 import java.util.Map;
 import model.NeighborPolicy;
@@ -59,8 +58,8 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     if(nextState.equals(SegregationState.EMPTY)) {
-      State agentO = getAgentFromOverlappingNeighbors(new MovingState(SegregationState.OAGENT), statesOfOverlappingNeighborsOnCell);
-      State agentX = getAgentFromOverlappingNeighbors(new MovingState(SegregationState.XAGENT), statesOfOverlappingNeighborsOnCell);
+      State agentO = getAgentFromOverlappingNeighbors(new State(SegregationState.OAGENT), statesOfOverlappingNeighborsOnCell);
+      State agentX = getAgentFromOverlappingNeighbors(new State(SegregationState.XAGENT), statesOfOverlappingNeighborsOnCell);
       if(agentX!=null) {
         return agentX;
       }
