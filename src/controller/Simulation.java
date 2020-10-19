@@ -62,12 +62,19 @@ public abstract class Simulation {
 
       //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
       this.possibleStateTypes = getStateTypesForSimulation();
-      currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+     /* currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
           propertiesInformation.get("neighborPolicy"),
-          createStates(readCellStatesFile(), possibleStateTypes));
-      nextGrid = currentGrid.getNextGrid();
+          createStates(readCellStatesFile(), possibleStateTypes), Double.parseDouble(propertiesInformation.get("probability")));
+   */
+    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
+        propertiesInformation.get("neighborPolicy"),
+        createStates(readCellStatesFile(), possibleStateTypes));
+
+    nextGrid = currentGrid.getNextGrid();
    // simulationView = new SimulationView(currentGrid);
   }
+
+  //abstract Grid createCorrectGrid();
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
