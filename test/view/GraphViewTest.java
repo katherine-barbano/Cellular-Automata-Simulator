@@ -29,7 +29,7 @@ class GraphViewTest extends DukeApplicationTest {
   public void start(Stage stage) throws Exception {
     Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
     myView = new GraphView(grid, ControllerMain.ENGLISH_LANGUAGE);
-    myScene = myView.setupScene(SIMULATION_TYPE,MY_STATES,400,400);
+    myScene = myView.setupScene(SIMULATION_TYPE, 0,MY_STATES,400,400);
     stage.setScene(myScene);
     stage.setTitle("Game of Life");
     stage.show();
@@ -53,5 +53,14 @@ class GraphViewTest extends DukeApplicationTest {
     myView.updateCurrentGrid(newGrid,10);
     sleep(10000);
   }
+
+
+  @Test
+  void changeGrid(){
+    Grid newGrid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
+    myView.updateCurrentGrid(newGrid,10);
+    sleep(10000);
+  }
+
 
 }

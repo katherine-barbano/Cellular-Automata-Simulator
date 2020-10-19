@@ -40,8 +40,8 @@ public class SimulationGraph extends LineChart {
     }
   }
 
-  public void updateStateSeries(StateType state, double elapsedTime, int numCells){
-    myStateSeriesMap.get(state).getData().add(new XYChart.Data(elapsedTime,numCells));
+  public void updateStateSeries(StateType state, double stepNumber, int numCells){
+    myStateSeriesMap.get(state).getData().add(new XYChart.Data(stepNumber,numCells));
   }
 
 

@@ -46,7 +46,7 @@ public class ControllerMain extends Application {
   private Stage secondStage= new Stage();
   private GraphView myGraphView;
   private Scene myGraphScene;
-  private int stepCount;
+  private int stepCount=0;
   private ResourceBundle myBundle = ResourceBundle.getBundle(SPEED_VALUES);
   private double minSpeed;
   private double maxSpeed;
@@ -129,7 +129,7 @@ public class ControllerMain extends Application {
 
   private void setupGraph(){
     myGraphView = new GraphView(currentSimulation.getCurrentGrid(), myLanguageChoice);
-    myGraphScene = myGraphView.setupScene("GameOfLife", currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
+    myGraphScene = myGraphView.setupScene("GameOfLife", stepCount, currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
   }
 
   private void setUpButtons() {
