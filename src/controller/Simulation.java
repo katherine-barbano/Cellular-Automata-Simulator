@@ -98,8 +98,8 @@ public abstract class Simulation {
     try {
       String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
       File file = new File(input);
-      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
-      //FileWriter csvWriter = new FileWriter(file.getName());
+      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
+    //FileWriter csvWriter = new FileWriter(file.getName());
       csvWriter.append(Integer.toString(rowNumber));
       csvWriter.append(",");
       csvWriter.append(Integer.toString(colNumber));
@@ -178,8 +178,15 @@ public abstract class Simulation {
 
   public int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
+    List<String[]> readFiles = new ArrayList<String[]>();
     try {
-      List<String[]> readFiles = readAll(new FileInputStream(simulationFileLocation));
+      readFiles = readAll(new FileInputStream(simulationFileLocation));
+    } catch (Exception e) {
+      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("InvalidFileName");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
+    try {
       rowNumber = Integer.parseInt(readFiles.get(0)[0]);
       colNumber = Integer.parseInt(readFiles.get(0)[1]);
       cellStates = new int[rowNumber][colNumber];
@@ -189,7 +196,7 @@ public abstract class Simulation {
         }
       }
     } catch (Exception f){
-      String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+      String incorrectConfigurationExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
           getString("InvalidConfigSize");
       throw new ControllerException(incorrectConfigurationExceptionMessage);
     }
