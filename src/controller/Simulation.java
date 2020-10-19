@@ -99,13 +99,11 @@ public abstract class Simulation {
       }
   }
 
-//CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = STORING_FILE_NAME + newFileLocation;
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
-    //simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
   }
 
@@ -130,7 +128,7 @@ public abstract class Simulation {
       dialog.setContentText("Please enter new file name:");
       dialog.showAndWait();
       String newFileName = dialog.getResult();
-      File file = new File(newFileName + CSV_SUFFIX);
+      File newCSVFile = new File(newFileName + CSV_SUFFIX);
 
       dialog.setContentText("Please enter new title");
       dialog.showAndWait();
@@ -152,38 +150,40 @@ public abstract class Simulation {
       properties.setProperty("edgePolicy", propertiesInformation.get("edgePolicy"));
       properties.setProperty("neighborPolicy", propertiesInformation.get("neighborPolicy"));
 
-      File nFile = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
-      FileOutputStream fileOut = new FileOutputStream(nFile);
+      File newPropertiesFiles = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
+      FileOutputStream fileOut = new FileOutputStream(newPropertiesFiles);
       properties.store(fileOut, null);
       fileOut.close();
 
-      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
-    //FileWriter csvWriter = new FileWriter(file.getName());
-      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
-      csvWriter.append(",");
-      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
-      csvWriter.append(",");
-      csvWriter.append("\n");
-      createMapOfStates(possibleStateTypes);
-
-      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
-        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
-          if (col != gridToStore.getGridNumberOfColumns() - 1) {
-            csvWriter.append(",");
-          }
-        }
-        csvWriter.append("\n");
-      }
-      csvWriter.flush();
-      csvWriter.close();
+      createCSVGridFile(gridToStore, newCSVFile);
 
     } catch (Exception e) {
-      //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
+  }
+
+  private void createCSVGridFile(Grid gridToStore, File newCSVFile) throws IOException {
+    FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + newCSVFile.getName());
+    csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
+    csvWriter.append(",");
+    csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
+    csvWriter.append(",");
+    csvWriter.append("\n");
+    createMapOfStates(possibleStateTypes);
+
+    for(int row=0; row< gridToStore.getGridNumberOfRows(); row++){
+      for(int col=0; col< gridToStore.getGridNumberOfColumns();col++) {
+        csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
+        if (col != gridToStore.getGridNumberOfColumns() - 1) {
+          csvWriter.append(",");
+        }
+      }
+      csvWriter.append("\n");
+    }
+    csvWriter.flush();
+    csvWriter.close();
   }
 
   public State[][] createInitialGridConfiguration(String configType) {
@@ -227,8 +227,6 @@ public abstract class Simulation {
     }
     return cellStates;
   }
-
-
 
   private void createMapOfStates(StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
