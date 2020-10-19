@@ -2,6 +2,7 @@ package controller;
 
 import controller.stateType.GameOfLifeState;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,14 +67,14 @@ public class GameOfLifeSimulation extends Simulation {
   public StateType[] getStateTypesForSimulation() {
     return GameOfLifeState.values();
   }
-
+/*
   @Override
-  public void storeNewCellConfig(Grid gridToStore) {
-      try {
+  public void storeNewCellConfig(Grid gridToStore) {*/
+/*      try {
         String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
         File file = new File(input);
-        //FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
-        FileWriter csvWriter = new FileWriter(file.getName());
+        FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
+        //FileWriter csvWriter = new FileWriter(file.getName());
         csvWriter.append(Integer.toString(numberRows));
         csvWriter.append(",");
         csvWriter.append(Integer.toString(numberCols));
@@ -82,6 +83,9 @@ public class GameOfLifeSimulation extends Simulation {
 
         for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
           for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+            State x = gridToStore.getCell(row,col).getCurrentState();
+            Integer t = integerForStates.get(gridToStore.getCell(row,col).getCurrentState());
+            String s = t.toString();
             csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState()).toString());
             //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
             csvWriter.append(",");
@@ -98,12 +102,18 @@ public class GameOfLifeSimulation extends Simulation {
         }
         Object s = "fileName";
         props.replace(s, props.get(s), input);
-        System.out.println("saved");
+        FileOutputStream out = new FileOutputStream(
+            String.valueOf(loader.getResourceAsStream(resourceName)));
+        props.setProperty("fileName", file.getName());
+        props.store(out, null);
+        out.close();
+        System.out.println("done");
+
       } catch (IOException e) {
         //System.out.println("not working");
         String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
             getString("InvalidFile");
         throw new ControllerException(invalidFileExceptionMessage);
-      }
-  }
+      }*/
+
 }

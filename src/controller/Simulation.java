@@ -2,17 +2,24 @@ package controller;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import controller.stateType.GameOfLifeState;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 import javafx.scene.Group;
+import javax.swing.JOptionPane;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
 
@@ -22,7 +29,7 @@ public abstract class Simulation {
   private Grid nextGrid;
   private final String simulationName;
   private String simulationFileLocation;
-  private SimulationView simulationView;
+  //private SimulationView simulationView;
   private Group root;
 
 
@@ -43,18 +50,21 @@ public abstract class Simulation {
     this.propertiesInformation = new HashMap<String, String>();
     readPropertiesFile(newSimulationName);
     simulationFileLocation = "data/initialConfigurations/" + propertiesInformation.get("fileName");
+    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
     this.possibleStateTypes = getStateTypesForSimulation();
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), possibleStateTypes));
+
+    //currentGrid = new Grid(simulationName, "Finite", "Complete", createStates(readCellStatesFile(), possibleStateTypes));
     nextGrid = currentGrid.getNextGrid();
-    simulationView = new SimulationView(currentGrid);
+   // simulationView = new SimulationView(currentGrid);
   }
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try {
-        String resourceName = "simulationProperties/" + propertiesFileName;
-           // + ".properties"; // could also be a constant
+        String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant*/
+        //String resourceName = "simulationProperties/" + propertiesFileName + ".properties"; // could also be a constant
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -77,13 +87,67 @@ public abstract class Simulation {
     currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
         propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
-    simulationView = new SimulationView(currentGrid);
+    //simulationView = new SimulationView(currentGrid);
     System.out.println("new simulation set");
   }
 
-  abstract public void storeNewCellConfig(Grid gridToStore);
+  //abstract public void storeNewCellConfig(Grid gridToStore);
 
  // abstract public String readInPropertiesFile();
+
+  public void saveNewCellConfiguration(Grid gridToStore) {
+    try {
+      String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
+      File file = new File(input);
+      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+ file.getName());
+      //FileWriter csvWriter = new FileWriter(file.getName());
+      csvWriter.append(Integer.toString(rowNumber));
+      csvWriter.append(",");
+      csvWriter.append(Integer.toString(colNumber));
+      csvWriter.append(",");
+      csvWriter.append("\n");
+
+      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
+        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
+          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
+           csvWriter.append(",");
+        }
+        csvWriter.append("\n");
+      }
+      csvWriter.flush();
+      csvWriter.close();
+      String resourceName = "simulationProperties/GameOfLife.properties"; // could also be a constant
+      ClassLoader loader = Thread.currentThread().getContextClassLoader();
+      Properties props = new Properties();
+      try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+        props.load(resourceStream);
+      }
+      File propFile = new File(resourceName);
+    /*
+      Object s = "fileName";
+      System.out.println(props.get(s));
+      Object q = props.get("fileName");
+      props.setProperty("fileName", "work");
+      System.out.println(props.get(s));
+      System.out.println("saved");
+    */
+      OutputStream out = new FileOutputStream(
+          String.valueOf(loader.getResourceAsStream(resourceName)));
+      //OutputStream out = new FileOutputStream(propFile);
+      props.setProperty("fileName", file.getName());
+      //props.put("fileName", file.getName());
+      props.store(out, null);
+      //props.save(out,null);
+      out.close();
+      System.out.println("done");
+    } catch (IOException e) {
+      //System.out.println("not working");
+      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
+          getString("InvalidFile");
+      throw new ControllerException(invalidFileExceptionMessage);
+    }
+  }
+
 
   abstract public StateType[] getStateTypesForSimulation();
 
@@ -147,22 +211,28 @@ public abstract class Simulation {
     return currentGrid;
   }
 
-  public void updateSimulationGrid(boolean shouldRun) {
+/*  public void updateSimulationGrid(boolean shouldRun) {
     if (shouldRun) {
       checkGridUpdatesInDisplay();
       //updateToNextSimulation();
       simulationView.updateGridDisplay(currentGrid);
     }
+  }*/
+
+
+
+  public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
+    if (shouldRun) {
+      checkGridUpdatesInDisplay(simulationView);
+      this.currentGrid = nextGrid;
+      this.nextGrid = currentGrid.getNextGrid();
+      simulationView.updateGridDisplay(currentGrid);
+    }
   }
 
-  public void checkGridUpdatesInDisplay(){
-    Grid newGrid = simulationView.getCurrentGridInDisplay();
+  public void checkGridUpdatesInDisplay(SimulationView currentSimView){
+    Grid newGrid = currentSimView.getCurrentGridInDisplay();
     this.currentGrid=newGrid;
-    this.nextGrid = currentGrid.getNextGrid();
-  }
-
-  public void updateToNextSimulation() {
-    this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
   }
 
@@ -171,6 +241,13 @@ public abstract class Simulation {
     this.nextGrid = currentGrid.getNextGrid();
   }
 
+
+  public void updateToNextSimulation() {
+    this.currentGrid = nextGrid;
+    this.nextGrid = currentGrid.getNextGrid();
+  }
+
+
   public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);
@@ -178,9 +255,9 @@ public abstract class Simulation {
     return sizeValues;
   }
 
-  public SimulationView getSimulationView() {
+/*  public SimulationView getSimulationView() {
     return simulationView;
-  }
+  }*/
 
 
   public int getRowNumber() {

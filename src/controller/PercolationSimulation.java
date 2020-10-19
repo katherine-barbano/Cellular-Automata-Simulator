@@ -65,7 +65,7 @@ public class PercolationSimulation extends Simulation{
     return PercolationState.values();
   }
 
-  @Override
+ /* @Override
   public void storeNewCellConfig(Grid gridToStore) {
     try {
       FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
@@ -92,5 +92,5 @@ public class PercolationSimulation extends Simulation{
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
-  }
+  }*/
 }
