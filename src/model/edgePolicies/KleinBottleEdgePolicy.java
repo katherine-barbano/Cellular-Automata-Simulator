@@ -3,19 +3,22 @@ package model.edgePolicies;
 import controller.State;
 import model.EdgePolicy;
 
-public class ToroidalEdgePolicy extends InfiniteEdgePolicy {
+public class KleinBottleEdgePolicy extends InfiniteEdgePolicy {
 
-  public ToroidalEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
+  public KleinBottleEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     super(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
   @Override
   void handleRowWrapping(State[][] states, int neighborRow, int neighborColumn, int[] positionNeighbor, boolean neighborStartsAsCorner) {
-    if(neighborRow < 0) {
+    if((neighborRow < 0 && !neighborStartsAsCorner) || (neighborRow >= states.length && neighborStartsAsCorner)) {
       positionNeighbor[0] = states.length-1;
     }
-    else {
+    else if (!neighborStartsAsCorner){
       positionNeighbor[0] = 0;
+    }
+    else {
+      positionNeighbor[0] = neighborRow - positionNeighbor[0];
     }
   }
 
@@ -26,6 +29,10 @@ public class ToroidalEdgePolicy extends InfiniteEdgePolicy {
     }
     else {
       positionNeighbor[1] = 0;
+    }
+
+    if(!neighborStartsAsCorner) {
+      positionNeighbor[0] = (states.length - 1) - positionNeighbor[0];
     }
   }
 }
