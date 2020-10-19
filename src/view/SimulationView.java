@@ -52,8 +52,8 @@ public class SimulationView {
    * Create Simulation View from initial Grid
    * @param grid Initial grid in scene
    */
-  public SimulationView(Grid grid){
-    myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE);
+  public SimulationView(Grid grid, String language){
+    myBundle = ResourceBundle.getBundle(RESOURCES+RESOURCE_BUNDLE+language);
     myGrid=grid;
   }
 
