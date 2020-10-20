@@ -6,7 +6,7 @@ import controller.ControllerException;
 import controller.GameOfLifeSimulation;
 import org.junit.jupiter.api.Test;
 
-public class ExceptionsTesting {
+public class ConfigurationAndPropertiesTests {
   @Test
   void testInvalidLocationCSVFile() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
