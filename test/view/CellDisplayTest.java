@@ -46,7 +46,7 @@ class CellDisplayTest extends DukeApplicationTest {
   }
 
   @Test
-  void testClick(){
+  void testGetNextStateGameOfLife(){
     clickOn(myCellDisplay);
     assertEquals(myCellDisplay.getMyStateType(),GameOfLifeState.DEAD);
     assertEquals(myCellDisplay.getCurrentColor(),SimulationView.STATE_COLOR_MAP.get(GameOfLifeState.DEAD));
@@ -55,14 +55,6 @@ class CellDisplayTest extends DukeApplicationTest {
     assertEquals(myCellDisplay.getMyStateType(),GameOfLifeState.ALIVE);
     assertEquals(myCellDisplay.getCurrentColor(),SimulationView.STATE_COLOR_MAP.get(GameOfLifeState.ALIVE));
 
-  }
-
-  @Test
-  void testGetNextState()
-      throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method nextStateMethod = myCellDisplay.getClass().getDeclaredMethod("getNextState", CellDisplay.class);
-    nextStateMethod.setAccessible(true);
-    nextStateMethod.invoke(myCellDisplay,myCellDisplay.getMyStateType());
   }
 
 

@@ -19,6 +19,7 @@ public class SimulationButtonBar extends HBox {
 
     this.setPrefHeight(SimulationView.BUTTON_BAR_HEIGHT);
     this.getStyleClass().add("button-bar");
+    this.setId("simulation-bar");
   }
 
   public Button getMySimulationButton(){

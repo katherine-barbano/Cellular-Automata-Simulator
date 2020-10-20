@@ -14,5 +14,6 @@ public class NewFileButton extends Button {
     super();
     String buttonText = resources.getString(NEW_FILE_BUTTON_PROPERTIES);
     this.setText(buttonText);
+    this.setId("new-file-button");
   }
 }

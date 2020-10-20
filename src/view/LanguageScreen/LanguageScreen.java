@@ -57,8 +57,11 @@ public class LanguageScreen{
     myLanguageBar = new HBox();
     myLanguageBar.getStyleClass().add("button-bar");
     myEnglishButton = new Button(myResources.getString(ENGLISH_PROPERTIES));
+    myEnglishButton.setId("english-button");
     mySpanishButton = new Button(myResources.getString(SPANISH_PROPERTIES));
+    mySpanishButton.setId("spanish-button");
     myFrenchButton = new Button(myResources.getString(FRENCH_PROPERTIES));
+    myFrenchButton.setId("french-button");
   }
 
   private void addUIElementsToRoot(){
