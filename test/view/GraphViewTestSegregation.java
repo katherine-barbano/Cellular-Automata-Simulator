@@ -17,16 +17,18 @@ import util.DukeApplicationTest;
 import view.GraphElements.GraphView;
 import view.GraphElements.SimulationGraph;
 
-class GraphViewTest extends DukeApplicationTest {
+public class GraphViewTestSegregation extends DukeApplicationTest {
 
-  public static final State ALIVE = new State(GameOfLifeState.ALIVE);
-  public static final State DEAD = new State(GameOfLifeState.DEAD);
-  public static final StateType[] MY_STATES = GameOfLifeState.values();
-  public static final String SIMULATION_TYPE ="GameOfLife";
+  public static final StateType[] MY_STATES = SegregationState.values();
+  public static final String SIMULATION_TYPE ="Segregation";
   public static final String EDGE_POLICY_TYPE ="Finite";
   public static final String NEIGHBOR_POLICY_TYPE ="Complete";
 
-  public static final State[][] TEST_GRID ={{ALIVE,ALIVE,ALIVE},{DEAD,ALIVE,DEAD},{ALIVE,DEAD,ALIVE}};
+  public static final State[][] TEST_GRID =new State[][] {
+      {new State(SegregationState.EMPTY), new State(SegregationState.EMPTY), new State(SegregationState.EMPTY), new State(SegregationState.EMPTY)},
+      {new State(SegregationState.EMPTY), new State(SegregationState.OAGENT), new State(SegregationState.EMPTY), new State(SegregationState.EMPTY)},
+      {new State(SegregationState.EMPTY), new State(SegregationState.EMPTY), new State(SegregationState.EMPTY), new State(SegregationState.EMPTY)}
+  };
   private Stage myStage;
   private GraphView myView;
   private Scene myScene;
@@ -49,29 +51,18 @@ class GraphViewTest extends DukeApplicationTest {
     myGraph=lookup("#simulationGraph").query();
   }
 
-
   @Test
-  void GraphSetup(){
-    sleep(1000);
-  }
-
-  @Test
-  void updateGraph(){
+  void updateGridSegregation(){
     Grid newGrid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-    myView.updateCurrentGrid(newGrid,10);
-    XYChart.Data data = (Data) myGraph.getMyStateSeriesMap().get(GameOfLifeState.DEAD).getData().get(0);
-    assertEquals(3,data.getYValue());
+    myView.updateCurrentGrid(newGrid,3);
 
-    XYChart.Data data2 = (Data) myGraph.getMyStateSeriesMap().get(GameOfLifeState.DEAD).getData().get(1);
-    assertEquals(3,data2.getYValue());
-    assertEquals(10.0,data2.getXValue());
+    myData = (Data) myGraph.getMyStateSeriesMap().get(SegregationState.EMPTY).getData().get(0);
+    assertEquals(11,myData.getYValue());
 
-    XYChart.Data data3 = (Data) myGraph.getMyStateSeriesMap().get(GameOfLifeState.ALIVE).getData().get(0);
-    assertEquals(6,data2.getYValue());
-    assertEquals(0.0,data2.getXValue());
+    XYChart.Data data2 = (Data) myGraph.getMyStateSeriesMap().get(SegregationState.EMPTY).getData().get(1);
+    assertEquals(11,data2.getYValue());
+    assertEquals(3.0,data2.getXValue());
+
   }
-
-
-
 
 }
