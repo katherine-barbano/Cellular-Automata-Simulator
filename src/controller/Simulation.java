@@ -16,7 +16,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextInputDialog;
-import model.*; //CHECK may need to change so not all classes from model package
+import model.*;
 import view.SimulationView;
 
 public abstract class Simulation {
@@ -26,24 +26,24 @@ public abstract class Simulation {
   private Grid nextGrid;
   private final String simulationName;
   private String simulationFileLocation;
-  private final String ERRORS_LOCATION = "resources/ControllerErrors";
-  private final String SETTINGS_LOCATION = "resources/SimulationSettings";
-  private final String NEW_CONFIG_LOCATION = "data/initialConfigurations/";
-  private final String RANDOM_SIZE = "randomConfigurationSize";
-  private final String CSV_SUFFIX = ".csv";
-  private final String PROPERTIES_SUFFIX = ".properties";
-  private final String NEIGHBOR = "neighborPolicy";
-  private final String EDGE = "edgePolicy";
-  private final String STATE_CONFIG = "stateConfiguration";
-  private final String PROBABILITY = "probability";
-  private final String CONFIG_PROBABILITY = "configProbability";
-  private final String PROPERTIES_PREFIX = "simulationProperties/";
-  private final String FILE_NAME = "fileName";
-  private final String FILE = "file";
-  private final String AUTHOR = "author";
-  private final String DESCRIPTION = "description";
-  private final String TITLE = "title";
-  private final String DIALOG_PREFIX = "dialogPrefix";
+  private final static String ERRORS_LOCATION = "resources/ControllerErrors";
+  private final static String SETTINGS_LOCATION = "resources/SimulationSettings";
+  private final static String NEW_CONFIG_LOCATION = "data/initialConfigurations/";
+  private final static String RANDOM_SIZE = "randomConfigurationSize";
+  private final static String CSV_SUFFIX = ".csv";
+  private final static String PROPERTIES_SUFFIX = ".properties";
+  private final static String NEIGHBOR = "neighborPolicy";
+  private final static String EDGE = "edgePolicy";
+  private final static String STATE_CONFIG = "stateConfiguration";
+  private final static String PROBABILITY = "probability";
+  private final static String CONFIG_PROBABILITY = "configProbability";
+  private final static String PROPERTIES_PREFIX = "simulationProperties/";
+  private final static String FILE_NAME = "fileName";
+  private final static String FILE = "file";
+  private final static String AUTHOR = "author";
+  private final static String DESCRIPTION = "description";
+  private final static String TITLE = "title";
+  private final static String DIALOG_PREFIX = "dialogPrefix";
   private String configurationType;
   private final ResourceBundle myBundle = ResourceBundle.getBundle(SETTINGS_LOCATION);
 
@@ -62,18 +62,28 @@ public abstract class Simulation {
 
 
   public Simulation(String newSimulationName){
-    this.simulationName = newSimulationName;
-    this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
+      this.simulationName = newSimulationName;
+      this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
+      initializeSimulation(PROPERTIES_PREFIX, newSimulationName);
+  }
+
+  private void initializeSimulation(String locationFolder, String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(PROPERTIES_PREFIX, newSimulationName);
+    readPropertiesFile(locationFolder, newPropertiesFile);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
-    currentGrid = createCorrectGrid();
+    try {
+      this.gridStateFormation = createInitialGridConfiguration(
+          propertiesInformation.get(STATE_CONFIG));
+    } catch (Exception e) {
+      String improperPropertiesFileMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFile");
+      throw new ControllerException(improperPropertiesFileMessage);
+    } currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
   }
 
-  public Grid createCorrectGrid() {
+  private Grid createCorrectGrid() {
     if (propertiesInformation.containsKey(PROBABILITY)) {
       return new Grid(simulationName, propertiesInformation.get(EDGE), propertiesInformation.get(NEIGHBOR),
           this.gridStateFormation, Double.parseDouble(propertiesInformation.get(PROBABILITY)));
@@ -83,7 +93,7 @@ public abstract class Simulation {
   }
 
 
-  public void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
+  private void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
       try{
         String resourceName = locationPrefix + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -110,13 +120,7 @@ public abstract class Simulation {
   }
 
   public void setNewPropertiesFile(String locationFolder, String newPropertiesFile) {
-    this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(locationFolder, newPropertiesFile);
-    this.configurationType = propertiesInformation.get(STATE_CONFIG);
-    this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
-    currentGrid = createCorrectGrid();
-    nextGrid = currentGrid.getNextGrid();
+    initializeSimulation(locationFolder, newPropertiesFile);
   }
 
   public void saveNewCellConfiguration(Grid gridToStore) {
@@ -127,25 +131,22 @@ public abstract class Simulation {
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + FILE_NAME);
       dialog.showAndWait();
       String newFileName = dialog.getResult();
+      properties.setProperty(FILE_NAME, newFileName);
 
       File newCSVFile = new File(newFileName + CSV_SUFFIX);
 
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + TITLE);
       dialog.showAndWait();
-      String newTitle = dialog.getResult();
+      properties.setProperty(TITLE, dialog.getResult());
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + AUTHOR);
       dialog.showAndWait();
-      String newAuthorName = dialog.getResult();
+      properties.setProperty(AUTHOR, dialog.getResult());
+
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + DESCRIPTION);
       dialog.showAndWait();
-      String newDescription = dialog.getResult();
+      properties.setProperty(DESCRIPTION, dialog.getResult());
 
-
-      properties.setProperty(FILE_NAME, newFileName);
       properties.setProperty(STATE_CONFIG, FILE);
-      properties.setProperty(TITLE, newTitle);
-      properties.setProperty(AUTHOR, newAuthorName);
-      properties.setProperty(DESCRIPTION, newDescription);
       properties.setProperty(EDGE, propertiesInformation.get(EDGE));
       properties.setProperty(NEIGHBOR, propertiesInformation.get(NEIGHBOR));
 
@@ -185,31 +186,31 @@ public abstract class Simulation {
     csvWriter.close();
   }
 
-  public State[][] createInitialGridConfiguration(String configType) {
-    if (configType.equals(FILE)) {
-      try {
-        simulationFileLocation =
-            NEW_CONFIG_LOCATION + propertiesInformation.get(FILE_NAME);
-        return createStates(readCellStatesFile(), possibleStateTypes);
+  private State[][] createInitialGridConfiguration(String configType) {
+      if (configType.equals(FILE)) {
+        try {
+          simulationFileLocation =
+              NEW_CONFIG_LOCATION + propertiesInformation.get(FILE_NAME);
+          return createStates(readCellStatesFile(), possibleStateTypes);
 
-      } catch (Exception e) {
-        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
-            getString("InvalidFileName");
-        throw new ControllerException(invalidFileExceptionMessage);
+        } catch (Exception e) {
+          String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+              getString("InvalidFileName");
+          throw new ControllerException(invalidFileExceptionMessage);
+        }
       }
-    }
-    if (configType.equals(PROBABILITY)) {
-      try {
-        double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
-        return createProbabilityBasedStateConfiguration(probability);
-      } catch (Exception e) {
-        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
-            getString("InvalidFileConfiguration");
-        throw new ControllerException(invalidFileExceptionMessage);
+      if (configType.equals(PROBABILITY)) {
+        try {
+          double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
+          return createProbabilityBasedStateConfiguration(probability);
+        } catch (Exception e) {
+          String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+              getString("InvalidFileConfiguration");
+          throw new ControllerException(invalidFileExceptionMessage);
+        }
       }
-    }
-    //if not defined, or if type listed is not found :
-    return createRandomLocationConfig();
+      //if not defined, or if type listed is not found :
+      return createRandomLocationConfig();
   }
 
   abstract public StateType[] getStateTypesForSimulation();
@@ -218,7 +219,7 @@ public abstract class Simulation {
     return possibleStateTypes;
   }
 
-  public State[][] createStates(int[][] integerCellStates,
+  private State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
     createMapOfStates(possibleStatesForSimulation);
     State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
@@ -245,7 +246,7 @@ public abstract class Simulation {
     return propertiesInformation;
   }
 
-  public int[][] readCellStatesFile() throws ControllerException {
+  private int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
     List<String[]> readFiles = new ArrayList<>();
     try {
@@ -272,7 +273,7 @@ public abstract class Simulation {
     return cellStates;
   }
 
-  public List<String[]> readAll (InputStream data) {
+  private List<String[]> readAll (InputStream data) {
     try (CSVReader csvReader = new CSVReader(new InputStreamReader(data))) {
       return csvReader.readAll();
     }
@@ -287,7 +288,7 @@ public abstract class Simulation {
     return currentGrid;
   }
 
-  public State[][] createRandomLocationConfig() {
+  private State[][] createRandomLocationConfig() {
     State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibilities = getPossibleStateTypes();
     Random random = new Random();
@@ -300,7 +301,7 @@ public abstract class Simulation {
     return randomLocationCells;
   }
 
-  public State[][] createProbabilityBasedStateConfiguration(double probabilities) {
+  private State[][] createProbabilityBasedStateConfiguration(double probabilities) {
     State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibleStates = getPossibleStateTypes();
     Random random = new Random();

@@ -19,26 +19,22 @@ import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
-
-  //public static final int FRAMES_PER_SECOND = 60;
-  //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static double secondDelay = 1.0;
+  public double secondDelay = 1.0;
   public static final int FRAME_SIZE = 400;
   public final String SIMULATION_SETTINGS = "resources/SimulationSettings";
- // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 500;
   public static final int SCREEN_HEIGHT = 500;
   public static final int LANGUAGE_SCREEN_HEIGHT = 80;
   public static final String ENGLISH_LANGUAGE="English";
   public static final String SPANISH_LANGUAGE="Spanish";
   public static final String FRENCH_LANGUAGE="French";
-  private final String ERRORS_LOCATION = "resources/ControllerErrors";
-  private final String SIMULATION_PREFIX = "controller.";
-  private final String SIMULATION_SUFFIX = "Simulation";
-  private final String FILE_TITLE = "fileChooserTitle";
-  private final String FILE_DESCRIPTION = "fileChooserDescription";
-  private final String FILE_SUFFIX_CSV = "*.csv";
-  private final String FILE_SUFFIX_SIM = "*.sim";
+  private static final String ERRORS_LOCATION = "resources/ControllerErrors";
+  private static final String SIMULATION_PREFIX = "controller.";
+  private static final String SIMULATION_SUFFIX = "Simulation";
+  private static final String FILE_TITLE = "fileChooserTitle";
+  private static final String FILE_DESCRIPTION = "fileChooserDescription";
+  private static final String FILE_SUFFIX_CSV = "*.csv";
+  private static final String FILE_SUFFIX_SIM = "*.sim";
   private Scene myScene;
   private Group root;
   private LanguageScreen myLanguageScreen;
@@ -130,7 +126,7 @@ public class ControllerMain extends Application {
     myGraphScene = myGraphView.setupScene(simType, stepCount, currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
   }
 
-  private void setUpButtons() {
+  public void setUpButtons() {
     currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currentSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
@@ -183,7 +179,7 @@ public class ControllerMain extends Application {
     secondStage.show();
   }
 
-  void checkChangeSimulation() {
+  private void checkChangeSimulation() {
     String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
         .getMyChosenType();
     if (simulationChosen != null) {
@@ -208,7 +204,7 @@ public class ControllerMain extends Application {
     }
   }
 
-  void increaseSpeed() {
+  private void increaseSpeed() {
     if (secondDelay-speedShiftAmount > minSpeed) {
       secondDelay -= speedShiftAmount;
       setUpStage(currentStage);
@@ -216,7 +212,7 @@ public class ControllerMain extends Application {
     }
   }
 
-  void decreaseSpeed() {
+  private void decreaseSpeed() {
     if (secondDelay + speedShiftAmount < maxSpeed) {
       secondDelay += speedShiftAmount;
       setUpStage(currentStage);
@@ -254,13 +250,19 @@ public class ControllerMain extends Application {
 
   public void displayError(String message){
     Alert alert = new Alert(AlertType.ERROR);
-    //alert.setTitle("Error");
     alert.setContentText(message);
     alert.showAndWait();
   }
 
   public boolean getIsPaused() {
     return isPaused;
+  }
+
+  public Simulation getCurrentSimulation() {
+    return currentSimulation;
+  }
+  public SimulationView getSimulationView() {
+    return currentSimView;
   }
 
   public static void main (String[] args) {
