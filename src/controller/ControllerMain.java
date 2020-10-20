@@ -48,7 +48,8 @@ public class ControllerMain extends Application {
   private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
-  private Stage secondStage= new Stage();
+  //private Stage secondStage= new Stage();
+  private Stage secondStage;
   private GraphView myGraphView;
   private Scene myGraphScene;
   private boolean viewGraph = false;
@@ -61,6 +62,7 @@ public class ControllerMain extends Application {
   @Override
   public void start(Stage stage) {
     currentStage = stage;
+    secondStage = new Stage();
     chooseLanguageAndSetupStage();
     startAnimation(secondDelay);
     minSpeed = Double.parseDouble(myBundle.getString("minSpeed"));

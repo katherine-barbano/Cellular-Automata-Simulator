@@ -96,4 +96,11 @@ public class ConfigurationAndPropertiesTests {
     assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile("newPropertyFiles/", missingProbabilityResource));
   }
 
+  @Test
+  void testPropertiesFileMissingStateConfiguration() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    String missingProbabilityResource = "missingConfiguration";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile("newPropertyFiles/", missingProbabilityResource));
+  }
+
 }

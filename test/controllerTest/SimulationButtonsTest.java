@@ -46,7 +46,7 @@ public class SimulationButtonsTest extends DukeApplicationTest {
   public void start(Stage stage) {
     //Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
 /*    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
-    setUpStage(stage);
+
 
     myView = new SimulationView(mySimulation.getCurrentGrid(),LANGUAGE);
     myScene = myController.setupScene();
@@ -70,7 +70,7 @@ public class SimulationButtonsTest extends DukeApplicationTest {
 
   @Test
   void testPlayButtonOnSimulationView() {
-   // myView.getMyControlButtons().getMyPlayPause();
+    myView.getMyControlButtons().getMyPlayPause();
 
   }
 }

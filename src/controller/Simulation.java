@@ -16,7 +16,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.scene.control.TextInputDialog;
-import model.*; //CHECK may need to change so not all classes from model package
+import model.*;
 import view.SimulationView;
 
 public abstract class Simulation {
@@ -62,14 +62,24 @@ public abstract class Simulation {
 
 
   public Simulation(String newSimulationName){
-    this.simulationName = newSimulationName;
-    this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
+      this.simulationName = newSimulationName;
+      this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
+      initializeSimulation(PROPERTIES_PREFIX, newSimulationName);
+  }
+
+  private void initializeSimulation(String locationFolder, String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(PROPERTIES_PREFIX, newSimulationName);
+    readPropertiesFile(locationFolder, newPropertiesFile);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
-    currentGrid = createCorrectGrid();
+    try {
+      this.gridStateFormation = createInitialGridConfiguration(
+          propertiesInformation.get(STATE_CONFIG));
+    } catch (Exception e) {
+      String improperPropertiesFileMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+          getString("InvalidFile");
+      throw new ControllerException(improperPropertiesFileMessage);
+    } currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
   }
 
@@ -110,13 +120,7 @@ public abstract class Simulation {
   }
 
   public void setNewPropertiesFile(String locationFolder, String newPropertiesFile) {
-    this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(locationFolder, newPropertiesFile);
-    this.configurationType = propertiesInformation.get(STATE_CONFIG);
-    this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
-    currentGrid = createCorrectGrid();
-    nextGrid = currentGrid.getNextGrid();
+    initializeSimulation(locationFolder, newPropertiesFile);
   }
 
   public void saveNewCellConfiguration(Grid gridToStore) {
@@ -186,30 +190,30 @@ public abstract class Simulation {
   }
 
   public State[][] createInitialGridConfiguration(String configType) {
-    if (configType.equals(FILE)) {
-      try {
-        simulationFileLocation =
-            NEW_CONFIG_LOCATION + propertiesInformation.get(FILE_NAME);
-        return createStates(readCellStatesFile(), possibleStateTypes);
+      if (configType.equals(FILE)) {
+        try {
+          simulationFileLocation =
+              NEW_CONFIG_LOCATION + propertiesInformation.get(FILE_NAME);
+          return createStates(readCellStatesFile(), possibleStateTypes);
 
-      } catch (Exception e) {
-        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
-            getString("InvalidFileName");
-        throw new ControllerException(invalidFileExceptionMessage);
+        } catch (Exception e) {
+          String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+              getString("InvalidFileName");
+          throw new ControllerException(invalidFileExceptionMessage);
+        }
       }
-    }
-    if (configType.equals(PROBABILITY)) {
-      try {
-        double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
-        return createProbabilityBasedStateConfiguration(probability);
-      } catch (Exception e) {
-        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
-            getString("InvalidFileConfiguration");
-        throw new ControllerException(invalidFileExceptionMessage);
+      if (configType.equals(PROBABILITY)) {
+        try {
+          double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
+          return createProbabilityBasedStateConfiguration(probability);
+        } catch (Exception e) {
+          String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+              getString("InvalidFileConfiguration");
+          throw new ControllerException(invalidFileExceptionMessage);
+        }
       }
-    }
-    //if not defined, or if type listed is not found :
-    return createRandomLocationConfig();
+      //if not defined, or if type listed is not found :
+      return createRandomLocationConfig();
   }
 
   abstract public StateType[] getStateTypesForSimulation();
