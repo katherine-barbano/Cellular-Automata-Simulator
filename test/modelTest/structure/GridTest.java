@@ -3,10 +3,6 @@ package modelTest.structure;
 import controller.State;
 import controller.stateType.GameOfLifeState;
 import controller.stateType.PercolationState;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import model.Cell;
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,7 +53,7 @@ class GridTest {
 
     Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
     Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
-    assertTrue(gridOne.equals(gridTwo));
+    assertTrue(gridOne.equalsGrid(gridTwo));
   }
 
   @Test
@@ -78,7 +74,7 @@ class GridTest {
 
     Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
     Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
-    assertFalse(gridOne.equals(gridTwo));
+    assertFalse(gridOne.equalsGrid(gridTwo));
   }
 
   @Test
@@ -98,7 +94,7 @@ class GridTest {
 
     Grid gridOne = new Grid("GameOfLife", "Finite", "Complete", statesOne);
     Grid gridTwo = new Grid("GameOfLife", "Finite", "Complete", statesTwo);
-    assertFalse(gridOne.equals(gridTwo));
+    assertFalse(gridOne.equalsGrid(gridTwo));
   }
 
   @Test

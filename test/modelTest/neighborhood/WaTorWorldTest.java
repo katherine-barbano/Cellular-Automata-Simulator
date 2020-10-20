@@ -48,7 +48,7 @@ public class WaTorWorldTest {
     Grid expected3 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome3);
     Grid expected4 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome4);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4));
   }
 
   @Test
@@ -91,7 +91,7 @@ public class WaTorWorldTest {
     Grid expected3 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome3);
     Grid expected4 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome4);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4));
   }
 
   @Test
@@ -111,7 +111,7 @@ public class WaTorWorldTest {
     int fishCount = 0;
     for(int row=0;row<3;row++) {
       for(int column=0;column<4;column++) {
-        if(gridTurn4.getCell(row,column).getCurrentState().equals(WaTorWorldState.FISH)) {
+        if(gridTurn4.getCell(row,column).getCurrentState().equalsState(WaTorWorldState.FISH)) {
           fishCount++;
         }
       }
@@ -138,7 +138,7 @@ public class WaTorWorldTest {
     int sharkCount = 0;
     for(int row=0;row<3;row++) {
       for(int column=0;column<4;column++) {
-        if(gridTurn5.getCell(row,column).getCurrentState().equals(WaTorWorldState.SHARK)) {
+        if(gridTurn5.getCell(row,column).getCurrentState().equalsState(WaTorWorldState.SHARK)) {
           sharkCount++;
         }
       }
@@ -165,7 +165,7 @@ public class WaTorWorldTest {
     Grid gridTurn1 = currentGrid.getNextGrid();
     Grid outcomeGrid = new Grid("WaTorWorld","Finite", "Rectangle", outcome);
 
-    assertTrue(outcomeGrid.equals(gridTurn1));
+    assertTrue(outcomeGrid.equalsGrid(gridTurn1));
   }
 
   @Test
@@ -209,7 +209,7 @@ public class WaTorWorldTest {
     Grid outcomeGrid4 = new Grid("WaTorWorld","Finite", "Rectangle", outcome4);
 
 
-    assertTrue(outcomeGrid1.equals(gridTurn1) || outcomeGrid2.equals(gridTurn1) || outcomeGrid3.equals(gridTurn1) || outcomeGrid4.equals(gridTurn1));
+    assertTrue(outcomeGrid1.equalsGrid(gridTurn1) || outcomeGrid2.equalsGrid(gridTurn1) || outcomeGrid3.equalsGrid(gridTurn1) || outcomeGrid4.equalsGrid(gridTurn1));
   }
 
 
@@ -229,6 +229,6 @@ public class WaTorWorldTest {
     Grid gridTurn1 = currentGrid.getNextGrid();
     Grid outcomeGrid = new Grid("WaTorWorld","Finite", "Rectangle", outcome);
 
-    assertTrue(outcomeGrid.equals(gridTurn1));
+    assertTrue(outcomeGrid.equalsGrid(gridTurn1));
   }
 }
