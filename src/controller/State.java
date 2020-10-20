@@ -21,11 +21,11 @@ public class State {
 
   public void setStateType(StateType inputStateType) { this.stateType = inputStateType; }
 
-  public boolean equals(State otherState) {
+  public boolean equalsState(State otherState) {
     return stateType == otherState.getStateType();
   }
 
-  public boolean equals(StateType otherStateType) {
+  public boolean equalsState(StateType otherStateType) {
     return stateType == otherStateType;
   }
 

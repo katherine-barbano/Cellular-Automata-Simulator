@@ -45,8 +45,8 @@ public class Cell {
     this.neighborhood = neighborhood;
   }
 
-  public boolean equals(Cell otherCell) {
-    boolean statesAreEqual = otherCell.getCurrentState().equals(currentState);
+  public boolean equalsCell(Cell otherCell) {
+    boolean statesAreEqual = otherCell.getCurrentState().equalsState(currentState);
     boolean neighborhoodsBothNull = neighborhood == null && otherCell.getNeighborhood()==null;
     boolean atLeastOneNeighborhoodNull = neighborhood==null || otherCell.neighborhood==null;
     boolean neighborhoodsAreEqual = false;

@@ -37,7 +37,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   public State getNextState(State currentState) {
     double percentSameNeighbors = getNumberOfNeighborsWithGivenState(currentState)/(double)getNumberOfNeighbors();
     boolean isSatisfied = thresholdToMove <= percentSameNeighbors;
-    if(currentState.equals(SegregationState.EMPTY)) {
+    if(currentState.equalsState(SegregationState.EMPTY)) {
       return currentState;
     }
     else if(isSatisfied){
@@ -58,7 +58,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   @Override
   public State getStateOfOverlappingNeighbors(State nextState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     try {
-      if(nextState.equals(SegregationState.EMPTY)) {
+      if(nextState.equalsState(SegregationState.EMPTY)) {
         return returnAgentFromOverlappingNeighbors(statesOfOverlappingNeighborsOnCell);
       }
       else {
@@ -82,7 +82,7 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   private State getAgentFromOverlappingNeighbors(State targetState, Map<int[], State> statesOfOverlappingNeighborsOnCell) {
     for(int[] position:statesOfOverlappingNeighborsOnCell.keySet()) {
       State currentState = statesOfOverlappingNeighborsOnCell.get(position);
-      if(currentState.equals(targetState)) {
+      if(currentState.equalsState(targetState)) {
         return currentState;
       }
     }
