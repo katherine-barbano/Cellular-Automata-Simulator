@@ -61,6 +61,7 @@ public class SimulationButtonsTest extends DukeApplicationTest {
   @Test
   void testButtonOnSimulationView() {
     myView.getMySimulationButtons().getMySimulationButton();
+    //javafxRun(()->myView.getMySimulationButtons().);
     //System.out.println("test");
   }
 }

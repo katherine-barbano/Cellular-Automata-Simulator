@@ -25,7 +25,7 @@ public class ControllerMain extends Application {
   public static double secondDelay = 1.0;
   public final double SPEED_CHANGE_AMOUNT = .50;
   public static final int FRAME_SIZE = 400;
-  public final String SPEED_VALUES = "resources/SimulationSpeeds";
+  public final String SPEED_VALUES = "resources/SimulationSettings";
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 500;
   public static final int SCREEN_HEIGHT = 500;
@@ -38,9 +38,7 @@ public class ControllerMain extends Application {
   private Group root;
   private LanguageScreen myLanguageScreen;
   private String myLanguageChoice;
-  private Simulation currentSimulation = new GameOfLifeSimulation();
-  //private Simulation currentSimulation;
-  //private SimulationView currentSimView = new SimulationView();
+  private Simulation currentSimulation = new GameOfLifeSimulation(); //default starts with Game of Life
   private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
@@ -58,7 +56,6 @@ public class ControllerMain extends Application {
   public void start(Stage stage) {
     currentStage = stage;
     chooseLanguageAndSetupStage();
-    //currentSimulation = new GameOfLifeSimulation();
     startAnimation(secondDelay);
     minSpeed = Double.parseDouble(myBundle.getString("minSpeed"));
     maxSpeed = Double.parseDouble(myBundle.getString("maxSpeed"));
@@ -115,18 +112,11 @@ public class ControllerMain extends Application {
    */
   Scene setupScene(int width, int height, Simulation currSim, String newSimType) {
     root = new Group();
-    //currentSimView = new SimulationView();
-   // try {
       currentSimulation = currSim;
-    //currentSimulation = currSim;
-      //SimulationView currSimView = currentSimulation.getSimulationView();
       currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
-      //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
       myScene = currentSimView.setupScene(newSimType, currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
     System.out.println("set up");
-      //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
-      //        SCREEN_WIDTH, SCREEN_HEIGHT);
       setUpButtons();
     return myScene;
   }
@@ -156,11 +146,8 @@ public class ControllerMain extends Application {
     }
 
   void step () {
-    //System.out.println("stepping");
-    //if (currentSimulation != null) {
     if(currentSimulation!=null && currentSimView != null){
       updateShapes(!isPaused);
-      //checkChangeSimulation();
     }
 
   }
@@ -178,11 +165,8 @@ public class ControllerMain extends Application {
 
   void saveFile() {
     try {
-      System.out.println("saving");
       isPaused = true;
-      //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
       currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
-      System.out.println("finished");
     } catch (ControllerException e) {
       displayError(e.getMessage());
     }
@@ -207,15 +191,12 @@ public class ControllerMain extends Application {
         cons.newInstance();
         Simulation test = (Simulation) cons.newInstance();
         currentSimulation = test;
-        System.out.println(currentSimulation.getPropertiesInformation().get("kind"));
         setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, simulationChosen);
         if(viewGraph){
           setupGraph(simulationChosen);
         }
         setUpStage(currentStage);
-        //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
-
-      } catch (Exception e) {
+          } catch (Exception e) {
         String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
             getString("InvalidSimulationName");
         throw new ControllerException(invalidFileExceptionMessage);
@@ -227,19 +208,17 @@ public class ControllerMain extends Application {
     if (secondDelay-speedShiftAmount > minSpeed) {
       secondDelay -= speedShiftAmount;
       System.out.println("increasing");
-     // startAnimation(secondDelay);
       setUpStage(currentStage);
       isPaused = false;
     }
   }
 
-  void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
+  void decreaseSpeed() {
     if (secondDelay + speedShiftAmount < maxSpeed) {
       secondDelay += speedShiftAmount;
       System.out.println("decreasing");
       setUpStage(currentStage);
       System.out.println(secondDelay);
-      //startAnimation(secondDelay);
       isPaused = false;
     }
   }
