@@ -83,7 +83,7 @@ public abstract class NeighborPolicy {
   }
 
 
-  protected boolean equals(Neighborhood neighborhood) {
+  protected boolean equalsNeighborhood(Neighborhood neighborhood) {
     boolean valueEquality = compareNeighborhoods(neighborhood);
     boolean sizeEquality = getNumberOfNeighbors() == neighborhood.getNumberOfNeighbors();
     return valueEquality && sizeEquality;
