@@ -14,6 +14,7 @@ public class SlowDownButton extends Button {
     super();
     String buttonText = resources.getString(SLOW_DOWN_BUTTON_PROPERTIES);
     this.setText(buttonText);
+    this.setId("slow-down");
   }
 
 }

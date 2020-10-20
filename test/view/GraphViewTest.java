@@ -1,5 +1,7 @@
 package view;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import controller.ControllerMain;
 import controller.State;
 import controller.StateType;
@@ -51,7 +53,7 @@ class GraphViewTest extends DukeApplicationTest {
   void updateGraph(){
     Grid newGrid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
     myView.updateCurrentGrid(newGrid,10);
-    sleep(10000);
+    assertEquals(3,myGraph.getMyStateSeriesMap().get(GameOfLifeState.DEAD).getData().get(0).getYValue());
   }
 
 

@@ -27,6 +27,20 @@ class SimulationViewTest extends DukeApplicationTest {
   public static final String LANGUAGE="English";
 
   public static final State[][] TEST_GRID ={{new State(ALIVE),new State(ALIVE),new State(ALIVE)},{new State(DEAD),new State(ALIVE),new State(DEAD)},{new State(ALIVE),new State(DEAD),new State(ALIVE)}};
+  State[][] blinkerInitialState = new State[][] {
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}
+  };
+
+  State[][] blinkerOneStepState = new State[][] {
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.ALIVE), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)},
+      {new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD), new State(GameOfLifeState.DEAD)}};
   private SimulationView myView;
   private Scene myScene;
   private GridDisplay myGridDisplay;
@@ -97,15 +111,11 @@ class SimulationViewTest extends DukeApplicationTest {
     }
   }
 
-/*
   @Test
   void testInitialGOLBlinker() throws FileNotFoundException {
     //setup initial simulation grid
-    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
-    mySimulation.setSimulationFileLocation("testInitialGOLBlinker.csv");
-    Grid grid1 =mySimulation.getCurrentGrid();
-    State[][] gridMatrix = mySimulation.createStatesFromInteger(getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker.csv"));
-    javafxRun(()->myView.updateGridDisplay(grid1));
+    Grid blinkerfirst = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE, blinkerInitialState);
+    javafxRun(()->myView.updateGridDisplay(blinkerfirst));
 
     //test gridDisplay = inputFile
     List<Node> cells = myGridDisplay.getChildren();
@@ -114,14 +124,12 @@ class SimulationViewTest extends DukeApplicationTest {
       int col = myGridDisplay.getColumnIndex(cell);
 
       CellDisplay cellDisplay = (CellDisplay) cell;
-      State cellState=cellDisplay.getMyState();
-      assertEquals(cellState,gridMatrix[row][col]);
+      StateType cellState=cellDisplay.getMyStateType();
+      assertEquals(cellState,blinkerInitialState[row][col].getStateType());
     }
 
     //set up screen 2
-    mySimulation.updateSimulation(true);
-    Grid grid2 =mySimulation.getCurrentGrid();
-    State[][] gridMatrix2 =mySimulation.createStatesFromInteger(getIntMatrixFromInputFile("data/GameOfLifeSample/testInitialGOLBlinker2.csv"));
+    Grid grid2 =new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE, blinkerOneStepState);
     javafxRun(()->myView.updateGridDisplay(grid2));
 
     //test GridDipslay = input file 2
@@ -131,31 +139,10 @@ class SimulationViewTest extends DukeApplicationTest {
       int col = myGridDisplay.getColumnIndex(cell);
 
       CellDisplay cellDisplay = (CellDisplay) cell;
-      State cellState=cellDisplay.getMyState();
-      assertEquals(cellState,gridMatrix2[row][col]);
+      StateType cellState=cellDisplay.getMyStateType();
+      assertEquals(cellState,blinkerOneStepState[row][col].getStateType());
     }
   }
 
 
-  private int[][] getIntMatrixFromInputFile(String inputFile) throws FileNotFoundException {
-    File file = new File(inputFile);
-    Scanner s = new Scanner(file);
-
-    String dimensions = s.nextLine();
-    String[] sizeArray = dimensions.split(",");
-    int rows = Integer.parseInt(sizeArray[0]);
-    int cols = Integer.parseInt(sizeArray[1]);
-
-    int[][] intMatrix = new int[rows][cols];
-    for(int i=0;i<rows;i++){
-      String states = s.nextLine();
-      String[] stateArray=states.split(",");
-
-      for(int j=0;j<cols;j++){
-        intMatrix[i][j]=Integer.parseInt(stateArray[j]);
-      }
-    }
-    return intMatrix;
-  }
-*/
 }

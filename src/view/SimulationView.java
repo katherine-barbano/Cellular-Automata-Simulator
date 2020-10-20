@@ -93,7 +93,7 @@ public class SimulationView {
     myOpenGraphViewBar = new OpenGraphViewBar(myBundle);
 
     myGridHeight = findGridHeight();
-    myGridDisplay = new GridDisplay(myGrid, myGridHeight, simulationType);
+    myGridDisplay = new GridDisplay(myGrid, myGridHeight, simulationType, myBundle);
     myCellFormatBar = new CellFormatBar(myGridDisplay, states, myBundle);
 
   }
@@ -108,6 +108,27 @@ public class SimulationView {
     myRoot.getChildren().add(mySimulationButtons);
     myRoot.getChildren().add(myOpenGraphViewBar);
   }
+
+  private void setDarkLightModeActions(){
+    myDarkLightModeBar.getMyDarkButton().setOnAction(event -> setDarkMode());
+    myDarkLightModeBar.getMyLightButton().setOnAction(event -> setLightMode());
+  }
+
+  private void setDarkMode(){
+    myScene.getStylesheets().add(RESOURCES + DARK_MODE_CSS);
+  }
+
+  private void setLightMode(){
+    myScene.getStylesheets().remove(RESOURCES + DARK_MODE_CSS);
+  }
+
+
+  private void initializeStateColorMap(StateType[] stateTypes){
+    for(StateType state: stateTypes){
+      STATE_COLOR_MAP.put(state,state.getDefaultColor());
+    }
+  }
+
 
   /**
    * Update the GridDisplay to show the next grid in the simulation
@@ -162,24 +183,6 @@ public class SimulationView {
     return mySimulationButtons;
   }
 
-  private void setDarkLightModeActions(){
-    myDarkLightModeBar.getMyDarkButton().setOnAction(event -> setDarkMode());
-    myDarkLightModeBar.getMyLightButton().setOnAction(event -> setLightMode());
-  }
 
-  public void setDarkMode(){
-    myScene.getStylesheets().add(RESOURCES + DARK_MODE_CSS);
-  }
-
-  public void setLightMode(){
-    myScene.getStylesheets().remove(RESOURCES + DARK_MODE_CSS);
-  }
-
-
-  private void initializeStateColorMap(StateType[] stateTypes){
-    for(StateType state: stateTypes){
-      STATE_COLOR_MAP.put(state,state.getDefaultColor());
-    }
-  }
 
 }

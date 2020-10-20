@@ -28,6 +28,7 @@ public class SimulationChooser extends ChoiceBox {
     this.setTooltip(new Tooltip("Select a Simulation Type: "));
     this.simulationTypes = this.getTypesFromFileNames();
     this.simulationTypeNames = getNamesFromSimulationTypes();
+    this.setId("simulation-chooser");
 
     myTypes = FXCollections.observableArrayList(Arrays.asList(simulationTypeNames));
     this.setItems(myTypes);

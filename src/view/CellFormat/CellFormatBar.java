@@ -11,6 +11,9 @@ import view.SimulationView;
 
 /**
  * The Cell Format Bar allows the user to choose colors and images to fill cells with a chosen state.
+ * It contains 3 drop down menus, to choose a state, color, or image.  Pressing the CellChooserButton
+ * changes the cellFill to the selected color.  Pressing the ImageChooser Button sets the cellFill
+ * to the selected image.
  */
 public class CellFormatBar extends HBox {
 
@@ -19,7 +22,7 @@ public class CellFormatBar extends HBox {
   private CellColorChooser myColorChoice;
   private ImageChooser myImageChoice;
   private StateChooser myStateChoice;
-  private Button myFormatButton;
+  private Button myCellChooserButton;
   private Button myImageChooserButton;
 
   public CellFormatBar(GridDisplay gridDisplay, StateType[] possibleStates, ResourceBundle resources) {
@@ -29,8 +32,8 @@ public class CellFormatBar extends HBox {
     this.myGridDisplay = gridDisplay;
     this.myStateChoice = new StateChooser(myPossibleStates);
     this.myColorChoice = new CellColorChooser();
-    this.myFormatButton = new ChangeColorButton(resources);
-    myFormatButton.setOnAction(event -> updateCellColor());
+    this.myCellChooserButton = new ChangeColorButton(resources);
+    myCellChooserButton.setOnAction(event -> updateCellColor());
 
     this.myImageChoice = new ImageChooser(resources);
     myImageChooserButton = new ChangeImageButton(resources);
@@ -46,7 +49,7 @@ public class CellFormatBar extends HBox {
   private void addToRoot(){
     this.getChildren().add(myStateChoice);
     this.getChildren().add(myColorChoice);
-    this.getChildren().add(myFormatButton);
+    this.getChildren().add(myCellChooserButton);
     this.getChildren().add(myImageChoice);
     this.getChildren().add(myImageChooserButton);
   }
@@ -74,6 +77,7 @@ public class CellFormatBar extends HBox {
     List<CellDisplay> cellsWithChosenState = myGridDisplay.getCellListByState(chosenState);
     for (CellDisplay cell : cellsWithChosenState) {
       cell.setFill(chosenFill.getCellFill());
+      cell.setCurrentColor(chosenFill);
       SimulationView.STATE_COLOR_MAP.put(chosenState,chosenFill);
     }
   }

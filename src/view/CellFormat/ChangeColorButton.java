@@ -4,7 +4,8 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
 /**
- * The Change Color Button will be used to
+ * The ChangeColorButton can be pressed by the user to change the color of all cells with a chosen state
+ * and color
  */
 public class ChangeColorButton extends Button {
 

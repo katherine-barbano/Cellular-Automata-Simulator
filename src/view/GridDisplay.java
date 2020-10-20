@@ -4,6 +4,7 @@ import controller.State;
 import controller.StateType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.css.StyleClass;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,11 +17,13 @@ public class GridDisplay extends GridPane {
   private Grid myGrid;
   private String mySimulationType;
   private double myCellSize;
+  private ResourceBundle myResources;
 
-  public GridDisplay(Grid grid, double height, String simulationType){
+  public GridDisplay(Grid grid, double height, String simulationType, ResourceBundle resources){
     super();
     this.myGrid=grid;
     this.mySimulationType=simulationType;
+    this.myResources = resources;
     this.setAlignment(Pos.CENTER);
     this.setPrefHeight(height);
     this.getStyleClass().add("grid-display");
@@ -33,7 +36,7 @@ public class GridDisplay extends GridPane {
   private void addAllCells(){
     for(int row=0; row<myGrid.getGridNumberOfRows(); row++){
       for(int col=0; col<myGrid.getGridNumberOfColumns();col++){
-        CellDisplay newCell = new CellDisplay(myGrid.getCell(row,col).getCurrentState().getStateType(),myCellSize, this);
+        CellDisplay newCell = new CellDisplay(myGrid.getCell(row,col).getCurrentState().getStateType(),myCellSize, this, myResources);
         this.add(newCell,col,row);
       }
     }

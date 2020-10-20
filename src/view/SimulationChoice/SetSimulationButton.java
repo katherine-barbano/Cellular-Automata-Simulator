@@ -10,5 +10,6 @@ public class SetSimulationButton extends Button {
     super();
     String buttonText = resources.getString(FORMAT_BUTTON_PROPERTIES);
     this.setText(buttonText);
+    this.setId("simulation-button");
   }
 }
