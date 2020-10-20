@@ -28,6 +28,7 @@ public abstract class Simulation {
   private String simulationFileLocation;
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
   private final String SETTINGS_LOCATION = "resources/SimulationSettings";
+  private final String NEW_CONFIG_LOCATION = "data/initialConfigurations/";
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
@@ -35,6 +36,7 @@ public abstract class Simulation {
   private final String EDGE = "edgePolicy";
   private final String STATE_CONFIG = "stateConfiguration";
   private final String PROBABILITY = "probability";
+  private final String CONFIG_PROBABILITY = "configProbability";
   private String configurationType;
   private final ResourceBundle myBundle = ResourceBundle.getBundle(SETTINGS_LOCATION);
 
@@ -76,7 +78,7 @@ public abstract class Simulation {
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX; // could also be a constant*/
+        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -98,7 +100,6 @@ public abstract class Simulation {
     currentGrid = new Grid(simulationName, propertiesInformation.get(EDGE),
         propertiesInformation.get(NEIGHBOR), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
-    System.out.println("new simulation set");
   }
 
   public void setNewPropertiesFile(String newPropertiesFile) {
@@ -180,7 +181,7 @@ public abstract class Simulation {
     if (configType.equals("file")) {
       try {
         simulationFileLocation =
-            "data/initialConfigurations/" + propertiesInformation.get("fileName");
+            NEW_CONFIG_LOCATION + propertiesInformation.get("fileName");
         return createStates(readCellStatesFile(), possibleStateTypes);
 
       } catch (Exception e) {
@@ -189,9 +190,9 @@ public abstract class Simulation {
         throw new ControllerException(invalidFileExceptionMessage);
       }
     }
-    if (configType.equals("probability")) {
+    if (configType.equals(PROBABILITY)) {
       try {
-        double probability = Double.parseDouble(propertiesInformation.get("configProbability"));
+        double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
         return createProbabilityBasedStateConfiguration(probability);
       } catch (Exception e) {
         String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
