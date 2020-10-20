@@ -48,7 +48,7 @@ public class SimulationButtonsTest extends DukeApplicationTest {
   private Stage currentStage;
   private Group root;
   private PlayPauseButton myButton;*/
-  private final ControllerMain myGame = new ControllerMain();
+  private ControllerMain myGame;
   // keep created scene to allow mouse and keyboard events
   private Scene myScene;
   private PlayPauseButton myButton;
@@ -56,43 +56,13 @@ public class SimulationButtonsTest extends DukeApplicationTest {
 
   @Override
   public void start(Stage stage) {
-    //Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
- /*   mySimulation = new GameOfLifeSimulation();
-    myView = new SimulationView(mySimulation.getCurrentGrid(),LANGUAGE);
-    myScene = myController.setupScene(myController.FRAME_SIZE, myController.FRAME_SIZE, mySimulation, "GameOfLife");
-    stage.setScene(myScene);
-   // stage.setTitle("Game of Life");
-    stage.show();*/
-    //stage.setScene(myScene);
-    //stage.show();
-
-    //getUIComponentsInScene();
-/*    myController = new ControllerMain();
-    mySimulation = new GameOfLifeSimulation();
-    root = new Group();
-    myView = new SimulationView(mySimulation.getCurrentGrid(),"English");
-    myScene = myView.setupScene("GameOfLife", mySimulation.getPossibleStateTypes(),
-        500, 500);
-    myButton = lookup("play-pause").query();*/
-    //currentStage = new Stage();
-    //root = new Group();
-    //mySimulation = new GameOfLifeSimulation();
-    //myView = new SimulationView(mySimulation.getCurrentGrid(),"English");
-    //myScene = myView.setupScene("GameOfLife", mySimulation.getPossibleStateTypes(),
-    //    ControllerMain.SCREEN_WIDTH, ControllerMain.SCREEN_HEIGHT);
-   // return myScene;
-
+    myGame = new ControllerMain();
     myScene = myGame.setupScene(ControllerMain.FRAME_SIZE, ControllerMain.FRAME_SIZE,
         myGame.getCurrentSimulation(), "GameOfLife");
     stage.setScene(myScene);
     stage.show();
     myButton = lookup("play-pause").query();
   }
-
-  //private void getUIComponentsInScene(){
-   // =lookup("#gridDisplay").query();
-  //}
-
 
 
   @Test
