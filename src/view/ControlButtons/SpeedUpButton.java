@@ -14,5 +14,6 @@ public class SpeedUpButton extends Button {
     super();
     String buttonText = resources.getString(SPEED_UP_BUTTON_PROPERTIES);
     this.setText(buttonText);
+    this.setId("speed-up");
   }
 }

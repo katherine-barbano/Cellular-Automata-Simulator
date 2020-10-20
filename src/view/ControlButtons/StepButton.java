@@ -15,12 +15,8 @@ public class StepButton extends Button {
     super();
     String buttonText = resources.getString(STEP_BUTTON_PROPERTIES);
     this.setText(buttonText);
-    //this.setOnAction(event -> step());
+    this.setId("step-button");
   }
 
-  private void step(){
-    System.out.println("should step");
-    //ControllerMain.updateShapes();
-  }
 
 }

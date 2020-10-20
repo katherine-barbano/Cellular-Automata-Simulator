@@ -5,6 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import view.SimulationView;
 
+/**
+ * The DarkLightModeBar includes a light mode button and dark mode button.  It is used to change
+ * the Simulation View between light and dark modes
+ */
 public class DarkLightModeBar extends HBox {
 
   private Button myLightButton;

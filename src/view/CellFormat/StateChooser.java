@@ -10,6 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 
+/**
+ * The StateChooser creates a dropdown menu with all of the state choices for a given type of
+ * Simulation
+ */
 public class StateChooser extends ChoiceBox {
 
   private ObservableList myStates;
@@ -32,14 +36,20 @@ public class StateChooser extends ChoiceBox {
     });
   }
 
+  /**
+   * Acessor for the selected State.
+   * @return the selected StateType
+   */
   public StateType getMySelection(){
     return mySelection;
   }
 
+  /**
+   * Primarily used in testing, set selected state
+   * @param state selected StateType
+   */
   public void setMySelection(StateType state){
     mySelection=state;
   }
-
-
 
 }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import controller.State;
 import controller.StateType;
 import controller.stateType.GameOfLifeState;
+import java.io.FileNotFoundException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Grid;
@@ -64,8 +65,8 @@ class CellFormatBarTest extends DukeApplicationTest {
     myStateChooser.setMySelection(ALIVE);
     myColorChooser.setMyChosenColor(CellColors.BLUE);
     clickOn(myColorButton);
+    sleep(1000);
     CellDisplay cell = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
-
     assertEquals(CellColors.BLUE, cell.getCurrentColor());
 
     //Test that cells have Blue Color after updating the grid
@@ -88,8 +89,12 @@ class CellFormatBarTest extends DukeApplicationTest {
     javafxRun(()->myView.updateGridDisplay(new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID2)));
     CellDisplay cell2 = myGridDisplay.getCellListByState(myStateChooser.getMySelection()).get(0);
     assertEquals(CellImages.STARRY_NIGHT, cell2.getCurrentColor());
-
-
   }
+
+  @Test
+  void testInvalidImagesInResourceFile(){
+    assertDoesNotThrow(()->CellImages.TREE.setResourceBundle("resources/ImageErrors"));
+  }
+
 
 }

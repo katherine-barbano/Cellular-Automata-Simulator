@@ -14,11 +14,7 @@ public class SaveButton extends Button {
     super();
     String buttonText = resources.getString(SAVE_BUTTON_PROPERTIES);
     this.setText(buttonText);
-    this.setOnAction(event -> save());
-  }
-
-  private void save(){
-    //System.out.println("should save")
+    this.setId("save-button");
   }
 
 }

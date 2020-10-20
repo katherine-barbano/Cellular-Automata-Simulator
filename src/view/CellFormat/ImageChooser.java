@@ -11,8 +11,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 
 /**
- * The Image Chooser class allows the user to choose an image to place on all the cells with
- * a chosen state.
+ * The Image Chooser class creates a dropdown menu with all image options.  It allows the user
+ * to choose an image to place on all the cells with a chosen state.
  */
 public class ImageChooser extends ChoiceBox {
   private CellFill[] CELL_PHOTOS = CellImages.values();
@@ -41,16 +41,24 @@ public class ImageChooser extends ChoiceBox {
     });
   }
 
-  public void getImageNamesFromProperty(ResourceBundle resources){
+  private void getImageNamesFromProperty(ResourceBundle resources){
     for(int imageNum=0; imageNum<myImageNames.length;imageNum++){
       myImageNames[imageNum]=resources.getString(CELL_PHOTOS[imageNum].toString()+LABEL_SUFFIX);
     }
   }
 
+  /**
+   * Acessor for the chosen image from the dropdown menu
+   * @return the chosen image
+   */
   public CellFill getChosenImage(){
     return myChosenImage;
   }
 
+  /**
+   * Used in testing to set the chosen image in the dropdown
+   * @param image Image from CellImage enum
+   */
   public void setMyChosenImage(CellFill image){ myChosenImage = image; }
 
 
