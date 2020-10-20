@@ -42,7 +42,7 @@ public class WaTorWorldSimulation extends Simulation{
       }
     }
     return cellStates;*/
-  //return null;
+    //return null;
   //}
 
 /*  @Override
@@ -93,4 +93,3 @@ public class WaTorWorldSimulation extends Simulation{
     }
   }*/
 }
-
