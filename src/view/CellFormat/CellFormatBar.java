@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Paint;
 import view.CellDisplay;
 import view.GridDisplay;
 import view.SimulationView;
@@ -55,13 +54,20 @@ public class CellFormatBar extends HBox {
    private void updateCellColor() {
     StateType chosenState = myStateChoice.getMySelection();
     CellFill chosenColor= myColorChoice.getChosenColor();
-    updateAllCellsWithChosenState(chosenState,chosenColor);
+    if(chosenState !=null && chosenColor !=null){
+      updateAllCellsWithChosenState(chosenState,chosenColor);
+    }
+
   }
 
   private void updateCellImage() {
     StateType chosenState = myStateChoice.getMySelection();
     CellFill chosenImage = myImageChoice.getChosenImage();
-    updateAllCellsWithChosenState(chosenState,chosenImage);
+    if(chosenState !=null && chosenImage !=null){
+      updateAllCellsWithChosenState(chosenState,chosenImage);
+    }
+
+
   }
 
   private void updateAllCellsWithChosenState(StateType chosenState, CellFill chosenFill){
