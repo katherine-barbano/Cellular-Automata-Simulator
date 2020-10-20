@@ -31,6 +31,10 @@ public abstract class Simulation {
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
+  private final String NEIGHBOR = "neighborPolicy";
+  private final String EDGE = "edgePolicy";
+  private final String STATE_CONFIG = "stateConfiguration";
+  private final String PROBABILITY = "probability";
   private String configurationType;
   private final ResourceBundle myBundle = ResourceBundle.getBundle(SETTINGS_LOCATION);
 
@@ -53,20 +57,20 @@ public abstract class Simulation {
     this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString("randomConfigurationSize"));
     this.propertiesInformation = new HashMap<>();
     readPropertiesFile(newSimulationName);
-    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
     currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
   }
 
   public Grid createCorrectGrid() {
-    if (propertiesInformation.containsKey("probability")) {
-      return new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),
-          this.gridStateFormation, Double.parseDouble(propertiesInformation.get("probability")));
+    if (propertiesInformation.containsKey(PROBABILITY)) {
+      return new Grid(simulationName, propertiesInformation.get(EDGE), propertiesInformation.get(NEIGHBOR),
+          this.gridStateFormation, Double.parseDouble(propertiesInformation.get(PROBABILITY)));
     }
-    return new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+    return new Grid(simulationName, propertiesInformation.get(EDGE),
+        propertiesInformation.get(NEIGHBOR),this.gridStateFormation);
   }
 
 
@@ -91,8 +95,8 @@ public abstract class Simulation {
 
   public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = STORING_FILE_NAME + newFileLocation;
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
+    currentGrid = new Grid(simulationName, propertiesInformation.get(EDGE),
+        propertiesInformation.get(NEIGHBOR), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
     System.out.println("new simulation set");
   }
@@ -100,9 +104,9 @@ public abstract class Simulation {
   public void setNewPropertiesFile(String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
     readPropertiesFile(newPropertiesFile);
-    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
     currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
   }
@@ -129,12 +133,12 @@ public abstract class Simulation {
 
       Properties properties = new Properties();
       properties.setProperty("fileName", newFileName);
-      properties.setProperty("stateConfiguration", "file");
+      properties.setProperty(STATE_CONFIG, "file");
       properties.setProperty("title", newTitle);
       properties.setProperty("author", newAuthorName);
       properties.setProperty("description", newDescription);
-      properties.setProperty("edgePolicy", propertiesInformation.get("edgePolicy"));
-      properties.setProperty("neighborPolicy", propertiesInformation.get("neighborPolicy"));
+      properties.setProperty(EDGE, propertiesInformation.get(EDGE));
+      properties.setProperty(NEIGHBOR, propertiesInformation.get(NEIGHBOR));
 
       File newPropertiesFiles = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
       FileOutputStream fileOut = new FileOutputStream(newPropertiesFiles);
@@ -315,7 +319,6 @@ public abstract class Simulation {
     }
     return probabilityConfiguration;
   }
-
 
 
   public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
