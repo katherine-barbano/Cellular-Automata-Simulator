@@ -1,6 +1,6 @@
 package controllerTest;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import controller.ControllerException;
 import controller.GameOfLifeSimulation;
@@ -52,7 +52,8 @@ public class ExceptionsTesting {
   void testPropertiesFileIncorrectLocation() {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     String incorrectPropertiesLocation = "invalidProperties";
-    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesLocation));
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(
+        "initalConfigurations", incorrectPropertiesLocation));
   }
 
   @Test
@@ -60,11 +61,39 @@ public class ExceptionsTesting {
     GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
     //this properties file is incorrect because it indicates the configuration is based on the file
     //but it does not list a file name
-    String incorrectPropertiesFile = "newPropertyFiles.invalidProperties";
-    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile(incorrectPropertiesFile));
+    String incorrectPropertiesFile = "invalidProperties";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile("newPropertyFiles",
+        incorrectPropertiesFile));
   }
 
+  @Test
+  void testPropertiesFileCorrectConfigurationType() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    String stateConfig = mySimulation.getPropertiesInformation().get("stateConfiguration");
+    assertEquals("file", stateConfig);
+  }
 
+  @Test
+  void testPropertiesFileRandomConfigurationType() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setNewPropertiesFile("newPropertyFiles/", "randomConfiguration");
+    String stateConfig = mySimulation.getPropertiesInformation().get("stateConfiguration");
+    assertEquals("random", stateConfig);
+  }
 
+  @Test
+  void testPropertiesFileProbabilityConfigurationType() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    mySimulation.setNewPropertiesFile("newPropertyFiles/", "probabilityConfiguration");
+    String stateConfig = mySimulation.getPropertiesInformation().get("stateConfiguration");
+    assertEquals("probability", stateConfig);
+  }
+
+  @Test
+  void testPropertiesFileProbabilityConfigurationTypeMissingProbability() {
+    GameOfLifeSimulation mySimulation = new GameOfLifeSimulation();
+    String missingProbabilityResource = "probabilityMissing";
+    assertThrows(ControllerException.class, () -> mySimulation.setNewPropertiesFile("newPropertyFiles/", missingProbabilityResource));
+  }
 
 }

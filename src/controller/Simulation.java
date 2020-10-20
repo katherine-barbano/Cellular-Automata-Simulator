@@ -65,7 +65,7 @@ public abstract class Simulation {
     this.simulationName = newSimulationName;
     this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(newSimulationName);
+    readPropertiesFile(PROPERTIES_PREFIX, newSimulationName);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
     this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
@@ -83,9 +83,9 @@ public abstract class Simulation {
   }
 
 
-  public void readPropertiesFile(String propertiesFileName) throws ControllerException {
+  public void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = PROPERTIES_PREFIX + propertiesFileName + PROPERTIES_SUFFIX;
+        String resourceName = locationPrefix + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -109,9 +109,9 @@ public abstract class Simulation {
     nextGrid = currentGrid.getNextGrid();
   }
 
-  public void setNewPropertiesFile(String newPropertiesFile) {
+  public void setNewPropertiesFile(String locationFolder, String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(newPropertiesFile);
+    readPropertiesFile(locationFolder, newPropertiesFile);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
     this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
@@ -294,7 +294,6 @@ public abstract class Simulation {
     for (int row = 0; row < randomConfigRowColNumber; row ++) {
       for (int col = 0; col < randomConfigRowColNumber; col++) {
         int randomIndex = random.nextInt(possibleStateTypes.length);
-        System.out.println(randomIndex);
         randomLocationCells[row][col] = new State(possibilities[randomIndex]);
       }
     }
@@ -310,6 +309,7 @@ public abstract class Simulation {
       for (int col = 0; col < probabilityConfiguration.length; col++) {
         while (numberOfCells>0) {
           probabilityConfiguration[row][col] = new State(possibleStates[0]);
+          numberOfCells -= 1;
         }
         int randomIndex = random.nextInt(possibleStateTypes.length);
         probabilityConfiguration[row][col] = new State(possibleStates[randomIndex]);
