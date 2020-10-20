@@ -29,17 +29,12 @@ public class GraphView {
   private SimulationGraph myGraph;
   private StateType[] myStates;
 
-  /**
-   *
-   */
   public GraphView(Grid grid, String language){
     myBundle = ResourceBundle.getBundle(SimulationView.RESOURCES+SimulationView.RESOURCE_BUNDLE+language);
     myGrid = grid;
   }
 
-  /**
-   *
-   */
+
   public Scene setupScene(String simulationType, double stepNumber, StateType[] states, int width, int height) {
     this.myStates = states;
 

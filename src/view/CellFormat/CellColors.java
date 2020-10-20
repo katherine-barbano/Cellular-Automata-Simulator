@@ -5,7 +5,7 @@ import javafx.scene.paint.Paint;
 
 
 /**
- * All Possible colors and images to fill the cells.
+ * All Possible colors fill the cells.
  */
 public enum CellColors implements CellFill{
   BLACK(Color.BLACK),
@@ -23,10 +23,18 @@ public enum CellColors implements CellFill{
     this.cellFill = color;
   }
 
+  /**
+   * Get the color associated with the enum value
+   * @return a paint fill color
+   */
   public Paint getCellFill() {
     return this.cellFill;
   }
 
+  /**
+   * Override toString method.
+   * @return Name of color with capitalized first letter
+   */
   @Override
   public String toString(){
     String lowercaseName = this.name().toLowerCase();
