@@ -12,13 +12,13 @@ class CellTest {
   void cellsNotEqualState() {
     Cell aliveCell = new Cell(new State(GameOfLifeState.ALIVE));
     Cell deadCell = new Cell( new State(GameOfLifeState.DEAD));
-    assertFalse(aliveCell.equals(deadCell));
+    assertFalse(aliveCell.equalsCell(deadCell));
   }
 
   @Test
   void cellsEqualState() {
     Cell aliveCell1 = new Cell( new State(GameOfLifeState.ALIVE));
     Cell aliveCell2 = new Cell( new State(GameOfLifeState.ALIVE));
-    assertTrue(aliveCell1.equals(aliveCell2));
+    assertTrue(aliveCell1.equalsCell(aliveCell2));
   }
 }

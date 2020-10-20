@@ -33,7 +33,7 @@ class RectangleFiniteTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("GameOfLife", "Finite", "Rectangle", expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -60,7 +60,7 @@ class RectangleFiniteTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("RockPaperScissors", "Finite", "Rectangle", expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -90,7 +90,7 @@ class RectangleFiniteTest {
     Grid expected1 = new Grid("Segregation", "Finite", "Rectangle", possibleOutcome1);
     Grid expected2 = new Grid("Segregation", "Finite", "Rectangle", possibleOutcome2);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2));
   }
 
   @Test

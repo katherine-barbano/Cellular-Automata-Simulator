@@ -37,7 +37,7 @@ class CompleteFiniteTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Complete",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -88,8 +88,8 @@ class CompleteFiniteTest {
     Grid expectGrid3Result = new Grid("SpreadingOfFire", "Finite", "Complete",  expectGrid3);
     Grid expectGrid4Result = new Grid("SpreadingOfFire", "Finite", "Complete",  expectGrid4);
 
-    assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result) || actualNextGrid.equals(expectGrid3Result) || actualNextGrid
-        .equals(expectGrid4Result));
+    assertTrue(actualNextGrid.equalsGrid(expectGrid1Result) || actualNextGrid.equalsGrid(expectGrid2Result) || actualNextGrid.equalsGrid(expectGrid3Result) || actualNextGrid
+        .equalsGrid(expectGrid4Result));
   }
 
   @Test
@@ -125,6 +125,6 @@ class CompleteFiniteTest {
     Grid expected2 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome2);
     Grid expected3 = new Grid("WaTorWorld", "Finite", "Rectangle", possibleOutcome3);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3));
   }
 }

@@ -53,7 +53,7 @@ public abstract class NeighborPolicy {
 
   protected boolean neighborPositionToStateContainsState(State target) {
     for(int[] position:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(position).equals(target)) {
+      if(neighborPositionToState.get(position).equalsState(target)) {
         return true;
       }
     }
@@ -115,7 +115,7 @@ public abstract class NeighborPolicy {
     int numberNeighbors=0;
     for(int[] neighborPosition:adjacentNeighborsToState.keySet()) {
       State state = adjacentNeighborsToState.get(neighborPosition);
-      if(state.equals(targetState)) {
+      if(state.equalsState(targetState)) {
         numberNeighbors++;
       }
     }
@@ -129,7 +129,7 @@ public abstract class NeighborPolicy {
   protected List<int[]> positionsOfTargetStateNeighbors(State state) {
     List<int[]> emptyIndices = new ArrayList<>();
     for(int[] thisKey:neighborPositionToState.keySet()) {
-      if(neighborPositionToState.get(thisKey).equals(state)) {
+      if(neighborPositionToState.get(thisKey).equalsState(state)) {
         emptyIndices.add(thisKey);
       }
     }
