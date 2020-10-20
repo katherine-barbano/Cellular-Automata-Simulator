@@ -83,7 +83,7 @@ public abstract class Simulation {
     nextGrid = currentGrid.getNextGrid();
   }
 
-  public Grid createCorrectGrid() {
+  private Grid createCorrectGrid() {
     if (propertiesInformation.containsKey(PROBABILITY)) {
       return new Grid(simulationName, propertiesInformation.get(EDGE), propertiesInformation.get(NEIGHBOR),
           this.gridStateFormation, Double.parseDouble(propertiesInformation.get(PROBABILITY)));
@@ -93,7 +93,7 @@ public abstract class Simulation {
   }
 
 
-  public void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
+  private void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
       try{
         String resourceName = locationPrefix + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -189,7 +189,7 @@ public abstract class Simulation {
     csvWriter.close();
   }
 
-  public State[][] createInitialGridConfiguration(String configType) {
+  private State[][] createInitialGridConfiguration(String configType) {
       if (configType.equals(FILE)) {
         try {
           simulationFileLocation =
@@ -222,7 +222,7 @@ public abstract class Simulation {
     return possibleStateTypes;
   }
 
-  public State[][] createStates(int[][] integerCellStates,
+  private State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
     createMapOfStates(possibleStatesForSimulation);
     State[][] cellStates = new State[integerCellStates.length][integerCellStates[0].length];
@@ -249,7 +249,7 @@ public abstract class Simulation {
     return propertiesInformation;
   }
 
-  public int[][] readCellStatesFile() throws ControllerException {
+  private int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
     List<String[]> readFiles = new ArrayList<>();
     try {
@@ -276,7 +276,7 @@ public abstract class Simulation {
     return cellStates;
   }
 
-  public List<String[]> readAll (InputStream data) {
+  private List<String[]> readAll (InputStream data) {
     try (CSVReader csvReader = new CSVReader(new InputStreamReader(data))) {
       return csvReader.readAll();
     }
@@ -291,7 +291,7 @@ public abstract class Simulation {
     return currentGrid;
   }
 
-  public State[][] createRandomLocationConfig() {
+  private State[][] createRandomLocationConfig() {
     State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibilities = getPossibleStateTypes();
     Random random = new Random();
@@ -304,7 +304,7 @@ public abstract class Simulation {
     return randomLocationCells;
   }
 
-  public State[][] createProbabilityBasedStateConfiguration(double probabilities) {
+  private State[][] createProbabilityBasedStateConfiguration(double probabilities) {
     State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibleStates = getPossibleStateTypes();
     Random random = new Random();

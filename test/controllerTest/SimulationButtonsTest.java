@@ -5,9 +5,12 @@ import controller.GameOfLifeSimulation;
 import controller.Simulation;
 import controller.State;
 import controller.StateType;
+import view.*;
 import controller.stateType.GameOfLifeState;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import model.Grid;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -36,41 +39,55 @@ public class SimulationButtonsTest extends DukeApplicationTest {
       {new State(ALIVE),new State(DEAD),new State(ALIVE)}};
   private Simulation mySimulation;
   private SimulationView myView;
-  private ControllerMain myController = new ControllerMain();
+  private ControllerMain myController;
   private Scene myScene;
   private GridDisplay myGridDisplay;
   private TitleBar myTitleBar;
+  private Stage currentStage;
+  private Group root;
 
 
   @Override
   public void start(Stage stage) {
     //Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
-/*    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
-
-
+ /*   mySimulation = new GameOfLifeSimulation();
     myView = new SimulationView(mySimulation.getCurrentGrid(),LANGUAGE);
-    myScene = myController.setupScene();
-    stage.setScene(myScene);*/
+    myScene = myController.setupScene(myController.FRAME_SIZE, myController.FRAME_SIZE, mySimulation, "GameOfLife");
+    stage.setScene(myScene);
    // stage.setTitle("Game of Life");
-    //stage.show();
-    mySimulation = new GameOfLifeSimulation();
-    myScene = myController.setupScene(myController.FRAME_SIZE, myController.FRAME_SIZE, mySimulation,
-        "GameOfLife");
+    stage.show();*/
     //stage.setScene(myScene);
     //stage.show();
 
     //getUIComponentsInScene();
+    myController = new ControllerMain();
+    mySimulation = new GameOfLifeSimulation();
+    root = new Group();
+    myView = new SimulationView(mySimulation.getCurrentGrid(),"English");
+    myScene = myView.setupScene("GameOfLife", mySimulation.getPossibleStateTypes(),
+        500, 500);
+    //currentStage = new Stage();
+    //root = new Group();
+    //mySimulation = new GameOfLifeSimulation();
+    //myView = new SimulationView(mySimulation.getCurrentGrid(),"English");
+    //myScene = myView.setupScene("GameOfLife", mySimulation.getPossibleStateTypes(),
+    //    ControllerMain.SCREEN_WIDTH, ControllerMain.SCREEN_HEIGHT);
+   // return myScene;
   }
 
-  private void getUIComponentsInScene(){
+  //private void getUIComponentsInScene(){
     myGridDisplay=lookup("#gridDisplay").query();
-  }
+  //}
 
 
 
   @Test
   void testPlayButtonOnSimulationView() {
-    myView.getMyControlButtons().getMyPlayPause();
 
+    myController.setupScene(myController.SCREEN_WIDTH, myController.SCREEN_HEIGHT, mySimulation,
+        "GameOfLife");
+    myController.setUpButtons();
+    myController.getSimulationView().getMyControlButtons();
+    //myView.getMyControlButtons().getMyPlayPause();
   }
 }

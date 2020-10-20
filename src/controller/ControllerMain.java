@@ -19,13 +19,9 @@ import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
 public class ControllerMain extends Application {
-
-  //public static final int FRAMES_PER_SECOND = 60;
-  //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public static double secondDelay = 1.0;
+  public double secondDelay = 1.0;
   public static final int FRAME_SIZE = 400;
   public final String SIMULATION_SETTINGS = "resources/SimulationSettings";
- // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 500;
   public static final int SCREEN_HEIGHT = 500;
   public static final int LANGUAGE_SCREEN_HEIGHT = 80;
@@ -48,8 +44,7 @@ public class ControllerMain extends Application {
   private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
-  //private Stage secondStage= new Stage();
-  private Stage secondStage;
+  private Stage secondStage= new Stage();
   private GraphView myGraphView;
   private Scene myGraphScene;
   private boolean viewGraph = false;
@@ -62,7 +57,6 @@ public class ControllerMain extends Application {
   @Override
   public void start(Stage stage) {
     currentStage = stage;
-    secondStage = new Stage();
     chooseLanguageAndSetupStage();
     startAnimation(secondDelay);
     minSpeed = Double.parseDouble(myBundle.getString("minSpeed"));
@@ -132,7 +126,7 @@ public class ControllerMain extends Application {
     myGraphScene = myGraphView.setupScene(simType, stepCount, currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
   }
 
-  private void setUpButtons() {
+  public void setUpButtons() {
     currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
     currentSimView.getMyFileButtons().getMySave().setOnAction(event -> saveFile());
@@ -185,7 +179,7 @@ public class ControllerMain extends Application {
     secondStage.show();
   }
 
-  void checkChangeSimulation() {
+  private void checkChangeSimulation() {
     String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
         .getMyChosenType();
     if (simulationChosen != null) {
@@ -210,7 +204,7 @@ public class ControllerMain extends Application {
     }
   }
 
-  void increaseSpeed() {
+  private void increaseSpeed() {
     if (secondDelay-speedShiftAmount > minSpeed) {
       secondDelay -= speedShiftAmount;
       setUpStage(currentStage);
@@ -218,7 +212,7 @@ public class ControllerMain extends Application {
     }
   }
 
-  void decreaseSpeed() {
+  private void decreaseSpeed() {
     if (secondDelay + speedShiftAmount < maxSpeed) {
       secondDelay += speedShiftAmount;
       setUpStage(currentStage);
@@ -263,6 +257,13 @@ public class ControllerMain extends Application {
 
   public boolean getIsPaused() {
     return isPaused;
+  }
+
+  public Simulation getCurrentSimulation() {
+    return currentSimulation;
+  }
+  public SimulationView getSimulationView() {
+    return currentSimView;
   }
 
   public static void main (String[] args) {
