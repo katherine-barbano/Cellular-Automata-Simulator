@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
-import javafx.scene.Group;
 import javafx.scene.control.TextInputDialog;
 import model.*; //CHECK may need to change so not all classes from model package
 import view.SimulationView;
@@ -27,16 +26,22 @@ public abstract class Simulation {
   private Grid nextGrid;
   private final String simulationName;
   private String simulationFileLocation;
-  //private SimulationView simulationView;
-  //private Group root;
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
+  private final String SETTINGS_LOCATION = "resources/SimulationSettings";
+  private final String NEW_CONFIG_LOCATION = "data/initialConfigurations/";
   private final String CSV_SUFFIX = ".csv";
   private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
+  private final String NEIGHBOR = "neighborPolicy";
+  private final String EDGE = "edgePolicy";
+  private final String STATE_CONFIG = "stateConfiguration";
+  private final String PROBABILITY = "probability";
+  private final String CONFIG_PROBABILITY = "configProbability";
   private String configurationType;
+  private final ResourceBundle myBundle = ResourceBundle.getBundle(SETTINGS_LOCATION);
 
 
-  private final int randomConfigRowColNumber = 4;
+  private final int randomConfigRowColNumber;
   private int rowNumber;
   private int colNumber;
   private HashMap<Integer, StateType> statesForInteger;
@@ -47,42 +52,33 @@ public abstract class Simulation {
   private HashMap<String, String> propertiesInformation;
   private final String STORING_FILE_NAME = "data/initialConfigurations/";
   private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
- // private final String PROPERTIES_EXTENSION = ".properties";
 
 
   public Simulation(String newSimulationName){
     this.simulationName = newSimulationName;
-    this.propertiesInformation = new HashMap<String, String>();
+    this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString("randomConfigurationSize"));
+    this.propertiesInformation = new HashMap<>();
     readPropertiesFile(newSimulationName);
-    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    //this.gridStateFormation = createStates(readCellStatesFile(), possibleStateTypes);
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
-    //simulationFileLocation = "data/initialConfigurations/testingGOL.csv";
-
-     /* currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-          propertiesInformation.get("neighborPolicy"),
-          createStates(readCellStatesFile(), possibleStateTypes), Double.parseDouble(propertiesInformation.get("probability")));
-   */
-    //currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
     currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
-   // simulationView = new SimulationView(currentGrid);
   }
 
   public Grid createCorrectGrid() {
-    if (propertiesInformation.containsKey("probability")) {
-      return new Grid(simulationName, propertiesInformation.get("edgePolicy"), propertiesInformation.get("neighborPolicy"),
-          this.gridStateFormation, Double.parseDouble(propertiesInformation.get("probability")));
+    if (propertiesInformation.containsKey(PROBABILITY)) {
+      return new Grid(simulationName, propertiesInformation.get(EDGE), propertiesInformation.get(NEIGHBOR),
+          this.gridStateFormation, Double.parseDouble(propertiesInformation.get(PROBABILITY)));
     }
-    return new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"),this.gridStateFormation);
+    return new Grid(simulationName, propertiesInformation.get(EDGE),
+        propertiesInformation.get(NEIGHBOR),this.gridStateFormation);
   }
 
 
   public void readPropertiesFile(String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX; // could also be a constant*/
+        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -99,38 +95,31 @@ public abstract class Simulation {
       }
   }
 
-//CHECK can remove this method if initializing in the constructor itself
   public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = STORING_FILE_NAME + newFileLocation;
-    currentGrid = new Grid(simulationName, propertiesInformation.get("edgePolicy"),
-        propertiesInformation.get("neighborPolicy"), createStates(readCellStatesFile(), getStateTypesForSimulation()));
+    currentGrid = new Grid(simulationName, propertiesInformation.get(EDGE),
+        propertiesInformation.get(NEIGHBOR), createStates(readCellStatesFile(), getStateTypesForSimulation()));
     nextGrid = currentGrid.getNextGrid();
-    //simulationView = new SimulationView(currentGrid);
-    System.out.println("new simulation set");
   }
 
   public void setNewPropertiesFile(String newPropertiesFile) {
-    this.propertiesInformation = new HashMap<String, String>();
-    readPropertiesFile(this.simulationName);
-    this.configurationType = propertiesInformation.get("stateConfiguration");
+    this.propertiesInformation = new HashMap<>();
+    readPropertiesFile(newPropertiesFile);
+    this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
-    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get("stateConfiguration"));
+    this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
     currentGrid = createCorrectGrid();
     nextGrid = currentGrid.getNextGrid();
   }
-  //abstract public void storeNewCellConfig(Grid gridToStore);
-
- // abstract public String readInPropertiesFile();
 
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
       TextInputDialog dialog = new TextInputDialog();
       dialog.setTitle("To Save a New File");
-      //dialog.setHeaderText("");
       dialog.setContentText("Please enter new file name:");
       dialog.showAndWait();
       String newFileName = dialog.getResult();
-      File file = new File(newFileName + CSV_SUFFIX);
+      File newCSVFile = new File(newFileName + CSV_SUFFIX);
 
       dialog.setContentText("Please enter new title");
       dialog.showAndWait();
@@ -145,66 +134,85 @@ public abstract class Simulation {
 
       Properties properties = new Properties();
       properties.setProperty("fileName", newFileName);
-      properties.setProperty("stateConfiguration", "file");
+      properties.setProperty(STATE_CONFIG, "file");
       properties.setProperty("title", newTitle);
       properties.setProperty("author", newAuthorName);
       properties.setProperty("description", newDescription);
-      properties.setProperty("edgePolicy", propertiesInformation.get("edgePolicy"));
-      properties.setProperty("neighborPolicy", propertiesInformation.get("neighborPolicy"));
+      properties.setProperty(EDGE, propertiesInformation.get(EDGE));
+      properties.setProperty(NEIGHBOR, propertiesInformation.get(NEIGHBOR));
 
-      File nFile = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
-      FileOutputStream fileOut = new FileOutputStream(nFile);
+      File newPropertiesFiles = new File(NEW_PROPERTIES_LOCATION+newFileName+PROPERTIES_SUFFIX);
+      FileOutputStream fileOut = new FileOutputStream(newPropertiesFiles);
       properties.store(fileOut, null);
       fileOut.close();
 
-      FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + file.getName());
-    //FileWriter csvWriter = new FileWriter(file.getName());
-      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
-      csvWriter.append(",");
-      csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
-      csvWriter.append(",");
-      csvWriter.append("\n");
-      createMapOfStates(possibleStateTypes);
-
-      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
-        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
-          if (col != gridToStore.getGridNumberOfColumns() - 1) {
-            csvWriter.append(",");
-          }
-        }
-        csvWriter.append("\n");
-      }
-      csvWriter.flush();
-      csvWriter.close();
+      createCSVGridFile(gridToStore, newCSVFile);
 
     } catch (Exception e) {
-      //System.out.println("not working");
       String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("InvalidFile");
       throw new ControllerException(invalidFileExceptionMessage);
     }
   }
 
-  public State[][] createInitialGridConfiguration(String configType) {
-    try {
-      if (configType.equals("file")) {
-        simulationFileLocation =
-            "data/initialConfigurations/" + propertiesInformation.get("fileName");
-        return createStates(readCellStatesFile(), possibleStateTypes);
+  private void createCSVGridFile(Grid gridToStore, File newCSVFile) throws IOException {
+    FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + newCSVFile.getName());
+    csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
+    csvWriter.append(",");
+    csvWriter.append(Integer.toString(gridToStore.getGridNumberOfColumns()));
+    csvWriter.append(",");
+    csvWriter.append("\n");
+    createMapOfStates(possibleStateTypes);
+
+    for(int row=0; row< gridToStore.getGridNumberOfRows(); row++){
+      for(int col=0; col< gridToStore.getGridNumberOfColumns();col++) {
+        csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState().getStateType()).toString());
+        if (col != gridToStore.getGridNumberOfColumns() - 1) {
+          csvWriter.append(",");
+        }
       }
-    } catch (Exception e) {
-      String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
-          getString("InvalidFileName");
-      throw new ControllerException(invalidFileExceptionMessage);
+      csvWriter.append("\n");
     }
-    //else if (configType.equals("random")) {
-    if (configType.equals("probability")) {
-
-    }
-    return createRandomLocationConfig();
-
+    csvWriter.flush();
+    csvWriter.close();
   }
+
+  public State[][] createInitialGridConfiguration(String configType) {
+    if (configType.equals("file")) {
+      try {
+        simulationFileLocation =
+            NEW_CONFIG_LOCATION + propertiesInformation.get("fileName");
+        return createStates(readCellStatesFile(), possibleStateTypes);
+
+      } catch (Exception e) {
+        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+            getString("InvalidFileName");
+        throw new ControllerException(invalidFileExceptionMessage);
+      }
+    }
+    if (configType.equals(PROBABILITY)) {
+      try {
+        double probability = Double.parseDouble(propertiesInformation.get(CONFIG_PROBABILITY));
+        return createProbabilityBasedStateConfiguration(probability);
+      } catch (Exception e) {
+        String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
+            getString("InvalidFileConfiguration");
+        throw new ControllerException(invalidFileExceptionMessage);
+      }
+    }
+    //if not defined, or if type listed is not found :
+    return createRandomLocationConfig();
+  }
+
+/*  private double[] extractProbabilities(String probabilities) {
+    String[] probabilityForStates = probabilities.split(",");
+    double[] probabilityValuesByState  = new double[probabilityForStates.length];
+    int count = 0;
+    for (String currentProbability: probabilityForStates) {
+      probabilityValuesByState[count] = Double.parseDouble(currentProbability);
+    }
+    return probabilityValuesByState;
+  }*/
 
 
   abstract public StateType[] getStateTypesForSimulation();
@@ -212,9 +220,6 @@ public abstract class Simulation {
   public StateType[] getPossibleStateTypes() {
     return possibleStateTypes;
   }
-
-  //CHECK - remove this method!
- // abstract public StateType[][] createStatesFromInteger(int[][] integerCellStates);
 
   public State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
@@ -227,8 +232,6 @@ public abstract class Simulation {
     }
     return cellStates;
   }
-
-
 
   private void createMapOfStates(StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
@@ -247,7 +250,7 @@ public abstract class Simulation {
 
   public int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
-    List<String[]> readFiles = new ArrayList<String[]>();
+    List<String[]> readFiles = new ArrayList<>();
     try {
       readFiles = readAll(new FileInputStream(simulationFileLocation));
     } catch (Exception e) {
@@ -277,8 +280,6 @@ public abstract class Simulation {
       return csvReader.readAll();
     }
     catch (IOException | CsvException e) {
-      //e.printStackTrace();
-      //return Collections.emptyList();
       String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
           getString("InvalidFileName");
       throw new ControllerException(invalidFileExceptionMessage);
@@ -288,14 +289,6 @@ public abstract class Simulation {
   public Grid getCurrentGrid() {
     return currentGrid;
   }
-
-/*  public void updateSimulationGrid(boolean shouldRun) {
-    if (shouldRun) {
-      checkGridUpdatesInDisplay();
-      //updateToNextSimulation();
-      simulationView.updateGridDisplay(currentGrid);
-    }
-  }*/
 
   public State[][] createRandomLocationConfig() {
     State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
@@ -311,22 +304,28 @@ public abstract class Simulation {
     return randomLocationCells;
   }
 
-  public State[][] createProbabilityBasedStateConfiguration(double probability) {
+  public State[][] createProbabilityBasedStateConfiguration(double probabilities) {
     State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibleStates = getPossibleStateTypes();
-
-
-    return null;
+    Random random = new Random();
+    int numberOfCells = (int) (randomConfigRowColNumber * randomConfigRowColNumber * probabilities);
+    for (int row = 0; row < probabilityConfiguration.length; row ++) {
+      for (int col = 0; col < probabilityConfiguration.length; col++) {
+        while (numberOfCells>0) {
+          probabilityConfiguration[row][col] = new State(possibleStates[0]);
+        }
+        int randomIndex = random.nextInt(possibleStateTypes.length);
+        probabilityConfiguration[row][col] = new State(possibleStates[randomIndex]);
+      }
+    }
+    return probabilityConfiguration;
   }
-
 
 
   public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
     if (shouldRun) {
       checkGridUpdatesInDisplay(simulationView);
       updateSimulation();
-      //this.currentGrid = nextGrid;
-      //this.nextGrid = currentGrid.getNextGrid();
       simulationView.updateGridDisplay(currentGrid);
     }
   }
@@ -340,34 +339,13 @@ public abstract class Simulation {
   public void updateSimulation() {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
-    //System.out.println("updated");
   }
-
-
-  public void updateToNextSimulation() {
-    this.currentGrid = nextGrid;
-    this.nextGrid = currentGrid.getNextGrid();
-  }
-
 
   public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);
     sizeValues.add(colNumber);
     return sizeValues;
-  }
-
-/*  public SimulationView getSimulationView() {
-    return simulationView;
-  }*/
-
-
-  public int getRowNumber() {
-    return rowNumber;
-  }
-
-  public int getColNumber() {
-    return colNumber;
   }
 
   public String getSimulatonName(){

@@ -23,9 +23,8 @@ public class ControllerMain extends Application {
   //public static final int FRAMES_PER_SECOND = 60;
   //public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   public static double secondDelay = 1.0;
-  public final double SPEED_CHANGE_AMOUNT = .50;
   public static final int FRAME_SIZE = 400;
-  public final String SPEED_VALUES = "resources/SimulationSpeeds";
+  public final String SIMULATION_SETTINGS = "resources/SimulationSettings";
  // public static final Paint BACKGROUND = Color.AZURE;
   public static final int SCREEN_WIDTH = 500;
   public static final int SCREEN_HEIGHT = 500;
@@ -34,13 +33,18 @@ public class ControllerMain extends Application {
   public static final String SPANISH_LANGUAGE="Spanish";
   public static final String FRENCH_LANGUAGE="French";
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
+  private final String SIMULATION_PREFIX = "controller.";
+  private final String SIMULATION_SUFFIX = "Simulation";
+  private final String FILE_TITLE = "fileChooserTitle";
+  private final String FILE_DESCRIPTION = "fileChooserDescription";
+  private final String FILE_SUFFIX_CSV = "*.csv";
+  private final String FILE_SUFFIX_SIM = "*.sim";
   private Scene myScene;
   private Group root;
   private LanguageScreen myLanguageScreen;
   private String myLanguageChoice;
-  private Simulation currentSimulation = new GameOfLifeSimulation();
-  //private Simulation currentSimulation;
-  //private SimulationView currentSimView = new SimulationView();
+  private final String STARTING_SIMULATION_TYPE = "GameOfLife";
+  private Simulation currentSimulation = new GameOfLifeSimulation(); //default starts with Game of Life
   private SimulationView currentSimView;
   private boolean isPaused;
   private Stage currentStage;
@@ -49,7 +53,7 @@ public class ControllerMain extends Application {
   private Scene myGraphScene;
   private boolean viewGraph = false;
   private int stepCount=0;
-  private ResourceBundle myBundle = ResourceBundle.getBundle(SPEED_VALUES);
+  private ResourceBundle myBundle = ResourceBundle.getBundle(SIMULATION_SETTINGS);
   private double minSpeed;
   private double maxSpeed;
   private double speedShiftAmount;
@@ -58,7 +62,6 @@ public class ControllerMain extends Application {
   public void start(Stage stage) {
     currentStage = stage;
     chooseLanguageAndSetupStage();
-    //currentSimulation = new GameOfLifeSimulation();
     startAnimation(secondDelay);
     minSpeed = Double.parseDouble(myBundle.getString("minSpeed"));
     maxSpeed = Double.parseDouble(myBundle.getString("maxSpeed"));
@@ -86,7 +89,7 @@ public class ControllerMain extends Application {
 
   private void setupSimulationScenes(Stage stage, String language){
     this.myLanguageChoice=language;
-    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
+    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, STARTING_SIMULATION_TYPE);
     setUpStage(stage);
   }
 
@@ -100,7 +103,6 @@ public class ControllerMain extends Application {
         isPaused = true;
 
         if(viewGraph && myGraphScene !=null){
-          System.out.println("Viewing Graph");
           secondStage.setScene(myGraphScene);
           secondStage.show();
         }
@@ -113,20 +115,12 @@ public class ControllerMain extends Application {
   /*
    * Create the game's "scene": what shapes will be in the game and their starting properties
    */
-  Scene setupScene(int width, int height, Simulation currSim, String newSimType) {
+  public Scene setupScene(int width, int height, Simulation currSim, String newSimType) {
     root = new Group();
-    //currentSimView = new SimulationView();
-   // try {
       currentSimulation = currSim;
-    //currentSimulation = currSim;
-      //SimulationView currSimView = currentSimulation.getSimulationView();
       currentSimView = new SimulationView(currentSimulation.getCurrentGrid(),myLanguageChoice);
-      //SimulationView currSimView = new SimulationView(currentSimulation.getCurrentGrid());
       myScene = currentSimView.setupScene(newSimType, currentSimulation.getPossibleStateTypes(),
           SCREEN_WIDTH, SCREEN_HEIGHT);
-    System.out.println("set up");
-      //myScene = currSimView.setupScene("GameOfLife", GameOfLifeState.values(),
-      //        SCREEN_WIDTH, SCREEN_HEIGHT);
       setUpButtons();
     return myScene;
   }
@@ -156,11 +150,8 @@ public class ControllerMain extends Application {
     }
 
   void step () {
-    //System.out.println("stepping");
-    //if (currentSimulation != null) {
     if(currentSimulation!=null && currentSimView != null){
       updateShapes(!isPaused);
-      //checkChangeSimulation();
     }
 
   }
@@ -178,11 +169,8 @@ public class ControllerMain extends Application {
 
   void saveFile() {
     try {
-      System.out.println("saving");
       isPaused = true;
-      //currentSimulation.storeNewCellConfig(currentSimulation.getCurrentGrid());
       currentSimulation.saveNewCellConfiguration(currentSimulation.getCurrentGrid());
-      System.out.println("finished");
     } catch (ControllerException e) {
       displayError(e.getMessage());
     }
@@ -201,21 +189,18 @@ public class ControllerMain extends Application {
     if (simulationChosen != null) {
       try {
         stepCount=0;
-        String fullClassName = String.format("controller." + simulationChosen + "Simulation");
+        String fullClassName = String.format(SIMULATION_PREFIX + simulationChosen + SIMULATION_SUFFIX);
         Class<?> cl = Class.forName(fullClassName);
         Constructor<?> cons = cl.getConstructor();
         cons.newInstance();
         Simulation test = (Simulation) cons.newInstance();
         currentSimulation = test;
-        System.out.println(currentSimulation.getPropertiesInformation().get("kind"));
         setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, simulationChosen);
         if(viewGraph){
           setupGraph(simulationChosen);
         }
         setUpStage(currentStage);
-        //Constructor<?> cons = PercolationSimulation.class.getConstructor("");
-
-      } catch (Exception e) {
+          } catch (Exception e) {
         String invalidFileExceptionMessage = ResourceBundle.getBundle(ERRORS_LOCATION).
             getString("InvalidSimulationName");
         throw new ControllerException(invalidFileExceptionMessage);
@@ -226,20 +211,15 @@ public class ControllerMain extends Application {
   void increaseSpeed() {
     if (secondDelay-speedShiftAmount > minSpeed) {
       secondDelay -= speedShiftAmount;
-      System.out.println("increasing");
-     // startAnimation(secondDelay);
       setUpStage(currentStage);
       isPaused = false;
     }
   }
 
-  void decreaseSpeed() { //CHECK need min speed and max speed - read in values?
+  void decreaseSpeed() {
     if (secondDelay + speedShiftAmount < maxSpeed) {
       secondDelay += speedShiftAmount;
-      System.out.println("decreasing");
       setUpStage(currentStage);
-      System.out.println(secondDelay);
-      //startAnimation(secondDelay);
       isPaused = false;
     }
   }
@@ -256,8 +236,9 @@ public class ControllerMain extends Application {
     try {
       isPaused = true;
       FileChooser fileChooser = new FileChooser();
-      fileChooser.setTitle("Open Resource File");
-      fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Simulation Files", "*.sim", "*.csv"));
+      fileChooser.setTitle(myBundle.getString(FILE_TITLE));
+      fileChooser.getExtensionFilters().addAll(new ExtensionFilter(myBundle.getString(FILE_DESCRIPTION),
+          FILE_SUFFIX_CSV, FILE_SUFFIX_SIM));
       File selectedFile = fileChooser.showOpenDialog(currentStage);
       if (selectedFile != null) {
         currentSimulation.setSimulationFileLocation(selectedFile.getName());
@@ -268,16 +249,18 @@ public class ControllerMain extends Application {
       String noFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
           getString("NoFileSelectedError");
       displayError(noFileExceptionMessage);
-      //throw new ControllerException(noFileExceptionMessage);
-      //currentSimulation.getSimulationView().addExceptionMessage(noFileExceptionMessage);
-    }
+      }
   }
 
   public void displayError(String message){
     Alert alert = new Alert(AlertType.ERROR);
-    alert.setTitle("Error");
+    //alert.setTitle("Error");
     alert.setContentText(message);
     alert.showAndWait();
+  }
+
+  public boolean getIsPaused() {
+    return isPaused;
   }
 
   public static void main (String[] args) {
