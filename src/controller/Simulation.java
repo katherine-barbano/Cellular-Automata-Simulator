@@ -131,25 +131,22 @@ public abstract class Simulation {
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + FILE_NAME);
       dialog.showAndWait();
       String newFileName = dialog.getResult();
+      properties.setProperty(FILE_NAME, newFileName);
 
       File newCSVFile = new File(newFileName + CSV_SUFFIX);
 
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + TITLE);
       dialog.showAndWait();
-      String newTitle = dialog.getResult();
+      properties.setProperty(TITLE, dialog.getResult());
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + AUTHOR);
       dialog.showAndWait();
-      String newAuthorName = dialog.getResult();
+      properties.setProperty(AUTHOR, dialog.getResult());
+
       dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + DESCRIPTION);
       dialog.showAndWait();
-      String newDescription = dialog.getResult();
+      properties.setProperty(DESCRIPTION, dialog.getResult());
 
-
-      properties.setProperty(FILE_NAME, newFileName);
       properties.setProperty(STATE_CONFIG, FILE);
-      properties.setProperty(TITLE, newTitle);
-      properties.setProperty(AUTHOR, newAuthorName);
-      properties.setProperty(DESCRIPTION, newDescription);
       properties.setProperty(EDGE, propertiesInformation.get(EDGE));
       properties.setProperty(NEIGHBOR, propertiesInformation.get(NEIGHBOR));
 

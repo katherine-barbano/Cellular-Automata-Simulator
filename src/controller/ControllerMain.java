@@ -250,7 +250,6 @@ public class ControllerMain extends Application {
 
   public void displayError(String message){
     Alert alert = new Alert(AlertType.ERROR);
-    //alert.setTitle("Error");
     alert.setContentText(message);
     alert.showAndWait();
   }
