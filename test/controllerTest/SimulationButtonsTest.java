@@ -43,7 +43,7 @@ public class SimulationButtonsTest extends DukeApplicationTest {
 
 
   @Override
-  public void start(Stage stage) throws Exception {
+  public void start(Stage stage) {
     //Grid grid = new Grid(SIMULATION_TYPE, EDGE_POLICY_TYPE,NEIGHBOR_POLICY_TYPE,TEST_GRID);
 /*    setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, "GameOfLife");
     setUpStage(stage);

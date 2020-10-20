@@ -29,14 +29,21 @@ public abstract class Simulation {
   private final String ERRORS_LOCATION = "resources/ControllerErrors";
   private final String SETTINGS_LOCATION = "resources/SimulationSettings";
   private final String NEW_CONFIG_LOCATION = "data/initialConfigurations/";
+  private final String RANDOM_SIZE = "randomConfigurationSize";
   private final String CSV_SUFFIX = ".csv";
-  private final String SIM_SUFFIX = ".sim";
   private final String PROPERTIES_SUFFIX = ".properties";
   private final String NEIGHBOR = "neighborPolicy";
   private final String EDGE = "edgePolicy";
   private final String STATE_CONFIG = "stateConfiguration";
   private final String PROBABILITY = "probability";
   private final String CONFIG_PROBABILITY = "configProbability";
+  private final String PROPERTIES_PREFIX = "simulationProperties/";
+  private final String FILE_NAME = "fileName";
+  private final String FILE = "file";
+  private final String AUTHOR = "author";
+  private final String DESCRIPTION = "description";
+  private final String TITLE = "title";
+  private final String DIALOG_PREFIX = "dialogPrefix";
   private String configurationType;
   private final ResourceBundle myBundle = ResourceBundle.getBundle(SETTINGS_LOCATION);
 
@@ -56,9 +63,9 @@ public abstract class Simulation {
 
   public Simulation(String newSimulationName){
     this.simulationName = newSimulationName;
-    this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString("randomConfigurationSize"));
+    this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(newSimulationName);
+    readPropertiesFile(PROPERTIES_PREFIX, newSimulationName);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
     this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
@@ -76,9 +83,9 @@ public abstract class Simulation {
   }
 
 
-  public void readPropertiesFile(String propertiesFileName) throws ControllerException {
+  public void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
       try{
-        String resourceName = "simulationProperties/" + propertiesFileName + PROPERTIES_SUFFIX;
+        String resourceName = locationPrefix + propertiesFileName + PROPERTIES_SUFFIX;
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -102,9 +109,9 @@ public abstract class Simulation {
     nextGrid = currentGrid.getNextGrid();
   }
 
-  public void setNewPropertiesFile(String newPropertiesFile) {
+  public void setNewPropertiesFile(String locationFolder, String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
-    readPropertiesFile(newPropertiesFile);
+    readPropertiesFile(locationFolder, newPropertiesFile);
     this.configurationType = propertiesInformation.get(STATE_CONFIG);
     this.possibleStateTypes = getStateTypesForSimulation();
     this.gridStateFormation = createInitialGridConfiguration(propertiesInformation.get(STATE_CONFIG));
@@ -114,30 +121,31 @@ public abstract class Simulation {
 
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
+      Properties properties = new Properties();
       TextInputDialog dialog = new TextInputDialog();
-      dialog.setTitle("To Save a New File");
-      dialog.setContentText("Please enter new file name:");
+      dialog.setTitle(myBundle.getString(TITLE));
+      dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + FILE_NAME);
       dialog.showAndWait();
       String newFileName = dialog.getResult();
+
       File newCSVFile = new File(newFileName + CSV_SUFFIX);
 
-      dialog.setContentText("Please enter new title");
+      dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + TITLE);
       dialog.showAndWait();
       String newTitle = dialog.getResult();
-
-      dialog.setContentText("Please enter new author");
+      dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + AUTHOR);
       dialog.showAndWait();
       String newAuthorName = dialog.getResult();
-      dialog.setContentText("Please enter new description");
+      dialog.setContentText(myBundle.getString(DIALOG_PREFIX) + DESCRIPTION);
       dialog.showAndWait();
       String newDescription = dialog.getResult();
 
-      Properties properties = new Properties();
-      properties.setProperty("fileName", newFileName);
-      properties.setProperty(STATE_CONFIG, "file");
-      properties.setProperty("title", newTitle);
-      properties.setProperty("author", newAuthorName);
-      properties.setProperty("description", newDescription);
+
+      properties.setProperty(FILE_NAME, newFileName);
+      properties.setProperty(STATE_CONFIG, FILE);
+      properties.setProperty(TITLE, newTitle);
+      properties.setProperty(AUTHOR, newAuthorName);
+      properties.setProperty(DESCRIPTION, newDescription);
       properties.setProperty(EDGE, propertiesInformation.get(EDGE));
       properties.setProperty(NEIGHBOR, propertiesInformation.get(NEIGHBOR));
 
@@ -178,10 +186,10 @@ public abstract class Simulation {
   }
 
   public State[][] createInitialGridConfiguration(String configType) {
-    if (configType.equals("file")) {
+    if (configType.equals(FILE)) {
       try {
         simulationFileLocation =
-            NEW_CONFIG_LOCATION + propertiesInformation.get("fileName");
+            NEW_CONFIG_LOCATION + propertiesInformation.get(FILE_NAME);
         return createStates(readCellStatesFile(), possibleStateTypes);
 
       } catch (Exception e) {
@@ -203,17 +211,6 @@ public abstract class Simulation {
     //if not defined, or if type listed is not found :
     return createRandomLocationConfig();
   }
-
-/*  private double[] extractProbabilities(String probabilities) {
-    String[] probabilityForStates = probabilities.split(",");
-    double[] probabilityValuesByState  = new double[probabilityForStates.length];
-    int count = 0;
-    for (String currentProbability: probabilityForStates) {
-      probabilityValuesByState[count] = Double.parseDouble(currentProbability);
-    }
-    return probabilityValuesByState;
-  }*/
-
 
   abstract public StateType[] getStateTypesForSimulation();
 
@@ -297,7 +294,6 @@ public abstract class Simulation {
     for (int row = 0; row < randomConfigRowColNumber; row ++) {
       for (int col = 0; col < randomConfigRowColNumber; col++) {
         int randomIndex = random.nextInt(possibleStateTypes.length);
-        System.out.println(randomIndex);
         randomLocationCells[row][col] = new State(possibilities[randomIndex]);
       }
     }
@@ -313,6 +309,7 @@ public abstract class Simulation {
       for (int col = 0; col < probabilityConfiguration.length; col++) {
         while (numberOfCells>0) {
           probabilityConfiguration[row][col] = new State(possibleStates[0]);
+          numberOfCells -= 1;
         }
         int randomIndex = random.nextInt(possibleStateTypes.length);
         probabilityConfiguration[row][col] = new State(possibleStates[randomIndex]);
@@ -331,8 +328,7 @@ public abstract class Simulation {
   }
 
   public void checkGridUpdatesInDisplay(SimulationView currentSimView){
-    Grid newGrid = currentSimView.getCurrentGridInDisplay();
-    this.currentGrid=newGrid;
+    this.currentGrid=currentSimView.getCurrentGridInDisplay();
     this.nextGrid = currentGrid.getNextGrid();
   }
 
