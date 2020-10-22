@@ -3,14 +3,37 @@ package model.edgePolicies;
 import controller.State;
 import model.EdgePolicy;
 
+/***
+ * Abstraction for an edge policy that uses some type of wrapping, meaning there are no
+ * ends to the Grid (used by KleinBottleEdgePolicy and ToroidalEdgePolicy). Contains abstractions
+ * for how to wrap rows and wrap columns.
+ *
+ * @author Katherine Barbano
+ */
 public abstract class InfiniteEdgePolicy extends EdgePolicy {
 
   public InfiniteEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
     super(centerCellRow, centerCellColumn, allStatesInCSV);
   }
 
+  /***
+   * Modifies positionNeighbor to the correctly wrapped position if it is off the edge of the row.
+   * @param states 2D state array
+   * @param neighborRow actual position of row in Grid
+   * @param neighborColumn actual position of column in Grid
+   * @param positionNeighbor relative position of neighbor in neighborhood
+   * @param neighborStartsAsCorner true if the neighbor is in the corner of the Grid
+   */
   abstract void handleRowWrapping(State[][] states, int neighborRow, int neighborColumn, int[] positionNeighbor, boolean neighborStartsAsCorner);
 
+  /***
+   * Modifies positionNeighbor to the correctly wrapped position if it is off the edge of the column.
+   * @param states 2D state array
+   * @param neighborRow actual position of row in Grid
+   * @param neighborColumn actual position of column in Grid
+   * @param positionNeighbor relative position of neighbor in neighborhood
+   * @param neighborStartsAsCorner true if the neighbor is in the corner of the Grid
+   */
   abstract void handleColumnWrapping(State[][] states, int neighborRow, int neighborColumn, int[] positionNeighbor, boolean neighborStartsAsCorner);
 
   @Override
@@ -24,6 +47,12 @@ public abstract class InfiniteEdgePolicy extends EdgePolicy {
     }
   }
 
+  /***
+   * Returns the actual position of the neighbor cell in the Grid from a relative position. Uses
+   * wrapping to return the correct position.
+   * @param relativePositionOfNeighbor int[] row, column of relative position of neighbor cell
+   * @return
+   */
   @Override
   public int[] getPositionOfNeighbor(int[] relativePositionOfNeighbor) {
     try {
