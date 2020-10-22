@@ -14,7 +14,7 @@ Finish Date: 10/19/2020
 Hours Spent:
 Katherine - around 80 hrs
 Priya - around 70 hours 
-Heather - 
+Heather - around 70 hours
 
 ### Primary Roles
 
@@ -56,6 +56,20 @@ or new edge policies can be added simply by creating subclasses, without any cha
 - Use of a custom runtime exception (ModelException) that is caught and handled apporpriately throughout Model.
 
 View
+- The main view is created in SimulationView.  In this view, the Grid is displayed along with
+6 button bars.  
+- The Control Button Bar controls pause/play, and the speed of the animation
+- The Cell Format Bar allows the user to choose a cell state from the drop down menu, and then choose 
+a color or image to fill those cells in the simulation.
+- The Dark/Light Mode Bar allows the user to switch between Dark and Light mode.
+- The File Button Bar allows the user to save the current configuration to a file, or upload a new configuration from tthe file.
+- The Simulation Choice Bar allows the user to change the simulation to a new type of simulation.
+- The Graph View bar allows the user to open the Graph View.  The graph view can be opened and closed 
+dynamically this way.
+- Graph View is a separate way to view the simulation.  In this view, the graph keeps track of the number
+of cells in the grid for each state throughout each step in the simulation.
+- Clicking on individual cells changes their state to a new state in the simulation.
+- Language Choice - The user is able to choose language in the first screen to appear.
 
 Controller
 - The controller's main feature is the abstract simulation class which is what deals with reading in the 
@@ -103,6 +117,15 @@ grid configuration (which the code also assumes is the default if nothing else i
 invalid name is provided), creates a completely random configuration of the cells with various states for 
 that simulation. It reads in the square size of the grid from a properties file so it can be adjusted.
 
+There are a few notable assumptions within the view, specifically that 
+- We assume that there are a finite number of color and image options which the user can choose to
+ fill the cell.  These options are defined by the programmer, not the user.  The user must choose between
+ these options.
+- We also assumed the dimensions of the app.  The simulationView window is 500 by 500, but can easily be 
+changed in the code by changing the constant values.
+- All button bars have a set preferred height of 50 pixels.
+- The x-Axis of the Graph view is measured by the number of steps, rather than in elapsed time.
+
 Errors Tested: In the ConfigurationAndPropertiesTests Class, several different scenarios are tested 
 to ensure that the custom controller exceptions are correctly being thrown at the correct 
 time. For example, several incorrect configuration files were tested, such as having negative
@@ -132,6 +155,9 @@ Extra credit:
 - The Grid uses a List<List<Cell>> as its data structure instead of a 2D matrix. Although we did not have time to actually display differently shaped cells, this design decision
 should make tilings of different shapes with different length rows or columns much easier (especially
 given that we already have a hexagonal and triangle neighbor policy).
+
+- The Graph View is able to be opened dynamically from the SimulationView, but the Simulation View
+cannot be opened dynamically from the GraphView.
 
 
 ### Impressions

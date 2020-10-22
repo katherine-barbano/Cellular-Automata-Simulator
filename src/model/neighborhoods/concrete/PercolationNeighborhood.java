@@ -13,7 +13,7 @@ public class PercolationNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState) {
-    if(currentState.equals(PercolationState.OPEN)) {
+    if(currentState.equalsState(PercolationState.OPEN)) {
       return handleOpenState();
     }
     return currentState;

@@ -25,10 +25,10 @@ public class RockPaperScissorsNeighborhood extends NonInfluentialNeighborhood {
   }
 
   private State stateThatBeatsCurrentState(State currentState) {
-    if(currentState.equals(RockPaperScissorsState.ROCK)) {
+    if(currentState.equalsState(RockPaperScissorsState.ROCK)) {
       return new State(RockPaperScissorsState.PAPER);
     }
-    else if(currentState.equals(RockPaperScissorsState.PAPER)) {
+    else if(currentState.equalsState(RockPaperScissorsState.PAPER)) {
       return new State(RockPaperScissorsState.SCISSORS);
     }
     return new State(RockPaperScissorsState.ROCK);

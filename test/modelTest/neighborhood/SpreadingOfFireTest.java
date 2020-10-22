@@ -24,7 +24,7 @@ public class SpreadingOfFireTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -43,7 +43,7 @@ public class SpreadingOfFireTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -62,7 +62,7 @@ public class SpreadingOfFireTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -87,7 +87,7 @@ public class SpreadingOfFireTest {
     Grid expectGrid1Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid1);
     Grid expectGrid2Result = new Grid("SpreadingOfFire", "Finite", "Rectangle",  expectGrid2);
 
-    assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
+    assertTrue(actualNextGrid.equalsGrid(expectGrid1Result) || actualNextGrid.equalsGrid(expectGrid2Result));
   }
 
   @Test
@@ -107,7 +107,7 @@ public class SpreadingOfFireTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
 
     assertEquals(actualProbability, 1.0);
-    assertTrue(expectedNextGrid.equals(actualNextGrid));
+    assertTrue(expectedNextGrid.equalsGrid(actualNextGrid));
   }
 
 }

@@ -101,7 +101,7 @@ public class Grid {
    * @return true if current grid is stable
    */
   public boolean currentGridIsStable() {
-    return getNextGrid().equals(this);
+    return getNextGrid().equalsGrid(this);
   }
 
   /***
@@ -317,7 +317,7 @@ public class Grid {
     }
     catch(Exception e) {
       String simulationTypeExceptionMessage = modelResources.getString(REFLECTION_EXCEPTION_MESSAGE_PROPERTIES);
-      throw new ModelException(simulationTypeExceptionMessage);
+      throw new ModelException(simulationTypeExceptionMessage,e);
     }
   }
 
@@ -346,7 +346,7 @@ public class Grid {
     cellGrid.get(cellRow).set(cellColumn, newCell);
   }
 
-  public boolean equals (Grid otherGrid) {
+  public boolean equalsGrid(Grid otherGrid) {
 
     if(otherGrid.getGridNumberOfRows()!=getGridNumberOfRows()) {
       return false;
@@ -361,7 +361,7 @@ public class Grid {
         Cell thisCell = getCell(row, column);
         boolean onlyOneCellEmpty = (otherCell==null && thisCell!=null) || (otherCell!=null && thisCell==null);
         boolean bothCellsEmpty = otherCell==null && thisCell==null;
-        if(onlyOneCellEmpty || (!bothCellsEmpty && !otherCell.equals(thisCell))) {
+        if(onlyOneCellEmpty || (!bothCellsEmpty && !otherCell.equalsCell(thisCell))) {
           return false;
         }
       }
@@ -391,7 +391,7 @@ public class Grid {
       for(int column = 0; column<cellGrid.get(row).size(); column++) {
         Cell currentCell = cellGrid.get(row).get(column);
         State currentState = currentCell.getCurrentState();
-        if(currentState.equals(target)) {
+        if(currentState.equalsState(target)) {
           numCellsWithTargetStateType++;
         }
       }

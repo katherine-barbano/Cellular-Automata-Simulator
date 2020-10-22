@@ -23,8 +23,8 @@ public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
     List<Integer> numberLiveNeighborsForLiveCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES);
     List<Integer> numberLiveNeighborsForDeadCellToSurvive = getNumberOfNeighborsFromResources(NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES);
 
-    boolean liveCellSurvives = currentState.equals(GameOfLifeState.ALIVE) && numberLiveNeighborsForLiveCellToSurvive.contains(numberOfLivingNeighbors);
-    boolean deadCellSurvives = currentState.equals(GameOfLifeState.DEAD) && numberLiveNeighborsForDeadCellToSurvive.contains(numberOfLivingNeighbors);
+    boolean liveCellSurvives = currentState.equalsState(GameOfLifeState.ALIVE) && numberLiveNeighborsForLiveCellToSurvive.contains(numberOfLivingNeighbors);
+    boolean deadCellSurvives = currentState.equalsState(GameOfLifeState.DEAD) && numberLiveNeighborsForDeadCellToSurvive.contains(numberOfLivingNeighbors);
 
     if(liveCellSurvives || deadCellSurvives) {
       nextState = new State(GameOfLifeState.ALIVE);
