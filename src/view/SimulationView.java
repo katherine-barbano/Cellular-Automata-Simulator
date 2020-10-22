@@ -183,6 +183,10 @@ public class SimulationView {
     return mySimulationButtons;
   }
 
+  public GridDisplay getMyGridDisplay() {
+    return myGridDisplay;
+  }
+
 
 
 }

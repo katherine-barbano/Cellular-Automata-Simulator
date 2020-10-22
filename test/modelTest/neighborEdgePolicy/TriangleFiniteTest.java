@@ -30,7 +30,7 @@ class TriangleFiniteTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("GameOfLife", "Finite", "Triangle", expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -51,6 +51,6 @@ class TriangleFiniteTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Triangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 }

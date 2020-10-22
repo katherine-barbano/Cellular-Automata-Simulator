@@ -33,7 +33,7 @@ class RectangleToroidalTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("GameOfLife", "Toroidal", "Rectangle", expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -54,7 +54,7 @@ class RectangleToroidalTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Toroidal", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -75,7 +75,7 @@ class RectangleToroidalTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("RockPaperScissors", "Toroidal", "Rectangle", expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -119,7 +119,7 @@ class RectangleToroidalTest {
     Grid expected3 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome3);
     Grid expected4 = new Grid("Segregation", "Toroidal", "Rectangle", possibleOutcome4);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4));
   }
 
   @Test
@@ -144,7 +144,7 @@ class RectangleToroidalTest {
     Grid expectGrid1Result = new Grid("SpreadingOfFire", "Toroidal", "Rectangle",  expectGrid1);
     Grid expectGrid2Result = new Grid("SpreadingOfFire", "Toroidal", "Rectangle",  expectGrid2);
 
-    assertTrue(actualNextGrid.equals(expectGrid1Result) || actualNextGrid.equals(expectGrid2Result));
+    assertTrue(actualNextGrid.equalsGrid(expectGrid1Result) || actualNextGrid.equalsGrid(expectGrid2Result));
   }
 
   @Test
@@ -187,6 +187,6 @@ class RectangleToroidalTest {
     Grid expected3 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome3);
     Grid expected4 = new Grid("WaTorWorld", "Toroidal", "Rectangle", possibleOutcome4);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4));
   }
 }

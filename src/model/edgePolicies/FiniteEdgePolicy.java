@@ -20,7 +20,7 @@ public class FiniteEdgePolicy extends EdgePolicy {
     catch(IndexOutOfBoundsException e) {
       //If index is out of bounds, this means the center cell is on the edge, and the neighbor in question does not exist
       String edgePolicyAddExceptionMessage = getModelResources().getString(EdgePolicy.EDGE_POLICY_EXCEPTION_PROPERTIES);
-      throw new ModelException(edgePolicyAddExceptionMessage);
+      throw new ModelException(edgePolicyAddExceptionMessage, e);
     }
   }
 
@@ -32,7 +32,7 @@ public class FiniteEdgePolicy extends EdgePolicy {
     }
     catch(IndexOutOfBoundsException e) {
       String errorMessage = getModelResources().getString(FINITE_EXCEPTION_PROPERTIES);
-      throw new ModelException(errorMessage);
+      throw new ModelException(errorMessage, e);
     }
   }
 }

@@ -76,7 +76,7 @@ public class SegregationTest {
     Grid expected7 = new Grid("Segregation", "Finite", "Complete", possibleOutcome7);
     Grid expected8 = new Grid("Segregation", "Finite", "Complete", possibleOutcome8);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4) || actualNextGrid.equals(expected5) || actualNextGrid.equals(expected6) || actualNextGrid.equals(expected7) || actualNextGrid.equals(expected8));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4) || actualNextGrid.equalsGrid(expected5) || actualNextGrid.equalsGrid(expected6) || actualNextGrid.equalsGrid(expected7) || actualNextGrid.equalsGrid(expected8));
   }
 
   @Test
@@ -95,7 +95,7 @@ public class SegregationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome);
 
-    assertTrue(actualNextGrid.equals(expected1));
+    assertTrue(actualNextGrid.equalsGrid(expected1));
   }
 
   @Test
@@ -166,7 +166,7 @@ public class SegregationTest {
     Grid expected7 = new Grid("Segregation", "Finite", "Complete", possibleOutcome7);
     Grid expected8 = new Grid("Segregation", "Finite", "Complete", possibleOutcome8);
 
-    assertTrue(actualNextGrid.equals(expected1) || actualNextGrid.equals(expected2) || actualNextGrid.equals(expected3) || actualNextGrid.equals(expected4) || actualNextGrid.equals(expected5) || actualNextGrid.equals(expected6) || actualNextGrid.equals(expected7) || actualNextGrid.equals(expected8));
+    assertTrue(actualNextGrid.equalsGrid(expected1) || actualNextGrid.equalsGrid(expected2) || actualNextGrid.equalsGrid(expected3) || actualNextGrid.equalsGrid(expected4) || actualNextGrid.equalsGrid(expected5) || actualNextGrid.equalsGrid(expected6) || actualNextGrid.equalsGrid(expected7) || actualNextGrid.equalsGrid(expected8));
   }
 
   @Test
@@ -185,7 +185,7 @@ public class SegregationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expected1 = new Grid("Segregation", "Finite", "Complete", possibleOutcome);
 
-    assertTrue(actualNextGrid.equals(expected1));
+    assertTrue(actualNextGrid.equalsGrid(expected1));
   }
 
   @Test
@@ -205,6 +205,6 @@ public class SegregationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
 
     assertEquals(actualProbability, 1.0);
-    assertTrue(expectedNextGrid.equals(actualNextGrid));
+    assertTrue(expectedNextGrid.equalsGrid(actualNextGrid));
   }
 }

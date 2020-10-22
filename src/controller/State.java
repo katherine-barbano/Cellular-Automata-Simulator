@@ -37,17 +37,11 @@ public class State {
    */
   public void setStateType(StateType inputStateType) { this.stateType = inputStateType; }
 
-  /*
-  an equals method that checks based on another State if their state types are equal
-   */
-  public boolean equals(State otherState) {
+  public boolean equalsState(State otherState) {
     return stateType == otherState.getStateType();
   }
 
-  /*
-  An equals method that checks if a State equals a statetype by seeing if their state types match
-   */
-  public boolean equals(StateType otherStateType) {
+  public boolean equalsState(StateType otherStateType) {
     return stateType == otherStateType;
   }
 

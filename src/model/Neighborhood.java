@@ -55,8 +55,8 @@ public abstract class Neighborhood {
     return modelResources;
   }
 
-  public boolean equals(Neighborhood neighborhood) {
-    return neighborPolicy.equals(neighborhood);
+  public boolean equalsNeighborhood(Neighborhood neighborhood) {
+    return neighborPolicy.equalsNeighborhood(neighborhood);
   }
 
   protected boolean neighborPositionToStateContainsState(State target) {

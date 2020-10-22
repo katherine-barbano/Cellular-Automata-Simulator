@@ -32,12 +32,12 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
 
     Grid actualNextNextGrid = actualNextGrid.getNextGrid();
     Grid expectedNextNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid2);
 
-    assertTrue(actualNextNextGrid.equals(expectedNextNextGrid));
+    assertTrue(actualNextNextGrid.equalsGrid(expectedNextNextGrid));
   }
 
   @Test
@@ -58,7 +58,7 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -79,7 +79,7 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -100,7 +100,7 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -121,7 +121,7 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 
   @Test
@@ -142,6 +142,6 @@ public class PercolationTest {
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid("Percolation", "Finite", "Rectangle",  expectedGrid);
 
-    assertTrue(actualNextGrid.equals(expectedNextGrid));
+    assertTrue(actualNextGrid.equalsGrid(expectedNextGrid));
   }
 }

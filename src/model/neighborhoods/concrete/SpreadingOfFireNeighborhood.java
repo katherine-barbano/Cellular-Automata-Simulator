@@ -30,7 +30,7 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   @Override
   public State getNextState(State currentState) {
-    if(!currentState.equals(SpreadingOfFireState.TREE)) {
+    if(!currentState.equalsState(SpreadingOfFireState.TREE)) {
       return new State(SpreadingOfFireState.EMPTY);
     }
     else if(getNumberOfNeighborsWithGivenState(new State(SpreadingOfFireState.BURNING)) >0 && treeCatchesFire()){

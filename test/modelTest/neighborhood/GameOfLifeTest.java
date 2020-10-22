@@ -11,7 +11,7 @@ public class GameOfLifeTest {
   private void checkStillLifeGridsEqual(String simulationType, String edgePolicy, String neighborPolicy, State[][] initialMatrix) {
     Grid currentGrid = new Grid(simulationType, edgePolicy, neighborPolicy, initialMatrix);
     Grid nextGrid = currentGrid.getNextGrid();
-    assertTrue(currentGrid.equals(nextGrid));
+    assertTrue(currentGrid.equalsGrid(nextGrid));
   }
 
   private void checkTwoPeriodOscillator(String simulationType, String edgePolicy, String neighborPolicy, State[][] gridInitialState, State[][] gridOneStepState) {
@@ -23,7 +23,7 @@ public class GameOfLifeTest {
     Grid currentGrid = new Grid(simulationType, edgePolicy, neighborPolicy, initialState);
     Grid actualNextGrid = currentGrid.getNextGrid();
     Grid expectedNextGrid = new Grid(simulationType, edgePolicy, neighborPolicy, expectedNextState);
-    assertTrue(expectedNextGrid.equals(actualNextGrid));
+    assertTrue(expectedNextGrid.equalsGrid(actualNextGrid));
   }
 
   @Test
