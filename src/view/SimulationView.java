@@ -164,14 +164,28 @@ public class SimulationView {
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
 
+  /**
+   * Accessor for the Open Graph View Bar
+   * @return the Open Graph View Bar
+   */
   public OpenGraphViewBar getMyOpenGraphViewBar() {
     return myOpenGraphViewBar;
   }
 
+  /**
+   * Accessor for the current grid beign displayed.  This is used to check that if the grid has been
+   * changed by the user clicking on cells.
+   * @return the Current Grid in the display
+   */
   public Grid getCurrentGridInDisplay(){
     return myGrid;
   }
 
+  /**
+   * Method to add an exception message to the screen. This shoud have been deleted as it is not
+   * used in the program.
+   * @param message String to be displayed.
+   */
   public void addExceptionMessage(String message){
     //Text ExceptionText = new Text(message);
     //myRoot.getChildren().add(ExceptionText);
@@ -182,10 +196,18 @@ public class SimulationView {
 
   }
 
+  /**
+   * Accessor for the Simulation Button Bar
+   * @return the Simulation Button Bar
+   */
   public SimulationButtonBar getMySimulationButtons() {
     return mySimulationButtons;
   }
 
+  /**
+   * The current Grid Display.  This is only accessed in testing.
+   * @return the Grid Display
+   */
   public GridDisplay getMyGridDisplay() {
     return myGridDisplay;
   }

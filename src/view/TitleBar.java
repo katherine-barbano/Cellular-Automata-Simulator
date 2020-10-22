@@ -36,6 +36,11 @@ public class TitleBar extends FlowPane {
     this.getChildren().add(titleText);
   }
 
+  /**
+   * Method to update the title text.  This should have been deleted as it is not used
+   * throughout the program (a new scene and titleBar are created for every new simulation).
+   * @param simulationType String representing the simulationType
+   */
   public void updateTitleText(String simulationType){
     String title = myResources.getString(simulationType+TITLE_STRING_IN_RESOURCES);
     this.titleText.setText(title);

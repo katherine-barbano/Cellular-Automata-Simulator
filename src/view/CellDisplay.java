@@ -40,10 +40,22 @@ public class CellDisplay extends Rectangle {
     this.setOnMouseClicked(mouseEvent->handleMouseEvent());
   }
 
+  /**
+   * Accessor for the StateType of the cellDisplay object
+   * @return current StateType
+   */
   public StateType getMyStateType() { return myStateType; }
 
+  /**
+   * Accessor for the fill of the cellDisplay object
+   * @return current CellFill Color
+   */
   public CellFill getCurrentColor(){ return currentColor; }
 
+  /**
+   * Set the current fill of the CellDisplay block
+   * @param newColor new CellFill (image or color)
+   */
   public void setCurrentColor(CellFill newColor) { currentColor = newColor; }
 
   private void setMyState(StateType inputState){
