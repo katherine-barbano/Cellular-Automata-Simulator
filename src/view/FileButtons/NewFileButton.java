@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 
 /**
  * New File Button will be used to Upload a new Configuration file
+ * @author Heather Grune (hlg20)
  */
 public class NewFileButton extends Button {
 

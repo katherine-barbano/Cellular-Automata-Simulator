@@ -11,6 +11,12 @@ import javafx.scene.shape.Rectangle;
 import view.CellFormat.CellColors;
 import view.CellFormat.CellFill;
 
+/**
+ * The CellDisplay class is responsible for displaying the cells in the grid correctly.  CellDisplay
+ * must keep track of each cell's state and color, and create the Rectangle of the correct color
+ * to display in the GridDisplay.  Additionally, when a cell is clicked, it much change state/color.
+ * @author Heather Grune (hlg20)
+ */
 public class CellDisplay extends Rectangle {
 
   public static final String STATE_ENUM_SUFFIX = "State";

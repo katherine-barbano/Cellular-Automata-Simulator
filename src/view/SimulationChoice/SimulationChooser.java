@@ -10,6 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 
+/**
+ * The SimulationChooser extends ChoiceBox to create a dropdown menu of all of the Simulation Types.
+ * @author Heather Grune (hlg20)
+ */
 public class SimulationChooser extends ChoiceBox {
 
   public static final String CHOICE_SUFFIX = "Title";
@@ -51,7 +55,9 @@ public class SimulationChooser extends ChoiceBox {
     return names;
   }
 
-  //Source https://stackoverflow.com/questions/5694385/getting-the-filenames-of-all-files-in-a-folder
+  /**
+   * Source https://stackoverflow.com/questions/5694385/getting-the-filenames-of-all-files-in-a-folder
+   */
   private String[] getTypesFromFileNames(){
     File folder = new File(SIMULATION_PROPERTIES_FOLDER);
     File[] listOfFiles = folder.listFiles();
@@ -65,6 +71,10 @@ public class SimulationChooser extends ChoiceBox {
     return simTypes;
   }
 
+  /**
+   * Accessor for the user's chosen type of simulation
+   * @return chosen type of simulation (string)
+   */
   public String getMyChosenType(){
     return myChosenType;
   }

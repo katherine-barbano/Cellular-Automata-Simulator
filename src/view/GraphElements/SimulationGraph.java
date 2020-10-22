@@ -11,7 +11,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 /**
+ * The Simulation graph displays the number of cells of each type over the course of the simulation.
+ * In order to design this class, I referenced this source:
  * https://docs.oracle.com/javafx/2/charts/line-chart.htm#CIHGBCFI
+ * @author Heather Grune (hlg20)
  */
 public class SimulationGraph extends LineChart {
 
@@ -40,6 +43,13 @@ public class SimulationGraph extends LineChart {
     }
   }
 
+  /**
+   * Update the series in the simulation graph to add an additional data point for the current
+   * number cells in the grid.
+   * @param state The state type of the cells
+   * @param stepNumber The number of steps that the simulation has gone through
+   * @param numCells The number of cells with the given stateType
+   */
   public void updateStateSeries(StateType state, double stepNumber, int numCells){
     myStateSeriesMap.get(state).getData().add(new XYChart.Data(stepNumber,numCells));
   }

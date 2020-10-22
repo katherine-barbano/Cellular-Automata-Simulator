@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 
 /**
  * The Speed Up Button will speed up the animation.
+ * @author Heather Grune (hlg20)
  */
 public class SpeedUpButton extends Button {
 

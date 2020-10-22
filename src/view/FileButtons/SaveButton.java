@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 
 /**
  * The Save Button will save the current tile configuration to a file.
+ * @author Heather Grune (hlg20)
  */
 public class SaveButton extends Button {
 

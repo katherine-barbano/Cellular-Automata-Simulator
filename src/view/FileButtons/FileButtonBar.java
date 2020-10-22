@@ -8,6 +8,7 @@ import view.SimulationView;
 /**
  * File Button Bar contains Buttons to save the tile Configuration to a file, and to upload a
  * file with a new tile configuration.
+ * @author Heather Grune (hlg20)
  */
 public class FileButtonBar extends HBox {
 

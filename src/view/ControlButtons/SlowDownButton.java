@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 
 /**
  * The Slow Down Button will slow down the speed of the animation.
+ * @author Heather Grune (hlg20)
  */
 public class SlowDownButton extends Button {
 

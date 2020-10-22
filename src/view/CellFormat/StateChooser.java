@@ -13,6 +13,7 @@ import javafx.scene.control.Tooltip;
 /**
  * The StateChooser creates a dropdown menu with all of the state choices for a given type of
  * Simulation
+ * @author Heather Grune (hlg20)
  */
 public class StateChooser extends ChoiceBox {
 

@@ -14,7 +14,12 @@ import view.GraphElements.SimulationGraph;
 import view.SimulationView;
 import view.TitleBar;
 
-
+/**
+ * The Graph View is responsible for creating the scene which contains the Graph and a title bar
+ * in a separate window from the Simulation View.  The GraphView should be updated for each step in
+ * the animation.
+ * @author Heather Grune (hlg20)
+ */
 public class GraphView {
 
   public static final String RESOURCES = "resources/";
@@ -35,6 +40,15 @@ public class GraphView {
   }
 
 
+  /**
+   * This method sets up and returns the initial scene for the graph view.
+   * @param simulationType A string representing the type of simulation
+   * @param stepNumber The number of steps through the current simulation
+   * @param states An array of all the possible states types for the curren simulation
+   * @param width The width of the scene
+   * @param height The width of the scene
+   * @return The initial scene
+   */
   public Scene setupScene(String simulationType, double stepNumber, StateType[] states, int width, int height) {
     this.myStates = states;
 
@@ -60,12 +74,17 @@ public class GraphView {
     myRoot.getChildren().add(myGraph);
   }
 
+  /**
+   * Update the Graph to display the data for a new grid
+   * @param nextGrid The grid to be displayed
+   * @param elapsedTime The number of steps through a simulation
+   */
   public void updateCurrentGrid(Grid nextGrid,double elapsedTime){
     myGrid = nextGrid;
     updateGraph(elapsedTime);
   }
 
-  public void updateGraph(double stepNumber){
+  private void updateGraph(double stepNumber){
     for(StateType state: myStates){
       int numCellsWithState = myGrid.getCountAllCellsWithSameStateTypeAsTarget(state);
       myGraph.updateStateSeries(state,stepNumber,numCellsWithState);

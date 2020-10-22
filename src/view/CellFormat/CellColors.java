@@ -5,7 +5,8 @@ import javafx.scene.paint.Paint;
 
 
 /**
- * All Possible colors fill the cells.
+ * All Possible colors to fill the cells.
+ * @author Heather Grune (hlg20)
  */
 public enum CellColors implements CellFill{
   BLACK(Color.BLACK),
