@@ -3,6 +3,11 @@ package model.neighborPolicies;
 import model.EdgePolicy;
 import model.NeighborPolicy;
 
+/**
+ * NeighborPolicy for all adjacent neighbors except the northeast and southwest neighbors
+ *
+ * @author Katherine Barbano
+ */
 public class HexagonalNeighborPolicy extends NeighborPolicy {
 
   public HexagonalNeighborPolicy(EdgePolicy edgePolicy) {

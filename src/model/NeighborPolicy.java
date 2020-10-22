@@ -8,6 +8,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+/***
+ * Maintains a Map neighborPositionToState with keys being the relative position of a neighbor, and
+ * values being the State of that Neighbor. This map can be created differently by different NeighborPolicies,
+ * meaning that what is considered a "neighbor" in one NeighborPolicy might not be considered
+ * a "neighbor" in another NeighborPolicy.
+ *
+ * This class uses the system illustrated in doc/relativePositionOfNeighbors.JPG to
+ * keep track of positions of neighbors relative to the center cell in an int[] of row, column.
+ *
+ * @author Katherine Barbano
+ */
 public abstract class NeighborPolicy {
 
   public static final String KEY_NOT_FOUND_PROPERTIES = "neighborPositionNotFound";
@@ -18,6 +29,11 @@ public abstract class NeighborPolicy {
   private final EdgePolicy edgePolicy;
   private final ResourceBundle modelResources;
 
+  /***
+   * Constructor that takes an EdgePolicy superclass object.
+   * The EdgePolicy is usually passed in as a superclass reference to a subclass EdgePolicy object.
+   * @param edgePolicy EdgePolicy superclass
+   */
   protected NeighborPolicy(EdgePolicy edgePolicy) {
     modelResources = ResourceBundle.getBundle(MODEL_RESOURCE_PATH);
     this.neighborPositionToState = new HashMap<>();
@@ -25,6 +41,11 @@ public abstract class NeighborPolicy {
     createNeighborPositionToState();
   }
 
+  /***
+   * Puts all neighbors into the neighborPositionToState map based on the edge policy (usually
+   * by calling the makePositionAndPutIntoMap helper).
+   * Different neighborPolicies might choose different adjacent cells to consider as "neighbors".
+   */
   protected abstract void createNeighborPositionToState();
 
   protected void makePositionAndPutIntoMap(int row, int column) {
@@ -36,6 +57,11 @@ public abstract class NeighborPolicy {
     putValidNeighborsIntoMapWithEdgePolicy(relativePositionOfNeighbor);
   }
 
+  /***
+   * Gets the actual position in the Grid from the relative position
+   * @param relativePosition Relative position of neighbor in the neighborhood
+   * @return Actual position of the neighbor in the Grid
+   */
   public int[] getPositionOfNeighbor(int[] relativePosition) {
     return edgePolicy.getPositionOfNeighbor(relativePosition);
   }
@@ -72,6 +98,12 @@ public abstract class NeighborPolicy {
     return thisKey[0] == otherKey[0] && thisKey[1] == otherKey[1];
   }
 
+  /***
+   * Accesses neighborPositionToState to return the State associated
+   * with a certain neighbor
+   * @param position Relative position of neighbor
+   * @return State associated with that relative position
+   */
   public State getStateFromNeighborPosition(int[] position) {
     for(int[] thisKey:neighborPositionToState.keySet()) {
       if(keysAreEqual(thisKey,position)) {

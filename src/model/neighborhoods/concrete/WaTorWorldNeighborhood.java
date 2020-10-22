@@ -9,15 +9,29 @@ import model.NeighborPolicy;
 import model.Neighborhood;
 import model.neighborhoods.InfluentialNeighborhood;
 
+/***
+ * Neighborhood for WaTorWorld simulation
+ *
+ * @author Katherine Barbano
+ */
 public class WaTorWorldNeighborhood extends InfluentialNeighborhood {
 
   public static final String MIN_BREED_AGE_PROPERTIES = "WaTorWorld_MinimumBreedingAge";
   public static final String SEA_CREATURE_EXCEPTION_MESSAGE = "oldestSeaCreatureNotFoundExceptionMessage";
 
+  /***
+   * Constructor overrides Neighborhood constructor
+   * @param neighborPolicy NeighborPolicy object
+   */
   public WaTorWorldNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
   }
 
+  /***
+   * Gets the next state of the center cell for this type of simulation
+   * @param currentState State object currently in the center Cell
+   * @return State object that should be in the center cell for the next grid
+   */
   @Override
   public State getNextState(State currentState) {
     List<int[]> positionsOfEmptyNeighbors = positionsOfTargetStateNeighbors(new State(WaTorWorldState.EMPTY));
