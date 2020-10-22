@@ -54,6 +54,10 @@ public class SimulationGraph extends LineChart {
     myStateSeriesMap.get(state).getData().add(new XYChart.Data(stepNumber,numCells));
   }
 
+  /**
+   * Accessor for the Map containing the series for each state.  This is only used in testing.
+   * @return Map of the series for each state.
+   */
   public Map<StateType,XYChart.Series> getMyStateSeriesMap(){
     return myStateSeriesMap;
   }
