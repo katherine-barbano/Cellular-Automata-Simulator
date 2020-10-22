@@ -18,6 +18,18 @@ import view.GraphElements.GraphView;
 import view.LanguageScreen.LanguageScreen;
 import view.SimulationView;
 
+/**@author Priya Rathinavelu
+ * This class is the main class within the controller that starts the simulation and general
+ * display of the project. It handles starting the animation and scene as well as starts the
+ * simulation and its associated grid. In addition, it handles setting up the actions of some of the
+ * buttons that relate to user interface like being able to swtich between simulations and step and
+ * pause/play. This class assumes that the default simulation to start off with is the game of life
+ * simulation first. This class does not have any connection with the model package and strictly
+ * works with the controller and the graph/simulation views created within the View package. This
+ * class is never really instantiated, and instead is really just used to run the simulations
+ * and display them. This class is responsible for connecting the view and the model (but does not
+ * directly work with the model).
+ */
 public class ControllerMain extends Application {
   public double secondDelay = 1.0;
   public static final int FRAME_SIZE = 400;
@@ -64,6 +76,10 @@ public class ControllerMain extends Application {
     speedShiftAmount = Double.parseDouble(myBundle.getString("speedShiftAmount"));
   }
 
+  /*
+  Method for starting the animation using timeline and indicates that for a certain speed, the
+  step function should be called
+   */
   private void startAnimation(double speedAmount) {
     KeyFrame frame = new KeyFrame(Duration.seconds(speedAmount), e -> step());
     Timeline animation = new Timeline();
@@ -73,6 +89,11 @@ public class ControllerMain extends Application {
   }
 
 
+  /*
+  This method is responsible for handling the first splash screen shown that allows the user
+  to indicate with language they would like the game to played and depending on which language is
+  selected, the screen will be set up accordingly
+   */
   private void chooseLanguageAndSetupStage(){
     myLanguageScreen = new LanguageScreen();
     currentStage.setScene(myLanguageScreen.setupScene(SCREEN_WIDTH,LANGUAGE_SCREEN_HEIGHT));
@@ -83,6 +104,10 @@ public class ControllerMain extends Application {
     myLanguageScreen.getMyFrenchButton().setOnAction(event -> setupSimulationScenes(currentStage,FRENCH_LANGUAGE));
   }
 
+  /*
+  This method is responsible for setting up the scene based on the language selected - it uses
+   the initial set up assuming that game of life simulation is the first simulation to be shown
+   */
   private void setupSimulationScenes(Stage stage, String language){
     this.myLanguageChoice=language;
     setupScene(FRAME_SIZE, FRAME_SIZE, currentSimulation, STARTING_SIMULATION_TYPE);
@@ -90,7 +115,7 @@ public class ControllerMain extends Application {
   }
 
   /*
-   * Sets up the stage size and title
+   * Sets up the stage size and title and can add the graph view to the scene
    */
   protected void setUpStage(Stage stage) {
       try {
@@ -121,11 +146,20 @@ public class ControllerMain extends Application {
     return myScene;
   }
 
+  /*
+  This method sets up the graph view by taking in the simulation type and can display a new
+  graph view and new graph scene
+   */
   private void setupGraph(String simType){
     myGraphView = new GraphView(currentSimulation.getCurrentGrid(), myLanguageChoice);
     myGraphScene = myGraphView.setupScene(simType, stepCount, currentSimulation.getPossibleStateTypes(),FRAME_SIZE,FRAME_SIZE);
   }
 
+  /*
+  This method is responsible for taking some of the buttons created in the view package and
+  associating them with the actions that need to happen if the button is actually selected. The actions
+  are the ones that are unique to the controller main class
+   */
   public void setUpButtons() {
     currentSimView.getMyControlButtons().getMyStep().setOnAction(event -> stepByButton());
     currentSimView.getMyControlButtons().getMyPlayPause().setOnAction(event -> unpauseOrPause());
@@ -145,6 +179,9 @@ public class ControllerMain extends Application {
     secondStage.setOnHidden(event ->{   viewGraph = false; });
     }
 
+    /*
+    This method is what updates the grid by calling the update shapes method
+     */
   void step () {
     if(currentSimulation!=null && currentSimView != null){
       updateShapes(!isPaused);
@@ -152,6 +189,9 @@ public class ControllerMain extends Application {
 
   }
 
+  /*
+  This method updates the simulation by updating the simulation grid and updates the graph view
+   */
   private void updateShapes(boolean shouldRun) {
     currentSimulation.updateSimulationGrid(shouldRun, currentSimView);
     if(shouldRun){
@@ -163,6 +203,10 @@ public class ControllerMain extends Application {
 
   }
 
+  /*
+  This method saves the file of the current simulation that contains the current grid
+  configuration
+   */
   void saveFile() {
     try {
       isPaused = true;
@@ -172,6 +216,9 @@ public class ControllerMain extends Application {
     }
   }
 
+  /*
+  This method displays the graph but setting up the scene for a second stage
+   */
   void showGraphOnClick(){
     viewGraph=true;
     setupGraph(currentSimulation.getSimulatonName());
@@ -179,6 +226,11 @@ public class ControllerMain extends Application {
     secondStage.show();
   }
 
+  /*
+  This method checks if the simulation needs to be changed based on the values chosen from the drop
+  down menu on the display, so based on which simulation is chosen and set, that simulation will
+  then be displayed
+   */
   private void checkChangeSimulation() {
     String simulationChosen = currentSimView.getMySimulationButtons().getSimulationChooser()
         .getMyChosenType();
@@ -204,6 +256,9 @@ public class ControllerMain extends Application {
     }
   }
 
+  /*
+  This method increases the speed until it reaches a maximum speed
+   */
   private void increaseSpeed() {
     if (secondDelay-speedShiftAmount > minSpeed) {
       secondDelay -= speedShiftAmount;
@@ -212,6 +267,9 @@ public class ControllerMain extends Application {
     }
   }
 
+  /*
+  This method decreases the speed until it reaches a minimum speed
+   */
   private void decreaseSpeed() {
     if (secondDelay + speedShiftAmount < maxSpeed) {
       secondDelay += speedShiftAmount;
@@ -220,14 +278,24 @@ public class ControllerMain extends Application {
     }
   }
 
+  /*
+  This method is related to the step button and updates the cells as needed
+   */
   void stepByButton() {
     updateShapes(isPaused);
   }
 
+  /*
+  This method pauses/unpauses the simulation
+   */
   void unpauseOrPause() {
     isPaused = !isPaused;
   }
 
+  /*
+  This method allows the user to select a new file to be displayed by the view so whatever simulation
+  is currently chosen will start displaying a new configuration read in from the selected csv file
+   */
   void selectNewFile() throws ControllerException {
     try {
       isPaused = true;
@@ -248,19 +316,31 @@ public class ControllerMain extends Application {
       }
   }
 
+  /*
+  This method displays a string message error to the user and is used to display any exceptions
+   */
   public void displayError(String message){
     Alert alert = new Alert(AlertType.ERROR);
     alert.setContentText(message);
     alert.showAndWait();
   }
 
+  /*
+  getter method to see the value of the isPaused variable
+   */
   public boolean getIsPaused() {
     return isPaused;
   }
 
+  /*
+  Method for getting the current simulation
+   */
   public Simulation getCurrentSimulation() {
     return currentSimulation;
   }
+  /*
+  Method for getting the current simulationview
+   */
   public SimulationView getSimulationView() {
     return currentSimView;
   }

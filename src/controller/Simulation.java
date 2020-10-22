@@ -19,6 +19,29 @@ import javafx.scene.control.TextInputDialog;
 import model.*;
 import view.SimulationView;
 
+/**
+ * @author Priya Rathinavelu
+ * The purpose of this class is to serve as the abstract class that defines the various simulations
+ * that can be displayed. When initializing a new simulation, that class will need to extend this
+ * abstract class so that it can inherit all of its methods needed for defining and organizing the
+ * parts of the simulation. The main assumptions for this class are the locations of the different
+ *  files associated with the simulation. For example, there needs to be a properties file correctly
+ * associated with the simulation placed in the right location (under simulationProperties folder).
+ * In addition, because the simulation names for the view are made from filing through that simulation
+ *  properties folder, it is essential that any properties files associated with a simulation must have
+ *  the correct name matching the simulation class's name as well. This class has instance of other
+ *  classes found within
+ *  the model package, specifically the Grid class. This is because the simulation class is
+ *  responsible for creating the grid from the configuration file. This is because the simulation
+ *  reads from its specific properties file, and based on the value of the stateConfiguration key,
+ *  the configuration of states will be created accordingly. An example of how to use this class
+ *  is when you want to create a new simulation. It will extend this abstract class, and will need
+ *  to override the abstract method getStateTypesForSimulation to return the appropriate state types
+ *  associated with the unique situation. This also means that in order for this class to work,
+ *  there needs to be an enum associated with the simulation that implements the stateType interface.
+ *
+ */
+
 public abstract class Simulation {
 
   private State[][] gridStateFormation;
@@ -60,13 +83,20 @@ public abstract class Simulation {
   private final String STORING_FILE_NAME = "data/initialConfigurations/";
   private final String NEW_PROPERTIES_LOCATION = "data/newPropertyFiles/";
 
-
+  /*
+  Constructor for setting up the simulation with its necessary properties and grid
+   */
   public Simulation(String newSimulationName){
       this.simulationName = newSimulationName;
       this.randomConfigRowColNumber = Integer.parseInt(myBundle.getString(RANDOM_SIZE));
       initializeSimulation(PROPERTIES_PREFIX, newSimulationName);
   }
 
+  /*
+  This method initializes the simulation by reading in the appropriate properties file to
+  determine which configuration of states should be used as well as uses the states associated with
+  each simulation to create that configuration
+   */
   private void initializeSimulation(String locationFolder, String newPropertiesFile) {
     this.propertiesInformation = new HashMap<>();
     readPropertiesFile(locationFolder, newPropertiesFile);
@@ -83,6 +113,11 @@ public abstract class Simulation {
     nextGrid = currentGrid.getNextGrid();
   }
 
+  /*
+  This method determines which grid should be created to sent to the model. It can either create
+  a grid with probability (if defined within the properties file) or the grid that doesn't use
+  probability (if not define within the properties file)
+   */
   private Grid createCorrectGrid() {
     if (propertiesInformation.containsKey(PROBABILITY)) {
       return new Grid(simulationName, propertiesInformation.get(EDGE), propertiesInformation.get(NEIGHBOR),
@@ -93,6 +128,10 @@ public abstract class Simulation {
   }
 
 
+  /*
+  This method reads in the properties file and stores all of the information into a properties
+  map to keep track of the appropriate values for the simulation
+   */
   private void readPropertiesFile(String locationPrefix, String propertiesFileName) throws ControllerException {
       try{
         String resourceName = locationPrefix + propertiesFileName + PROPERTIES_SUFFIX;
@@ -112,6 +151,10 @@ public abstract class Simulation {
       }
   }
 
+  /*
+  This method is able to set the new file that will be used to create a new configuration of states
+  for the simulation.
+   */
   public void setSimulationFileLocation(String newFileLocation) {
     simulationFileLocation = STORING_FILE_NAME + newFileLocation;
     currentGrid = new Grid(simulationName, propertiesInformation.get(EDGE),
@@ -119,10 +162,21 @@ public abstract class Simulation {
     nextGrid = currentGrid.getNextGrid();
   }
 
+  /*
+  This method sets a new properties file instead of using the main properties file associated
+  with the simulation (the properties file with the same name of the simulation and is set as the
+  default)
+   */
   public void setNewPropertiesFile(String locationFolder, String newPropertiesFile) {
     initializeSimulation(locationFolder, newPropertiesFile);
   }
 
+  /*
+  This method saves the current cell configuration by creating a new csv file as well as a new
+  properties file that can still maintain some of the original keys within the default original
+  properties file for the simulation. It takes in a grid so that it can create the correct new
+  grid csv file.
+   */
   public void saveNewCellConfiguration(Grid gridToStore) {
     try {
       Properties properties = new Properties();
@@ -164,6 +218,9 @@ public abstract class Simulation {
     }
   }
 
+  /*
+  This helper method is what actually writes the csv file of the states by opening a csv writer
+   */
   private void createCSVGridFile(Grid gridToStore, File newCSVFile) throws IOException {
     FileWriter csvWriter = new FileWriter(STORING_FILE_NAME + newCSVFile.getName());
     csvWriter.append(Integer.toString(gridToStore.getGridNumberOfRows()));
@@ -186,6 +243,14 @@ public abstract class Simulation {
     csvWriter.close();
   }
 
+  /*
+  This method determines which intial grid configuration should be used for the simulation. It is
+  determined by which value is found for the key "stateConfiguration" within the properties file
+  for the simulation. If it is file, then the method will try to find the key "filename" to get the
+  right file to read in the state configuration. If it is set to random, then a random configuration
+  of the states will be created. If the configuration type is set to probability, then a probability
+  based configuration will be created.
+   */
   private State[][] createInitialGridConfiguration(String configType) {
       if (configType.equals(FILE)) {
         try {
@@ -213,12 +278,25 @@ public abstract class Simulation {
       return createRandomLocationConfig();
   }
 
+  /*
+  This abstract method is used so that the simulation can determine which enum of statetypes is
+  associated with each implementation of simulation.
+   */
   abstract public StateType[] getStateTypesForSimulation();
 
+  /*
+  getter method for state types array
+   */
   public StateType[] getPossibleStateTypes() {
     return possibleStateTypes;
   }
 
+  /*
+  This method creates a 2d array of States (which is needed for the grid), by taking in an integer
+  2d array (either created from reading in the csv file or based on randomness or probability) and
+  also takes in the state types available for the simulation to create a 2d array of states because
+  each state type is mapped to an integer.
+   */
   private State[][] createStates(int[][] integerCellStates,
     StateType[] possibleStatesForSimulation) {
     createMapOfStates(possibleStatesForSimulation);
@@ -231,6 +309,10 @@ public abstract class Simulation {
     return cellStates;
   }
 
+  /*
+  This method creates a map of the state types where each state type is mapped to an integer, which
+  is how the csv files are created (with the intention of each integer representing a state)
+   */
   private void createMapOfStates(StateType[] possibleStatesForSimulation) {
     statesForInteger = new HashMap<>();
     integerForStates = new HashMap<>();
@@ -242,10 +324,18 @@ public abstract class Simulation {
     }
   }
 
+  /*
+  getter method for the map storing all of the information found in the properties file
+   */
   public HashMap<String, String> getPropertiesInformation() {
     return propertiesInformation;
   }
 
+  /*
+  this method is what reads in the main simulation file listed in the properties file for each
+  location and uses it to create the 2d array of integers based on directly what integers are within
+  the csv file
+   */
   private int[][] readCellStatesFile() throws ControllerException {
     int[][] cellStates;
     List<String[]> readFiles = new ArrayList<>();
@@ -273,6 +363,10 @@ public abstract class Simulation {
     return cellStates;
   }
 
+  /*
+  the method reads the input stream of data from the file and can use a csv reader to read in the
+  information from the csv file and store it
+   */
   private List<String[]> readAll (InputStream data) {
     try (CSVReader csvReader = new CSVReader(new InputStreamReader(data))) {
       return csvReader.readAll();
@@ -288,6 +382,11 @@ public abstract class Simulation {
     return currentGrid;
   }
 
+  /*
+  This method is what creates a random configuration of states if the state configuration key within
+  the properties file is listed as random. It randomly selects a state for the simulation, and makes
+  it a size that is read in from a properties file
+   */
   private State[][] createRandomLocationConfig() {
     State[][] randomLocationCells = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibilities = getPossibleStateTypes();
@@ -301,6 +400,12 @@ public abstract class Simulation {
     return randomLocationCells;
   }
 
+  /*
+  this method creates an intial configuration of states based on probability if the state
+  configuration key indicates that the initial set up should be based on probability. It needs a
+  probability to be read in as well. For this method, the probability indicates which percentage of
+  cells should be the first state in the state types for the simulation.
+   */
   private State[][] createProbabilityBasedStateConfiguration(double probabilities) {
     State[][] probabilityConfiguration = new State[randomConfigRowColNumber][randomConfigRowColNumber];
     StateType[] possibleStates = getPossibleStateTypes();
@@ -320,6 +425,10 @@ public abstract class Simulation {
   }
 
 
+  /*
+  This method is what updates the simulation grid to reflect the new grid for the next stage by taking
+  the grid and getting the next grid for the simulation
+   */
   public void updateSimulationGrid(boolean shouldRun, SimulationView simulationView) {
     if (shouldRun) {
       checkGridUpdatesInDisplay(simulationView);
@@ -328,16 +437,27 @@ public abstract class Simulation {
     }
   }
 
+  /*
+  This method uses the simulation view to get the current based on what the grid is in the simulation
+  This is used so that when the user updates the grid by clicking on cells, the simulation can
+  still account for it by updating what the current grid is wihtin simulation
+   */
   public void checkGridUpdatesInDisplay(SimulationView currentSimView){
     this.currentGrid=currentSimView.getCurrentGridInDisplay();
     this.nextGrid = currentGrid.getNextGrid();
   }
 
+  /*
+  Method that switches the current grid to its next grid and sets the next grid to its next stage
+   */
   public void updateSimulation() {
     this.currentGrid = nextGrid;
     this.nextGrid = currentGrid.getNextGrid();
   }
 
+  /*
+  method used for testing
+   */
   public List<Integer> getMatrixSize() {
     List<Integer> sizeValues = new ArrayList<>();
     sizeValues.add(rowNumber);

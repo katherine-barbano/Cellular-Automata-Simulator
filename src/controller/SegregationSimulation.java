@@ -10,6 +10,19 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import model.Grid;
+/*
+ * This class is the specific class extending the Simulation class that represents the Segregation
+ *  simulation. This class alone assumes that the properties file associated with this
+ * simulation has the name "Segregation". If the properties file name is not this, then the
+ * initial set up of the simulation would not be possible because there is no default set up. In
+ * addition, this class assumes that the states available for this simulation are defined within the
+ * segregationState enum so that the correct formation of states based on the configuration can
+ * be created. An example of how to use this class is to instantiate it when you want to create a
+ * new segregation simulation. In order to actually display it, it will need to be connected
+ * with a simulation view. This class is an extension of the abstract simulation class so it depends
+ * on what that class depends on. In addition, segregationSimulation needs to work with the
+ * segregationState to get the states found within that enum.
+*/
 
 public class SegregationSimulation extends Simulation{
 
@@ -24,78 +37,14 @@ public class SegregationSimulation extends Simulation{
     super("Segregation");
   }
 
-/*  @Override
-  public StateType[][] createStatesFromInteger(int[][] integerCellStates) {
-*//*    statesForInteger = new HashMap<>();
-    integerForStates = new HashMap<>();
-    StateType possibleStatesInGameOfLife[] = SegregationState.values();
-    int stateNumber = 0;
-    for(StateType state : possibleStatesInGameOfLife) {
-      integerForStates.put(state, stateNumber);
-      statesForInteger.put(stateNumber,state);
-      stateNumber++;
-    }
-    StateType[][] cellStates = new StateType[integerCellStates.length][integerCellStates[0].length];
-    numberRows = integerCellStates.length;
-    numberCols = integerCellStates[0].length;
-    for (int row = 0; row < integerCellStates.length; row++) {
-      for (int col = 0; col < integerCellStates[0].length; col++) {
-        cellStates[row][col] = statesForInteger.get(integerCellStates[row][col]);
-      }
-    }
-    return cellStates;*//*
-    return null;
-  }*/
-
-/*  @Override
-  public String readInPropertiesFile() {
-    try {
-      Properties myProperties = new Properties();
-      InputStream is = GameOfLifeSimulation.class.getClass().getResourceAsStream("ControllerError.properties");
-      myProperties.load(is);
-      System.out.println("loaded now");
-      return "";
-    }
-    catch (Exception e) {
-      System.out.println("exception");
-    }
-    return null;
-  }*/
-
+  /*
+  This method returns the state types specific to the segregation simulation by getting the
+  segregation state's values from that enum
+ */
   @Override
   public StateType[] getStateTypesForSimulation() {
     return SegregationState.values();
   }
 
-/*  @Override
-  public void storeNewCellConfig(Grid gridToStore) {
-    try {
-      String input = JOptionPane.showInputDialog("Enter new File name (with csv)");
-      File file = new File(input);
-      //FileWriter csvWriter = new FileWriter(STORING_FILE_NAME+"New.csv");
-      FileWriter csvWriter = new FileWriter(file.getName());
-      csvWriter.append(Integer.toString(numberRows));
-      csvWriter.append(",");
-      csvWriter.append(Integer.toString(numberCols));
-      csvWriter.append(",");
-      csvWriter.append("\n");
 
-      for(int row=0; row<gridToStore.getGridNumberOfRows(); row++){
-        for(int col=0; col<gridToStore.getGridNumberOfColumns();col++) {
-          csvWriter.append(integerForStates.get(gridToStore.getCell(row,col).getCurrentState()).toString());
-          //csvWriter.append(gridToStore.getCell(row,col).getCurrentState().toString());
-          csvWriter.append(",");
-        }
-        csvWriter.append("\n");
-      }
-      csvWriter.flush();
-      csvWriter.close();
-      System.out.println("saved");
-    } catch (IOException e) {
-      //System.out.println("not working");
-      String invalidFileExceptionMessage = ResourceBundle.getBundle("resources/ControllerErrors").
-          getString("InvalidFile");
-      throw new ControllerException(invalidFileExceptionMessage);
-    }
-  }*/
 }
