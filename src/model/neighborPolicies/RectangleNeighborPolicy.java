@@ -3,6 +3,11 @@ package model.neighborPolicies;
 import model.EdgePolicy;
 import model.NeighborPolicy;
 
+/**
+ * NeighborPolicy for all adjacent neighbors that share an edge (ie not a corner neighbor)
+ *
+ * @author Katherine Barbano
+ */
 public class RectangleNeighborPolicy extends NeighborPolicy {
 
   public RectangleNeighborPolicy(EdgePolicy edgePolicy) {

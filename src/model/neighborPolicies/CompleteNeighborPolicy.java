@@ -3,6 +3,11 @@ package model.neighborPolicies;
 import model.EdgePolicy;
 import model.NeighborPolicy;
 
+/**
+ * NeighborPolicy for all 8 adjacent neighbors
+ *
+ * @author Katherine Barbano
+ */
 public class CompleteNeighborPolicy extends NeighborPolicy {
 
   public CompleteNeighborPolicy(EdgePolicy edgePolicy) {

@@ -2,6 +2,11 @@ package model.edgePolicies;
 
 import controller.State;
 
+/***
+ * Edge policy where wrapping occurs from the end of one side to the start of the other side.
+ *
+ * @author Katherine Barbano
+ */
 public class ToroidalEdgePolicy extends InfiniteEdgePolicy {
 
   public ToroidalEdgePolicy(int centerCellRow, int centerCellColumn, State[][] allStatesInCSV) {
