@@ -7,6 +7,11 @@ import model.ModelException;
 import model.NeighborPolicy;
 import model.neighborhoods.InfluentialNeighborhood;
 
+/***
+ * Neighborhood for Segregation simulation
+ *
+ * @author Katherine Barbano
+ */
 public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   public static final String DEFAULT_THRESHOLD_TO_MOVE_PROPERTIES = "Segregation_thresholdToMoveDefault";
@@ -14,6 +19,10 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
 
   private double thresholdToMove;
 
+  /***
+   * Constructor overrides Neighborhood constructor
+   * @param neighborPolicy NeighborPolicy object
+   */
   public SegregationNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
     thresholdToMove = Double.parseDouble(getModelResources().getString(DEFAULT_THRESHOLD_TO_MOVE_PROPERTIES));
@@ -27,11 +36,12 @@ public class SegregationNeighborhood extends InfluentialNeighborhood {
   }
 
   /***
+   * Gets the next state of the center cell for this type of simulation.
    * An unsatisfied agent will move into one of its empty neighbors.
    * Agents were modeled after people, so if an agent is completely surrounded, it cannot move
    * regardless of whether it is satisfied or not.
-   * @param currentState
-   * @return
+   * @param currentState State object currently in the center Cell
+   * @return State object that should be in the center cell for the next grid
    */
   @Override
   public State getNextState(State currentState) {
