@@ -14,6 +14,7 @@ import view.SimulationView;
  * It contains 3 drop down menus, to choose a state, color, or image.  Pressing the CellChooserButton
  * changes the cellFill to the selected color.  Pressing the ImageChooser Button sets the cellFill
  * to the selected image.
+ * @author Heather Grune (hlg20)
  */
 public class CellFormatBar extends HBox {
 

@@ -8,6 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * The language screen creates the interface for the user to choose the language of the simulation.
+ * @author Heather Grune (hlg20)
+ */
 public class LanguageScreen{
   public static final String RESOURCES = "resources/";
   public static final String LANGUAGE_PROPERTIES = "LanguageScreen";
@@ -28,13 +32,14 @@ public class LanguageScreen{
   private Button mySpanishButton;
   private Button myFrenchButton;
 
-  /**
-   */
+
   public LanguageScreen(){
     myResources = ResourceBundle.getBundle(RESOURCES+LANGUAGE_PROPERTIES);
   }
 
   /**
+   * Setup Scene adds all the UI components to the Language Screen scene, applies a stylesheet,
+   * and returns the scene.
    */
   public Scene setupScene(int width, int height) {
 
@@ -74,14 +79,26 @@ public class LanguageScreen{
     myRoot.getChildren().add(myLanguageBar);
   }
 
+  /**
+   * Accessor for the English Button
+   * @return English Button
+   */
   public Button getMyEnglishButton() {
     return myEnglishButton;
   }
 
+  /**
+   * Accessor for the Spanish button
+   * @return Spanish Button
+   */
   public Button getMySpanishButton(){
     return mySpanishButton;
   }
 
+  /**
+   * Accessor for the French Button
+   * @return French Button
+   */
   public Button getMyFrenchButton(){
     return myFrenchButton;
   }

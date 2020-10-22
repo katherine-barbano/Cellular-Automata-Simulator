@@ -11,6 +11,7 @@ import javafx.scene.control.Tooltip;
 /**
  * CellColor Chooser Class extends ChoiceBox to create a drop down menu containing all color choices
  * This will allow the user to change the color of cells with a chosen state.
+ * @author Heather Grune (hlg20)
  */
 public class CellColorChooser extends ChoiceBox {
 

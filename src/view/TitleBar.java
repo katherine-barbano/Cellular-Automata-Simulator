@@ -5,6 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 
+/**
+ * The Title Bar displays the title of the current simulation at the top of the screen.
+ * @author Heather Grune (hlg20)
+ */
 public class TitleBar extends FlowPane {
 
   public static final int TITLE_BAR_HEIGHT=50;

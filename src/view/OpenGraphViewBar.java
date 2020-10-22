@@ -6,6 +6,11 @@ import javafx.scene.layout.HBox;
 import view.SimulationChoice.SetSimulationButton;
 import view.SimulationChoice.SimulationChooser;
 
+/**
+ * The Open Graph View Bar creates the bar which contains the button that is used to open the
+ * GraphView from the SimulationView
+ * @author Heather Grune (hlg20)
+ */
 public class OpenGraphViewBar extends HBox {
 
   public static final String START_GRAPH_PROPERTIES = "GraphViewButton";
@@ -20,6 +25,10 @@ public class OpenGraphViewBar extends HBox {
 
   }
 
+  /**
+   * Accessor for the Start Graph View Button
+   * @return StartGraphViewButton
+   */
   public Button getMyStartGraphViewButton(){
     return myStartGraphViewButton;
   }

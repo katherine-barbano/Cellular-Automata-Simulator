@@ -19,7 +19,10 @@ import view.DarkLightModeButtons.DarkLightModeBar;
 import view.FileButtons.FileButtonBar;
 
 /**
- * SimulationView sets up and updates the User Interface.
+ * SimulationView sets up and updates the main User Interface. It includes a TitleBar, Grid Display,
+ * Control Button Bar, Cell Format Button Bar, Dark/Light Mode Button Bar, Configuration File
+ * Button Bar, Simulation Choice Button Bar, and a Graph View Button Bar.
+ * @author Heather Grune (hlg20)
  */
 public class SimulationView {
 
