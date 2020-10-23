@@ -19,7 +19,14 @@ with the view to create an interactive user interface.
  to display information about the next Grid.
 
  * Team Member #3
-
+ 
+Heather Grune - My responsiblity was creating the View/frontend package.  I worked on building 
+the SimulationView, GraphView, and LanguageScreen.  I made sure that each of these views could be 
+constructed separately, so that the Controller could display them in separate windows.  
+The SimulationView and GraphView displayed the simulation based on the current Grid in the controller.
+Additionally, I created buttons to control the design of the cells and the color scheme of the SimulationView.
+I also created buttons which the controller could use to control the flow and configuration of the
+simulation (play/pause, step, simulationChoice, Upload File etc).
 
 ## Design goals
 
@@ -78,6 +85,34 @@ of any of the cells themselves. So the second step is to iterate through the pro
 after the first step, and see if there are any Neighborhoods that completed a "push" onto
 the center cell, and if so, to resolve the conflicts. The Neighborhoods
 that have the potential to push onto the center cell are simply the Neighborhoods of the center cell's neighbors.
+
+Within the view:
+The SimulationView creates the scene for the main user interface.  It is responsible
+for setting up the TitleBar, GridDisplay, and 6 Button bars with the right sizing, as well as updating
+the GridDisplay each time the controller wishes to display a new grid.
+The Main components in the Simulation View are :
+* TitleBar
+* GridDisplay - displays all CellDisplay objects in a grid pattern
+* ControlButtonBar - creates buttons to pause/play, slow down, and speed up animation
+* CellFormatBar - allows the user to change the cells with a chosen state to a new color or image
+    * StateChooser - dropdown for selecting the state
+    * ColorChooser - dropdown with all color options
+    * ChangeColorButton - pressed by user to change cells with the selected state to the selected color 
+    * ImageChooser - dropdown with all image options
+    * ImageChooserButton - pressed by user to change cells with the selected state to the selected image
+    * CellColors - enum of all colors to be chosen by user
+    * CellImages - enum of all images to be chosen by user
+    * CellFill - interface implemented by both CellColors and CellImages to define getCellFill method
+* DarkLightModeBar - creates buttons to switch between the dark and light mode
+* SimulationButtonBar - SimulationChooser creates a dropdown of all simulation types, SetSimulationButton
+allows user to change the simulation type to the selected type.
+* OpenGraphViewBar - creates a button to open graphView dynamically
+
+The GraphView creates the view for the graph of the number of cells of each state that are in the displayed grid
+after each step in the simulation. The SimulationGraph creates this graph, while the GraphView is responsible
+for constructing and updating this graph with each step in the simulation.
+
+The Language Screen creates an interface of three buttons to choose the language for the simulation.
 
 
 ## Assumptions that Affect the Design
