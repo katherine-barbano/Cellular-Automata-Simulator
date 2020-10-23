@@ -19,7 +19,10 @@ import view.DarkLightModeButtons.DarkLightModeBar;
 import view.FileButtons.FileButtonBar;
 
 /**
- * SimulationView sets up and updates the User Interface.
+ * SimulationView sets up and updates the main User Interface. It includes a TitleBar, Grid Display,
+ * Control Button Bar, Cell Format Button Bar, Dark/Light Mode Button Bar, Configuration File
+ * Button Bar, Simulation Choice Button Bar, and a Graph View Button Bar.
+ * @author Heather Grune (hlg20)
  */
 public class SimulationView {
 
@@ -161,14 +164,28 @@ public class SimulationView {
    */
   public FileButtonBar getMyFileButtons() { return myFileButtons; }
 
+  /**
+   * Accessor for the Open Graph View Bar
+   * @return the Open Graph View Bar
+   */
   public OpenGraphViewBar getMyOpenGraphViewBar() {
     return myOpenGraphViewBar;
   }
 
+  /**
+   * Accessor for the current grid beign displayed.  This is used to check that if the grid has been
+   * changed by the user clicking on cells.
+   * @return the Current Grid in the display
+   */
   public Grid getCurrentGridInDisplay(){
     return myGrid;
   }
 
+  /**
+   * Method to add an exception message to the screen. This shoud have been deleted as it is not
+   * used in the program.
+   * @param message String to be displayed.
+   */
   public void addExceptionMessage(String message){
     //Text ExceptionText = new Text(message);
     //myRoot.getChildren().add(ExceptionText);
@@ -179,10 +196,18 @@ public class SimulationView {
 
   }
 
+  /**
+   * Accessor for the Simulation Button Bar
+   * @return the Simulation Button Bar
+   */
   public SimulationButtonBar getMySimulationButtons() {
     return mySimulationButtons;
   }
 
+  /**
+   * The current Grid Display.  This is only accessed in testing.
+   * @return the Grid Display
+   */
   public GridDisplay getMyGridDisplay() {
     return myGridDisplay;
   }

@@ -12,6 +12,11 @@ import javafx.scene.layout.GridPane;
 import model.Cell;
 import model.Grid;
 
+/**
+ * The GridDisplay class extends the GridPane class.  It is responsible for displaying all of the
+ * CellDisplay objects in the current grid.
+ * @author Heather Grune (hlg20)
+ */
 public class GridDisplay extends GridPane {
 
   private Grid myGrid;
@@ -42,6 +47,11 @@ public class GridDisplay extends GridPane {
     }
   }
 
+  /**
+   * This method is used to update the GridDisplay to display a new Grid
+   * @param nextGrid The new Grid to be displayed
+   * @return the new GridDisplay
+   */
   public GridDisplay updateCellsInGridDisplay(Grid nextGrid){
     this.getChildren().clear();
     myGrid=nextGrid;
@@ -51,6 +61,11 @@ public class GridDisplay extends GridPane {
     return this;
   }
 
+  /**
+   * Get a list of the CellDisplay objects in the GridDisplay with a given state
+   * @param inputState chosen StateType
+   * @return List of CellDisplay objects with the chosen state
+   */
   public List<CellDisplay> getCellListByState(StateType inputState){
     List<CellDisplay> stateCells = new ArrayList();
     for(Node cell: this.getChildren()){
@@ -67,14 +82,29 @@ public class GridDisplay extends GridPane {
     }
   }
 
+  /**
+   * This is method is used to update the cells in the GRID data structure, after a CellDisplay
+   * component has been clicked.
+   * @param row Row of cellDisplay clicked
+   * @param col Column of cellDisplay clicked
+   * @param newState New StateType of the cell
+   */
   public void updateCellInGrid(int row, int col, StateType newState){
     myGrid.getCell(row,col).getCurrentState().setStateType(newState);
   }
 
+  /**
+   * Accessor for the current grid in the GridDisplay
+   * @return
+   */
   public Grid getMyGrid(){
     return myGrid;
   }
 
+  /**
+   * Accessor for the current Simulation type of the Grid Display
+   * @return
+   */
   public String getMySimulationType(){
     return mySimulationType;
   }

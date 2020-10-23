@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 
 /**
  * The Step button will step to the next frame (only when the game is paused).
+ * @author Heather Grune (hlg20)
  */
 public class StepButton extends Button {
 

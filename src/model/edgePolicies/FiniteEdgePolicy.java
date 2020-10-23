@@ -4,6 +4,11 @@ import controller.State;
 import model.EdgePolicy;
 import model.ModelException;
 
+/***
+ * Edge policy where no wrapping occurs. The edges of the Grid do not go beyond the edges.
+ *
+ * @author Katherine Barbano
+ */
 public class FiniteEdgePolicy extends EdgePolicy {
 
   public static final String FINITE_EXCEPTION_PROPERTIES = "finiteExceptionMessageProperties";

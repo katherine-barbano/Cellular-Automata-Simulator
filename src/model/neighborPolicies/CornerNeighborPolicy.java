@@ -3,6 +3,11 @@ package model.neighborPolicies;
 import model.EdgePolicy;
 import model.NeighborPolicy;
 
+/**
+ * NeighborPolicy for 4 neighbors in corners of center cell
+ *
+ * @author Katherine Barbano
+ */
 public class CornerNeighborPolicy extends NeighborPolicy {
 
   public CornerNeighborPolicy(EdgePolicy edgePolicy) {

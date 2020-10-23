@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 /**
  * The ChangeColorButton can be pressed by the user to change the color of all cells with a chosen state
  * and color
+ * @author Heather Grune (hlg20)
  */
 public class ChangeColorButton extends Button {
 

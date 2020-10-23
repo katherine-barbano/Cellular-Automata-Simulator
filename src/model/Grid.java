@@ -10,6 +10,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+/***
+ * Maintains a List<List<Cell>> as the backend for the simulation.
+ * This class serves as the boundary between the model and the controller/view.
+ * Has methods to return the next Grid based on this current Grid, analyze
+ * data about the States in this Grid for the view's graph, and private methods to
+ * create Cells, Neighborhoods, NeighborPolicy, and EdgePolicy based on the given
+ * constructor.
+ * @author Katherine Barbano
+ */
 public class Grid {
 
   public static final String NEIGHBORHOOD_NAME_PREFIX_PROPERTIES = "neighborhoodNamePrefix";
@@ -28,9 +37,12 @@ public class Grid {
   private double optionalProbability;
 
   /***
-   * Constructor used for creating first initial grid from CSV file.
-   * @param simulationType type of simulation from SimulationType enum
-   * @param allStatesInCSV State[][] of all the states in the csv file
+   * Constructor used for creating first initial grid from CSV file for a simulation without
+   * a probability. This should be called by the Controller.
+   * @param simulationType String such as "WaTorWorld" describing what type of simulation subclass should be instantiated
+   * @param edgePolicyName String such as "Finite" describing the edge policy to be instantiated
+   * @param neighborPolicyName String such as "Complete" describing the neighbor policy subclass to instantiate
+   * @param allStatesInCSV A 2D array of States, taken directly from the csv file in the Controller
    */
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV) {
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
@@ -39,11 +51,13 @@ public class Grid {
   }
 
   /***
-   * Constructor used for creating all Grids after the initial grid. Initializes cellGrid as empty,
-   * and the model should later populate it with next state data.
-   * @param simulationType type of simulation from SimulationType enum
-   * @param rowLength number of rows in grid
-   * @param columnLength number of columns in grid
+   * Constructor used for creating the next Grid in Model. Should not be called by Controller.
+   * @param simulationType String such as "WaTorWorld" describing what type of simulation subclass should be instantiated
+   * @param edgePolicyName String such as "Finite" describing the edge policy to be instantiated
+   * @param neighborPolicyName String such as "Complete" describing the neighbor policy subclass to instantiate
+   * @param rowLength Length of rows
+   * @param columnLength Length of columns
+   * @param optionalProbability Double corresponding to an optional probability. Should be 0.0 if no optional probability for the simulation.
    */
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, int rowLength, int columnLength, double optionalProbability) {
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
@@ -51,6 +65,15 @@ public class Grid {
     this.optionalProbability = optionalProbability;
   }
 
+  /***
+   * Constructor used for creating first initial grid from CSV file for a simulation without
+   * a probability. This should be called by the Controller.
+   * @param simulationType String such as "WaTorWorld" describing what type of simulation subclass should be instantiated
+   * @param edgePolicyName String such as "Finite" describing the edge policy to be instantiated
+   * @param neighborPolicyName String such as "Complete" describing the neighbor policy subclass to instantiate
+   * @param allStatesInCSV A 2D array of States, taken directly from the csv file in the Controller
+   * @param optionalProbability Double corresponding to an optional probability, from the properties file in Controller
+   */
   public Grid(String simulationType, String edgePolicyName, String neighborPolicyName, State[][] allStatesInCSV, double optionalProbability) {
     this.optionalProbability = optionalProbability;
     setupPrivateVariables(simulationType, edgePolicyName, neighborPolicyName);
@@ -230,11 +253,6 @@ public class Grid {
     cell.setNeighborhood(cellNeighborhood);
   }
 
-  /***
-   * If number of rows (or number of columns) is not constant throughout entire allStatesInCSV,
-   * assume that allStatesInCSV[index][index] is -1 if no Cell should be initialized for that position.
-   * This method leaves an empty position in cellGrid if the state is -1 in CSV.
-   */
   private void initializeCurrentCellGrid(State[][] allStatesInCSV) {
     for (int csvRow = 0; csvRow < allStatesInCSV.length; csvRow++) {
       for (int csvColumn = 0; csvColumn < allStatesInCSV[csvRow].length; csvColumn++) {
@@ -346,6 +364,12 @@ public class Grid {
     cellGrid.get(cellRow).set(cellColumn, newCell);
   }
 
+  /***
+   * Determines whether all States in two Grids are equal by comparing
+   * the equality of their Cells, and their number of rows/cols.
+   * @param otherGrid Another Grid object to compare to
+   * @return true if the Grids are equal
+   */
   public boolean equalsGrid(Grid otherGrid) {
 
     if(otherGrid.getGridNumberOfRows()!=getGridNumberOfRows()) {
@@ -369,22 +393,49 @@ public class Grid {
     return true;
   }
 
+  /***
+   * Called by View and Controller to return a Cell corresponding to that
+   * row and column number. This method allows the data structure for Grid to be
+   * hidden from public access.
+   * @param rowNumber Int for row number
+   * @param columnNumber Int for column number
+   * @return Cell object corresponding to that row and column
+   */
   public Cell getCell(int rowNumber, int columnNumber) {
     return cellGrid.get(rowNumber).get(columnNumber);
   }
 
+  /***
+   * Returns number of rows in Grid
+   * @return int of rows
+   */
   public int getGridNumberOfRows() {
     return cellGrid.size();
   }
 
+  /***
+   * Returns number of columns in Grid
+   * @return int of columns
+   */
   public int getGridNumberOfColumns() {
     return cellGrid.get(0).size();
   }
 
+  /***
+   * Returns the optional probability Grid was instantiated with.
+   * Returns 0.0 if not instantiated with optional probability.
+   * @return Double of optional probability
+   */
   public double getOptionalProbability() {
     return optionalProbability;
   }
 
+  /***
+   * Provides data analysis for the View's graph about the number of cells
+   * in the Grid that have the same StateType as a given target
+   * @param target StateType object
+   * @return int count for number of cells
+   */
   public int getCountAllCellsWithSameStateTypeAsTarget(StateType target) {
     int numCellsWithTargetStateType=0;
     for(int row = 0; row<cellGrid.size(); row++) {

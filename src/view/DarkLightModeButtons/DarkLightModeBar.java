@@ -8,6 +8,7 @@ import view.SimulationView;
 /**
  * The DarkLightModeBar includes a light mode button and dark mode button.  It is used to change
  * the Simulation View between light and dark modes
+ * @author Heather Grune (hlg20)
  */
 public class DarkLightModeBar extends HBox {
 
@@ -26,8 +27,16 @@ public class DarkLightModeBar extends HBox {
     this.setId("dark-light-bar");
   }
 
+  /**
+   * Accessor for the Light Mode Button
+   * @return Light mode button
+   */
   public Button getMyLightButton() { return myLightButton; }
 
+  /**
+   * Accessor for the Dark Mode Button
+   * @return Dark Mode Button
+   */
   public Button getMyDarkButton() { return myDarkButton; }
 
 }

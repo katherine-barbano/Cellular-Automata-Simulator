@@ -8,6 +8,7 @@ import view.SimulationView;
 /**
  * The ControlButtonBar contains all of the buttons that control the flow of the Simulation, including
  * Play/Pause, Step, SpeedUp, SlowDown.
+ * @author Heather Grune (hlg20)
  */
 public class ControlButtonBar extends HBox {
 

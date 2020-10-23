@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 /**
  * The Image Chooser class creates a dropdown menu with all image options.  It allows the user
  * to choose an image to place on all the cells with a chosen state.
+ * @author Heather Grune (hlg20)
  */
 public class ImageChooser extends ChoiceBox {
   private CellFill[] CELL_PHOTOS = CellImages.values();

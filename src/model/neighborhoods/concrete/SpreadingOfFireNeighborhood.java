@@ -6,6 +6,11 @@ import java.util.Random;
 import model.NeighborPolicy;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
+/***
+ * Neighborhood for SpreadingOfFire simulation
+ *
+ * @author Katherine Barbano
+ */
 public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String PROBABILITY_CATCH_DEFAULT_PROPERTIES = "SpreadingOfFire_probabilityOfCatchingDefault";
@@ -14,6 +19,10 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
   private final Random random;
   private double nextDouble;
 
+  /***
+   * Constructor overrides Neighborhood constructor
+   * @param neighborPolicy NeighborPolicy object
+   */
   public SpreadingOfFireNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
     probabilityCatchFire = Double.parseDouble(getModelResources().getString(PROBABILITY_CATCH_DEFAULT_PROPERTIES));
@@ -28,6 +37,11 @@ public class SpreadingOfFireNeighborhood extends NonInfluentialNeighborhood {
     }
   }
 
+  /***
+   * Gets the next state of the center cell for this type of simulation
+   * @param currentState State object currently in the center Cell
+   * @return State object that should be in the center cell for the next grid
+   */
   @Override
   public State getNextState(State currentState) {
     if(!currentState.equalsState(SpreadingOfFireState.TREE)) {

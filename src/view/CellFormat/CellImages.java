@@ -12,6 +12,7 @@ import view.SimulationView;
 
 /**
  * The CellImages enum defines all possible images that the user can choose to fill the cell.
+ * @author Heather Grune (hlg20)
  */
 public enum CellImages implements CellFill {
 

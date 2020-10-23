@@ -7,15 +7,29 @@ import java.util.List;
 import model.NeighborPolicy;
 import model.neighborhoods.NonInfluentialNeighborhood;
 
+/***
+ * Neighborhood for GameOfLife simulation
+ *
+ * @author Katherine Barbano
+ */
 public class GameOfLifeNeighborhood extends NonInfluentialNeighborhood {
 
   public static final String NAME_OF_LIVE_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForLiveCellToSurvive";
   public static final String NAME_OF_DEAD_CONSTANT_IN_MODEL_PROPERTIES = "GameOfLife_NumberLiveNeighborsForDeadCellToSurvive";
 
+  /***
+   * Constructor overrides Neighborhood constructor
+   * @param neighborPolicy NeighborPolicy object
+   */
   public GameOfLifeNeighborhood(NeighborPolicy neighborPolicy) {
     super(neighborPolicy);
   }
 
+  /***
+   * Gets the next state of the center cell for this type of simulation
+   * @param currentState State object currently in the center Cell
+   * @return State object that should be in the center cell for the next grid
+   */
   @Override
   public State getNextState(State currentState) {
     State nextState = new State(GameOfLifeState.DEAD);

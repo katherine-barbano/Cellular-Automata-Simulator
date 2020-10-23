@@ -3,6 +3,12 @@ package model;
 import controller.State;
 import java.util.Map;
 
+/***
+ * Corresponds to a single unit in the Grid with a single currentState.
+ * Maintains the currentState and neighborhood of that unit, as well as the
+ * statesOfOverlappingNeighborsOnCell for Grid's getNextGridAfterMove.
+ * @author Katherine Barbano
+ */
 public class Cell {
 
   private Neighborhood neighborhood;
@@ -33,10 +39,18 @@ public class Cell {
     return new Cell(nextState);
   }
 
+  /***
+   * Used by the View to return the currentState of this cell.
+   * @return State object
+   */
   public State getCurrentState() {
     return currentState;
   }
 
+  /***
+   * Gets the current Neighborhood of this cell. Used by Grid.
+   * @return Neighborhood object
+   */
   public Neighborhood getNeighborhood() {
     return neighborhood;
   }
@@ -45,6 +59,12 @@ public class Cell {
     this.neighborhood = neighborhood;
   }
 
+  /***
+   * Determines whether the states of this cell and another cell are equal, along with
+   * their neighborhoods.
+   * @param otherCell Another cell object
+   * @return true if cells are equal
+   */
   public boolean equalsCell(Cell otherCell) {
     boolean statesAreEqual = otherCell.getCurrentState().equalsState(currentState);
     boolean neighborhoodsBothNull = neighborhood == null && otherCell.getNeighborhood()==null;
@@ -74,6 +94,11 @@ public class Cell {
     return neighborhood.getNeighborhoodsOfNeighbors();
   }
 
+  /***
+   * Used by the View and Controller to set the currentState of the cell (for example,
+   * if the user clicks directly on a Cell to change its state).
+   * @param state State the Cell should change to
+   */
   public void setCurrentState(State state) {
     currentState = state;
   }
